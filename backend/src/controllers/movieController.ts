@@ -1,9 +1,5 @@
 import type { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/User.js";
 import Movie from "../models/Movie.js";
-import { Types } from "mongoose";
 
 interface GenreParams {
     genre: string;

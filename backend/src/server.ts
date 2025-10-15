@@ -1,9 +1,11 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "./config/database.js"
-import userRoutes from "./routes/users.js"
-import movieRoutes from "./routes/movies.js"
+import connectDB from "./config/database.js";
+import userRoutes from "./routes/users.js";
+import movieRoutes from "./routes/movies.js";
+import reaiperRoutes from "./routes/reaiper.js"
+
 
 dotenv.config(); 
 
@@ -18,6 +20,7 @@ connectDB();
 
 app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);
+app.use("/reaiper", reaiperRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend's app is online, gg");
