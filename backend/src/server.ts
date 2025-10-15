@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/database.js"
 import userRoutes from "./routes/users.js"
+import movieRoutes from "./routes/movies.js"
 
 dotenv.config(); 
 
@@ -16,6 +17,7 @@ connectDB();
 
 
 app.use("/users", userRoutes);
+app.use("/movies", movieRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend's app is online, gg");

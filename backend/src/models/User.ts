@@ -10,6 +10,7 @@ export interface IUser extends Document {
     UserName: string;
     UserPseudo: string;
     UserMail: string;
+    UserPassword: string;
     UserLocation: string;
     UserAge: number;
     SignUpDate: Date;
@@ -36,6 +37,7 @@ const UserSchema: Schema = new Schema({
     UserPseudo: { type: String, required: true },
     UserMail: { type: String, required: true },
     UserLocation: { type: String, required: true },
+    UserPassword: { type: String, required: true},
     UserAge: { type: Number },
     SignUpDate: { type: Date, default: Date.now },
     NumberOfWatchedMovies: { type: Number, default: 0 },

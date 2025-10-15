@@ -1,4 +1,5 @@
-// route test to create a user, add a film to its watchlist, add, delete, block somebody
+/** route test to create a user, add a film to its watchlist, add, delete, block somebody
+
 import express from "express";
 import User from "../models/User.js";
 import Movie from "../models/Movie.js";
@@ -67,5 +68,30 @@ router.post("/:userId/blockUser/:blockedUserId", async (req, res) => {
     res.status(500).json({ message: "Error blocking user", error: err });
   }
 });
+
+export default router; 
+
+*/
+import express from "express"
+import {
+  registerUser,
+  loginUser,
+  addAFriend,
+  deleteAFriend,
+  blockAnUser,
+  addAMovieToWatchlist,
+  deleteAMovieFromWatchlist
+} from "../controllers/userController.js"
+
+const router = express.Router();
+
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.post("/:userId/friends/:friendId", addAFriend);
+router.delete("/:userId/friends/:friendId", deleteAFriend);
+router.post("/:userId/block/:blockedUserId", blockAnUser);
+router.post("/:userId/watchlist/:movieId", addAMovieToWatchlist);
+router.delete("/:userId/watchlist/:movieId", deleteAMovieFromWatchlist);
+
 
 export default router;
