@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/server.ts",
-    "dev": "node --loader ts-node/esm src/server.ts"
+    "start": "node --loader ts-node/esm src/server.ts",
+    "dev": "nodemon --loader ts-node/esm src/server.ts"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +30,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^24.7.2",
+    "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }
