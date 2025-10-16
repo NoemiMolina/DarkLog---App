@@ -72,7 +72,8 @@ router.post("/:userId/blockUser/:blockedUserId", async (req, res) => {
 export default router; 
 
 */
-import express from "express"
+import express from "express";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 import {
   registerUser,
   loginUser,
@@ -87,11 +88,11 @@ const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
-router.post("/:userId/friends/:friendId", addAFriend);
-router.delete("/:userId/friends/:friendId", deleteAFriend);
-router.post("/:userId/block/:blockedUserId", blockAnUser);
-router.post("/:userId/watchlist/:movieId", addAMovieToWatchlist);
-router.delete("/:userId/watchlist/:movieId", deleteAMovieFromWatchlist);
+router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);
+router.delete("/:userId/friends/:friendId", authMiddleware, deleteAFriend);
+router.post("/:userId/block/:blockedUserId", authMiddleware, blockAnUser);
+router.post("/:userId/watchlist/:movieId", authMiddleware, addAMovieToWatchlist);
+router.delete("/:userId/watchlist/:movieId", authMiddleware, deleteAMovieFromWatchlist);
 
 
 export default router;

@@ -8,10 +8,11 @@
 // export default router;
 // src/routes/reaiper.ts
 import express from "express";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 import { getAIRecommendation } from "../controllers/reaiperController.js";
 
 const router = express.Router();
 
-router.post("/recommend", getAIRecommendation);
+router.post("/recommend", authMiddleware, getAIRecommendation);
 
 export default router;
