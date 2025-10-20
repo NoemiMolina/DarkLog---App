@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import TVShow from "../models/TVShow.js";
 import { Types } from "mongoose";
+import User from "../models/User.js";
 
 export const getAllTVShows = async (req: Request, res: Response) => {
     try {
@@ -59,36 +60,68 @@ export const getEpisodeByNumber = async (req: Request, res: Response) => {
 };
 
 export const addRatingToEpisode = async (req: Request, res: Response) => {
-    const seasonNumber = Number(req.params.seasonNumber);
-    const episodeNumber = Number(req.params.episodeNumber);
-
     try {
+        const { tvShowId, seasonNumber, episodeNumber } = req.params;
+        const { userId, rating } = req.body;
 
-        if (isNaN(seasonNumber) || isNaN(episodeNumber)) {
+        if (!userId || typeof rating !== "number") {
+            return res.status(400).json({ message: "UserId and numeric rating are required" });
+        }
+
+        const seasonNum = Number(seasonNumber);
+        const episodeNum = Number(episodeNumber);
+
+        if (isNaN(seasonNum) || isNaN(episodeNum)) {
             return res.status(400).json({ message: "Invalid season or episode number" });
         }
-        const { tvShowId } = req.params;
-        const { userId, rating } = req.body;
 
         const tvShow = await TVShow.findById(tvShowId);
         if (!tvShow) return res.status(404).json({ message: "TV show not found" });
 
-        const season = tvShow.seasons.find(s => s.season_number === seasonNumber);
+        const season = tvShow.seasons.find(s => s.season_number === seasonNum);
         if (!season) return res.status(404).json({ message: "Season not found" });
 
-        const episode = season.episodes.find(e => e.episode_number === episodeNumber);
+        const episode = season.episodes.find(e => e.episode_number === episodeNum);
         if (!episode) return res.status(404).json({ message: "Episode not found" });
 
-        const existingRating = episode.ratings.find(r => r.userId?.toString() === userId);
+        const existingRating = episode.ratings.find(
+            r => r.userId?.toString() === userId
+        );
+
         if (existingRating) {
             existingRating.value = rating;
         } else {
             episode.ratings.push({ userId: new Types.ObjectId(userId), value: rating });
         }
 
+        const validRatings = episode.ratings
+            .filter(r => r.userId && typeof r.value === "number")
+            .map(r => r.value as number);
+
+        const episodeAverage = validRatings.reduce((a, b) => a + b, 0) / validRatings.length;
+
+        episode.vote_average = episodeAverage;
+
         await tvShow.save();
-        res.status(200).json({ message: "Rating added", episode });
+
+        const user = await User.findById(userId);
+        if (user) {
+            const allUserRatings = tvShow.seasons
+                .flatMap(s => s.episodes)
+                .flatMap(e => e.ratings)
+                .filter(r => r.userId?.toString() === userId && typeof r.value === "number")
+                .map(r => r.value as number);
+
+            if (allUserRatings.length > 0) {
+                user.AverageTvShowRating = allUserRatings.reduce((a, b) => a + b, 0) / allUserRatings.length;
+                await user.save();
+            }
+        }
+
+        res.status(200).json({ message: "Rating added/updated", episode, episodeAverage });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ message: "Error adding rating", error: err });
     }
 };
+
