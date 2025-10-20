@@ -24,7 +24,8 @@ export const getTVShowById = async (req: Request, res: Response) => {
 
 export const getSeasonByNumber = async (req: Request, res: Response) => {
     try {
-        const { tvShowId, seasonNumber } = req.params;
+        const seasonNumber = Number(req.params.seasonNumber);
+        const { tvShowId } = req.params;
         const tvShow = await TVShow.findById(tvShowId);
         if (!tvShow) return res.status(404).json({ message: "TV show not found" });
 
@@ -39,7 +40,9 @@ export const getSeasonByNumber = async (req: Request, res: Response) => {
 
 export const getEpisodeByNumber = async (req: Request, res: Response) => {
     try {
-        const { tvShowId, seasonNumber, episodeNumber } = req.params;
+        const seasonNumber = Number(req.params.seasonNumber);
+        const episodeNumber = Number(req.params.episodeNumber);
+        const { tvShowId } = req.params;
         const tvShow = await TVShow.findById(tvShowId);
         if (!tvShow) return res.status(404).json({ message: "TV show not found" });
 

@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 import connectDB from "./config/database.js";
 import userRoutes from "./routes/users.js";
 import movieRoutes from "./routes/movies.js";
+import tvShowsRoutes from "./routes/tvShows.js"
 import reaiperRoutes from "./routes/reaiper.js"
-
 
 dotenv.config(); 
 
@@ -17,10 +17,10 @@ app.use(express.json());
 
 connectDB();
 
-
 app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);
 app.use("/reaiper", reaiperRoutes);
+app.use("/tvShows", tvShowsRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend's app is online, gg");
