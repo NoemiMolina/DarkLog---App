@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Movie from "../models/Movie.js";
 import { Types } from "mongoose";
+import TVShow from "../models/TVShow.js";
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
@@ -108,8 +109,8 @@ export const addAMovieToWatchlist = async (req: Request, res: Response) => {
 
         if (!user || !movie) return res.status(404).json({ message: "User or movie not found" });
 
-        if (!user.Watchlist.includes(movie._id as Types.ObjectId)) {
-            user.Watchlist.push(movie._id as Types.ObjectId);
+        if (!user.MovieWatchlist.includes(movie._id as Types.ObjectId)) {
+            user.MovieWatchlist.push(movie._id as Types.ObjectId);
             await user.save();
         }
 
@@ -119,13 +120,32 @@ export const addAMovieToWatchlist = async (req: Request, res: Response) => {
     }
 }
 
+export const addATvShowToWatchlist = async (req: Request, res: Response) => {
+    try {
+        const { userId, tvShowId } = req.params;
+        const user = await User.findById(userId);
+        const tvShow = await TVShow.findById(tvShowId);
+
+        if (!user || !tvShow) return res.status(404).json({ message: "User or tV Show not found" });
+
+        if (!user.TvShowWatchlist.includes(tvShow._id as Types.ObjectId)) {
+            user.TvShowWatchlist.push(tvShow._id as Types.ObjectId);
+            await user.save();
+        }
+
+        res.status(200).json({ message: "TV Show added to your watchlist", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while adding a TV Show to your watchlist", error: err });
+    }
+}
+
 export const deleteAMovieFromWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        user.Watchlist = user.Watchlist.filter(id => id.toString() !== movieId);
+        user.MovieWatchlist = user.MovieWatchlist.filter(id => id.toString() !== movieId);
         await user.save();
 
         res.status(200).json({ message: "Movie deleted from your watchlist", user });
@@ -133,3 +153,19 @@ export const deleteAMovieFromWatchlist = async (req: Request, res: Response) => 
         res.status(500).json({ message: "Error while deleting a movie from your watchlist", error: err });
     }
 }
+
+export const deleteATvShowFromWatchlist = async (req: Request, res: Response) => {
+    try {
+        const { userId, tvShowId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        user.TvShowWatchlist = user.TvShowWatchlist.filter(id => id.toString() !== tvShowId);
+        await user.save();
+
+        res.status(200).json({ message: "TV Show deleted from your watchlist", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while deleting a TV Show from your watchlist", error: err });
+    }
+}
+

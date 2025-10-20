@@ -7,6 +7,9 @@ import movieRoutes from "./routes/movies.js";
 import tvShowsRoutes from "./routes/tvShows.js"
 import reaiperRoutes from "./routes/reaiper.js"
 
+console.log("✅ Server.ts démarre !");
+
+
 dotenv.config(); 
 
 const app = express();
@@ -19,8 +22,8 @@ connectDB();
 
 app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);
-app.use("/reaiper", reaiperRoutes);
 app.use("/tvShows", tvShowsRoutes);
+app.use("/reaiper", reaiperRoutes);
 
 app.get("/", (req, res) => {
   res.send("Backend's app is online, gg");

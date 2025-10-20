@@ -21,7 +21,7 @@ export interface IUser extends Document {
     UserAge: number;
     SignUpDate: Date;
     NumberOfWatchedMovies: number;
-    NumberOfWatchedTVShows: number;
+    NumberOfWatchedTvShows: number;
     NumberOfGivenReviews: number;
     AverageMovieRating: number;
     AverageTvShowRating: number;
