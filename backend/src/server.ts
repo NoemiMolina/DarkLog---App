@@ -7,6 +7,7 @@ import movieRoutes from "./routes/movies.js";
 import tvShowsRoutes from "./routes/tvShows.js"
 import reaiperRoutes from "./routes/reaiper.js"
 import forumRoutes from "./routes/forum.js";
+// import quizRoutes from "./routes/quiz.js";
 
 console.log("✅ Server.ts démarre !");
 
@@ -26,6 +27,7 @@ app.use("/movies", movieRoutes);
 app.use("/tvShows", tvShowsRoutes);
 app.use("/reaiper", reaiperRoutes);
 app.use("/forum", forumRoutes);
+// app.use("/quiz", quizRoutes);
 
 
 app.get("/", (req, res) => {
