@@ -6,6 +6,8 @@ import Movie from "../models/Movie.js";
 import { Types } from "mongoose";
 import TVShow from "../models/TVShow.js";
 
+
+// ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
     try {
         const { UserName, UserPseudo, UserMail, UserPassword, UserLocation, UserAge } = req.body;
@@ -31,6 +33,7 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 };
 
+// ------- LOGIN
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const { UserMail, UserPassword } = req.body;
@@ -48,6 +51,7 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 };
 
+// -------------- USER ADDS A FRIEND
 export const addAFriend = async (req: Request, res: Response) => {
     try {
         const { userId, friendId } = req.params;
@@ -67,6 +71,7 @@ export const addAFriend = async (req: Request, res: Response) => {
     }
 }
 
+// ------------ USER DELETES A FRIEND
 export const deleteAFriend = async (req: Request, res: Response) => {
     try {
         const { userId, friendId } = req.params;
@@ -82,6 +87,7 @@ export const deleteAFriend = async (req: Request, res: Response) => {
     }
 }
 
+// ------------ USER BLOCKS ANOTHER USER
 export const blockAnUser = async (req: Request, res: Response) => {
     try {
         const { userId, blockedUserId } = req.params;
@@ -101,6 +107,7 @@ export const blockAnUser = async (req: Request, res: Response) => {
     }
 }
 
+// --------- USER ADDS A MOVIE TO ITS WATCHLIST
 export const addAMovieToWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
@@ -120,6 +127,7 @@ export const addAMovieToWatchlist = async (req: Request, res: Response) => {
     }
 }
 
+// ------------- USER ADDS A TVSHOW TO ITS WATCHLIST
 export const addATvShowToWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, tvShowId } = req.params;
@@ -139,6 +147,7 @@ export const addATvShowToWatchlist = async (req: Request, res: Response) => {
     }
 }
 
+// ------------- USER DELETES A MOVIE FROM ITS WATCHLIST
 export const deleteAMovieFromWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
@@ -154,6 +163,7 @@ export const deleteAMovieFromWatchlist = async (req: Request, res: Response) => 
     }
 }
 
+// ---------- USER DELETES A TVSHOW FROM ITS WATCHLIST
 export const deleteATvShowFromWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, tvShowId } = req.params;
