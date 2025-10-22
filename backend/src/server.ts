@@ -6,6 +6,7 @@ import userRoutes from "./routes/users.js";
 import movieRoutes from "./routes/movies.js";
 import tvShowsRoutes from "./routes/tvShows.js"
 import reaiperRoutes from "./routes/reaiper.js"
+import forumRoutes from "./routes/forum.js";
 
 console.log("✅ Server.ts démarre !");
 
@@ -24,6 +25,8 @@ app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);
 app.use("/tvShows", tvShowsRoutes);
 app.use("/reaiper", reaiperRoutes);
+app.use("/forum", forumRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Backend's app is online, gg");
