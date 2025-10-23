@@ -1,0 +1,379 @@
+[
+    {
+        "question": "Another masterpiece proving we're not alone in the universe.",
+        "options": [
+            "Alien: Romulus",
+            "Life",
+            "The Thing",
+            "Prometheus"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A very effective beauty routine.",
+        "options": [
+            "The Substance",
+            "American Mary",
+            "Raw",
+            "Neon Demon"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Sometimes it's better to stick to drinking games than try to talk to the dead.",
+        "options": [
+            "Talk to Me",
+            "Ouija",
+            "The Medium",
+            "The Autopsy of Jane Doe"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Long live fitness.",
+        "options": [
+            "The Substance",
+            "American Psycho 2",
+            "May",
+            "Teeth"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "The key is often very hard to reach.",
+        "options": [
+            "Saw",
+            "Cube",
+            "The Platform",
+            "The Collector"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A house is so angry it swallows the family.",
+        "options": [
+            "Poltergeist",
+            "Monster House",
+            "The Amityville Horror",
+            "The Haunting"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A guy discovers he should never have opened a noisy cube.",
+        "options": [
+            "Hellraiser",
+            "Cube",
+            "Event Horizon",
+            "The Lament Configuration"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A traumatized old photograph decides to kill anyone who looks at it.",
+        "options": [
+            "Smile",
+            "Shutter",
+            "The Ring",
+            "Sinister"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A youth party ends in a screaming and disembowelment contest.",
+        "options": [
+            "Scream",
+            "Bodies Bodies Bodies",
+            "House of Wax",
+            "The Strangers"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A great Vespa ride to discover the landscape of Rome and its surroundings.",
+        "options": [
+            "The Nun",
+            "The Pope’s Exorcist",
+            "The Exorcism of Emily Rose",
+            "The Conjuring 2"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Not very talkative but the mask looks nice.",
+        "options": [
+            "Halloween",
+            "Scream",
+            "The Strangers",
+            "The Collector"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A troop of scouts discovers that nature sometimes just wants to devour you.",
+        "options": [
+            "The Ritual",
+            "The Descent",
+            "Backcountry",
+            "Eden Lake"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Whatever you do, don't shake his hand!!!!",
+        "options": [
+            "Talk to Me",
+            "Idle Hands",
+            "Jennifer’s Body",
+            "May"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A camgirl discovers the evil double isn't just a site bug.",
+        "options": [
+            "Cam",
+            "Perfect Blue",
+            "Pulse",
+            "Unfriended"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Teens ruin a couple's romantic weekend.",
+        "options": [
+            "Wrong Turn",
+            "The Texas Chainsaw Massacre",
+            "The Farm",
+            "Eden Lake"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "True love.",
+        "options": [
+            "Together",
+            "Possession",
+            "The Lodge",
+            "Gone Girl"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "He killed the wrong man's wife.",
+        "options": [
+            "I Saw the Devil",
+            "The Autopsy of Jane Doe",
+            "The Wailing",
+            "Sinister"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A documentary segment set in Indonesia.",
+        "options": [
+            "Creep",
+            "V/H/S 2",
+            "REC",
+            "Paranormal Activity"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "An entity that likes mirrors.",
+        "options": [
+            "Oculus",
+            "Mirrors",
+            "Candyman",
+            "The Bye Bye Man"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Being hit on turned out to be a trap.",
+        "options": [
+            "American Psycho",
+            "The Substance",
+            "Hostel",
+            "Saw II"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A security camera becomes more effective than the entire police force.",
+        "options": [
+            "Paranormal Activity",
+            "The Den",
+            "Unfriended",
+            "The Visit"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Old age is not well accepted by this woman...",
+        "options": [
+            "The Neon Demon",
+            "Perfect Blue",
+            "The Substance",
+            "May"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A Scandinavian cult organizes a big festival.",
+        "options": [
+            "Midsommar",
+            "Apostle",
+            "The Ritual",
+            "The Wicker Man"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A mother who wants to kill everyone and ends up in a pulp of flesh.",
+        "options": [
+            "Evil Dead Rise",
+            "Blair Witch",
+            "The Ritual",
+            "The Forest"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A creature comes out of the TV, not for Netflix & Chill.",
+        "options": [
+            "The Ring",
+            "Pulse",
+            "Videodrome",
+            "Smile"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A couple isolates themselves to reconnect, but finds pure madness instead.",
+        "options": [
+            "Possession",
+            "Antichrist",
+            "The Lodge",
+            "Together"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Mannequins kill people. Literally. No metaphor.",
+        "options": [
+            "Tourist Trap",
+            "House of Wax",
+            "May",
+            "Dead Silence"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A man discovers his mother is an influencer for the demon.",
+        "options": [
+            "Hereditary",
+            "The Omen",
+            "The Witch",
+            "The Pope’s Exorcist"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A hidden camera that goes very wrong.",
+        "options": [
+            "Creep",
+            "The Poughkeepsie Tapes",
+            "V/H/S",
+            "Grave Encounters"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    }
+]

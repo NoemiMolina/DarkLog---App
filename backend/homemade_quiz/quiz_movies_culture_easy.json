@@ -1,0 +1,392 @@
+[
+    {
+        "question": "In which film does the evil doll Annabelle appear?",
+        "options": [
+            "The Conjuring",
+            "Annabelle",
+            "Ouija",
+            "Insidious"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which director is behind the 'Scream' saga?",
+        "options": [
+            "John Carpenter",
+            "Wes Craven",
+            "James Wan",
+            "Sam Raimi"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In which film does a giant shark wreak terror?",
+        "options": [
+            "The Meg",
+            "Jaws",
+            "Sharknado",
+            "Deep Blue Sea"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "What is the killer's first name in 'Friday the 13th'?",
+        "options": [
+            "Michael",
+            "Freddy",
+            "Jason",
+            "Leatherface"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Exorcist', the little girl is possessed by:",
+        "options": [
+            "A ghost",
+            "A demon",
+            "A witch",
+            "An alien"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "What is the subtitle of the first 'Conjuring' film?",
+        "options": [
+            "The Warren Files",
+            "The Devil Made Me Do It",
+            "The Origin of Evil",
+            "The Lost Souls"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Who plays the clown Pennywise in 'It' (2017)?",
+        "options": [
+            "Tim Curry",
+            "Bill Skarsgård",
+            "Alexander Skarsgård",
+            "James McAvoy"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In which film does a child say \"I see dead people\"?",
+        "options": [
+            "Poltergeist",
+            "The Sixth Sense",
+            "Insidious",
+            "The Others"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which director is known for the film 'Psycho'?",
+        "options": [
+            "Alfred Hitchcock",
+            "Roman Polanski",
+            "Brian De Palma",
+            "Stanley Kubrick"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Hereditary', which tragedy triggers the family's descent into hell?",
+        "options": [
+            "A fire",
+            "A car accident",
+            "The grandmother's death",
+            "A collective possession"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which film features a killer wearing a white mask and holding a knife?",
+        "options": [
+            "Halloween",
+            "Scream",
+            "Friday the 13th",
+            "House of Wax"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In which film does a young boy befriend a vampire named Eli?",
+        "options": [
+            "Let the Right One In",
+            "Twilight",
+            "30 Days of Night",
+            "Interview with the Vampire"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "What is the first name of the possessed girl in 'The Exorcist'?",
+        "options": [
+            "Emily",
+            "Regan",
+            "Carrie",
+            "Megan"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Who directed 'Get Out'?",
+        "options": [
+            "Jordan Peele",
+            "Ari Aster",
+            "Mike Flanagan",
+            "Robert Eggers"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Hereditary', which symbol recurs often in the film?",
+        "options": [
+            "An inverted cross",
+            "A triangle",
+            "A crown",
+            "A circle with a dot"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which horror film takes place in an isolated hotel during winter?",
+        "options": [
+            "The Shining",
+            "1408",
+            "Identity",
+            "Doctor Sleep"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which animal is associated with the film 'Cujo'?",
+        "options": [
+            "A cat",
+            "A dog",
+            "A rat",
+            "A monkey"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Ring', what happens after watching the tape?",
+        "options": [
+            "You become blind",
+            "You die in 7 days",
+            "You are possessed",
+            "You have a new ring to your finger"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Who is the director of 'The Conjuring' and 'Insidious'?",
+        "options": [
+            "James Wan",
+            "Leigh Whannell",
+            "Mike Flanagan",
+            "The developer of this website"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Saw', what must the victim often do to survive?",
+        "options": [
+            "Ask politely Jigsaw if he can let them go",
+            "Sacrifice someone",
+            "Solve a morbid puzzle",
+            "Kill the killer"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which film features a surveillance camera in a haunted house?",
+        "options": [
+            "REC",
+            "Paranormal Activity",
+            "The Visit",
+            "Grave Encounters"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In which country does 'The Descent' primarily take place?",
+        "options": [
+            "England",
+            "United States",
+            "France",
+            "Scotland"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which horror film features a family encountering their evil doubles?",
+        "options": [
+            "Us",
+            "Them",
+            "It Follows",
+            "Nope"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Blair Witch Project', how is the film shot?",
+        "options": [
+            "Handheld camera",
+            "Long take",
+            "Fixed shot",
+            "Found footage"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "What is the French title of 'Nightmare on Elm Street'?",
+        "options": [
+            "The Claws of the Night",
+            "A Nightmare on Elm Street",
+            "Freddy's Nightmare",
+            "Dreams of Death"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Child's Play' (Chucky), what is the doll's peculiarity?",
+        "options": [
+            "It is a good looking dude",
+            "It is possessed",
+            "It changes shape",
+            "It is remote-controlled"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "What object triggers the curse in 'Hellraiser'?",
+        "options": [
+            "A box",
+            "A mirror",
+            "A book",
+            "A ring"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Which cult horror film features the line \"They're here...\"?",
+        "options": [
+            "Poltergeist",
+            "The Others",
+            "The Ring",
+            "The Visit"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Who directed 'Evil Dead'?",
+        "options": [
+            "Sam Raimi",
+            "Peter Jackson",
+            "Rob Zombie",
+            "George Romero"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Sharknado', the danger comes from:",
+        "options": [
+            "Mutant sharks",
+            "Tornadoes filled with sharks",
+            "Radioactive waves",
+            "Vampire fish"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "easy",
+        "type": "movie"
+    }
+]

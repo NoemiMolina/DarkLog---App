@@ -1,0 +1,379 @@
+[
+    {
+        "question": "Dwight Schrute in a horror movie.",
+        "options": [
+            "House of 1000 Corpses",
+            "Wrong Turn",
+            "The Hills Have Eyes",
+            "Texas Chainsaw Massacre"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Zombies take the train.",
+        "options": [
+            "Train to Busan",
+            "World War Z",
+            "The Sadness",
+            "28 Weeks Later"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A clown party goes wrong.",
+        "options": [
+            "31",
+            "Terrifier",
+            "Clown",
+            "Circus of the Dead"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "From ballet to drinking blood real quick.",
+        "options": [
+            "Abigail",
+            "Suspiria",
+            "The Blackcoat’s Daughter",
+            "Mandy"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "The key to a successful dish is to season it generously.",
+        "options": [
+            "Terrifier 2",
+            "31",
+            "All Hallows’ Eve",
+            "The Funhouse Massacre"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Two hippie psychopaths rediscover the meaning of family.",
+        "options": [
+            "The Devil’s Rejects",
+            "House of 1000 Corpses",
+            "Texas Chainsaw Massacre 2",
+            "Natural Born Killers"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A guy discovers his neighbors might be aliens.",
+        "options": [
+            "Vivarium",
+            "The Stepford Wives",
+            "Coherence",
+            "The Invitation"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A cellar, a train, blood, and an overly passionate photographer.",
+        "options": [
+            "The Midnight Meat Train",
+            "Raw",
+            "Creep",
+            "Maniac"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A punk band is invited to the wrong place.",
+        "options": [
+            "Green Room",
+            "The Devil’s Candy",
+            "Lords of Chaos",
+            "Satanic Panic"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A guy misses his flight and dies 12 times in a row.",
+        "options": [
+            "Final Destination",
+            "Timecrimes",
+            "Happy Death Day",
+            "Triangle"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Vampires discover that winter is convenient for hunting.",
+        "options": [
+            "30 Days of Night",
+            "Let Me In",
+            "Nosferatu",
+            "Fright Night"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A ghost mother clings a little too tightly to her maternal role.",
+        "options": [
+            "Mama",
+            "The Others",
+            "The Babadook",
+            "Mama 2"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A horde of undead in a shopping mall.",
+        "options": [
+            "Zombieland: Double Tap",
+            "Shaun of the Dead",
+            "Dawn of the Dead",
+            "Army of the Dead"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "The award for best husband during a zombie apocalypse goes to...",
+        "options": [
+            "When Evil Lurks",
+            "The Sadness",
+            "Pontypool",
+            "28 Days Later"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "It's hard to say which is worse: the vampire or rabies.",
+        "options": [
+            "Nosferatu",
+            "Dracula",
+            "Shadow of the Vampire",
+            "Salem’s Lot"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "You must escort this young lady to the ball, and everything will be resolved!",
+        "options": [
+            "Wolf Creek",
+            "The Reef",
+            "Killing Ground",
+            "The Loved Ones"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Worse than sales.",
+        "options": [
+            "Black Friday",
+            "The Banana Splits Movie",
+            "Chopping Mall",
+            "Slaxx"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Beware of the monsters under the bed!",
+        "options": [
+            "The Deep House",
+            "The Thing Below",
+            "Terrified",
+            "The Evil Within"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Dream life, dream house, loving couple, then a happy event!",
+        "options": [
+            "Vivarium",
+            "A Quiet Place",
+            "Under the Skin",
+            "Come True"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "What could be better than dancing vampires!",
+        "options": [
+            "Sinners",
+            "The Empty Man",
+            "The Wailing",
+            "The Killing of a Sacred Deer"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Beware of the late-night subway! Stay vigilant.",
+        "options": [
+            "The Midnight Meat Train",
+            "Creep",
+            "Raw",
+            "The Taking of Deborah Logan"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Watch out for trucks carrying logs!",
+        "options": [
+            "Final Destination 2",
+            "Saw II",
+            "Hostel",
+            "1408"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "The instructions for transporting a possessed person are not well followed.",
+        "options": [
+            "The Crazies",
+            "Mayhem",
+            "When Evil Lurks",
+            "Pontypool"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Winter vampires.",
+        "options": [
+            "30 Days of Night",
+            "The Thing",
+            "Let Me In",
+            "The Bay"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "An adoptive mother regrets trusting an overbearing maternal ghost.",
+        "options": [
+            "Mama",
+            "The Others",
+            "The Orphanage",
+            "The Haunting"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A killer dressed as a clown discovers the joy of low-budget slaughter.",
+        "options": [
+            "Terrifier 1",
+            "31",
+            "Killer Klowns from Outer Space",
+            "Clownhouse"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "A quest for Twinkies.",
+        "options": [
+            "Zombieland: Double Tap",
+            "Shaun of the Dead",
+            "Army of the Dead",
+            "Planet Terror"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "People stuck in a supermarket discover the real horror: the customers.",
+        "options": [
+            "Black Friday",
+            "The Mist",
+            "Chopping Mall",
+            "Supermarket Massacre"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Animals and insects are not the scariest things in the Australian outback.",
+        "options": [
+            "Wolf Creek",
+            "Backcountry",
+            "Killing Ground",
+            "Hounds of Love"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "movie"
+    }
+]

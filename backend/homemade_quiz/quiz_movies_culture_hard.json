@@ -1,0 +1,379 @@
+[
+    {
+        "question": "Which director is behind the film 'Dawn of the Dead' (1978)?",
+        "options": [
+            "George A. Romero",
+            "Tobe Hooper",
+            "Lucio Fulci",
+            "John Carpenter"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Blob' (1958), what is the monster's peculiarity?",
+        "options": [
+            "It feeds on humans",
+            "It changes shape",
+            "It multiplies in water",
+            "It can speak"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "'Ghostwatch', broadcast on the BBC in 1992, was:",
+        "options": [
+            "A fake TV documentary",
+            "A theatrical film",
+            "A six-episode series",
+            "A reality TV show"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which Italian horror film features a blind man chased by zombies in a cemetery?",
+        "options": [
+            "The Beyond",
+            "City of the Living Dead",
+            "Zombi 2",
+            "Demons"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which actor plays the hero in 'Shaun of the Dead'?",
+        "options": [
+            "Simon Pegg",
+            "Nick Frost",
+            "Martin Freeman",
+            "Ricky Gervais"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Thing' (1982), where does the main action take place?",
+        "options": [
+            "In Antarctica",
+            "In Alaska",
+            "In Greenland",
+            "In Siberia"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Evil Dead II', what does Ash lose at the beginning of the film?",
+        "options": [
+            "His right hand",
+            "His left eye",
+            "His girlfriend",
+            "His car"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Ghostwatch', what is the name of the ghost?",
+        "options": [
+            "Pipes",
+            "Mr. Hollow",
+            "The Watcher",
+            "Merritt"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which Japanese director made 'Hausu', famous for its delirious visual style?",
+        "options": [
+            "Nobuhiko Obayashi",
+            "Takashi Miike",
+            "Kiyoshi Kurosawa",
+            "Hideo Nakata"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Re-Animator', which substance allows the dead to be reanimated?",
+        "options": [
+            "A fluorescent green serum",
+            "A toxic gas",
+            "Modified blood",
+            "A sound wave"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which 1981 horror film is famous for its revolutionary werewolf transformation?",
+        "options": [
+            "An American Werewolf in London",
+            "The Howling",
+            "Silver Bullet",
+            "Dog Soldiers"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Suspiria' (1977), what does the dance academy hide?",
+        "options": [
+            "A coven of witches",
+            "A satanic cult",
+            "Vampires",
+            "Cannibals"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which 1985 film mixes comedy and gore with brains and punks?",
+        "options": [
+            "Return of the Living Dead",
+            "Evil Dead II",
+            "Braindead",
+            "Night of the Creeps"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In Peter Jackson's 'Braindead', which object becomes a weapon?",
+        "options": [
+            "A lawnmower",
+            "An axe",
+            "A blender",
+            "A hair dryer"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which Canadian horror film explores physical transformation related to puberty?",
+        "options": [
+            "Ginger Snaps",
+            "The Fly",
+            "Rabid",
+            "Pontypool"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "'The Poughkeepsie Tapes' adopts which narrative format?",
+        "options": [
+            "Found footage",
+            "Mockumentary",
+            "Anthology",
+            "Reverse chronological"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which 1973 British horror film takes place on an island dominated by a pagan cult?",
+        "options": [
+            "The Wicker Man",
+            "Don't Look Now",
+            "The Devil Rides Out",
+            "The Blood on Satan's Claw"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Piranha 3D', where does the main carnage occur?",
+        "options": [
+            "A lake during spring break",
+            "The Seine, in Paris",
+            "A seaside resort",
+            "A river in the Amazon"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which 1977 film features carnivorous mutant slugs?",
+        "options": [
+            "Slugs",
+            "Squirm",
+            "The Bay",
+            "Night of the Lepus"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Fly' (1986), which actor plays Seth Brundle?",
+        "options": [
+            "Jeff Goldblum",
+            "Christopher Walken",
+            "Sam Neill",
+            "Michael Ironside"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which horror film introduced the concept of the 'dream demon' before Freddy Krueger?",
+        "options": [
+            "Phantasm",
+            "Dreamscape",
+            "The Entity",
+            "Alone in the Dark"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "'Dead Alive' was released under which other title in some countries?",
+        "options": [
+            "Braindead",
+            "Living Flesh",
+            "Zombie Party",
+            "Blood Feast"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Gate' (1987), how do the children open a demonic portal?",
+        "options": [
+            "By playing a record backwards",
+            "With a ritual found in a book",
+            "By accidentally invoking it",
+            "By breaking a statue"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which Cronenberg film deals with a sexually transmitted infection?",
+        "options": [
+            "Shivers",
+            "Rabid",
+            "The Brood",
+            "Videodrome"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which 1982 horror film shows toys coming to life after a storm?",
+        "options": [
+            "Puppet Master",
+            "Poltergeist",
+            "Trilogy of Terror",
+            "Creepshow"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Day of the Dead', which zombie develops limited intelligence?",
+        "options": [
+            "Bub",
+            "Bob",
+            "Fred",
+            "Bud"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "Which 1988 film satirizes consumer society via infiltrating aliens?",
+        "options": [
+            "They Live",
+            "The Stuff",
+            "Videodrome",
+            "Society"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Society' (1989), what does the protagonist discover about the wealthy of Beverly Hills?",
+        "options": [
+            "They literally merge with each other",
+            "They are immortal",
+            "They eat the poor",
+            "They come from another world"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In Lucio Fulci's 'The Beyond', which door opens?",
+        "options": [
+            "A door to hell",
+            "A temporal rift",
+            "A passage to the dead",
+            "An alien portal"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    }
+]

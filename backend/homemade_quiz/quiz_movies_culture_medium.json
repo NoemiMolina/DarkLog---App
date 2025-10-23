@@ -1,0 +1,379 @@
+[
+    {
+        "question": "Which director is behind the film 'Midsommar'?",
+        "options": [
+            "Ari Aster",
+            "Robert Eggers",
+            "Jordan Peele",
+            "Mike Flanagan"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Witch', around which year does the story take place?",
+        "options": [
+            "1600",
+            "1700",
+            "1800",
+            "1900"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Who plays Maxine in 'MaXXXine'?",
+        "options": [
+            "Mia Goth",
+            "Samara Weaving",
+            "Anya Taylor-Joy",
+            "Florence Pugh"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which Australian film features a mother and her son haunted by a monster from a book?",
+        "options": [
+            "The Babadook",
+            "Lake Mungo",
+            "Relic",
+            "Cargo"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Wailing', what is the country of origin of the film?",
+        "options": [
+            "South Korea",
+            "Japan",
+            "Thailand",
+            "China"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which director created the trilogy 'X', 'Pearl' and 'MaXXXine'?",
+        "options": [
+            "Ti West",
+            "Ari Aster",
+            "Robert Eggers",
+            "Panos Cosmatos"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which Spanish film follows a priest and a journalist investigating a possession filmed live?",
+        "options": [
+            "[REC]",
+            "Verónica",
+            "The Possession of Hannah Grace",
+            "Witching & Bitching"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Autopsy of Jane Doe', what is discovered about the corpse?",
+        "options": [
+            "She is a witch",
+            "She is still alive",
+            "She is a demon",
+            "She is the woman of John Doe"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Who directed 'The Lodge'?",
+        "options": [
+            "Veronika Franz and Severin Fiala",
+            "Mike Flanagan",
+            "Jennifer Kent",
+            "Jordan Peele"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'It Follows', what is the rule to escape the curse?",
+        "options": [
+            "Pass it on to someone else",
+            "Burn the cursed object",
+            "Destroy the house",
+            "Hide for seven days"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which 2007 horror film features a couple attacked in their vacation home?",
+        "options": [
+            "The Strangers",
+            "Them (Ils)",
+            "Funny Games",
+            "The Invitation"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which Dario Argento Italian film takes place in a dance academy?",
+        "options": [
+            "Suspiria",
+            "Phenomena",
+            "Opera",
+            "Inferno"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Invitation' (2015), what does the guest discover at the end?",
+        "options": [
+            "A suicidal cult",
+            "A deadly virus",
+            "A paranormal trap",
+            "A collective illusion"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which director is behind 'The Black Phone'?",
+        "options": [
+            "Scott Derrickson",
+            "James Wan",
+            "Mike Flanagan",
+            "Adam Wingard"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Orphanage', what is Laura searching for?",
+        "options": [
+            "Her missing son",
+            "A former patient",
+            "A vengeful spirit",
+            "A relic"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which creature hides under the house in 'Barbarian'?",
+        "options": [
+            "A mutated woman",
+            "A ghost",
+            "The developer of this website",
+            "An aquatic monster"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Who plays Father Lankester Merrin in 'The Exorcist'?",
+        "options": [
+            "Max von Sydow",
+            "Donald Pleasence",
+            "Christopher Lee",
+            "Peter Cushing"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which 2016 film features a monster symbolizing a mother's grief?",
+        "options": [
+            "The Babadook",
+            "Mama",
+            "The Relic",
+            "Before I Wake"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Conjuring 2', in which town does the story take place?",
+        "options": [
+            "London",
+            "Enfield",
+            "Liverpool",
+            "Manchester"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Apostle', what does the protagonist discover on the island?",
+        "options": [
+            "A pagan deity held captive",
+            "Zombies",
+            "A sect of immortals",
+            "A portal to hell"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which film features a demon manifesting as an entity in a mirror?",
+        "options": [
+            "Oculus",
+            "Candyman",
+            "Mirrors",
+            "The Bye Bye Man"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Hereditary', which word is used as a symbol of invocation?",
+        "options": [
+            "Paimon",
+            "Azazel",
+            "Cheeseburger",
+            "Mammon"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which actress stars in 'The Others'?",
+        "options": [
+            "Nicole Kidman",
+            "Naomi Watts",
+            "Charlize Theron",
+            "Gillian Anderson"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Mist', what do the scientists unleash?",
+        "options": [
+            "Creatures from another dimension",
+            "A virus",
+            "Spirits",
+            "Clones"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which director made 'Possession' (1981)?",
+        "options": [
+            "Andrzej Żuławski",
+            "Roman Polanski",
+            "David Cronenberg",
+            "Lars von Trier"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In Karyn Kusama's 'The Invitation', what is the central theme?",
+        "options": [
+            "Grief and cult manipulation",
+            "Demonic possession",
+            "Cannibalism",
+            "Time loops"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which Panos Cosmatos film stars Nicolas Cage in a quest for vengeance?",
+        "options": [
+            "Mandy",
+            "Pig",
+            "Color Out of Space",
+            "Mom and Dad"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Ritual', which monster haunts the Swedish forest?",
+        "options": [
+            "A Nordic entity",
+            "A killer",
+            "A corrupted god",
+            "A witch"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "Which 2022 Danish horror film tells the story of a dinner that turns into a nightmare?",
+        "options": [
+            "Speak No Evil",
+            "The Feast",
+            "The Menu",
+            "Raw"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    }
+]
