@@ -1,0 +1,379 @@
+[
+    {
+        "question": "In 'Audition' (1999), what does Asami keep in the sack in her apartment?",
+        "options": [
+            "A corpse",
+            "A pet",
+            "Her ex-boyfriend",
+            "A mutilated man"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Possession' (1981), who directed this surreal horror film set in Berlin?",
+        "options": [
+            "Andrzej Żuławski",
+            "David Lynch",
+            "Lars von Trier",
+            "Roman Polanski"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Martyrs' (2008), what is the goal of the cult experimenting on women?",
+        "options": [
+            "To create immortality",
+            "To summon a demon",
+            "To witness the afterlife",
+            "To finally have a job"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'House' (Hausu, 1977), who does the house devour?",
+        "options": [
+            "A group of schoolgirls",
+            "A family",
+            "A couple",
+            "Tourists"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Antichrist' (2009), what body part does the woman mutilate?",
+        "options": [
+            "Her eyes",
+            "Her tongue",
+            "Her genitals",
+            "Her hands"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Wicker Man' (1973), what is burned at the film’s climax?",
+        "options": [
+            "A human inside a giant effigy",
+            "A church",
+            "A house",
+            "A ship"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Hour of the Wolf' (1968), who directed this Swedish psychological horror?",
+        "options": [
+            "The developer of this website",
+            "Fritz Lang",
+            "Ingmar Bergman",
+            "Rainer Werner Fassbinder"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Noroi: The Curse' (2005), what format is the film presented in?",
+        "options": [
+            "Mockumentary",
+            "Found footage",
+            "Anthology",
+            "POV short stories"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Begotten' (1990), what is notable about its visual style?",
+        "options": [
+            "It uses inverted colors",
+            "It is shot in reverse",
+            "It is animated",
+            "It is entirely black and white and silent"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Lake Mungo' (2008), what supernatural phenomenon haunts the family?",
+        "options": [
+            "Poltergeists",
+            "Their daughter's ghost",
+            "A cursed lake",
+            "A shapeshifter"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Come and See' (1985), why is the film often classified as horror despite being a war movie?",
+        "options": [
+            "Supernatural elements",
+            "Its depiction of human cruelty",
+            "Mutant soldiers",
+            "Psychological hallucinations"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Vanishing' (1988, Dutch version), what happens to the protagonist at the end?",
+        "options": [
+            "He escapes",
+            "He kills the kidnapper",
+            "He is buried alive",
+            "He finds the missing woman"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Trouble Every Day' (2001), what drives the characters’ violent acts?",
+        "options": [
+            "Demonic possession",
+            "A parasite",
+            "A psychosis",
+            "A sexual cannibalistic urge"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Perfect Blue' (1997), what is Mima's profession before she becomes an actress?",
+        "options": [
+            "Waitress",
+            "Pop idol",
+            "Model",
+            "Fullstack web developer"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The House That Jack Built' (2018), what profession does Jack pretend to have?",
+        "options": [
+            "Engineer",
+            "Architect",
+            "Doctor",
+            "Writer"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Santa Sangre' (1989), who directed this surreal horror masterpiece?",
+        "options": [
+            "Guillermo del Toro",
+            "Alejandro Jodorowsky",
+            "Gaspar Noé",
+            "Federico Fellini"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Devils' (1971), what historical event inspired the film?",
+        "options": [
+            "The Salem witch trials",
+            "The Inquisition",
+            "The Loudun possessions",
+            "The French Revolution"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Reflecting Skin' (1990), what do the villagers believe the woman next door is?",
+        "options": [
+            "A very gorgeous lady",
+            "A murderer",
+            "A ghost",
+            "A vampire"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Pulse' (Kairo, 2001), how do the ghosts invade the world?",
+        "options": [
+            "Through dreams",
+            "Through electricity",
+            "Through mirrors",
+            "Through the internet"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Maniac' (1980), what is Frank Zito obsessed with collecting?",
+        "options": [
+            "Photographs",
+            "Mannequins",
+            "Scalps",
+            "Dolls"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Beyond' (1981), what is located in the basement of the hotel?",
+        "options": [
+            "A graveyard",
+            "A hidden laboratory",
+            "A gateway to Hell",
+            "A very nice gaming setup"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Tenant' (1976), what paranoia consumes the main character?",
+        "options": [
+            "He thinks he’s being poisoned",
+            "He’s haunted by his past",
+            "He’s trapped in a time loop",
+            "He believes he's becoming the previous tenant"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Kill List' (2011), what do the assassins discover about their employers?",
+        "options": [
+            "They are part of a satanic cult",
+            "They are government agents",
+            "They are undead",
+            "They are their victims’ families"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Night Comes for Us' (2018), what subgenre of horror is blended with the story?",
+        "options": [
+            "Supernatural thriller",
+            "Body horror",
+            "Extreme gore and martial arts",
+            "Found footage"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Under the Skin' (2013), who plays the alien predator?",
+        "options": [
+            "Scarlett Johansson",
+            "Tilda Swinton",
+            "Charlize Theron",
+            "Natalie Portman"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Eyes of My Mother' (2016), where is the film set?",
+        "options": [
+            "In a city hospital",
+            "In a monastery",
+            "In an isolated farmhouse",
+            "In a seaside town"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'House of the Devil' (2009), during what decade is the film set?",
+        "options": [
+            "1970s",
+            "1980s",
+            "1960s",
+            "1990s"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Void' (2016), what do the cultists worship?",
+        "options": [
+            "A Lovecraftian entity",
+            "A vampire god",
+            "An alien overlord",
+            "The code of this website"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Titane' (2021), what unusual event happens to Alexia?",
+        "options": [
+            "She fuses with metal",
+            "She kills her parents",
+            "She turns invisible",
+            "She becomes pregnant with a car's child"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "hard",
+        "type": "movie"
+    }
+]

@@ -1,0 +1,235 @@
+[
+  {
+    "question": "In 'Channel Zero: Candle Cove', what do children see on their TVs?",
+    "options": [ "A static message", "A demonic clown", "A creepy puppet show", "A pirate cartoon"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Marianne', what is Marianne?",
+    "options": [ "A ghost", "A witch", "A demon", "A vampire"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Terror' (2018), where does the crew get trapped?",
+    "options": ["In the Arctic ice", "In a haunted forest", "On a ghost ship", "In the Antarctic base"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Hemlock Grove', what type of creature is Roman Godfrey?",
+    "options": [ "Werewolf", "Witch", "Upir (vampire)", "Ghoul"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Outsider', which author wrote the novel the TV Show is based on?",
+    "options": ["Stephen King", "Dean Koontz", "Clive Barker", "Peter Straub"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Midnight Mass', what is the 'miracle' on Crockett Island actually caused by?",
+    "options": [ "A demon", "A vampire", "An angel", "A plague"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Lovecraft Country', who is the main protagonist?",
+    "options": ["George Freeman", "Montrose Turner", "Atticus Freeman", "William Braithwhite"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Hannibal', what artist does Hannibal admire and mimic?",
+    "options": [ "Francis Bacon", "Hieronymus Bosch", "Caravaggio", "William Blake"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Slasher', how are the murders connected each season?",
+    "options": ["By a masked killer with a new motive", "By the same family", "By one location", "By supernatural forces"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Stand' (2020), what wipes out most of humanity?",
+    "options": ["A deadly virus", "Nuclear war", "A meteor", "A famine"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Kingdom' (2019), what causes the plague in Joseon-era Korea?",
+    "options": [ "A demonic curse", "Contaminated food", "A witch’s spell", "A resurrection plant"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Creepshow', how are the stories presented?",
+    "options": ["As comic book tales", "Through news reports", "As diary entries", "As found footage"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Purge' TV Show, what event do the stories center around?",
+    "options": [ "A zombie outbreak", "A civil war", "The annual Purge night", "A mass haunting"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Servant', what is strange about the couple’s baby?",
+    "options": ["It doesn’t age", "It can speak", "It’s invisible", "It’s a doll"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Evil', what are the main characters investigating?",
+    "options": [ "Ghost sightings", "Murders", "Alien abductions", "Possible demonic possessions"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Harper’s Island', what happens at the wedding celebration?",
+    "options": [ "A ghost crashes the event", "The island floods", "Guests are murdered one by one","The bride disappears"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Dexter: New Blood', what town does Dexter live in?",
+    "options": [ "Miami", "Coldwater", "Iron Lake", "Silver Springs"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Les Revenants' (The Returned), what happens to the dead?",
+    "options": [ "They return as ghosts", "They possess others","They come back to life normally", "They only appear in dreams"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Archive 81', what format reveals the horrors of the past?",
+    "options": ["Audio recordings", "Videotapes",  "Photographs", "Letters"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Yellowjackets', what event isolates the team?",
+    "options": [ "A storm", "A plane crash","A kidnapping", "An avalanche"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Exorcist' TV Show, who are Father Tomas and Father Marcus?",
+    "options": [ "Detectives", "Priests performing exorcisms", "Brothers", "Psychiatrists"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Parasyte: The Maxim', what invades the human body?",
+    "options": ["Alien parasites", "Demons", "Ghosts", "Mutant viruses"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Black Mirror: Playtest', what kind of game does Cooper test?",
+    "options": ["A virtual puzzle", "A haunted house sim","An augmented reality horror game",  "A military simulator"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Passage', what experiment leads to disaster?",
+    "options": [ "A cloning project", "A vampire virus", "A teleportation test", "A military AI"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Ratched', where does Nurse Ratched work?",
+    "options": ["A prison", "A psychiatric hospital",  "A military base", "A clinic for children"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Order', what two secret groups are at war?",
+    "options": 
+    [ "Demons and angels", "Vampires and hunters", "Witches and priests", "Werewolves and magicians"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Strain', what is the cause of the epidemic?",
+    "options": ["Ancient vampires", "Zombies", "Parasites", "Bioweapons"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'From', what traps the townspeople?",
+    "options": ["They can’t leave the town limits", "They lose their memories", "A demon controls them", "It’s always night"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Constantine', what is John Constantine’s main ability?",
+    "options": ["He can see demons and exorcise them", "He can travel through time", "He can possess others", "He can control fire"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "medium",
+    "type": "TVShow"
+  }
+]

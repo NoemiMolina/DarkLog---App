@@ -21,7 +21,7 @@ const QuizQuestionSchema = new Schema(
     correctIndex: { type: Number, required: true },
     category: { type: String, enum: ["culture", "dumb_description", "titleless_poster"], default: "culture" }, // check later for dumb description in case they say it's too vulgar...
     difficulty: { type: String, enum: ["easy", "medium", "hard"], default: "medium" },
-    type: { type: String, enum: ["movie", "tv"], default: "movie" },
+    type: { type: String, enum: ["movie", "TVShow"], default: "movie" },
     imageUrl: { type: String },
     source: { type: String, default: "manual" }
   },

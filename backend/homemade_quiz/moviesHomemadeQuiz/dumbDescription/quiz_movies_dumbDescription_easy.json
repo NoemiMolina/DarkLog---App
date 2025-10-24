@@ -2,9 +2,204 @@
     {
         "question": "A couple goes on vacation to the Nordic countries — at least the flowers are pretty",
         "options": [
-            "Evil Dead",
             "The Witch",
-            "Midsommar",
+            "Evil Dead",
+            "The Forest",
+            "Midsommar"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "The cliché of the family that buys a haunted house.",
+        "options": [
+            "Insidious",
+            "Sinister",
+            "Amityville",
+            "The Conjuring"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A guy takes a nap for decades, then wants to kill babysitters.",
+        "options": [
+            "A Nightmare on Elm Street",
+            "Halloween",
+            "Psycho",
+            "Friday the 13th"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A kid plays hide-and-seek with a demon he didn't invite.",
+        "options": [
+            "The Babadook",
+            "Mama",
+            "Insidious",
+            "The Omen"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A family thinks the noises in their attic are normal (they're not).",
+        "options": [
+            "Hereditary",
+            "The Conjuring",
+            "The Others",
+            "Poltergeist"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "...All because of a nut allergy.",
+        "options": [
+            "Carrie",
+            "The Nun",
+            "Constantine",
+            "Hereditary"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Students have a great idea: go into a haunted forest for a film project.",
+        "options": [
+            "Paranormal Activity",
+            "REC",
+            "The Blair Witch Project",
+            "Grave Encounters"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A rude killer doll",
+        "options": [
+            "Annabelle",
+            "Chucky",
+            "M3GAN",
+            "Puppet Master"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A disturbed man creates painful puzzles to solve.",
+        "options": [
+            "Cube",
+            "Escape Room",
+            "Hostel",
+            "Saw"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A disguised man lives in the sewers and lures children.",
+        "options": [
+            "Terrifier",
+            "Pennywise Returns",
+            "It",
+            "Clown"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A bullying incident involving pig's blood.",
+        "options": [
+            "Psycho",
+            "Piggy",
+            "Texas Chainsaw Massacre",
+            "Carrie"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A TV so cursed it kills people who watch it.",
+        "options": [
+            "Pulse",
+            "Unfriended",
+            "The Ring",
+            "The Grudge"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A guy falls asleep and kills teens in their dreams.",
+        "options": [
+            "Sinister",
+            "A Nightmare on Elm Street",
+            "Dreamscape",
+            "Candyman"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A girl has powers but her mom isn't very tolerant.",
+        "options": [
+            "Matilda",
+            "The Craft",
+            "Carrie",
+            "Firestarter"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "A guy changes his face to survive.",
+        "options": [
+            "The Crazies",
+            "Wrong Turn",
+            "The Hills Have Eyes",
+            "Texas Chainsaw Massacre"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "easy",
+        "type": "movie"
+    },
+    {
+        "question": "Friends go camping but one forgot to check the weather... and the cemetery.",
+        "options": [
+            "Cabin Fever",
+            "The Ritual",
+            "Evil Dead",
             "The Forest"
         ],
         "correctIndex": 2,
@@ -13,209 +208,14 @@
         "type": "movie"
     },
     {
-        "question": "The cliché of the family that buys a haunted house.",
-        "options": [
-            "Amityville",
-            "The Conjuring",
-            "Insidious",
-            "Sinister"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A guy takes a nap for decades, then wants to kill babysitters.",
-        "options": [
-            "Halloween",
-            "Friday the 13th",
-            "A Nightmare on Elm Street",
-            "Psycho"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A kid plays hide-and-seek with a demon he didn't invite.",
-        "options": [
-            "Insidious",
-            "The Babadook",
-            "The Omen",
-            "Mama"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A family thinks the noises in their attic are normal (they're not).",
-        "options": [
-            "The Conjuring",
-            "Hereditary",
-            "Poltergeist",
-            "The Others"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "...All because of a nut allergy.",
-        "options": [
-            "Hereditary",
-            "Carrie",
-            "The Nun",
-            "Constantine"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "Students have a great idea: go into a haunted forest for a film project.",
-        "options": [
-            "The Blair Witch Project",
-            "Paranormal Activity",
-            "Grave Encounters",
-            "REC"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A rude killer doll",
-        "options": [
-            "Chucky",
-            "Annabelle",
-            "M3GAN",
-            "Puppet Master"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A disturbed man creates painful puzzles to solve.",
-        "options": [
-            "Saw",
-            "Cube",
-            "Escape Room",
-            "Hostel"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A disguised man lives in the sewers and lures children.",
-        "options": [
-            "It",
-            "Terrifier",
-            "Clown",
-            "Pennywise Returns"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A bullying incident involving pig's blood.",
-        "options": [
-            "Piggy",
-            "Carrie",
-            "Texas Chainsaw Massacre",
-            "Psycho"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A TV so cursed it kills people who watch it.",
-        "options": [
-            "The Ring",
-            "Pulse",
-            "The Grudge",
-            "Unfriended"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A guy falls asleep and kills teens in their dreams.",
-        "options": [
-            "A Nightmare on Elm Street",
-            "Sinister",
-            "Dreamscape",
-            "Candyman"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A girl has powers but her mom isn't very tolerant.",
-        "options": [
-            "Carrie",
-            "Matilda",
-            "The Craft",
-            "Firestarter"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "A guy changes his face to survive.",
-        "options": [
-            "Texas Chainsaw Massacre",
-            "The Crazies",
-            "Wrong Turn",
-            "The Hills Have Eyes"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "Friends go camping but one forgot to check the weather... and the cemetery.",
-        "options": [
-            "Evil Dead",
-            "Cabin Fever",
-            "The Ritual",
-            "The Forest"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
         "question": "A kid becomes buddies with a demon because he's bored.",
         "options": [
-            "The Omen",
             "Hereditary",
+            "The Omen",
             "Insidious",
             "The Possession"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "category": "dumb_description",
         "difficulty": "easy",
         "type": "movie"
@@ -223,12 +223,12 @@
     {
         "question": "Friends just want to party, end up as human sandwiches.",
         "options": [
-            "Hostel",
             "The Human Centipede",
+            "Hostel",
             "Cabin Fever",
             "Wrong Turn"
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "easy",
         "type": "movie"
@@ -236,12 +236,12 @@
     {
         "question": "A woman wants to do plastic surgery in eastern Europe...",
         "options": [
-            "Yummy",
             "Sharknado",
             "The Meg",
+            "Yummy",
             "47 Meters Down"
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "category": "dumb_description",
         "difficulty": "easy",
         "type": "movie"
@@ -249,12 +249,12 @@
     {
         "question": "People take a photo and die.",
         "options": [
-            "Shutter",
             "Smile",
+            "Shutter",
             "The Grudge",
             "Pulse"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "category": "dumb_description",
         "difficulty": "easy",
         "type": "movie"

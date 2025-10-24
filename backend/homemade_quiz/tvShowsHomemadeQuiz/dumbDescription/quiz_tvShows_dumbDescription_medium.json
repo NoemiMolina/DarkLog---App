@@ -1,0 +1,379 @@
+[
+    {
+        "question": "A man tries to stop a vampire apocalypse using a very bad plan from the Vatican.",
+        "options": [
+            "Midnight Mass",
+            "30 Coins",
+            "The Strain",
+            "The Passage"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A group of scientists in the Arctic learn the hard way that isolation sucks.",
+        "options": [
+            "Helix",
+            "The Thing",
+            "Fortitude",
+            "The Terror"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A cruise ship full of rich people becomes a floating therapy session for trauma and ghosts.",
+        "options": [
+            "1899",
+            "The Terror",
+            "Dead Calm",
+            "Manifest"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "An ancient curse meets small-town gossip and somehow becomes French horror gold.",
+        "options": [
+            "Marianne",
+            "The Returned",
+            "Les Revenants",
+            "Beyond the Walls"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A mother’s death inspires a daughter to do dumb things with videotapes and demons.",
+        "options": [
+            "Archive 81",
+            "Channel Zero",
+            "The Outsider",
+            "Ratched"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A mysterious fog gives everyone trust issues and zero visibility.",
+        "options": [
+            "The Mist",
+            "From",
+            "The Fog",
+            "The Watcher"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "When your dead wife comes back but she’s kinda... off.",
+        "options": [
+            "Glitch",
+            "Resurrection",
+            "The Returned",
+            "Ghosts"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "Everyone on this island should have just stayed home.",
+        "options": [
+            "The Third Day",
+            "Harper’s Island",
+            "The Wicker Man",
+            "Lost"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A therapist decides the best way to understand a serial killer is to get kidnapped by him.",
+        "options": [
+            "The Patient",
+            "Dexter",
+            "Mindhunter",
+            "Hannibal"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A detective solves crimes while secretly being the monster everyone’s afraid of.",
+        "options": [
+            "Dexter",
+            "Hannibal",
+            "Bates Motel",
+            "Evil"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "Someone thought turning a cursed video into a streaming show was a good idea.",
+        "options": [
+            "The Ring: The Series",
+            "Re/Member",
+            "The Enfield Haunting",
+            "The Grudge"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A man finds out the apocalypse has better storytelling than his marriage.",
+        "options": [
+            "The Last of Us",
+            "Station Eleven",
+            "The Stand",
+            "Black Summer"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A dead girl starts haunting everyone through Zoom calls and bad Wi-Fi.",
+        "options": [
+            "Red Rose",
+            "The Feed",
+            "Channel Zero",
+            "Ghosts"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "Witches, ghosts, and way too many candles for one season.",
+        "options": [
+            "A Discovery of Witches",
+            "The Witcher",
+            "The Order",
+            "Cursed"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A small town slowly realizes their preacher might be a vampire.",
+        "options": [
+            "Midnight Mass",
+            "The Outsider",
+            "30 Coins",
+            "The Passage"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A guy records scary tapes for work and regrets having a job.",
+        "options": [
+            "Archive 81",
+            "Creepshow",
+            "Evil",
+            "Slasher"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "Everyone thinks it’s a haunted house, but it’s actually bad parenting.",
+        "options": [
+            "Hill House",
+            "Bly Manor",
+            "The Watcher",
+            "Locke & Key"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "Monsters, swords, and the world’s angriest man in a bathtub.",
+        "options": [
+            "Game of Thrones",
+            "The Witcher",
+            "Shadow and Bone",
+            "Cursed"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A cult meets a small town, and things go about as well as you'd expect.",
+        "options": [
+            "The Devil’s Hour",
+            "The Third Day",
+            "Wayward Pines",
+            "Hellbound"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A nun and a ghost try to out-creep each other in Romania.",
+        "options": [
+            "The Nun",
+            "The Haunting of Bly Manor",
+            "The Exorcist",
+            "The Enfield Haunting"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A family moves into a new house and immediately regrets capitalism.",
+        "options": [
+            "The Watcher",
+            "The Haunting of Hill House",
+            "Servant",
+            "Bates Motel"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "Someone turned therapy and demons into the same job description.",
+        "options": [
+            "Evil",
+            "Constantine",
+            "Hannibal",
+            "Ratched"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A haunted videotape, but now everyone has Netflix.",
+        "options": [
+            "The Grudge",
+            "The Ring",
+            "Dead Set",
+            "Red Rose"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A woman investigates her dead husband and finds... a demon. Typical.",
+        "options": [
+            "The Outsider",
+            "Servant",
+            "Ratched",
+            "Hellbound"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "Kids get trapped in a mysterious fog and no one calls an Uber.",
+        "options": [
+            "The Mist",
+            "From",
+            "Dark",
+            "1899"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A town can’t leave and everyone’s acting like it’s fine.",
+        "options": [
+            "From",
+            "Wayward Pines",
+            "Dark",
+            "The Stand"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A bunch of people live forever and immediately regret it.",
+        "options": [
+            "Forever",
+            "The Passage",
+            "Dracula",
+            "Interview with the Vampire"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "A man kills for art and somehow makes it look classy.",
+        "options": [
+            "Hannibal",
+            "Dexter",
+            "Bates Motel",
+            "Slasher"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    },
+    {
+        "question": "An evil entity haunts a video game; gamers still play anyway.",
+        "options": [
+            "Dead Pixels",
+            "Channel Zero",
+            "Black Mirror",
+            "The Feed"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "TVShow"
+    }
+]

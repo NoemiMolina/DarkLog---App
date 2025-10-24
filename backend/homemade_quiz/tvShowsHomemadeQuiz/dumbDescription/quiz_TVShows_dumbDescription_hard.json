@@ -1,0 +1,392 @@
+[
+    {
+        "question": "A small town’s biggest mystery is how everyone still has power despite all the time travel.",
+        "options": [
+            "Dark",
+            "1899",
+            "From",
+            "Wayward Pines"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "An angel, a demon, and a midlife crisis walk into the apocalypse.",
+        "options": [
+            "Good Omens",
+            "The Leftovers",
+            "American Gods",
+            "Constantine"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A cursed bus takes you to random nightmares with no refund policy.",
+        "options": [
+            "Bloodride",
+            "Channel Zero",
+            "Tales from the Loop",
+            "Inside No. 9"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A priest plays detective, but his main suspect is literally the devil.",
+        "options": [
+            "The Exorcist",
+            "The Devil’s Hour",
+            "Constantine",
+            "Evil"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A haunted hospital proves that Danish TV can be just as cursed as the patients.",
+        "options": [
+            "The Kingdom",
+            "Riget",
+            "The Knick",
+            "The Strain"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "This Japanese town has more spirals than plot explanations.",
+        "options": [
+            "Uzumaki",
+            "Higurashi When They Cry",
+            "Another",
+            "Erased"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A cheerful murder cult meets real estate hell in Sweden.",
+        "options": [
+            "Midsommar: The Series",
+            "Midnight Sun",
+            "Jordskott",
+            "Taboo"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A serial killer, a psychologist, and way too much food porn.",
+        "options": [
+            "Hannibal",
+            "Dexter",
+            "Ratched",
+            "Bates Motel"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A paranormal investigator films cursed stories and forgets to leave.",
+        "options": [
+            "Channel Zero",
+            "Marianne",
+            "The Terror",
+            "Archive 81"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "Two guys and a pie shop make serial killing look oddly artisanal.",
+        "options": [
+            "Sweeney Todd: The Series",
+            "Bates Motel",
+            "Dexter",
+            "Hannibal"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A man discovers that hell is just a never-ending group therapy in Twin Peaks.",
+        "options": [
+            "Twin Peaks: The Return",
+            "Legion",
+            "The Leftovers",
+            "The X-Files"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "Ghosts, trauma, and more monologues than your average therapy session.",
+        "options": [
+            "The Fall of the House of Usher",
+            "The Haunting of Hill House",
+            "Bly Manor",
+            "Midnight Mass"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A viral video makes everyone suicidal, and YouTube still won’t delete it.",
+        "options": [
+            "The Signal",
+            "Dead Set",
+            "Channel Zero",
+            "Requiem"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A priest and a scientist try to prove God exists but mostly just make things worse.",
+        "options": [
+            "Evil",
+            "Constantine",
+            "The Outsider",
+            "The Exorcist"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A detective realizes his best lead is probably a demon with Wi-Fi.",
+        "options": [
+            "The Outsider",
+            "Hellbound",
+            "The Devil’s Hour",
+            "Ratched"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "When you die in this universe, you just respawn more depressed.",
+        "options": [
+            "The OA",
+            "Dark",
+            "The Returned",
+            "Les Revenants"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A man records ghosts for a podcast and ends up part of their playlist.",
+        "options": [
+            "The Magnus Archives",
+            "The Black Tapes",
+            "Archive 81",
+            "Ghostwatch"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A town’s people vanish and come back like nothing happened. Except everything did.",
+        "options": [
+            "The Leftovers",
+            "The Returned",
+            "Glitch",
+            "Manifest"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "In this animated nightmare, paranoia is contagious and fashionably weird.",
+        "options": [
+            "Paranoia Agent",
+            "Serial Experiments Lain",
+            "Perfect Blue",
+            "Texhnolyze"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A tech bro invents eternal life and instantly regrets it.",
+        "options": [
+            "Altered Carbon",
+            "Black Mirror",
+            "The Feed",
+            "The Peripheral"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A woman moves into a house where reality clearly skipped the tutorial.",
+        "options": [
+            "Beyond the Walls",
+            "The Watcher",
+            "Servant",
+            "Hellbound"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A small Norwegian town gets haunted by its own weather forecast.",
+        "options": [
+            "Ragnarok",
+            "Fortitude",
+            "Katla",
+            "Beau Séjour"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A demon possession story, but make it an anxiety metaphor with subtitles.",
+        "options": [
+            "Hellbound",
+            "Marianne",
+            "Requiem",
+            "Ghoul"
+        ],
+        "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A dinner party turns into a murder cult and no one leaves a Yelp review.",
+        "options": [
+            "The Invitation",
+            "The Third Day",
+            "The Servant",
+            "The Resort"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A detective literally investigates hell, and HR is nowhere to be found.",
+        "options": [
+            "The Devil’s Hour",
+            "Constantine",
+            "Evil",
+            "Hellbound"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A creepy puppet show that somehow became peak nightmare fuel.",
+        "options": [
+            "Channel Zero: Candle Cove",
+            "Marble Hornets",
+            "Don’t Hug Me I’m Scared",
+            "Inside No. 9"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A man keeps building houses to trap ghosts and then wonders why he's sad.",
+        "options": [
+            "The Haunting of Hill House",
+            "The Fall of the House of Usher",
+            "Hill House",
+            "Bly Manor"
+        ],
+        "correctIndex": 1,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A French village finds out resurrection isn’t as romantic as it sounds.",
+        "options": [
+            "Les Revenants",
+            "Marianne",
+            "Requiem",
+            "Beyond the Walls"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A Satanic cult tries to open a portal and ends up summoning their exes instead.",
+        "options": [
+            "The OA",
+            "Constantine",
+            "The Order",
+            "Chilling Adventures of Sabrina"
+        ],
+        "correctIndex": 2,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    },
+    {
+        "question": "A guy documents his descent into madness, but make it found footage and stressful.",
+        "options": [
+            "Marble Hornets",
+            "The Blair Witch Files",
+            "The Feed",
+            "Archive 81"
+        ],
+        "correctIndex": 0,
+        "category": "dumb_description",
+        "difficulty": "hard",
+        "type": "TVShow"
+    }
+]

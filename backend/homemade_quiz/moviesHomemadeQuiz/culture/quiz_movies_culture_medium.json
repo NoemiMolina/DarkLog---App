@@ -1,0 +1,392 @@
+[
+    {
+        "question": "In 'Hereditary' (2018), what miniature hobby does Annie do?",
+        "options": [
+            "Painting",
+            "Miniature sculpting",
+            "Sewing",
+            "Photography"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Others' (2001), who are the real ghosts in the story?",
+        "options": [
+            "The servants",
+            "The children",
+            "The family",
+            "The dog of the developer of this website"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Shining' (1980), what is the name of the hotel?",
+        "options": [
+            "Outlook Hotel",
+            "Stanley Hotel",
+            "Overlook Hotel",
+            "Grady Hotel"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Saw' (2004), what is the killer’s real name?",
+        "options": [
+            "John Kramer",
+            "Mark Hoffman",
+            "Adam Faulkner",
+            "Mishka, the dog of the developer of this website"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Descent' (2005), where do the creatures live?",
+        "options": [
+            "In forests",
+            "In caves",
+            "In sewers",
+            "In their own cosy beds"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Sixth Sense' (1999), what can the boy see?",
+        "options": [
+            "Ghosts",
+            "Demons",
+            "Visions of the future",
+            "The developer of this website having a job"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Carrie' (1976), what supernatural power does Carrie have?",
+        "options": [
+            "Invisibility",
+            "Mind reading",
+            "Shape-shifting",
+            "Telekinesis"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Fly' (1986), what causes Seth Brundle’s mutation?",
+        "options": [
+            "A teleportation experiment",
+            "A chemical explosion",
+            "Radiation",
+            "A bite"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Mist' (2007), what hides inside the fog?",
+        "options": [
+            "Ghosts",
+            "Aliens",
+            "The cat of the developer of this website",
+            "Monsters"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Grudge' (2004), where does the curse originate?",
+        "options": [
+            "In a house",
+            "In a hospital",
+            "In a school",
+            "In a cemetery"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Omen' (1976), what is the name of the Antichrist child?",
+        "options": [
+            "Damien",
+            "David",
+            "Gabriel",
+            "Lucian"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Insidious' (2010), what is 'The Further'?",
+        "options": [
+            "A time loop",
+            "A realm of spirits",
+            "A cursed house",
+            "A demon’s lair"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Poltergeist' (1982), what phrase does the little girl say?",
+        "options": [
+            "It’s coming!",
+            "Run away!",
+            "They're here!",
+            "It’s behind you!"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Thing' (1982), where does the story take place?",
+        "options": [
+            "Antarctica",
+            "Alaska",
+            "Siberia",
+            "Greenland"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Candyman' (1992), how many times must you say his name to summon him?",
+        "options": [
+            "Five",
+            "Three",
+            "Seven",
+            "Nine"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Witch' (2015), what animal is associated with the devil?",
+        "options": [
+            "A crow",
+            "A goat",
+            "A wolf",
+            "A snake"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Train to Busan' (2016), where are the passengers traveling to?",
+        "options": [
+            "Seoul",
+            "Daegu",
+            "Busan",
+            "Incheon"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Ring' (1998, Japan), what is the girl's name from the cursed tape?",
+        "options": [
+            "Sadako",
+            "Kayako",
+            "Asami",
+            "Yuko"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Autopsy of Jane Doe' (2016), what secret does the corpse hide?",
+        "options": [
+            "She was an alien",
+            "She was immortal",
+            "She was just too tired",
+            "She was a witch"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Crimson Peak' (2015), what color dominates the mansion?",
+        "options": [
+            "Red",
+            "White",
+            "Black",
+            "Gold"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Mama' (2013), what entity takes care of the two girls?",
+        "options": [
+            "A witch",
+            "A ghost",
+            "A vampire",
+            "A demon"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Lighthouse' (2019), who are the two main characters?",
+        "options": [
+            "Ephraim and Thomas",
+            "Jack and Danny",
+            "Paul and Louis",
+            "Edward and Henry"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Suspiria' (1977), where does the story take place?",
+        "options": [
+            "In a theater",
+            "In a dance academy",
+            "In a hospital",
+            "In a hotel"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Let the Right One In' (2008), what is Eli’s secret?",
+        "options": [
+            "She’s a witch",
+            "She’s a ghost",
+            "She’s a vampire",
+            "She’s a shapeshifter"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Wailing' (2016), what spreads through the village?",
+        "options": [
+            "A ghost curse",
+            "A toxic fog",
+            "A zombie infection",
+            "A mysterious illness"
+        ],
+        "correctIndex": 3,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Invitation' (2015), what is the dinner party really about?",
+        "options": [
+            "A reconciliation",
+            "A birthday",
+            "A cult ritual",
+            "A funeral"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Skeleton Key' (2005), what religion is central to the story?",
+        "options": [
+            "Hoodoo",
+            "Voodoo",
+            "Santería",
+            "Wicca"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Village' (2004), what is the real twist about the monsters?",
+        "options": [
+            "They are government experiments",
+            "They are humans in disguise",
+            "They are illusions",
+            "They are ghosts"
+        ],
+        "correctIndex": 1,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'The Others' (2001), where is the film set?",
+        "options": [
+            "Jersey Island",
+            "Ireland",
+            "Scotland",
+            "Wales"
+        ],
+        "correctIndex": 0,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "In 'Tucker and Dale vs Evil' (2010), what genre does the film parody?",
+        "options": [
+            "Zombie apocalypse",
+            "Found footage",
+            "Slasher horror",
+            "Gothic horror"
+        ],
+        "correctIndex": 2,
+        "category": "culture",
+        "difficulty": "medium",
+        "type": "movie"
+    }
+]
