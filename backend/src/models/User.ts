@@ -31,7 +31,8 @@ export interface IUser extends Document {
     Top3Movies: ITopMovie[];
     Top3TvShow: ITopTvShow[];
     Friends: Types.ObjectId[];
-    BlockedUsers: Types.ObjectId[]
+    BlockedUsers: Types.ObjectId[];
+    UserBadge: string;
 
 };
 
@@ -68,7 +69,8 @@ const UserSchema: Schema = new Schema({
     Top3Movies: { type: [TopMovieSchema], default: [] },
     Top3TvShow: { type: [TopTvShowSchema], default: [] },
     Friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    BlockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }]
+    BlockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    UserBadge: { type: String, default: "" }
 });
 
 export default mongoose.model<IUser>("User", UserSchema);

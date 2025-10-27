@@ -17,6 +17,19 @@ export const registerUser = async (req: Request, res: Response) => {
 
         const hashedPassword = await bcrypt.hash(UserPassword, 10);
 
+        const userCount = await User.countDocuments();
+
+        const rank = userCount + 1;
+        let UserBadge = "";
+
+        if (rank === 1) UserBadge = "TOP1 subscriber";
+        else if (rank === 2) UserBadge = "TOP2 subscriber";
+        else if (rank === 3) UserBadge = "TOP3 subscriber";
+        else if (rank >= 4 && rank <= 10) UserBadge = "TOP10 subscriber";
+        else if (rank >= 11 && rank <= 50) UserBadge = "TOP50 subscriber";
+        else if (rank >= 51 && rank <= 100) UserBadge = "TOP100 subscriber";
+        else UserBadge = "";
+
         const newUser = new User({
             UserName,
             UserPseudo,
@@ -24,6 +37,7 @@ export const registerUser = async (req: Request, res: Response) => {
             UserPassword: hashedPassword,
             UserLocation,
             UserAge,
+            UserBadge
         });
 
         await newUser.save();
