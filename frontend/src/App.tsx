@@ -1,7 +1,10 @@
+import { Button } from "./components/shadcnComponentsUi/button"
+import HomePage from "./features/home/HomePage"
+
 function App() {
   return (
-    <div className="min-h-screen bg-black text-red-500 flex items-center justify-center text-3xl">
-      Hell yeah it works ! 
+    <div className="bg-black">
+     <HomePage />
     </div>
   );
 }
