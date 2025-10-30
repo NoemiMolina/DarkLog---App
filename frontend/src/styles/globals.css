@@ -1,7 +1,5 @@
-/* @import "tw-animate-css"; */
-
 /* @plugin "tailwindcss-animate"; */
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
 @custom-variant dark (&:is(.dark *));
 
 @tailwind base;
@@ -47,9 +45,16 @@
 }
 
 :root {
+  /* --logo-size: 155px; */
+  --logo-top-offset: 780px;
+  --logo-left-offset: 400px;
+  --logo-min-size: 40px;
+  --logo-max-size: 155px;
+  --base-min: 14px;
+  --base-max: 18px;
   --radius: 0.625rem;
   --background: #14181c;
-  --foreground: #FFFF;
+  --foreground: #FFFFFF;
   --card: #14181c;
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: #14181c;
@@ -79,6 +84,48 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
+  --type-xxl: clamp(0.5rem, 3.2vw, 2.2rem);
+  --type-xl: clamp(1.25rem, 2.6vw, 1.8rem);
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  top: var(--logo-top-offset);
+  left: var(--logo-left-offset);
+  width: clamp(var(--logo-min-size), 5.5vw, var(--logo-max-size));
+  aspect-ratio: 1 / 1;
+  z-index: 9999;
+  pointer-events: auto;
+  background-image: url('/appLogo.png'), url('../assets/logo/appLogo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+  border-radius: 6px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  h1 {
+    font-size: clamp(1.4rem, 3.2vw, 2.8rem);
+    line-height: 1.05;
+  }
+
+  h2 {
+    font-size: clamp(1.2rem, 2.6vw, 2rem);
+    line-height: 1.08;
+  }
+
+  p {
+    font-size: clamp(0.95rem, 1.6vw, 1.06rem);
+  }
+
+  img,
+  svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
 }
 
 .dark {
@@ -121,6 +168,41 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 780px) {
+  :root {
+    --logo-left-offset: 75px;
+    --logo-top-offset: -10px;
+    --logo-min-size: 45px;
+    --logo-max-size: 88px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1366px) {
+  :root {
+    --logo-left-offset: 250px;
+    --logo-top-offset: -20px;
+    --logo-min-size: 160px;
+    --logo-max-size: 96px;
+  }
+}
+
+
+@media (min-width: 1367px) {
+  :root {
+    --logo-left-offset: 350px;
+    --logo-top-offset: -35px;
+    --logo-min-size: 160px;
+    --logo-max-size: 120px;
   }
 }
