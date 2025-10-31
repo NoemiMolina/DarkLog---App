@@ -201,8 +201,8 @@ body::before {
 @media (min-width: 1367px) {
   :root {
     --logo-left-offset: 350px;
-    --logo-top-offset: -35px;
-    --logo-min-size: 160px;
-    --logo-max-size: 120px;
+    --logo-top-offset: -45px;
+    --logo-min-size: 180px;
+    --logo-max-size: 280px;
   }
 }
