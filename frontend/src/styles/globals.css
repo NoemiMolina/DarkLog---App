@@ -1,10 +1,13 @@
 /* @plugin "tailwindcss-animate"; */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap');
+@import "tailwindcss";
 @custom-variant dark (&:is(.dark *));
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -45,11 +48,6 @@
 }
 
 :root {
-  /* --logo-size: 155px; */
-  --logo-top-offset: 780px;
-  --logo-left-offset: 400px;
-  --logo-min-size: 40px;
-  --logo-max-size: 155px;
   --base-min: 14px;
   --base-max: 18px;
   --radius: 0.625rem;
@@ -91,9 +89,6 @@
 body::before {
   content: "";
   position: absolute;
-  top: var(--logo-top-offset);
-  left: var(--logo-left-offset);
-  width: clamp(var(--logo-min-size), 5.5vw, var(--logo-max-size));
   aspect-ratio: 1 / 1;
   z-index: 9999;
   pointer-events: auto;
@@ -179,30 +174,76 @@ body::before {
   }
 }
 
-@media (min-width: 350px) and (max-width: 780px) {
-  :root {
-    --logo-left-offset: 75px;
-    --logo-top-offset: -10px;
-    --logo-min-size: 45px;
-    --logo-max-size: 88px;
-  }
-}
+@media (max-width: 420px) {
+  /* reduce hero heading so it doesn't dominate */
+  h1 { font-size: 1.15rem !important; }
+  h1, p { text-align: center; }
 
+  /* ensure header buttons are compact */
+  header nav button,
+  header nav .button,
+  header nav .btn {
+    padding: 5px 8px !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* join-us smaller */
+  .join-us, header .join-us, .join-us span { font-size: 0.85rem !important; }
+
+  /* avoid extra vertical scroll caused by large margins */
+  html, body, #root { height: 100%; overflow-x: hidden; }
+  main { min-height: 100vh; }
+}
 @media (min-width: 901px) and (max-width: 1366px) {
   :root {
-    --logo-left-offset: 250px;
-    --logo-top-offset: -20px;
-    --logo-min-size: 160px;
-    --logo-max-size: 96px;
+
   }
 }
 
 
 @media (min-width: 1367px) {
   :root {
-    --logo-left-offset: 350px;
-    --logo-top-offset: -45px;
-    --logo-min-size: 180px;
-    --logo-max-size: 280px;
+
+  }
+}
+
+@layer utilities {
+  .crt-effect {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .crt-effect::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background: repeating-linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.20) 0px,
+        rgba(255, 255, 255, 0.20) 1px,
+        rgba(0, 0, 0, 0.20) 2px);
+    mix-blend-mode: overlay;
+    opacity: 10;
+
+    --band: 100%;
+    -webkit-mask: radial-gradient(circle at center,
+        transparent 0 calc(100% - var(--band)),
+        white calc(100% - var(--band)) 100%);
+    mask: radial-gradient(circle at center,
+        transparent 0 calc(100% - var(--band)),
+        white calc(100% - var(--band)) 100%);
+
+    border-radius: inherit;
+  }
+
+  .crt-effect img {
+    position: relative;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: inherit;
   }
 }
