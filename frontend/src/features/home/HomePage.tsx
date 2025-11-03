@@ -29,37 +29,37 @@ const HomePage: React.FC = () => {
     return (
         <main className="min-h-screen relative">
 
-            <header className="absolute top-[-10px] left-5 w-full p-4 z-10 gap-5 flex justify-center">
+            <header className="buttons absolute top-[-10px] left-5 w-full p-4 z-10 gap-5 flex justify-center">
                 <img
                     src={appLogo}
                     alt="App Logo" 
-                    className="h-23 top-10 left-5 mt-3"
+                    className="logoWebsite h-23 top-10 left-5 mt-3"
                 />
                 <Button
                     variant="outline"
                     size="sm"
-                    className="mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold "
+                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold "
                 >
                     Log In
                 </Button>
                 <Button
                     variant="outline"
                     size="sm"
-                    className="mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
+                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
                 >
                     Create an account
                 </Button>
                  <Button
                     variant="outline"
                     size="sm"
-                    className="mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
+                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
                 >
                    Trouver un truc
                 </Button>
                  <Button
                     variant="outline"
                     size="sm"
-                    className="mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
+                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
                 >
                    Trouver un truc
                 </Button>
@@ -79,7 +79,7 @@ const HomePage: React.FC = () => {
                         className="font-bold tracking-wide"
                         style={{ fontSize: "var(--type-xxl)", lineHeight: "1" }}
                     >
-                        Track every movies or tv Shows you've seen.
+                        Track every movie or TV Show you've seen.
                     </h1>
                     <h1
                         className="font-bold tracking-wide mt-4"
@@ -101,7 +101,7 @@ const HomePage: React.FC = () => {
                         className="flex items-center whitespace-nowrap"
                         style={{ gap: "var(--join-gap, 0.5rem)" }}
                     >
-                        <span className="font-medium">Join us on</span>
+                        <span className="join-us font-medium">Join us on</span>
 
                         <div className="flex items-center" style={{ gap: "var(--join-gap, 0.5rem)" }}>
                             <a href="#" aria-label="Instagram" className="text-white hover:opacity-90">

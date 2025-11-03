@@ -48,6 +48,11 @@
 }
 
 :root {
+  /* --logo-size: 155px; */
+  --logo-top-offset: 780px;
+  --logo-left-offset: 400px;
+  --logo-min-size: 40px;
+  --logo-max-size: 155px;
   --base-min: 14px;
   --base-max: 18px;
   --radius: 0.625rem;
@@ -174,29 +179,15 @@ body::before {
   }
 }
 
-@media (max-width: 420px) {
-  /* reduce hero heading so it doesn't dominate */
-  h1 { font-size: 1.15rem !important; }
-  h1, p { text-align: center; }
-
-  /* ensure header buttons are compact */
-  header nav button,
-  header nav .button,
-  header nav .btn {
-    padding: 5px 8px !important;
-    font-size: 0.85rem !important;
+@media (min-width: 350px) and (max-width: 780px) {
+  :root {
+  
   }
-
-  /* join-us smaller */
-  .join-us, header .join-us, .join-us span { font-size: 0.85rem !important; }
-
-  /* avoid extra vertical scroll caused by large margins */
-  html, body, #root { height: 100%; overflow-x: hidden; }
-  main { min-height: 100vh; }
 }
+
 @media (min-width: 901px) and (max-width: 1366px) {
   :root {
-
+ 
   }
 }
 
