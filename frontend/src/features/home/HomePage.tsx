@@ -5,11 +5,11 @@ import backgroundOption3 from "@/assets/images/terrifierMainHomePic.jpg";
 import backgroundOption4 from "@/assets/images/screamMainHomePic.jpg";
 import backgroundOption5 from "@/assets/images/jawsMainHomePic.jpg";
 import backgroundOption6 from "@/assets/images/fromDuskTillDawnMainHomePic.jpg";
-import backgroundOption7 from "@/assets/images/shiningMainHomePic.jpg";    
+import backgroundOption7 from "@/assets/images/shiningMainHomePic.jpg";
 import appLogo from "@/assets/logo/appLogo.png";
-// import { Button } from frontend\src\components\ui\button.tsx;
 import { Button } from "../../components/ui/button"
-
+import GetLuckyButton from "../../components/GetLuckyButton";
+import PublicSearchBar from "../../components/PublicSearchBar";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
 
 
@@ -29,88 +29,81 @@ const HomePage: React.FC = () => {
     return (
         <main className="min-h-screen relative">
 
-            <header className="buttons absolute top-[-10px] left-5 w-full p-4 z-10 gap-5 flex justify-center">
+            <header className="flex flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 text-center -translate-y-[20px]">
+
                 <img
                     src={appLogo}
-                    alt="App Logo" 
-                    className="logoWebsite h-23 top-10 left-5 mt-3"
-                />
-                <Button
-                    variant="outline"
-                    size="sm"
-                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold "
-                >
-                    Log In
-                </Button>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
-                >
-                    Create an account
-                </Button>
-                 <Button
-                    variant="outline"
-                    size="sm"
-                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
-                >
-                   Trouver un truc
-                </Button>
-                 <Button
-                    variant="outline"
-                    size="sm"
-                    className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
-                >
-                   Trouver un truc
-                </Button>
-           </header>
+                    alt="App Logo"
+                    className="logoWebsite w-20 order-1 w-60 sm:w-32 md:w-40 xl:w-60 h-auto"
 
-            <section className="py-12">
-                <div className="relative mx-auto w-[60%] sm:w-[85%] md:w-[70%] lg:w-[60%] max-w-6xl crt-effect">
+                />
+
+                <div className="PublicSearchBar order-2 -translate-y-[50px] w-20 pt-0.2 mr-60 sm:w-80 xl:mb-15">
+                    <PublicSearchBar />
+                </div>
+                <div className="flex flex-col items-center -translate-y-[95px] order-3 mb-50 sm:flex-row sm:gap-4 xl:mb-10">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="headerButton button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold "
+                    >
+                        Log In
+                    </Button>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        className="headerButton button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
+                    >
+                        Create an account
+                    </Button>
+                    <GetLuckyButton />
+                </div>
+
+
+            </header>
+
+            <section className="py-10 -translate-y-[350px] sm:translate-y-0">
+                <div className="relative mb-90 mx-auto w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] max-w-6xl crt-effect xl:-translate-y-[100px]">
                     <img
                         src={randomImageSelection}
                         alt="MainPic"
-                        className="block mx-auto w-full h-auto object-contain mask-t-from-50% mask-r-from-90% mask-l-from-90% mask-l-to-100% mask-b-from-50% mask-b-to-100%"
+                        className="mainPic block mx-auto w-full h-auto object-contain
+        mask-t-from-85% mask-t-to-100%
+        mask-b-from-40% mask-b-to-100%
+        mask-l-from-85% mask-l-to-100%
+        mask-r-from-85% mask-r-to-100%
+        transition-all duration-500"
                     />
                 </div>
 
-                <div className="md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 text-center text-white px-4 mt-10 md:mt-30">
+                <div className="md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 text-center text-white px-4 mt-10 md:mt-40 xl:mt-60 -translate-y-[420px] font-small sm:translate-y-0">
                     <h1
-                        className="font-bold tracking-wide"
-                        style={{ fontSize: "var(--type-xxl)", lineHeight: "1" }}
+                        className="homePageCatchPhrase font-bold tracking-wide"
+                        style={{ fontSize: "var(--type-small)" }}
                     >
-                        Track every movie or TV Show you've seen.
-                    </h1>
-                    <h1
-                        className="font-bold tracking-wide mt-4"
-                        style={{ fontSize: "var(--type-xxl)", lineHeight: "1" }}
-                    >
-                        Challenge yourself with themed quizzes.
-                    </h1>
-                    <h1
-                        className="font-bold tracking-wide mt-4"
-                        style={{ fontSize: "var(--type-xxl)", lineHeight: "1" }}
-                    >
-                        Take part on the horror community.
+                        A logbook for the dark side of cinema.
                     </h1>
 
-                </div>
-
-                <div className="mt-1 flex justify-center">
                     <div
-                        className="flex items-center whitespace-nowrap"
-                        style={{ gap: "var(--join-gap, 0.5rem)" }}
+                        className="flex items-center justify-center gap-3 xl:mt-5 mb-90 text-white"
+                        style={{ gap: "var(--join-gap, 0.5rem)"}}
                     >
-                        <span className="join-us font-medium">Join us on</span>
+                        <span className="join-us font-small" style={{ fontSize: "var(--type-small)" }}>Join us on</span>
 
-                        <div className="flex items-center" style={{ gap: "var(--join-gap, 0.5rem)" }}>
-                            <a href="#" aria-label="Instagram" className="text-white hover:opacity-90">
-                                <FaInstagram color="#fff" className="text-white w-6 h-6 md:w-7 md:h-7" />
-                            </a>
-                            <a href="#" aria-label="TikTok" className="text-white hover:opacity-90">
-                                <FaTiktok color="#fff" className="text-white w-6 h-6 md:w-7 md:h-7" />
-                            </a>
-                        </div>
+                        <a
+                            href="#"
+                            aria-label="Instagram"
+                            className="text-white hover:opacity-90 inline-flex items-center"
+                        >
+                            <FaInstagram color="#fff" className="w-6 h-6 md:w-7 md:h-7" />
+                        </a>
+                        <a
+                            href="#"
+                            aria-label="TikTok"
+                            className="text-white hover:opacity-90 inline-flex items-center"
+                        >
+                            <FaTiktok color="#fff" className="w-6 h-6 md:w-7 md:h-7" />
+                        </a>
                     </div>
                 </div>
             </section>

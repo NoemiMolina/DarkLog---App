@@ -3,7 +3,7 @@ import HomePage from "./features/home/HomePage"
 
 function App() {
   return (
-    <div className="bg-black">
+  <div className="min-h-screen bg-[var(--background)]">
      <HomePage />
     </div>
   );

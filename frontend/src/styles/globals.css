@@ -52,7 +52,7 @@
   --logo-top-offset: 780px;
   --logo-left-offset: 400px;
   --logo-min-size: 40px;
-  --logo-max-size: 155px;
+  --logo-max-size: 200px;
   --base-min: 14px;
   --base-max: 18px;
   --radius: 0.625rem;
@@ -89,6 +89,7 @@
   --sidebar-ring: oklch(0.705 0.015 286.067);
   --type-xxl: clamp(0.5rem, 3.2vw, 2.2rem);
   --type-xl: clamp(1.25rem, 2.6vw, 1.8rem);
+  --type-small: clamp(1rem, 2.2vw, 1rem);
 }
 
 body::before {
@@ -106,30 +107,11 @@ body::before {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 
-  h1 {
-    font-size: clamp(1.4rem, 3.2vw, 2.8rem);
-    line-height: 1.05;
-  }
 
-  h2 {
-    font-size: clamp(1.2rem, 2.6vw, 2rem);
-    line-height: 1.08;
-  }
-
-  p {
-    font-size: clamp(0.95rem, 1.6vw, 1.06rem);
-  }
-
-  img,
-  svg {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
 }
 
 .dark {
-  --background: oklch(0.141 0.005 285.823);
+  --background: oklch(0.21 0.006 285.885);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
@@ -179,30 +161,13 @@ body::before {
   }
 }
 
-@media (min-width: 350px) and (max-width: 780px) {
-  :root {
-  
-  }
-}
-
-@media (min-width: 901px) and (max-width: 1366px) {
-  :root {
- 
-  }
-}
-
-
-@media (min-width: 1367px) {
-  :root {
-
-  }
-}
 
 @layer utilities {
   .crt-effect {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
+
   }
 
   .crt-effect::after {
@@ -216,7 +181,8 @@ body::before {
         rgba(255, 255, 255, 0.20) 1px,
         rgba(0, 0, 0, 0.20) 2px);
     mix-blend-mode: overlay;
-    opacity: 10;
+    opacity: 40%;
+
 
     --band: 100%;
     -webkit-mask: radial-gradient(circle at center,
