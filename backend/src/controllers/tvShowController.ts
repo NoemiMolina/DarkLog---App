@@ -125,3 +125,30 @@ export const addRatingToEpisode = async (req: Request, res: Response) => {
     }
 };
 
+export const getRandomTVShow = async (req: Request, res: Response) => {
+    try {
+        const count = await TVShow.countDocuments();
+        const randomIndex = Math.floor(Math.random() * count);
+        const randomTVShow = await TVShow.findOne().skip(randomIndex);
+        if (!randomTVShow) return res.status(404).json({ message: "TV show not found" });
+        res.status(200).json(randomTVShow);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching random TV show", error: err });
+    }   
+};
+
+export const searchTVShow = async (req: Request, res: Response) => {
+    try {
+        const query = req.query.query as string;
+        if (!query) {
+            return res.status(400).json({ message: "Query parameter is required" });
+        }
+        const tvShows = await TVShow.find({
+            title: { $regex: query, $options: "i" }
+        });
+        res.status(200).json(tvShows);
+    } catch (err) {
+        res.status(500).json({ message: "Error searching TV shows", error: err });
+    }       
+};
+

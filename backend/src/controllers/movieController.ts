@@ -74,3 +74,26 @@ export const getMovieByGenre = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Erreur lors du filtrage par genre", error: err });
     }
 }
+
+export const getRandomMovie = async (req: Request, res: Response) => {
+    try {
+        const count = await Movie.countDocuments();
+        const randomIndex = Math.floor(Math.random() * count);
+        const randomMovie = await Movie.findOne().skip(randomIndex);
+        if (!randomMovie) return res.status(404).json({ message: "Movie not found" });
+        res.status(200).json(randomMovie);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching random movie", error: err });
+    }
+}
+
+export const searchMovies = async (req: Request, res: Response) => {
+    try {
+        const query = req.query.query as string;
+        if (!query) return res.status(400).json({ message: "Query parameter is required" });
+        const movies = await Movie.find({ title: { $regex: query, $options: "i" } });
+        res.status(200).json(movies);
+    } catch (err) {
+        res.status(500).json({ message: "Error searching movies", error: err });
+    }   
+}

@@ -3,14 +3,19 @@ import {
     getAllMovies,
     getMovieById,
     getMovieByGenre,
-    addRatingToMovie
+    addRatingToMovie,
+    getRandomMovie,
+    searchMovies
 } from "../controllers/movieController.js"
 
 const router = express.Router();
 
 router.get("/", getAllMovies);
+router.get("/random", getRandomMovie);
+router.get("/search", searchMovies);
+router.get("/genre/:genre", getMovieByGenre);
 router.get("/:id", getMovieById);
-router.get("/genre/:genre", getMovieByGenre)
-router.post("/:id/rating", addRatingToMovie); // not tested yet
+router.post("/:id/rating", addRatingToMovie);
+
 
 export default router;
