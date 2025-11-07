@@ -10,7 +10,7 @@ import TVShow from "../models/TVShow.js";
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
     try {
-        const { UserName, UserPseudo, UserMail, UserPassword, UserLocation, UserAge } = req.body;
+        const { UserFirstName, UserLastName, UserPseudo, UserMail, UserPassword, UserLocation, UserAge } = req.body;
 
         const existingUser = await User.findOne({ UserMail });
         if (existingUser) return res.status(400).json({ message: "This email already exists" });
@@ -31,7 +31,8 @@ export const registerUser = async (req: Request, res: Response) => {
         else UserBadge = "";
 
         const newUser = new User({
-            UserName,
+            UserFirstName,
+            UserLastName,
             UserPseudo,
             UserMail,
             UserPassword: hashedPassword,
