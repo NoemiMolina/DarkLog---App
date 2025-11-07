@@ -13,7 +13,7 @@ router.get("/", async (req, res) => {
         }).lean();
 
         const tvshows = await TvShow.find({
-            title: { $regex: query, $options: "i" },
+            name: { $regex: query, $options: "i" },
         }).lean();
 
         const moviesWithType = movies.map((m) => ({ ...m, type: "movie" }));
