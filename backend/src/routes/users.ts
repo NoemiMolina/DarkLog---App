@@ -9,13 +9,17 @@ import {
   addAMovieToWatchlist,
   addATvShowToWatchlist,
   deleteAMovieFromWatchlist,
-  deleteATvShowFromWatchlist
+  deleteATvShowFromWatchlist,
+  addAMovieToTop3Favorites,
+  addATvShowToTop3Favorites
 } from "../controllers/userController.js"
 
 const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+router.post("/:userId/top3favorites/movie/:movieId", authMiddleware, addAMovieToTop3Favorites);
+router.post("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, addATvShowToTop3Favorites);
 router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);
 router.delete("/:userId/friends/:friendId", authMiddleware, deleteAFriend);
 router.post("/:userId/block/:blockedUserId", authMiddleware, blockAnUser);

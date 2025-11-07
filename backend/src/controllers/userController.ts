@@ -193,3 +193,52 @@ export const deleteATvShowFromWatchlist = async (req: Request, res: Response) =>
     }
 }
 
+// ------------- USER ADDS A MOVIE TO ITS TOP3 FAVORITES
+export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
+    try {
+        const { userId, movieId } = req.params;
+        const user = await User.findById(userId);
+        const movie = await Movie.findById(movieId);
+        if (!user || !movie) return res.status(404).json({ message: "User or movie not found" });
+
+        if (user.Top3Movies.length >= 3) {
+            return res.status(400).json({ message: "You can only have 3 favorite movies" });
+        }
+        if (!user.Top3Movies.some(topMovie => topMovie.MovieID.toString() === movieId)) {
+            user.Top3Movies.push({
+                MovieID: movie._id as Types.ObjectId,
+                MovieName: movie.title,
+                MovieGenre: Array.isArray(movie.genres) ? movie.genres.join(", ") : String(movie.genres),
+            });
+            await user.save();
+        }
+        res.status(200).json({ message: "Movie added to your Top 3 favorites", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while adding a movie to your Top 3 favorites", error: err });
+    }
+}
+
+// ------------- USER ADDS A TVSHOW TO ITS TOP3 FAVORITES
+export const addATvShowToTop3Favorites = async (req: Request, res: Response) => {
+    try {
+        const { userId, tvShowId } = req.params;
+        const user = await User.findById(userId);
+        const tvShow = await TVShow.findById(tvShowId);
+        if (!user || !tvShow) return res.status(404).json({ message: "User or TV Show not found" });
+
+        if (user.Top3TvShow.length >= 3) {
+            return res.status(400).json({ message: "You can only have 3 favorite TV Shows" });
+        }
+        if (!user.Top3TvShow.some(topTvShow => topTvShow.TvShowID.toString() === tvShowId)) {
+            user.Top3TvShow.push({
+                TvShowID: tvShow._id as Types.ObjectId,
+                TvShowName: tvShow.name ?? "",
+                TvShowGenre: Array.isArray(tvShow.genre_ids) ? tvShow.genre_ids.join(", ") : String(tvShow.genre_ids),
+            });
+            await user.save();
+        }
+        res.status(200).json({ message: "TV Show added to your Top 3 favorites", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while adding a TV Show to your Top 3 favorites", error: err });
+    }
+}
