@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import SignUpForm from "../../components/SignUpForm";
 import LogInForm from "../../components/LogInForm";
 import backgroundOption1 from "@/assets/images/evilDeadRiseMainHomePic.jpg";
@@ -9,7 +9,6 @@ import backgroundOption5 from "@/assets/images/jawsMainHomePic.jpg";
 import backgroundOption6 from "@/assets/images/fromDuskTillDawnMainHomePic.jpg";
 import backgroundOption7 from "@/assets/images/shiningMainHomePic.jpg";
 import appLogo from "@/assets/logo/appLogo.png";
-import { Button } from "../../components/ui/button"
 import GetLuckyDialog from "../../components/GetLuckyDialog";
 import PublicSearchBar from "../../components/PublicSearchBar";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
@@ -97,6 +96,3 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
-
-
-// do not touch anything from now
