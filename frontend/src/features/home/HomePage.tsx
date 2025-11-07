@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { createPortal } from "react-dom";
+import SignUpForm from "../../components/SignUpForm";
+import LogInForm from "../../components/LogInForm";
 import backgroundOption1 from "@/assets/images/evilDeadRiseMainHomePic.jpg";
 import backgroundOption2 from "@/assets/images/shaunOfTheDeadMainHomePic.jpg";
 import backgroundOption3 from "@/assets/images/terrifierMainHomePic.jpg";
@@ -9,7 +10,7 @@ import backgroundOption6 from "@/assets/images/fromDuskTillDawnMainHomePic.jpg";
 import backgroundOption7 from "@/assets/images/shiningMainHomePic.jpg";
 import appLogo from "@/assets/logo/appLogo.png";
 import { Button } from "../../components/ui/button"
-import GetLuckyButtonPopover from "../../components/GetLuckyButtonPopover";
+import GetLuckyDialog from "../../components/GetLuckyDialog";
 import PublicSearchBar from "../../components/PublicSearchBar";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
 
@@ -40,25 +41,13 @@ const HomePage: React.FC = () => {
                     <PublicSearchBar />
                 </div>
                 <div className="flex flex-row items-center -translate-y-[65px] order-2 gap-2 mb-50 sm:flex-row sm:gap-4 xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold "
-                    >
-                        Log In
-                    </Button>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold"
-                    >
-                        Sign Up
-                    </Button>
-                    <GetLuckyButtonPopover />
+                    <LogInForm />
+                    <SignUpForm />
+                    <GetLuckyDialog />
                 </div>
             </header>
 
-            <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px]">
+            <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px] -z-10">
                 <div className="relative max-w-6xl crt-effect mb-90 mx-auto w-[90%] sm:w-[85%] md:w-[70%] lg:w-[100%] xl:-translate-y-[60px]">
                     <img
                         src={randomImageSelection}
