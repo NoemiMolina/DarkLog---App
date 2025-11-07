@@ -14,6 +14,7 @@ interface ITopTvShow {
 
 export interface IUser extends Document {
     UserName: string;
+    UserFamilyName: string;
     UserPseudo: string;
     UserMail: string;
     UserPassword: string;
@@ -52,6 +53,7 @@ const TopTvShowSchema: Schema = new Schema({
 
 const UserSchema: Schema = new Schema({
     UserName: { type: String, required: true },
+    UserFamilyName: { type: String, required: true },
     UserPseudo: { type: String, required: true },
     UserMail: { type: String, required: true },
     UserLocation: { type: String, required: true },
