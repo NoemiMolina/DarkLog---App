@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import { fileURLToPath } from "url";
 import connectDB from "./config/database.js";
 import userRoutes from "./routes/users.js";
 import movieRoutes from "./routes/movies.js";
@@ -13,6 +14,8 @@ import searchRoutes from "./routes/search.js";
 
 console.log("✅ Server.ts démarre !");
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config(); 
 
@@ -32,6 +35,7 @@ app.use("/forum", forumRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/search", searchRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
 
 
 app.get("/", (req, res) => {
