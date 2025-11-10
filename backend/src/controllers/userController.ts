@@ -30,6 +30,11 @@ export const registerUser = async (req: Request, res: Response) => {
         else if (rank >= 51 && rank <= 100) UserBadge = "TOP100 subscriber";
         else UserBadge = "";
 
+        let profilePicUrl = null;
+        if (req.file) {
+            profilePicUrl = `uploads/${req.file.filename}`;
+        }
+
         const newUser = new User({
             UserFirstName,
             UserLastName,
@@ -38,7 +43,8 @@ export const registerUser = async (req: Request, res: Response) => {
             UserPassword: hashedPassword,
             UserLocation,
             UserAge,
-            UserBadge
+            UserBadge,
+            UserProfilePic: profilePicUrl,
         });
 
         await newUser.save();

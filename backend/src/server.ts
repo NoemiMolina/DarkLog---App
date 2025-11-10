@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 import connectDB from "./config/database.js";
 import userRoutes from "./routes/users.js";
 import movieRoutes from "./routes/movies.js";
@@ -30,6 +31,7 @@ app.use("/reaiper", reaiperRoutes); // not prioritized for now
 app.use("/forum", forumRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/search", searchRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 
 
 app.get("/", (req, res) => {
