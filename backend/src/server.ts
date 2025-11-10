@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/database.js";
+
+import testUploadRoute from "./routes/testUploadRoute.js";
+
 import userRoutes from "./routes/users.js";
 import movieRoutes from "./routes/movies.js";
 import tvShowsRoutes from "./routes/tvShows.js"
@@ -35,6 +38,7 @@ app.use("/forum", forumRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/search", searchRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/test", testUploadRoute);
 
 
 
