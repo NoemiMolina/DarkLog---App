@@ -1,12 +1,16 @@
-import HomePage from "./features/home/HomePage"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import WelcomePage from "./features/pages/WelcomePage";
+import HomePage from "./features/pages/HomePage";
 
-
-function App() {
+export default function App() {
   return (
-  <div className="min-h-screen bg-[var(--background)]">
-     <HomePage />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-[var(--background)]">
+        <Routes>
+          <Route path="/" element={<WelcomePage />} />
+          <Route path="/home" element={<HomePage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
-
-export default App;

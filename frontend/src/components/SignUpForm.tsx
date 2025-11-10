@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
 import { Button } from "../components/ui/button";
 import { Label } from "../components/ui/label";
@@ -30,13 +31,14 @@ function calcAgeFromDate(date: Date | null) {
 
 const DialogSignUpForm: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [userPseudo, setUserPseudo] = useState("");   
-  const [userFirstName, setUserFirstName] = useState(""); 
+  const [userPseudo, setUserPseudo] = useState("");
+  const [userFirstName, setUserFirstName] = useState("");
   const [userLastName, setUserLastName] = useState("");
-  const [email, setEmail] = useState("");              
-  const [password, setPassword] = useState("");       
-  const [birthDate, setBirthDate] = useState<Date | null>(null);  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [location, setLocation] = useState("");
+  const [profilePic, setProfilePic] = useState<File | null>(null);
 
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -47,7 +49,9 @@ const DialogSignUpForm: React.FC = () => {
   const [top3Movies, setTop3Movies] = useState<SearchItem[]>([]);
   const [qShows, setQShows] = useState("");
   const [resShows, setResShows] = useState<SearchItem[]>([]);
-  const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]); 
+  const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]);
+  const navigate = useNavigate();
+
 
 
   useEffect(() => {
@@ -56,7 +60,7 @@ const DialogSignUpForm: React.FC = () => {
       try {
         const r = await fetch(`http://localhost:5000/search?query=${encodeURIComponent(qMovies)}`);
         const data: SearchItem[] = await r.json();
-        setResMovies((data || []).filter(i => (i.type === "movie"))); 
+        setResMovies((data || []).filter(i => (i.type === "movie")));
       } catch { setResMovies([]); }
     }, 350);
     return () => clearTimeout(t);
@@ -68,7 +72,7 @@ const DialogSignUpForm: React.FC = () => {
       try {
         const r = await fetch(`http://localhost:5000/search?query=${encodeURIComponent(qShows)}`);
         const data: SearchItem[] = await r.json();
-        setResShows((data || []).filter(i => (i.type === "tvshow"))); 
+        setResShows((data || []).filter(i => (i.type === "tvshow")));
       } catch { setResShows([]); }
     }, 350);
     return () => clearTimeout(t);
@@ -118,18 +122,27 @@ const DialogSignUpForm: React.FC = () => {
         UserLastName: userLastName.trim(),
         UserPseudo: userPseudo.trim(),
         UserMail: email.trim(),
-        UserPassword: password, 
+        UserPassword: password,
         UserAge: age,
         UserLocation: location.trim(),
         Top3Movies: top3Movies.map(x => x._id),
-        Top3TvShow: top3TvShow.map(x => x._id), 
+        Top3TvShow: top3TvShow.map(x => x._id),
       };
+
+      const formData = new FormData();
+      Object.entries(payload).forEach(([key, value]) => {
+        formData.append(key, value as any);
+      });
+
+      if (profilePic) {
+        formData.append("UserProfilePic", profilePic);
+      }
 
       const res = await fetch("http://localhost:5000/users/register", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       });
+
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -137,6 +150,23 @@ const DialogSignUpForm: React.FC = () => {
       }
 
       setSubmitSuccess("Well done! Your account has been created.");
+
+      const newUser = {
+        UserPseudo: userPseudo.trim(),
+        UserFirstName: userFirstName.trim(),
+        UserLastName: userLastName.trim(),
+        UserMail: email.trim(),
+        UserProfilePic: profilePic ? `uploads/${profilePic.name}` : null,
+        top3Movies: [...top3Movies],
+        top3TvShow: [...top3TvShow],
+      };
+      localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("firstConnection", "true");
+
+      setTimeout(() => {
+        setOpen(false);
+        navigate("/home");
+      }, 800);
 
     } catch (e: any) {
       setSubmitError(e?.message || "Unknown error");
@@ -148,7 +178,7 @@ const DialogSignUpForm: React.FC = () => {
   return (
     <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setSubmitError(null); setSubmitSuccess(null); } }}>
       <DialogTrigger asChild>
-        <Button variant="outline"  size="sm" className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50">Sign Up</Button>
+        <Button variant="outline" size="sm" className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50">Sign Up</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[720px] bg-black text-white border border-white/20">
@@ -161,78 +191,128 @@ const DialogSignUpForm: React.FC = () => {
 
 
         <ScrollArea className="max-h-[70vh] pr-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4 lg:mr-50">
 
-            <div className="space-y-2">
-              <Label htmlFor="userName">Pseudo *</Label>
-              <Input id="userName" value={userPseudo} onChange={(e) => setUserPseudo(e.target.value)} placeholder="ex: Ghostface" />
-            </div>
+            <Label htmlFor="profilePic">Profile picture (optional)</Label>
 
-            <div className="space-y-2">
-              <Label htmlFor="firstName">First name *</Label>
-              <Input id="firstName" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} placeholder="ex : Stuart" />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="lastName">Last name *</Label>
-              <Input id="lastName" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} placeholder="ex : Macher" />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email">Email *</Label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="stumacher@ghostface.com" />
-              {!emailValid && email.length > 0 && (
-                <p className="text-xs text-red-400">Invalid email address.</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Password *</Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Min. 8, 1 maj, 1 number, 1 special"
-              />
-              {!passwordValid && password.length > 0 && (
-                <p className="text-xs text-red-400">
-                  Must contain 1 uppercase letter, 1 number, 1 special character, and at least 8 characters.
-                </p>
-              )}
-
-            </div>
-
-            <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="location">Location *</Label>
-              <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="ex : Woodsboro" />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Birth date *</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="w-full justify-between text-white">
-                    {birthDate ? format(birthDate, "dd MMM yyyy", { locale: fr }) : "Choose a date"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="p-0 w-full bg-black text-white border border-white/20" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={birthDate || undefined}
-                    onSelect={(d) => setBirthDate(d ?? null)}
-                    initialFocus
-                    locale={enUS}
-                    captionLayout="dropdown"
-                    fromYear={1930}
-                    toYear={new Date().getFullYear()}
-                    className="rounded-md border w-70"
+            <div
+              onDrop={(e) => {
+                e.preventDefault();
+                const file = e.dataTransfer.files?.[0];
+                if (file) setProfilePic(file);
+              }}
+              onDragOver={(e) => e.preventDefault()}
+              className="border-2 border-dashed border-white/30 rounded-lg p-6 text-center cursor-pointer hover:border-white/60 transition"
+            >
+              {profilePic ? (
+                <div className="flex flex-col items-center gap-2">
+                  <img
+                    src={URL.createObjectURL(profilePic)}
+                    alt="Preview"
+                    className="w-24 h-24 rounded-full object-cover border border-white/30 "
                   />
-                </PopoverContent>
-              </Popover>
-              <p className="text-xs text-gray-400"> : {age || "—"} years old</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setProfilePic(null)}
+                    className="text-white hover:bg-white/10"
+                  >
+                    Remove
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-400">
+                    Drag & drop your image here, or
+                  </p>
+                  <label
+                    htmlFor="profilePicInput"
+                    className="text-blue-400 underline cursor-pointer"
+                  >
+                    browse files
+                  </label>
+                  <input
+                    id="profilePicInput"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setProfilePic(e.target.files?.[0] || null)}
+                    className="hidden"
+                  />
+                </>
+              )}
             </div>
           </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="userName">Pseudo *</Label>
+            <Input id="userName" value={userPseudo} onChange={(e) => setUserPseudo(e.target.value)} placeholder="ex: Ghostface" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="firstName">First name *</Label>
+            <Input id="firstName" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} placeholder="ex : Stuart" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="lastName">Last name *</Label>
+            <Input id="lastName" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} placeholder="ex : Macher" />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email">Email *</Label>
+            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="stumacher@ghostface.com" />
+            {!emailValid && email.length > 0 && (
+              <p className="text-xs text-red-400">Invalid email address.</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password">Password *</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Min. 8, 1 maj, 1 number, 1 special"
+            />
+            {!passwordValid && password.length > 0 && (
+              <p className="text-xs text-red-400">
+                Must contain 1 uppercase letter, 1 number, 1 special character, and at least 8 characters.
+              </p>
+            )}
+
+          </div>
+
+          <div className="space-y-2 md:col-span-2">
+            <Label htmlFor="location">Location *</Label>
+            <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="ex : Woodsboro" />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Birth date *</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" className="w-full justify-between text-white">
+                  {birthDate ? format(birthDate, "dd MMM yyyy", { locale: fr }) : "Choose a date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0 w-full bg-black text-white border border-white/20" align="start">
+                <Calendar
+                  mode="single"
+                  selected={birthDate || undefined}
+                  onSelect={(d) => setBirthDate(d ?? null)}
+                  initialFocus
+                  locale={enUS}
+                  captionLayout="dropdown"
+                  fromYear={1930}
+                  toYear={new Date().getFullYear()}
+                  className="rounded-md border w-70"
+                />
+              </PopoverContent>
+            </Popover>
+            <p className="text-xs text-gray-400"> : {age || "—"} years old</p>
+          </div>
+
 
           <div className="mt-4">
             <Label className="mb-2 block">Top 3 horror movies *</Label>
@@ -331,7 +411,7 @@ const DialogSignUpForm: React.FC = () => {
           </div>
         </ScrollArea>
       </DialogContent>
-    </Dialog>
+    </Dialog >
   );
 };
 

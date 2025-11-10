@@ -1,20 +1,16 @@
-import React from "react";
-import SignUpForm from "../../components/SignUpForm";
-import LogInForm from "../../components/LogInForm";
-import backgroundOption1 from "@/assets/images/evilDeadRiseMainHomePic.jpg";
-import backgroundOption2 from "@/assets/images/shaunOfTheDeadMainHomePic.jpg";
-import backgroundOption3 from "@/assets/images/terrifierMainHomePic.jpg";
-import backgroundOption4 from "@/assets/images/screamMainHomePic.jpg";
-import backgroundOption5 from "@/assets/images/jawsMainHomePic.jpg";
-import backgroundOption6 from "@/assets/images/fromDuskTillDawnMainHomePic.jpg";
-import backgroundOption7 from "@/assets/images/shiningMainHomePic.jpg";
-import appLogo from "@/assets/logo/appLogo.png";
-import GetLuckyDialog from "../../components/GetLuckyDialog";
-import PublicSearchBar from "../../components/PublicSearchBar";
+import React, { useState, useEffect } from "react";
+import Header from "../../components/Header";
+import backgroundOption1 from "@/assets/images/WelcomePageBackgroundImgs/evilDeadRiseMainHomePic.jpg";
+import backgroundOption2 from "@/assets/images/WelcomePageBackgroundImgs/shaunOfTheDeadMainHomePic.jpg";
+import backgroundOption3 from "@/assets/images/WelcomePageBackgroundImgs/terrifierMainHomePic.jpg";
+import backgroundOption4 from "@/assets/images/WelcomePageBackgroundImgs/screamMainHomePic.jpg";
+import backgroundOption5 from "@/assets/images/WelcomePageBackgroundImgs/jawsMainHomePic.jpg";
+import backgroundOption6 from "@/assets/images/WelcomePageBackgroundImgs/fromDuskTillDawnMainHomePic.jpg";
+import backgroundOption7 from "@/assets/images/WelcomePageBackgroundImgs/shiningMainHomePic.jpg";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
 
 
-const HomePage: React.FC = () => {
+const WelcomePage: React.FC = () => {
     const backgroundsImages = [
         backgroundOption1,
         backgroundOption2,
@@ -27,25 +23,21 @@ const HomePage: React.FC = () => {
     const randomImageSelection =
         backgroundsImages[Math.floor(Math.random() * backgroundsImages.length)];
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem("userToken");
+        setIsLoggedIn(!!token);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("userToken");
+        setIsLoggedIn(false);
+    };
+
     return (
         <main className="min-h-screen relative max-h-screen sm:max-h-none">
-            <header className="text-center -translate-y-[20px] flex flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-8 xl:space-x-6 xl:p-8 xl:mt-4 xl:translate-y-5">
-                <img
-                    src={appLogo}
-                    alt="App Logo"
-                    className="h-auto w-20 order-1 w-60 sm:w-32 md:w-40 xl:w-60 xl:translate-y-0"
-
-                />
-                <div className="order-3 -translate-y-[300px] w-20 pt-0.2 mr-60 sm:w-80 xl:translate-x-2 xl:translate-y-[-20px] xl:mr-0 xl:w-80 xl:gap-4">
-                    <PublicSearchBar />
-                </div>
-                <div className="flex flex-row items-center -translate-y-[65px] order-2 gap-2 mb-50 sm:flex-row sm:gap-4 xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row">
-                    <LogInForm />
-                    <SignUpForm />
-                    <GetLuckyDialog />
-                </div>
-            </header>
-
+            <Header isLoggedIn={isLoggedIn} onLogOut={handleLogout} />
             <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px] -z-10">
                 <div className="relative max-w-6xl crt-effect mb-90 mx-auto w-[90%] sm:w-[85%] md:w-[70%] lg:w-[100%] xl:-translate-y-[60px]">
                     <img
@@ -95,4 +87,4 @@ const HomePage: React.FC = () => {
     );
 };
 
-export default HomePage;
+export default WelcomePage;

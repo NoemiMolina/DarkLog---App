@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -21,6 +22,7 @@ const DialogLoginForm: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const emailValid = /\S+@\S+\.\S+/.test(email);
   const canSubmit = emailValid && password.trim().length > 0;
@@ -32,28 +34,45 @@ const DialogLoginForm: React.FC = () => {
     setErrorMsg(null);
     setSuccessMsg(null);
 
-    try {
-      const res = await fetch("http://localhost:5000/users/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          UserMail: email.trim(),
-          UserPassword: password.trim(),
-        }),
-      });
+   try {
+  const res = await fetch("http://localhost:5000/users/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      UserMail: email.trim(),
+      UserPassword: password.trim(),
+    }),
+  });
 
-      const data = await res.json();
+  const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data?.message || "Login failed");
-      }
+  if (!res.ok) {
+    throw new Error(data?.message || "Login failed");
+  }
 
-      setSuccessMsg("✅ Successfully connected!");
-    } catch (err: any) {
-      setErrorMsg(err?.message || "Unknown error");
-    } finally {
-      setLoading(false);
-    }
+  if (data.user) {
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("username", data.user.UserPseudo || "Guest");
+  }
+
+  localStorage.setItem("firstConnection", "false");
+
+  if (data.token) {
+    localStorage.setItem("token", data.token);
+  }
+
+  setSuccessMsg("✅ Successfully connected!");
+  
+  setTimeout(() => {
+    setOpen(false);
+    navigate("/home");
+  }, 800);
+
+} catch (err: any) {
+  setErrorMsg(err?.message || "Unknown error");
+} finally {
+  setLoading(false);
+}
   };
 
   return (
