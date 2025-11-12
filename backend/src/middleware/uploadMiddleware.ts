@@ -2,17 +2,17 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-const uploadDir = path.join(__dirname, "../uploads");
+const uploadDir = path.join(process.cwd(), "uploads");
+
+console.log("✅ uploadMiddleware  :", uploadDir);
 
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
-  console.log("📁 Dossier 'uploads' créé automatiquement !");
+  console.log("📁 uploads file created if it did not exists :", uploadDir);
 }
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
+  destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
     const uniqueName = Date.now() + "-" + file.originalname;
     cb(null, uniqueName);

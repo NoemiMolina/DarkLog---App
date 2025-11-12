@@ -9,66 +9,65 @@ import TVShow from "../models/TVShow.js";
 
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
-  try {
-    const {
-      UserFirstName,
-      UserLastName,
-      UserPseudo,
-      UserMail,
-      UserPassword,
-      UserLocation,
-      UserAge,
-      Top3Movies,
-      Top3TvShow
-    } = req.body;
+    try {
+        const {
+            UserFirstName,
+            UserLastName,
+            UserPseudo,
+            UserMail,
+            UserPassword,
+            UserLocation,
+            UserAge,
+            Top3Movies,
+            Top3TvShow
+        } = req.body;
 
-    const existingUser = await User.findOne({ UserMail });
-    if (existingUser)
-      return res.status(400).json({ message: "This email already exists" });
+        const existingUser = await User.findOne({ UserMail });
+        if (existingUser)
+            return res.status(400).json({ message: "This email already exists" });
 
-    const hashedPassword = await bcrypt.hash(UserPassword, 10);
+        const hashedPassword = await bcrypt.hash(UserPassword, 10);
 
-    const userCount = await User.countDocuments();
-    const rank = userCount + 1;
+        const userCount = await User.countDocuments();
+        const rank = userCount + 1;
 
-    let UserBadge = "";
-    if (rank === 1) UserBadge = "TOP1 subscriber";
-    else if (rank === 2) UserBadge = "TOP2 subscriber";
-    else if (rank === 3) UserBadge = "TOP3 subscriber";
-    else if (rank >= 4 && rank <= 10) UserBadge = "TOP10 subscriber";
-    else if (rank >= 11 && rank <= 50) UserBadge = "TOP50 subscriber";
-    else if (rank >= 51 && rank <= 100) UserBadge = "TOP100 subscriber";
+        let UserBadge = "";
+        if (rank === 1) UserBadge = "TOP1 subscriber";
+        else if (rank === 2) UserBadge = "TOP2 subscriber";
+        else if (rank === 3) UserBadge = "TOP3 subscriber";
+        else if (rank >= 4 && rank <= 10) UserBadge = "TOP10 subscriber";
+        else if (rank >= 11 && rank <= 50) UserBadge = "TOP50 subscriber";
+        else if (rank >= 51 && rank <= 100) UserBadge = "TOP100 subscriber";
 
-    // ✅ conversion propre des champs
-    const parsedMovies = Top3Movies ? JSON.parse(Top3Movies) : [];
-    const parsedTv = Top3TvShow ? JSON.parse(Top3TvShow) : [];
+        const parsedMovies = Top3Movies ? JSON.parse(Top3Movies) : [];
+        const parsedTv = Top3TvShow ? JSON.parse(Top3TvShow) : [];
 
-    const profilePicUrl = req.file ? `uploads/${req.file.filename}` : null;
+        const profilePicUrl = req.file ? `uploads/${req.file.filename}` : null;
 
-    const newUser = new User({
-      UserFirstName,
-      UserLastName,
-      UserPseudo,
-      UserMail,
-      UserPassword: hashedPassword,
-      UserLocation,
-      UserAge: Number(UserAge), 
-      UserBadge,
-      UserProfilePic: profilePicUrl,
-      Top3Movies: parsedMovies,
-      Top3TvShow: parsedTv,
-    });
+        const newUser = new User({
+            UserFirstName,
+            UserLastName,
+            UserPseudo,
+            UserMail,
+            UserPassword: hashedPassword,
+            UserLocation,
+            UserAge: Number(UserAge),
+            UserBadge,
+            UserProfilePicture: profilePicUrl,
+            Top3Movies: parsedMovies,
+            Top3TvShow: parsedTv,
+        });
 
-    await newUser.save();
+        await newUser.save();
 
-    res.status(201).json({
-      message: "User successfully created",
-      user: newUser,
-    });
-  } catch (err) {
-    console.error("❌ Error in registerUser:", err);
-    res.status(500).json({ message: "Subscribing error", error: err });
-  }
+        res.status(201).json({
+            message: "User successfully created",
+            user: newUser,
+        });
+    } catch (err) {
+        console.error("❌ Error in registerUser:", err);
+        res.status(500).json({ message: "Subscribing error", error: err });
+    }
 };
 
 // ------- LOGIN

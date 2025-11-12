@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import path from "path";
 import connectDB from "./config/database.js";
 
-import testUploadRoute from "./routes/testUploadRoute.js";
 import userRoutes from "./routes/users.js";
 import movieRoutes from "./routes/movies.js";
 import tvShowsRoutes from "./routes/tvShows.js";
@@ -13,15 +12,7 @@ import forumRoutes from "./routes/forum.js";
 import quizRoutes from "./routes/quiz.js";
 import searchRoutes from "./routes/search.js";
 
-process.on("uncaughtException", (err) => {
-  console.error("❌ Uncaught Exception:", err);
-});
-
-process.on("unhandledRejection", (reason) => {
-  console.error("❌ Unhandled Rejection:", reason);
-});
-
-console.log("✅ Server.ts démarre !");
+console.log("✅ LETSGO !");
 
 dotenv.config();
 
@@ -40,8 +31,7 @@ app.use("/reaiper", reaiperRoutes);
 app.use("/forum", forumRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/search", searchRoutes);
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-app.use("/test", testUploadRoute);
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {
   res.send("Backend's app is online, gg");
