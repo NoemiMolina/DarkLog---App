@@ -17,7 +17,7 @@ import {
 
 const router = express.Router();
 
-router.post("/register", uploadMiddleware.single("UserProfilePic"), registerUser);
+router.post("/register", uploadMiddleware.single("UserProfilePicture"), registerUser);
 router.post("/login", loginUser);
 router.post("/:userId/top3favorites/movie/:movieId", authMiddleware, addAMovieToTop3Favorites);
 router.post("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, addATvShowToTop3Favorites);
