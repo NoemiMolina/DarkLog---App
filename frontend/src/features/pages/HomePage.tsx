@@ -40,13 +40,13 @@ const HomePage = () => {
           "Guest";
         setUsername(userPseudo);
 
-        // 👇 on récupère la photo
         if (parsed.UserProfilePic) {
           const fullPath = parsed.UserProfilePic.startsWith("http")
             ? parsed.UserProfilePic
             : `http://localhost:5000/${parsed.UserProfilePic}`;
           setProfilePic(fullPath);
         }
+
       } catch {
         setUsername("Guest");
       }
@@ -65,7 +65,7 @@ const HomePage = () => {
 
   return (
     <main className="min-h-screen relative max-h-screen sm:max-h-none">
-      <Header isLoggedIn={true} onLogOut={() => { }} />
+      <Header username={username} userProfilePicture={profilePic} />
 
       <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px] -z-10">
         <div className="relative max-w-6xl crt-effect mb-90 mx-auto w-[90%] sm:w-[85%] md:w-[70%] lg:w-[70%] xl:-translate-y-[60px]">
@@ -114,7 +114,7 @@ const HomePage = () => {
 
             ) : (
               <div>
-                Welcome back, {username}!
+                Welcome back, {username}! // to be modified later
               </div>
             )}
           </h1>

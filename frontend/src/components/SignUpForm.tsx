@@ -52,8 +52,6 @@ const DialogSignUpForm: React.FC = () => {
   const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]);
   const navigate = useNavigate();
 
-
-
   useEffect(() => {
     if (!qMovies.trim()) { setResMovies([]); return; }
     const t = setTimeout(async () => {
@@ -130,12 +128,17 @@ const DialogSignUpForm: React.FC = () => {
       };
 
       const formData = new FormData();
-      Object.entries(payload).forEach(([key, value]) => {
-        formData.append(key, value as any);
-      });
+      for (const [key, value] of Object.entries(payload)) {
+        if (Array.isArray(value)) {
+          formData.append(key, JSON.stringify(value)); 
+        } else {
+          formData.append(key, String(value)); 
+        }
+      }
+
 
       if (profilePic) {
-        formData.append("UserProfilePic", profilePic);
+        formData.append("UserProfilePicture", profilePic);
       }
 
       const res = await fetch("http://localhost:5000/users/register", {
