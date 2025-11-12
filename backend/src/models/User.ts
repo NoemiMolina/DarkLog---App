@@ -70,8 +70,8 @@ const UserSchema: Schema = new Schema({
     LastWatchedMovie: { type: String, default: "" },
     MovieWatchlist: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
     TvShowWatchlist: [{ type: Schema.Types.ObjectId, ref: "TV" }],
-    Top3Movies: { type: [TopMovieSchema], default: [] },
-    Top3TvShow: { type: [TopTvShowSchema], default: [] },
+    Top3Movies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
+    Top3TvShow: [{ type: mongoose.Schema.Types.ObjectId, ref: "TV" }],
     Friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
     BlockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     UserBadge: { type: String, default: "" }
