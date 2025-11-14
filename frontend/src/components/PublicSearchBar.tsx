@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import {
   InputGroup,
   InputGroupAddon,
@@ -10,6 +11,8 @@ const PublicSearchBar: React.FC = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [isVisible, setIsVisible] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [rect, setRect] = useState<{ top: number; left: number; width: number; bottom: number } | null>(null);
 
   useEffect(() => {
     if (query.trim().length === 0) {
@@ -18,13 +21,30 @@ const PublicSearchBar: React.FC = () => {
       return;
     }
 
+
     const fetchMoviesAndTVShows = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/search?query=${query}`);
-        if (!res.ok) throw new Error("Search request failed");
-        const data = await res.json();
-        setResults(data);
+        const encoded = encodeURIComponent(query);
+        const [moviesRes, tvRes] = await Promise.all([
+          fetch(`http://localhost:5000/search?query=${encoded}&type=movie`),
+          fetch(`http://localhost:5000/search?query=${encoded}&type=tv`)
+        ]);
+
+        const movies = moviesRes.ok ? await moviesRes.json() : [];
+        const tvs = tvRes.ok ? await tvRes.json() : [];
+
+        const mergedMap = new Map<string | number, any>();
+        [...movies, ...tvs].forEach((item: any) => {
+          const id = item._id ?? item.id;
+          if (id != null && !mergedMap.has(id)) mergedMap.set(id, item);
+        });
+        const merged = Array.from(mergedMap.values());
+
+        setResults(merged);
         setIsVisible(true);
+
+        const r = inputRef.current?.getBoundingClientRect();
+        if (r) setRect({ top: r.top, left: r.left, width: r.width, bottom: r.bottom });
       } catch (error) {
         console.error("Search error:", error);
         setResults([]);
@@ -36,13 +56,71 @@ const PublicSearchBar: React.FC = () => {
     return () => clearTimeout(debounce);
   }, [query]);
 
+
+  useEffect(() => {
+    const updateRect = () => {
+      const r = inputRef.current?.getBoundingClientRect();
+      if (r) setRect({ top: r.top, left: r.left, width: r.width, bottom: r.bottom });
+    };
+    window.addEventListener("resize", updateRect);
+    window.addEventListener("scroll", updateRect, true);
+    return () => {
+      window.removeEventListener("resize", updateRect);
+      window.removeEventListener("scroll", updateRect, true);
+    };
+  }, []);
+
+  const dropdown = isVisible && rect ? createPortal(
+    <div
+      style={{
+        position: "fixed",
+        top: rect.bottom + 4,
+        left: rect.left,
+        width: rect.width,
+        zIndex: 999999,
+      }}
+      className="transition-all duration-200 ease-in-out"
+    >
+      {results.length > 0 && (
+        <div
+          className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
+                     shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto xl:max-h-[25rem]"
+        >
+          {results.map((item) => {
+            const id = item._id ?? item.id ?? `${item.type ?? "item"}-${item.title ?? item.name ?? Math.random()}`;
+            const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
+            const rawRating = item.vote_average ?? item.rating ?? null;
+            const ratingStr = rawRating ? (Number(rawRating) / 2).toFixed(1) : "N/A";
+
+            return (
+              <div
+                key={`${id}-${type}`}
+                className="bg-black bg-opacity-100 text-white p-3 
+                           rounded-md w-full border border-white/30 mb-2 last:mb-0"
+              >
+                <h3 className="text-sm font-semibold">{item.title || item.name}</h3>
+                <p className="text-xs italic text-gray-400">
+                  {type === "movie" ? "🎬 Movie" : "📺 TV Show"}
+                </p>
+                <p className="text-sm text-gray-300 line-clamp-4">{item.overview}</p>
+                <p className="text-yellow-400 mt-1">
+                  ⭐ {ratingStr}/5
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>,
+    document.body
+  ) : null;
+
   return (
-    <div className="relative isolate z-[300] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-[2rem] ml-4">
-      
-      {/* Search Bar */}
-      <div className="relative z-[350]">
+    <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-[2rem] ml-4">
+      <div className="relative z-[10000]">
         <InputGroup className="w-70">
           <InputGroupInput
+            ref={inputRef}
             type="text"
             placeholder="Search..."
             value={query}
@@ -55,40 +133,7 @@ const PublicSearchBar: React.FC = () => {
         </InputGroup>
       </div>
 
-      {/* Dropdown */}
-      <div
-        className={`absolute top-full left-0 right-0 mt-2 z-[400] transition-opacity transition-transform duration-200 ease-in-out
-          ${isVisible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-2 pointer-events-none"}`}
-      >
-        {results.length > 0 && (
-          <div
-            className="bg-black !bg-opacity-100 text-white rounded-md border border-white/80 shadow-2xl isolate
-                        w-[15rem] sm:w-[25rem] md:w-[30rem] mx-auto p-3
-                        max-h-[15rem] overflow-y-auto modern-scrollbar"
-            style={{ WebkitOverflowScrolling: "touch" }}
-          >
-            {results.map((movie) => (
-              <div
-                key={movie._id}
-                className="bg-black !bg-opacity-100 text-white p-3 rounded-md w-full border border-white/30 mb-2 last:mb-0"
-              >
-                <h3 className="text-sm font-semibold">{movie.title || movie.name}</h3>
-                <p className="text-xs italic text-gray-400">
-                  {movie.type === "movie" ? "🎬 Movie" : "📺 TV Show"}
-                </p>
-                <p className="text-sm text-gray-300 line-clamp-4">{movie.overview}</p>
-                <p className="text-yellow-400 mt-1">
-                  ⭐{" "}
-                  {movie.vote_average != null
-                    ? (Number(movie.vote_average) / 2).toFixed(1)
-                    : "N/A"}
-                  /5
-                </p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      {dropdown}
     </div>
   );
 };

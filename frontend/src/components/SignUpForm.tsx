@@ -130,12 +130,11 @@ const DialogSignUpForm: React.FC = () => {
       const formData = new FormData();
       for (const [key, value] of Object.entries(payload)) {
         if (Array.isArray(value)) {
-          formData.append(key, JSON.stringify(value)); 
+          formData.append(key, JSON.stringify(value));
         } else {
-          formData.append(key, String(value)); 
+          formData.append(key, String(value));
         }
       }
-
 
       if (profilePic) {
         formData.append("UserProfilePicture", profilePic);
@@ -146,6 +145,7 @@ const DialogSignUpForm: React.FC = () => {
         body: formData,
       });
 
+      const data = await res.json();
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -159,7 +159,7 @@ const DialogSignUpForm: React.FC = () => {
         UserFirstName: userFirstName.trim(),
         UserLastName: userLastName.trim(),
         UserMail: email.trim(),
-        UserProfilePic: profilePic ? `uploads/${profilePic.name}` : null,
+        UserProfilePicture: data.user.UserProfilePicture || null,
         top3Movies: [...top3Movies],
         top3TvShow: [...top3TvShow],
       };
