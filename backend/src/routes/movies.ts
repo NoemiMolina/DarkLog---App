@@ -2,7 +2,7 @@ import express from "express";
 import {
     getAllMovies,
     getMovieById,
-    getMovieByGenre,
+    getMoviesByStyle,
     addRatingToMovie,
     getRandomMovie,
     searchMovies
@@ -13,7 +13,7 @@ const router = express.Router();
 router.get("/", getAllMovies);
 router.get("/random", getRandomMovie);
 router.get("/search", searchMovies);
-router.get("/genre/:genre", getMovieByGenre);
+router.get("/style/:style", getMoviesByStyle);
 router.get("/:id", getMovieById);
 router.post("/:id/rating", addRatingToMovie);
 

@@ -152,3 +152,14 @@ export const searchTVShow = async (req: Request, res: Response) => {
     }       
 };
 
+export const getTVShowsByStyle = async (req: Request, res: Response) => {
+    try {
+        const style = req.params.style.toLowerCase();
+        const tvShows = await TVShow.find({
+            keywords: { $regex: style, $options: "i" }
+        }).limit(40);
+        res.status(200).json(tvShows);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching TV shows by style", error: err });
+    }
+};

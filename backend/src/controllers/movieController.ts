@@ -62,18 +62,19 @@ export const addRatingToMovie = async (req: Request, res: Response) => {
 };
 
 // probably useless but you never know lol
-export const getMovieByGenre = async (req: Request, res: Response) => {
-    try {
-        const genre = req.params.genre;
-        const movies = await Movie.find({ genre });
+export const getMoviesByStyle = async (req: Request, res: Response) => {
+  try {
+    const style = req.params.style.toLowerCase();
 
-        if (movies.length === 0) return res.status(404).json({ message: "Aucun film trouvé pour ce genre" });
+    const movies = await Movie.find({
+      keywords: { $regex: style, $options: "i" }
+    }).limit(40);
 
-        res.status(200).json(movies);
-    } catch (err) {
-        res.status(500).json({ message: "Erreur lors du filtrage par genre", error: err });
-    }
-}
+    res.json(movies);
+  } catch (err) {
+    res.status(500).json({ message: "Error", error: err });
+  }
+};
 
 export const getRandomMovie = async (req: Request, res: Response) => {
     try {
