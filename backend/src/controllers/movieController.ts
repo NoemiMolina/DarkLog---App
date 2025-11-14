@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import Movie from "../models/Movie.js";
-import User from "../models/User.js";
+import Movie from "../models/Movie";
+import User from "../models/User";
 import { Types } from "mongoose";
 
 interface GenreParams {

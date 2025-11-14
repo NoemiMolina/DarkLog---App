@@ -1,10 +1,10 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
-import Movie from "../models/Movie.js";
+import User from "../models/User";
+import Movie from "../models/Movie";
 import { Types } from "mongoose";
-import TVShow from "../models/TVShow.js";
+import TVShow from "../models/TVShow";
 
 
 // ------ REGISTER

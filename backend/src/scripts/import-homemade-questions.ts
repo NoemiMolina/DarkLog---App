@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
-import Quiz from "../models/Quiz.js";
+import Quiz from "../models/Quiz";
 
 dotenv.config();
 

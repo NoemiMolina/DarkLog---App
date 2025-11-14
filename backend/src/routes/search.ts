@@ -1,6 +1,6 @@
 import express from "express";
-import Movie from "../models/Movie.js";
-import TvShow from "../models/TVShow.js";
+import Movie from "../models/Movie";
+import TvShow from "../models/TVShow";
 
 const router = express.Router();
 

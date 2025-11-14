@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware } from "../middleware/authMiddleware";
 import {
     createPost,
     publishPost, // user publish a post
@@ -14,7 +14,7 @@ import {
     addReactionToComment,
     getPostsByTag,
 
-} from '../controllers/forumController.js';
+} from '../controllers/forumController';
 
 
 const router = Router();

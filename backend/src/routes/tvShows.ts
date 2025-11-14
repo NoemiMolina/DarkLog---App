@@ -7,7 +7,7 @@ import {
     addRatingToEpisode,
     searchTVShow,
     getRandomTVShow
-} from "../controllers/tvShowController.js";
+} from "../controllers/tvShowController";
 
 const router = express.Router();
 

@@ -6,7 +6,7 @@ import {
     addRatingToMovie,
     getRandomMovie,
     searchMovies
-} from "../controllers/movieController.js"
+} from "../controllers/movieController"
 
 const router = express.Router();
 

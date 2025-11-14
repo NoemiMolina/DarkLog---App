@@ -1,6 +1,6 @@
 import express from "express";
-import { authMiddleware } from "../middleware/authMiddleware.js";
-import { uploadMiddleware } from "../middleware/uploadMiddleware.js";
+import { authMiddleware } from "../middleware/authMiddleware";
+import { uploadMiddleware } from "../middleware/uploadMiddleware";
 import {
   registerUser,
   loginUser,
@@ -13,7 +13,7 @@ import {
   deleteATvShowFromWatchlist,
   addAMovieToTop3Favorites,
   addATvShowToTop3Favorites
-} from "../controllers/userController.js"
+} from "../controllers/userController"
 
 const router = express.Router();
 

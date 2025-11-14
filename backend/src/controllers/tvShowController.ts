@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import TVShow from "../models/TVShow.js";
+import TVShow from "../models/TVShow";
 import { Types } from "mongoose";
-import User from "../models/User.js";
+import User from "../models/User";
 
 export const getAllTVShows = async (req: Request, res: Response) => {
     try {

@@ -1,6 +1,6 @@
 // trivia api is nice but cannot filter only for horror movies/tv shows, so let's make our own quiz questions for that
 import type { Request, Response } from "express";
-import Quiz from "../models/Quiz.js";
+import Quiz from "../models/Quiz";
 
 export const getQuizzes = async (req: Request, res: Response) => {
   try {

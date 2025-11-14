@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import Forum from '../models/Forum.js';
+import Forum from '../models/Forum';
 
 const getUserId = (req: Request) => (req as any).userId || (req as any).user?.id || (req as any).user?._id;
 
