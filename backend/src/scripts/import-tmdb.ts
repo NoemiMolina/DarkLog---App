@@ -20,7 +20,14 @@ const filmSchema = new mongoose.Schema(
     vote_count: Number,
     genre_ids: [Number],
     poster_path: String,
-    keywords: [String], 
+    keywords: [String],
+    platforms: [
+      {
+        provider_id: Number,
+        provider_name: String,
+        logo_path: String,
+      }
+    ],
     raw: Object,
   },
   { timestamps: true }
@@ -55,6 +62,27 @@ async function fetchKeywords(movieId: number): Promise<string[]> {
   }
 }
 
+async function fetchPlatforms(type: "movie" | "tv", id: number) {
+  const url = `https://api.themoviedb.org/3/${type}/${id}/watch/providers`;
+
+  try {
+    const res = await axios.get(url, { params: { api_key: TMDB_KEY } });
+
+    const fr = res.data.results?.FR;
+    if (!fr || !fr.flatrate) return [];
+
+    return fr.flatrate.map((p: any) => ({
+      provider_id: p.provider_id,
+      provider_name: p.provider_name,
+      logo_path: p.logo_path,
+    }));
+  } catch (err) {
+    console.error(`❌ Error fetching platforms for ${type} ${id}`, err);
+    return [];
+  }
+}
+
+
 async function main() {
   await mongoose.connect(
     process.env.MONGO_URI || "mongodb://localhost:27017/horror_movies_db"
@@ -70,6 +98,7 @@ async function main() {
 
   for (const item of first.results) {
     const keywords = await fetchKeywords(item.id);
+    const platforms = await fetchPlatforms("movie", item.id);
 
     await Film.updateOne(
       { tmdb_id: item.id },
@@ -85,7 +114,8 @@ async function main() {
           vote_count: item.vote_count,
           genre_ids: item.genre_ids,
           poster_path: item.poster_path,
-          keywords, 
+          keywords,
+          platforms,
           raw: item,
         },
       },
@@ -114,7 +144,7 @@ async function main() {
             vote_count: item.vote_count,
             genre_ids: item.genre_ids,
             poster_path: item.poster_path,
-            keywords, 
+            keywords,
             raw: item,
           },
         },

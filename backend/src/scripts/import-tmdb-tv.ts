@@ -117,6 +117,27 @@ async function fetchKeywords(tvId: number): Promise<string[]> {
   }
 }
 
+async function fetchPlatforms(type: "movie" | "tv", id: number) {
+  const url = `https://api.themoviedb.org/3/${type}/${id}/watch/providers`;
+
+  try {
+    const res = await axios.get(url, { params: { api_key: TMDB_KEY } });
+
+    const fr = res.data.results?.FR;
+    if (!fr || !fr.flatrate) return [];
+
+    return fr.flatrate.map((p: any) => ({
+      provider_id: p.provider_id,
+      provider_name: p.provider_name,
+      logo_path: p.logo_path,
+    }));
+  } catch (err) {
+    console.error(`❌ Error fetching platforms for ${type} ${id}`, err);
+    return [];
+  }
+}
+
+
 async function main() {
   await mongoose.connect(MONGO_URI);
   console.log("Connecté à MongoDB pour TV shows");
@@ -133,6 +154,7 @@ async function main() {
 
       const keywords = await fetchKeywords(item.id);
       const seasonsData = await fetchSeasons(item.id);
+      const platforms = await fetchPlatforms("tv", item.id);
       const seasons: Season[] = [];
 
       for (const season of seasonsData) {
@@ -172,7 +194,7 @@ async function main() {
             genre_ids: item.genre_ids,
             poster_path: item.poster_path,
             keywords,
-
+            platforms,
             seasons,
             raw: item,
           },
