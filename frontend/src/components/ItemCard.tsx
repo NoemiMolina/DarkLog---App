@@ -105,6 +105,41 @@ export default function ItemCard({ item, type }: ItemCardProps) {
       <div className="w-full md:w-2/3 space-y-4">
         <p className="text-gray-300 italic">Release year : {releaseYear}</p>
         <p className="text-sm md:text-base leading-relaxed">{item.overview}</p>
+
+        <div className="mt-4">
+          <h3 className="font-semibold mb-2">Main cast:</h3>
+
+          {item.cast?.length > 0 ? (
+            <div className="flex flex-wrap gap-4">
+              {item.cast.slice(0, 10).map((actor: any) => (
+                <div
+                  key={actor._id || actor.name}
+                  className="flex flex-col items-center w-20"
+                >
+                  <img
+                    src={
+                      actor.profile_path
+                        ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                        : "https://via.placeholder.com/100x100?text=?"
+                    }
+                    alt={actor.name}
+                    className="w-16 h-16 rounded-full object-cover border border-gray-600 shadow-md"
+                  />
+
+                  <p className="text-xs text-center mt-2 leading-tight">
+                    {actor.name}
+                  </p>
+
+                  <p className="text-[10px] text-gray-400 text-center leading-tight">
+                    {actor.character}
+                  </p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm">No cast information available.</p>
+          )}
+        </div>
         <div>
           <h3 className="font-semibold mb-2">Available on:</h3>
           {item.platforms?.length > 0 ? (

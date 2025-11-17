@@ -21,8 +21,6 @@ const PublicSearchBar: React.FC = () => {
   } | null>(null);
   const triggerRef = useRef<HTMLDivElement | null>(null);
 
-
-  // NEW : pour ouvrir ItemDialog sans le mettre dans la dropdown
   const [dialogData, setDialogData] = useState<{
     trigger: React.ReactNode | null;
     item: any;
@@ -97,7 +95,6 @@ const PublicSearchBar: React.FC = () => {
 
   useEffect(() => {
   if (dialogData.trigger && triggerRef.current) {
-    console.log("🔥 Auto-click sur trigger → ouverture du dialog");
     triggerRef.current.click();
   }
 }, [dialogData]);
@@ -143,7 +140,6 @@ const PublicSearchBar: React.FC = () => {
                rounded-md w-full border border-white/30 mb-2 last:mb-0 cursor-pointer hover:bg-white/10"
                     onClick={() => {
                       console.log("Clicked item:", item);
-                      // ⭐ On ENREGISTRE le trigger ici (un div invisible)
                       setDialogData({
                         trigger: (
                           <div
@@ -151,12 +147,10 @@ const PublicSearchBar: React.FC = () => {
                             style={{ width: 1, height: 1 }}
                             className="invisible"
                           />
-                        ), // indispensable pour shadcn
+                        ),
                         item,
                         type,
                       });
-
-                      // 🧽 On ferme la searchbar
                       setIsVisible(false);
                       setQuery("");
                       setResults([]);
