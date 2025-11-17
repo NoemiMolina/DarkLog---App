@@ -28,8 +28,17 @@ const filmSchema = new mongoose.Schema(
         logo_path: String,
       }
     ],
+    cast: [
+      {
+        name: String,
+        character: String,
+        profile_path: String,
+      }
+    ],
     raw: Object,
+
   },
+
   { timestamps: true }
 );
 
@@ -82,6 +91,21 @@ async function fetchPlatforms(type: "movie" | "tv", id: number) {
   }
 }
 
+async function fetchCast(movieId: number) {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${TMDB_KEY}`;
+  try {
+    const res = await axios.get(url);
+
+    return res.data.cast.slice(0, 10).map((actor: any) => ({
+      name: actor.name,
+      character: actor.character,
+      profile_path: actor.profile_path,
+    }));
+  } catch (err) {
+    console.error("❌ Error fetching cast for movie", movieId, err);
+    return [];
+  }
+}
 
 async function main() {
   await mongoose.connect(
@@ -99,6 +123,7 @@ async function main() {
   for (const item of first.results) {
     const keywords = await fetchKeywords(item.id);
     const platforms = await fetchPlatforms("movie", item.id);
+    const cast = await fetchCast(item.id);
 
     await Film.updateOne(
       { tmdb_id: item.id },
@@ -116,6 +141,7 @@ async function main() {
           poster_path: item.poster_path,
           keywords,
           platforms,
+          cast,
           raw: item,
         },
       },

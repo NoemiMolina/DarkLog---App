@@ -39,7 +39,20 @@ const tvSchema = new mongoose.Schema(
     genre_ids: [Number],
     poster_path: String,
     keywords: [String],
-
+    cast: [
+      {
+        name: String,
+        character: String,
+        profile_path: String,
+      }
+    ],
+    platforms: [
+      {
+        provider_id: Number,
+        provider_name: String,
+        logo_path: String,
+      }
+    ],
     seasons: [
       new mongoose.Schema(
         {
@@ -137,6 +150,22 @@ async function fetchPlatforms(type: "movie" | "tv", id: number) {
   }
 }
 
+async function fetchCast(tvId: number) {
+  const url = `https://api.themoviedb.org/3/tv/${tvId}/credits?api_key=${TMDB_KEY}`;
+  try {
+    const res = await axios.get(url);
+
+    return res.data.cast.slice(0, 10).map((actor: any) => ({
+      name: actor.name,
+      character: actor.character,
+      profile_path: actor.profile_path,
+    }));
+  } catch (err) {
+    console.error("❌ Error fetching cast for TV show", tvId, err);
+    return [];
+  }
+}
+
 
 async function main() {
   await mongoose.connect(MONGO_URI);
@@ -155,6 +184,7 @@ async function main() {
       const keywords = await fetchKeywords(item.id);
       const seasonsData = await fetchSeasons(item.id);
       const platforms = await fetchPlatforms("tv", item.id);
+      const cast = await fetchCast(item.id);
       const seasons: Season[] = [];
 
       for (const season of seasonsData) {
@@ -195,6 +225,7 @@ async function main() {
             poster_path: item.poster_path,
             keywords,
             platforms,
+            cast,
             seasons,
             raw: item,
           },
