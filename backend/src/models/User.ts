@@ -35,7 +35,20 @@ export interface IUser extends Document {
     Friends: Types.ObjectId[];
     BlockedUsers: Types.ObjectId[];
     UserBadge: string;
-
+    RatedMovies: {
+        movieId: string;
+        rating: number;
+    }[];
+    RatedTvShows: {
+        tvShowId: string;
+        rating: number;
+    }[];
+    Reviews: {
+        itemId: string;
+        type: "movie" | "tv";
+        text: string;
+        date: Date;
+    }[];
 };
 
 const TopMovieSchema: Schema = new Schema({
@@ -67,6 +80,20 @@ const UserSchema: Schema = new Schema({
     NumberOfGivenReviews: { type: Number, default: 0 },
     AverageMovieRating: { type: Number, default: 0 },
     AverageTvShowRating: { type: Number, default: 0 },
+    RatedMovies: [{
+        movieId: { type: String },
+        rating: { type: Number }
+    }],
+    RatedTvShows: [{
+        tvShowId: { type: String },
+        rating: { type: Number }
+    }],
+    Reviews: [{
+        itemId: { type: String },
+        type: { type: String, enum: ["movie", "tv"] },
+        text: { type: String },
+        date: { type: Date, default: Date.now }
+    }],
     LastWatchedMovie: { type: String, default: "" },
     MovieWatchlist: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
     TvShowWatchlist: [{ type: Schema.Types.ObjectId, ref: "TV" }],

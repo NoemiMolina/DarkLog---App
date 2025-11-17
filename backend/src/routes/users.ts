@@ -12,13 +12,15 @@ import {
   deleteAMovieFromWatchlist,
   deleteATvShowFromWatchlist,
   addAMovieToTop3Favorites,
-  addATvShowToTop3Favorites
+  addATvShowToTop3Favorites,
+  saveRatingAndReview,
 } from "../controllers/userController"
 
 const router = express.Router();
 
 router.post("/register", uploadMiddleware.single("UserProfilePicture"), registerUser);
 router.post("/login", loginUser);
+router.post("/:userId/rate/:itemId", authMiddleware, saveRatingAndReview);
 router.post("/:userId/top3favorites/movie/:movieId", authMiddleware, addAMovieToTop3Favorites);
 router.post("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, addATvShowToTop3Favorites);
 router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);

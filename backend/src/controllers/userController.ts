@@ -265,3 +265,60 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
         res.status(500).json({ message: "Error while adding a TV Show to your Top 3 favorites", error: err });
     }
 }
+
+export const saveRatingAndReview = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const { itemId, type, rating, reviewText } = req.body;
+
+        if (!["movie", "tv"].includes(type))
+            return res.status(400).json({ message: "Invalid type" });
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        if (type === "movie") {
+            const existing = user.RatedMovies.find(
+                (r: any) => r.movieId.toString() === itemId
+            );
+
+            if (existing) existing.rating = rating;
+            else user.RatedMovies.push({ movieId: itemId, rating });
+
+            user.NumberOfWatchedMovies = user.RatedMovies.length;
+            user.AverageMovieRating =
+                user.RatedMovies.reduce((acc: number, r: any) => acc + r.rating, 0) /
+                user.RatedMovies.length;
+        }
+
+        if (type === "tv") {
+            const existing = user.RatedTvShows.find(
+                (r: any) => r.tvShowId.toString() === itemId
+            );
+
+            if (existing) existing.rating = rating;
+            else user.RatedTvShows.push({ tvShowId: itemId, rating });
+            user.NumberOfWatchedTvShows = user.RatedTvShows.length;
+            user.AverageTvShowRating =
+                user.RatedTvShows.reduce((acc: number, r: any) => acc + r.rating, 0) /
+                user.RatedTvShows.length;
+        }
+        if (reviewText && reviewText.trim().length > 0) {
+            user.Reviews.push({
+                itemId,
+                type,
+                text: reviewText,
+                date: new Date(),
+            });
+
+            user.NumberOfGivenReviews = user.Reviews.length;
+        }
+
+        await user.save();
+
+        res.status(200).json({ message: "Saved successfully", user });
+
+    } catch (err) {
+        console.error("❌ Error saving rating:", err);
+        res.status(500).json({ message: "Saving error", error: err });
+    }
+};
