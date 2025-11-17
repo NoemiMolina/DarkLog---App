@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               Forum
             </Button>
 
-            <div className="flex items-center gap-2 mt-9 xl:translate-y-[-17px]">
+            <div className="flex items-center gap-2 mt-9 px-6 z-50 xl:translate-y-[-17px]">
               <Switch
                 id="tv-shows-switch"
                 className="mt-9"
@@ -82,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
 
               <Label
                 htmlFor="tv-shows-switch"
-                className="mt-10 text-white text-sm font-semibold z-50"
+                className="mt-9 text-white text-sm font-semibold z-50"
               >
                 {isTVShowMode ? "Movies" : "TV Shows"}
               </Label>

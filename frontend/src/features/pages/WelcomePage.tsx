@@ -73,8 +73,7 @@ const WelcomePage: React.FC = () => {
                         className="flex items-center justify-center gap-3 mb-90 text-white xl:mt-5"
                         style={{ gap: "var(--join-gap, 0.5rem)" }}
                     >
-                        <span className="font-small">Join us on</span>
-
+                    
                         <a
                             href="#"
                             aria-label="Instagram"

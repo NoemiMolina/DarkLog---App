@@ -1,0 +1,176 @@
+import { useState } from "react";
+import RatingStars from "./RatingStars";
+
+interface ItemCardProps {
+  item: any;
+  type: "movie" | "tv";
+}
+
+export default function ItemCard({ item, type }: ItemCardProps) {
+  const [rating, setRating] = useState<number>(item.myRating || 0);
+  const [review, setReview] = useState<string>("");
+  const [message, setMessage] = useState<string | null>(null);
+  const storedUser = localStorage.getItem("user");
+  const user = storedUser ? JSON.parse(storedUser) : null;
+  const userId = user?._id;
+  const token = localStorage.getItem("token");
+
+  const poster = item.poster_path
+    ? (item.poster_path.startsWith("http")
+      ? item.poster_path
+      : `https://image.tmdb.org/t/p/w500${item.poster_path}`)
+    : null;
+
+  const releaseYear =
+    type === "movie"
+      ? item.release_date?.slice(0, 4)
+      : item.first_air_date?.slice(0, 4);
+
+  function showMessage(text: string) {
+    setMessage(text);
+    setTimeout(() => setMessage(null), 2000);
+  }
+
+  async function handleSave() {
+    if (!userId) return;
+
+    try {
+      await fetch(
+        `http://localhost:5000/users/${userId}/rate/${item._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            type,
+            rating,
+            reviewText: review
+          })
+        }
+      );
+
+      showMessage("✔ Successfully saved!");
+
+    } catch (err) {
+      console.error(err);
+      showMessage("❌ Error saving.");
+    }
+  }
+
+  async function handleAddToWatchlist() {
+    if (!userId) {
+      console.error("❌ userId missing in localStorage");
+      return;
+    }
+
+    const route =
+      type === "movie"
+        ? `http://localhost:5000/users/${userId}/watchlist/${item._id}`
+        : `http://localhost:5000/users/${userId}/watchlist/${item._id}`;
+
+    try {
+      const res = await fetch(route, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+      console.log("🎉 Watchlist updated:", data);
+      showMessage("🎬 Successfully added to watchlist!");
+
+    } catch (err) {
+      console.error("❌ Error adding to watchlist:", err);
+      showMessage("❌ Error adding to watchlist.");
+    }
+  }
+
+  return (
+    <div className="flex flex-col md:flex-row gap-5 mt-2">
+      <div className="w-full md:w-1/3 flex justify-center">
+        {poster ? (
+          <img
+            src={poster}
+            alt={item.title || item.name}
+            className="xl:rounded-lg xl:w-70 xl:h-100 xl:mt-11"
+          />
+        ) : (
+          <div className="w-64 h-96 bg-gray-700 rounded-lg" />
+        )}
+      </div>
+
+      <div className="w-full md:w-2/3 space-y-4">
+        <p className="text-gray-300 italic">Release year : {releaseYear}</p>
+        <p className="text-sm md:text-base leading-relaxed">{item.overview}</p>
+        <div>
+          <h3 className="font-semibold mb-2">Available on:</h3>
+          {item.platforms?.length > 0 ? (
+            <div className="flex flex-wrap gap-3">
+              {item.platforms.map((p: any) => (
+                <div
+                  key={p.provider_id}
+                  className="flex items-center gap-2 bg-gray-800 px-3 py-1 rounded-lg"
+                >
+                  {p.logo_path && (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w45${p.logo_path}`}
+                      className="w-5 h-5"
+                    />
+                  )}
+                  <span>{p.provider_name}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-sm">
+              Not available on any platform for now, sorry.
+            </p>
+          )}
+        </div>
+        <div>
+          <h3 className="font-semibold mb-1">Your rating:</h3>
+          <RatingStars
+            value={rating}
+            onChange={(r) => {
+              console.log("Rating set:", r);
+              setRating(r);
+            }}
+          />
+        </div>
+        <div className="mt-4">
+          <h3 className="font-semibold mb-1">Write a review:</h3>
+          <textarea
+            className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-sm"
+            rows={4}
+            placeholder="Share your thoughts…"
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+          />
+        </div>
+        <div className="flex gap-4 mt-4">
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition font-semibold text-white"
+          >
+            Save
+          </button>
+
+          <button
+            onClick={handleAddToWatchlist}
+            className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition font-semibold text-white"
+          >
+            + Add to watchlist
+          </button>
+        </div>
+        {message && (
+          <p className="text-green-400 text-sm mt-2">
+            {message}
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
