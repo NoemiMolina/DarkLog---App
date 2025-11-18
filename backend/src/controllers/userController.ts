@@ -144,6 +144,20 @@ export const blockAnUser = async (req: Request, res: Response) => {
     }
 }
 
+//------------ USER UNBLOCKS ANOTHER USER
+export const unblockAnUser = async (req: Request, res: Response) => {
+    try {
+        const { userId, blockedUserId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        user.BlockedUsers = user.BlockedUsers.filter(id => id.toString() !== blockedUserId);
+        await user.save();
+        res.status(200).json({ message: "User successfully unblocked", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while unblocking", error: err });
+    }
+};
+
 // --------- USER ADDS A MOVIE TO ITS WATCHLIST
 export const addAMovieToWatchlist = async (req: Request, res: Response) => {
     try {
@@ -266,6 +280,7 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
     }
 }
 
+// ------------- SAVE RATING AND REVIEW
 export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
@@ -320,5 +335,59 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
     } catch (err) {
         console.error("❌ Error saving rating:", err);
         res.status(500).json({ message: "Saving error", error: err });
+    }
+};
+
+// ------------- UPDATE PROFILE INFOS
+export const updateProfileInfos = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const { UserFirstName, UserLastName, UserPseudo, UserLocation, UserAge } = req.body;
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        user.UserFirstName = UserFirstName || user.UserFirstName;
+        user.UserLastName = UserLastName || user.UserLastName;
+        user.UserPseudo = UserPseudo || user.UserPseudo;
+        user.UserLocation = UserLocation || user.UserLocation;
+        user.UserAge = UserAge || user.UserAge;
+        await user.save();
+
+        res.status(200).json({ message: "Profile updated successfully", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while updating profile", error: err });
+    }
+};
+
+// ------------- UPDATE PASSWORD
+export const updatePassword = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const { oldPassword, newPassword } = req.body;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        const isMatch = await bcrypt.compare(oldPassword, user.UserPassword);
+        if (!isMatch) return res.status(401).json({ message: "Old password is incorrect" });
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.UserPassword = hashedNewPassword;
+        await user.save();
+        res.status(200).json({ message: "Password updated successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Error while updating password", error: err });
+    }
+};
+
+// ------------- UPDATE PROFILE PICTURE
+export const updateProfilePicture = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        const profilePicUrl = req.file ? `uploads/${req.file.filename}` : null;
+        user.UserProfilePicture = profilePicUrl || user.UserProfilePicture;
+        await user.save();
+        res.status(200).json({ message: "Profile picture updated successfully", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while updating profile picture", error: err });
     }
 };
