@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WelcomePage from "./features/pages/WelcomePage";
 import HomePage from "./features/pages/HomePage";
+import UserProfile from './features/pages/UserProfile';
 
 export default function App() {
   return (
@@ -9,6 +10,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<WelcomePage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/profile" element={<UserProfile />} />
         </Routes>
       </div>
     </BrowserRouter>

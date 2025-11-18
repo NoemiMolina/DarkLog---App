@@ -8,7 +8,7 @@ import { Button } from '../components/ui/button';
 import { Label } from "../components/ui/label";
 import { Switch } from "../components/ui/switch";
 import { MdOutlinePersonSearch } from "react-icons/md";
-import { IoSearchOutline } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   username?: string;
@@ -20,6 +20,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onLogOut, onToggleTVShowMode, isTVShowMode }) => {
   console.log("🧩 userProfilePicture =", userProfilePicture);
+  const navigate = useNavigate();
 
   return (
     <header className="text-center -translate-y-[20px] flex flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-5 xl:space-x-6 xl:p-8 xl:mt-4 xl:translate-y-5">
@@ -40,7 +41,10 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
           </>
         ) : (
           <>
-            <div className="flex flex-row items-center gap-2 mt-9">
+            <div 
+            className="flex flex-row items-center gap-2 mt-9"
+            onClick={() => navigate('/profile')}
+            >
               {userProfilePicture ? (
                 <img
                   src={
