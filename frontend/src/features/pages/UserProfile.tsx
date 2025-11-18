@@ -4,7 +4,15 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Separator } from '../../components/ui/separator';
-import { Eye, EyeOff, Save, Trash2, Plus } from 'lucide-react';
+import { Eye, EyeOff, Save, Trash2 } from 'lucide-react';
+import { IoSearch } from "react-icons/io5";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from '../../components/ui/dialog';
 import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
@@ -38,7 +46,11 @@ const UserProfile: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [loading, setLoading] = useState(true);
-  
+  const [showMovieSearch, setShowMovieSearch] = useState(false);
+  const [showTvShowSearch, setShowTvShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   let userId: string | undefined;
@@ -73,17 +85,17 @@ const UserProfile: React.FC = () => {
 
     try {
       console.log(`📡 Fetching: http://localhost:5000/users/${userId}/profile`);
-      
+
       const response = await fetch(`http://localhost:5000/users/${userId}/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       console.log("✅ Profile data received:", data);
       setProfileData(data);
@@ -147,6 +159,65 @@ const UserProfile: React.FC = () => {
     return <div className="flex justify-center items-center h-screen text-white">No profile data</div>;
   }
 
+  const handleSearch = async (type: 'movie' | 'tv') => {
+    if (!searchQuery.trim()) return;
+
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/${type}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${searchQuery}`
+      );
+      const data = await response.json();
+      setSearchResults(data.results.slice(0, 10));
+    } catch (error) {
+      console.error('Error searching:', error);
+    }
+  };
+
+  const handleAddToTop3 = async (item: any, type: 'movie' | 'tv') => {
+    if (!userId) return;
+
+    try {
+      const createResponse = await fetch(`http://localhost:5000/${type === 'movie' ? 'movies' : 'tvshows'}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          tmdb_id: item.id,
+          title: item.title || item.name,
+          poster_path: item.poster_path,
+          year: new Date(item.release_date || item.first_air_date).getFullYear(),
+          genres: item.genre_ids || [],
+        }),
+      });
+
+      const createdItem = await createResponse.json();
+      const itemId = createdItem._id || createdItem.id;
+      const addResponse = await fetch(
+        `http://localhost:5000/users/${userId}/${type === 'movie' ? 'add-movie-to-top3' : 'add-tvshow-to-top3'}/${itemId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (addResponse.ok) {
+        alert(`${item.title || item.name} added to Top 3!`);
+        setShowMovieSearch(false);
+        setShowTvShowSearch(false);
+        setSearchQuery('');
+        setSearchResults([]);
+        fetchProfileData();
+      }
+    } catch (error) {
+      console.error('Error adding to Top 3:', error);
+    }
+  };
+
+
   return (
     <div className="container mx-auto p-6 space-y-8 max-w-6xl">
       <Card className="bg-[#2A2A2A] border-white/20 text-white">
@@ -170,6 +241,8 @@ const UserProfile: React.FC = () => {
                 </div>
               )}
             </div>
+
+            {/* profile */}
 
             <div className="flex-1 grid grid-cols-2 gap-4">
               <div>
@@ -212,13 +285,14 @@ const UserProfile: React.FC = () => {
             </div>
           </div>
 
+          {/* edit password */}
           {isEditing && (
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label>Password</Label>
                 <div className="relative">
                   <Input
-                    type={showPassword ? 'text' : 'password' }
+                    type={showPassword ? 'text' : 'password'}
                     value={profileData.userPassword || ''}
                     onChange={(e) => handleInputChange('userPassword', e.target.value)}
                     className="bg-[#1A1A1A] border-white/20 text-white pr-10"
@@ -265,42 +339,184 @@ const UserProfile: React.FC = () => {
 
       <Separator className="bg-white/20" />
 
+      {/* top 3 */}
+
       <Card className="bg-[#2A2A2A] border-white/20 text-white">
         <CardHeader>
           <CardTitle className="text-2xl">My Top 3</CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div>
-            <h3 className="text-xl mb-4">Top 3 Movies</h3>
-            <div className="grid grid-cols-3 gap-4">
-              {profileData.top3Movies.map((movie, index) => (
-                <div key={movie.id} className="relative group">
-                  <img src={movie.poster} alt={movie.title} className="w-full rounded-lg" />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <p className="text-white font-semibold">#{index + 1} {movie.title}</p>
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-2xl border border-purple-500/20">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              🎬 Top 3 Favorite Movies
+            </h2>
+
+            {profileData.top3Movies.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-400 mb-4">You haven't added your Top 3 movies yet</p>
+                <button
+                  onClick={() => setShowMovieSearch(true)}
+                  className="bg-purple-600 px-6 py-3 rounded-lg hover:bg-purple-700 transition"
+                >
+                  ➕ Add Your Top 3 Movies
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 gap-6">
+                {profileData.top3Movies.map((movie) => (
+                  <div key={movie.id} className="relative group">
+                    <img
+                      src={movie.poster || '/placeholder-movie.png'}
+                      alt={movie.title}
+                      className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                    />
+
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+                {profileData.top3Movies.length < 3 && (
+                  <button
+                    onClick={() => setShowMovieSearch(true)}
+                    className="w-full h-80 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                  >
+                    <span className="text-6xl mb-2">➕</span>
+                    <span className="text-gray-400">Add Movie</span>
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
-          <div>
-            <h3 className="text-xl mb-4">Top 3 TV Shows</h3>
-            <div className="grid grid-cols-3 gap-4">
-              {profileData.top3TvShows.map((show, index) => (
-                <div key={show.id} className="relative group">
-                  <img src={show.poster} alt={show.title} className="w-full rounded-lg" />
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <p className="text-white font-semibold">#{index + 1} {show.title}</p>
+
+          <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-2xl border border-purple-500/20">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              📺 Top 3 Favorite TV Shows
+            </h2>
+
+            {profileData.top3TvShows.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-400 mb-4">You haven't added your Top 3 TV shows yet</p>
+                <button
+                  onClick={() => setShowTvShowSearch(true)}
+                  className="bg-purple-600 px-6 py-3 rounded-lg hover:bg-purple-700 transition"
+                >
+                  ➕ Add Your Top 3 TV Shows
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 gap-6">
+                {profileData.top3TvShows.map((show) => (
+                  <div key={show.id} className="relative group">
+                    <img
+                      src={show.poster || '/placeholder-tv.png'}
+                      alt={show.title}
+                      className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                    />
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+                {profileData.top3TvShows.length < 3 && (
+                  <button
+                    onClick={() => setShowTvShowSearch(true)}
+                    className="w-full h-80 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                  >
+                    <span className="text-6xl mb-2">➕</span>
+                    <span className="text-gray-400">Add TV Show</span>
+                  </button>
+                )}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
 
+      {/* search dialogs */}
+
+      <Dialog open={showMovieSearch} onOpenChange={setShowMovieSearch}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Search Movies</DialogTitle>
+            <DialogDescription>
+              Search for a movie to add to your Top 3 favorites
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex gap-2 mb-6">
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch('movie')}
+              placeholder="Search for a movie..."
+              className="flex-1"
+            />
+            <Button onClick={() => handleSearch('movie')}>
+              <IoSearch />
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {searchResults.map((movie) => (
+              <div
+                key={movie.id}
+                className="cursor-pointer hover:scale-105 transition"
+                onClick={() => handleAddToTop3(movie, 'movie')}
+              >
+                <img
+                  src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/placeholder-movie.png'}
+                  alt={movie.title}
+                  className="w-full object-cover rounded-lg"
+                />
+                <p className="text-sm mt-2 text-center">{movie.title}</p>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showTvShowSearch} onOpenChange={setShowTvShowSearch}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Search TV Shows</DialogTitle>
+            <DialogDescription>
+              Search for a TV show to add to your Top 3 favorites
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex gap-2 mb-6">
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch('tv')}
+              placeholder="Search for a TV show..."
+              className="flex-1"
+            />
+            <Button onClick={() => handleSearch('tv')}>
+              <IoSearch />
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {searchResults.map((show) => (
+              <div
+                key={show.id}
+                className="cursor-pointer hover:scale-105 transition"
+                onClick={() => handleAddToTop3(show, 'tv')}
+              >
+                <img
+                  src={show.poster_path ? `https://image.tmdb.org/t/p/w500${show.poster_path}` : '/placeholder-tv.png'}
+                  alt={show.name}
+                  className="w-full object-cover rounded-lg"
+                />
+                <p className="text-sm mt-2 text-center">{show.name}</p>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <Separator className="bg-white/20" />
+
+      {/* watchlist */}
 
       <Card className="bg-[#2A2A2A] border-white/20 text-white">
         <CardHeader>
@@ -345,7 +561,8 @@ const UserProfile: React.FC = () => {
 
       <Separator className="bg-white/20" />
 
-      {/* Stats */}
+      {/* stats */}
+
       <Card className="bg-[#2A2A2A] border-white/20 text-white">
         <CardHeader>
           <CardTitle className="text-2xl">My Stats</CardTitle>
