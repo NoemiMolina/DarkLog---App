@@ -17,13 +17,15 @@ import {
   updateProfileInfos,
   updatePassword,
   updateProfilePicture,
-  unblockAnUser
+  unblockAnUser,
+  getUserProfile
 } from "../controllers/userController"
 
 const router = express.Router();
 
 router.post("/register", uploadMiddleware.single("UserProfilePicture"), registerUser);
 router.post("/login", loginUser);
+router.get("/:userId/profile", authMiddleware, getUserProfile);
 router.put("/:userId/profile", authMiddleware, uploadMiddleware.single("UserProfilePicture"), updateProfileInfos);
 router.put("/:userId/password", authMiddleware, updatePassword);
 router.put("/:userId/profile-picture", authMiddleware, uploadMiddleware.single("UserProfilePicture"), updateProfilePicture);

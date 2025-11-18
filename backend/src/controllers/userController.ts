@@ -280,6 +280,76 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
     }
 }
 
+// ----------- GETS PROFILE
+export const getUserProfile = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        
+        const user = await User.findById(userId)
+            .populate('MovieWatchlist')
+            .populate('TvShowWatchlist');
+        
+        if (!user) return res.status(404).json({ message: "User not found" });
+        const numberOfWatchedMovies = user.RatedMovies?.length || 0;
+        const numberOfWatchedTvShows = user.RatedTvShows?.length || 0;
+        const numberOfGivenReviews = user.Reviews?.length || 0;
+
+        const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
+            ? user.RatedMovies.reduce((sum: number, item: any) => sum + item.rating, 0) / user.RatedMovies.length
+            : 0;
+
+        const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
+            ? user.RatedTvShows.reduce((sum: number, item: any) => sum + item.rating, 0) / user.RatedTvShows.length
+            : 0;
+        const lastWatchedMovie = user.RatedMovies && user.RatedMovies.length > 0
+            ? await Movie.findById(user.RatedMovies[user.RatedMovies.length - 1].movieId)
+            : null;
+        const profileData = {
+            userProfilePicture: user.UserProfilePicture,
+            userFirstName: user.UserFirstName,
+            userLastName: user.UserLastName,
+            userPseudo: user.UserPseudo,
+            userMail: user.UserMail,
+            userPassword: '',
+            top3Movies: user.Top3Movies.map((m: any) => ({
+                id: m.MovieID,
+                title: m.MovieName,
+                poster: `https://image.tmdb.org/t/p/w500${m.MoviePoster || ''}`
+            })),
+            top3TvShows: user.Top3TvShow.map((tv: any) => ({
+                id: tv.TvShowID,
+                title: tv.TvShowName,
+                poster: `https://image.tmdb.org/t/p/w500${tv.TvShowPoster || ''}`
+            })),
+            movieWatchlist: (user.MovieWatchlist as any[]).map((movie: any) => ({
+                id: movie._id,
+                title: movie.title,
+                poster: `https://image.tmdb.org/t/p/w500${movie.poster_path || ''}`
+            })),
+            tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
+                id: show._id,
+                title: show.name,
+                poster: `https://image.tmdb.org/t/p/w500${show.poster_path || ''}`
+            })),
+            numberOfWatchedMovies,
+            numberOfWatchedTvShows,
+            numberOfGivenReviews,
+            averageMovieRating: Number(averageMovieRating.toFixed(1)),
+            averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
+            lastWatchedMovie: lastWatchedMovie ? {
+                id: lastWatchedMovie._id,
+                title: lastWatchedMovie.title,
+                poster: `https://image.tmdb.org/t/p/w500${(lastWatchedMovie as any).poster_path || ''}`
+            } : null
+        };
+
+        res.status(200).json(profileData);
+    } catch (err) {
+        console.error("❌ Error fetching profile:", err);
+        res.status(500).json({ message: "Error while fetching profile", error: err });
+    }
+};
+
 // ------------- SAVE RATING AND REVIEW
 export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
