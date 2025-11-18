@@ -30,8 +30,8 @@ export interface IUser extends Document {
     LastWatchedMovie: string;
     MovieWatchlist: Types.ObjectId[];
     TvShowWatchlist: Types.ObjectId[];
-    Top3Movies: ITopMovie[];
-    Top3TvShow: ITopTvShow[];
+    Top3Movies: Types.ObjectId[];
+    Top3TvShow: Types.ObjectId[];
     Friends: Types.ObjectId[];
     BlockedUsers: Types.ObjectId[];
     UserBadge: string;
@@ -50,20 +50,6 @@ export interface IUser extends Document {
         date: Date;
     }[];
 };
-
-const TopMovieSchema: Schema = new Schema({
-    MovieID: { type: Schema.Types.ObjectId, ref: "Movie", required: true },
-    MovieName: { type: String, required: true },
-    MovieGenre: { type: String, required: true },
-    TW: { type: [String], default: [] },
-});
-
-const TopTvShowSchema: Schema = new Schema({
-    TvShowID: { type: Schema.Types.ObjectId, ref: "TV", required: true },
-    TvShowName: { type: String, required: true },
-    TvShowGenre: { type: String, required: true },
-    TW: { type: [String], default: [] },
-})
 
 const UserSchema: Schema = new Schema({
     UserFirstName: { type: String, required: true },
@@ -96,9 +82,9 @@ const UserSchema: Schema = new Schema({
     }],
     LastWatchedMovie: { type: String, default: "" },
     MovieWatchlist: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
-    TvShowWatchlist: [{ type: Schema.Types.ObjectId, ref: "TV" }],
-    Top3Movies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Movie" }],
-    Top3TvShow: [{ type: mongoose.Schema.Types.ObjectId, ref: "TV" }],
+    TvShowWatchlist: [{ type: Schema.Types.ObjectId, ref: "tvshows" }],
+    Top3Movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
+    Top3TvShow: [{ type: Schema.Types.ObjectId, ref: "tvshows" }],
     Friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
     BlockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     UserBadge: { type: String, default: "" }
