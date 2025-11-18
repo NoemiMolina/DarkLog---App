@@ -284,72 +284,58 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
 export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
-        
-        const user = await User.findById(userId)
-            .populate('MovieWatchlist')
-            .populate('TvShowWatchlist');
-        
-        if (!user) return res.status(404).json({ message: "User not found" });
-        const numberOfWatchedMovies = user.RatedMovies?.length || 0;
-        const numberOfWatchedTvShows = user.RatedTvShows?.length || 0;
-        const numberOfGivenReviews = user.Reviews?.length || 0;
 
-        const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
-            ? user.RatedMovies.reduce((sum: number, item: any) => sum + item.rating, 0) / user.RatedMovies.length
-            : 0;
+        console.log("🔍 Fetching profile for userId:", userId);
+        const user = await User.findById(userId);
 
-        const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
-            ? user.RatedTvShows.reduce((sum: number, item: any) => sum + item.rating, 0) / user.RatedTvShows.length
-            : 0;
-        const lastWatchedMovie = user.RatedMovies && user.RatedMovies.length > 0
-            ? await Movie.findById(user.RatedMovies[user.RatedMovies.length - 1].movieId)
-            : null;
+        if (!user) {
+            console.log("❌ User not found");
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        console.log("✅ User found:", user.UserPseudo);
         const profileData = {
-            userProfilePicture: user.UserProfilePicture,
-            userFirstName: user.UserFirstName,
-            userLastName: user.UserLastName,
-            userPseudo: user.UserPseudo,
-            userMail: user.UserMail,
+            userProfilePicture: user.UserProfilePicture || null,
+            userFirstName: user.UserFirstName || '',
+            userLastName: user.UserLastName || '',
+            userPseudo: user.UserPseudo || '',
+            userMail: user.UserMail || '',
             userPassword: '',
-            top3Movies: user.Top3Movies.map((m: any) => ({
-                id: m.MovieID,
-                title: m.MovieName,
-                poster: `https://image.tmdb.org/t/p/w500${m.MoviePoster || ''}`
+            top3Movies: (user.Top3Movies || []).map((m: any) => ({
+                id: m.MovieID || m.id || m._id,
+                title: m.MovieName || m.title || 'Unknown',
+                poster: m.MoviePoster || (m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : '')
             })),
-            top3TvShows: user.Top3TvShow.map((tv: any) => ({
-                id: tv.TvShowID,
-                title: tv.TvShowName,
-                poster: `https://image.tmdb.org/t/p/w500${tv.TvShowPoster || ''}`
+            top3TvShows: (user.Top3TvShow || []).map((tv: any) => ({
+                id: tv.TvShowID || tv.id || tv._id,
+                title: tv.TvShowName || tv.name || 'Unknown',
+                poster: tv.TvShowPoster || (tv.poster_path ? `https://image.tmdb.org/t/p/w500${tv.poster_path}` : '')
             })),
-            movieWatchlist: (user.MovieWatchlist as any[]).map((movie: any) => ({
-                id: movie._id,
-                title: movie.title,
-                poster: `https://image.tmdb.org/t/p/w500${movie.poster_path || ''}`
+            movieWatchlist: (user.MovieWatchlist || []).map((movie: any) => ({
+                id: movie.MovieID || movie.id || movie._id,
+                title: movie.MovieName || movie.title || 'Unknown',
+                poster: movie.MoviePoster || (movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '')
             })),
-            tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
-                id: show._id,
-                title: show.name,
-                poster: `https://image.tmdb.org/t/p/w500${show.poster_path || ''}`
+            tvShowWatchlist: (user.TvShowWatchlist || []).map((show: any) => ({
+                id: show.TvShowID || show.id || show._id,
+                title: show.TvShowName || show.name || 'Unknown',
+                poster: show.TvShowPoster || (show.poster_path ? `https://image.tmdb.org/t/p/w500${show.poster_path}` : '')
             })),
-            numberOfWatchedMovies,
-            numberOfWatchedTvShows,
-            numberOfGivenReviews,
-            averageMovieRating: Number(averageMovieRating.toFixed(1)),
-            averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
-            lastWatchedMovie: lastWatchedMovie ? {
-                id: lastWatchedMovie._id,
-                title: lastWatchedMovie.title,
-                poster: `https://image.tmdb.org/t/p/w500${(lastWatchedMovie as any).poster_path || ''}`
-            } : null
+            numberOfWatchedMovies: user.RatedMovies?.length || 0,
+            numberOfWatchedTvShows: user.RatedTvShows?.length || 0,
+            numberOfGivenReviews: user.Reviews?.length || 0,
+            averageMovieRating: 0,
+            averageTvShowRating: 0,
+            lastWatchedMovie: null
         };
 
+        console.log("📤 Sending profile data");
         res.status(200).json(profileData);
     } catch (err) {
-        console.error("❌ Error fetching profile:", err);
-        res.status(500).json({ message: "Error while fetching profile", error: err });
+        console.error("❌ Error in getUserProfile:", err);
+        res.status(500).json({ message: "Error while fetching profile", error: String(err) });
     }
 };
-
 // ------------- SAVE RATING AND REVIEW
 export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
