@@ -45,11 +45,16 @@ const UserProfile: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(true);
   const [showMovieSearch, setShowMovieSearch] = useState(false);
   const [showTvShowSearch, setShowTvShowSearch] = useState(false);
+  const [showMovieWatchlistSearch, setShowMovieWatchlistSearch] = useState(false);
+  const [showTvShowWatchlistSearch, setShowTvShowWatchlistSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchType, setSearchType] = useState<'top3' | 'watchlist'>('top3');
 
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
@@ -107,28 +112,64 @@ const UserProfile: React.FC = () => {
   };
 
   const handleSave = async () => {
-    if (profileData?.userPassword !== passwordConfirm) {
-      alert('Passwords do not match!');
+
+    if (newPassword && newPassword !== passwordConfirm) {
+      alert('New passwords do not match!');
+      return;
+    }
+    if (newPassword && !oldPassword) {
+      alert('Please enter your current password to change it!');
       return;
     }
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/users/${userId}/profile`, {
+      const profileResponse = await fetch(`http://localhost:5000/users/${userId}/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(profileData),
+        body: JSON.stringify({
+          UserFirstName: profileData?.userFirstName,
+          UserLastName: profileData?.userLastName,
+          UserPseudo: profileData?.userPseudo,
+          UserMail: profileData?.userMail,
+        }),
       });
 
-      if (response.ok) {
-        alert('Profile updated successfully!');
-        setIsEditing(false);
+      if (!profileResponse.ok) {
+        const errorData = await profileResponse.json();
+        throw new Error(errorData.message || 'Failed to update profile');
       }
-    } catch (error) {
+      if (newPassword && oldPassword) {
+        const passwordResponse = await fetch(`http://localhost:5000/users/${userId}/password`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+          }),
+        });
+
+        if (!passwordResponse.ok) {
+          const errorData = await passwordResponse.json();
+          throw new Error(errorData.message || 'Failed to update password');
+        }
+      }
+
+      alert('Profile updated successfully!');
+      setIsEditing(false);
+      setOldPassword('');
+      setNewPassword('');
+      setPasswordConfirm('');
+      fetchProfileData();
+    } catch (error: any) {
       console.error('Error updating profile:', error);
+      alert(error.message || 'Failed to update profile. Please try again.');
     }
   };
 
@@ -136,15 +177,65 @@ const UserProfile: React.FC = () => {
     setProfileData((prev) => prev ? { ...prev, [field]: value } : null);
   };
 
+  const handleAddToWatchlist = async (item: any, type: 'movie' | 'tv') => {
+    if (!userId) return;
+
+    try {
+      const createResponse = await fetch(
+        `http://localhost:5000/${type === 'movie' ? 'movies' : 'tvshows'}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            tmdb_id: item.id,
+            title: item.title || item.name,
+            poster_path: item.poster_path,
+            year: new Date(item.release_date || item.first_air_date).getFullYear(),
+            genres: item.genre_ids || [],
+          }),
+        }
+      );
+
+      const createdItem = await createResponse.json();
+      const itemId = createdItem._id || createdItem.id;
+      const addResponse = await fetch(
+        `http://localhost:5000/users/${userId}/watchlist/${itemId}`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (addResponse.ok) {
+        alert(`${item.title || item.name} added to your watchlist!`);
+        setShowMovieSearch(false);
+        setShowTvShowSearch(false);
+        setSearchQuery('');
+        setSearchResults([]);
+        fetchProfileData();
+      }
+    } catch (error) {
+      console.error('Error adding to watchlist:', error);
+    }
+  };
+
   const removeFromWatchlist = async (id: number, type: 'movie' | 'tvshow') => {
     try {
-      const token = localStorage.getItem('token');
-      await fetch(`http://localhost:5000/api/watchlist/${type}/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      await fetch(
+        `http://localhost:5000/users/${userId}/watchlist/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
+
       fetchProfileData();
     } catch (error) {
       console.error('Error removing from watchlist:', error);
@@ -177,25 +268,29 @@ const UserProfile: React.FC = () => {
     if (!userId) return;
 
     try {
-      const createResponse = await fetch(`http://localhost:5000/${type === 'movie' ? 'movies' : 'tvshows'}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          tmdb_id: item.id,
-          title: item.title || item.name,
-          poster_path: item.poster_path,
-          year: new Date(item.release_date || item.first_air_date).getFullYear(),
-          genres: item.genre_ids || [],
-        }),
-      });
+      const createResponse = await fetch(
+        `http://localhost:5000/${type === 'movie' ? 'movies' : 'tvshows'}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            tmdb_id: item.id,
+            title: item.title || item.name,
+            poster_path: item.poster_path,
+            year: new Date(item.release_date || item.first_air_date).getFullYear(),
+            genres: item.genre_ids || [],
+          }),
+        }
+      );
 
       const createdItem = await createResponse.json();
       const itemId = createdItem._id || createdItem.id;
+
       const addResponse = await fetch(
-        `http://localhost:5000/users/${userId}/${type === 'movie' ? 'add-movie-to-top3' : 'add-tvshow-to-top3'}/${itemId}`,
+        `http://localhost:5000/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${itemId}`,
         {
           method: 'POST',
           headers: {
@@ -214,6 +309,29 @@ const UserProfile: React.FC = () => {
       }
     } catch (error) {
       console.error('Error adding to Top 3:', error);
+    }
+  };
+
+  const removeFromTop3 = async (itemId: number, type: 'movie' | 'tv') => {
+    try {
+      const endpoint =
+        type === 'movie'
+          ? `http://localhost:5000/users/${userId}/top3favorites/movie/${itemId}`
+          : `http://localhost:5000/users/${userId}/top3favorites/tvshow/${itemId}`;
+
+      const response = await fetch(endpoint, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        alert(`Removed from Top 3!`);
+        fetchProfileData();
+      }
+    } catch (error) {
+      console.error('Error removing from Top 3:', error);
     }
   };
 
@@ -287,14 +405,15 @@ const UserProfile: React.FC = () => {
 
           {/* edit password */}
           {isEditing && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <div>
-                <Label>Password</Label>
+                <Label>Current Password</Label>
                 <div className="relative">
                   <Input
                     type={showPassword ? 'text' : 'password'}
-                    value={profileData.userPassword || ''}
-                    onChange={(e) => handleInputChange('userPassword', e.target.value)}
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                    placeholder="Enter current password"
                     className="bg-[#1A1A1A] border-white/20 text-white pr-10"
                   />
                   <button
@@ -307,11 +426,22 @@ const UserProfile: React.FC = () => {
                 </div>
               </div>
               <div>
-                <Label>Confirm Password</Label>
+                <Label>New Password</Label>
                 <Input
                   type={showPassword ? 'text' : 'password'}
-                  value={passwordConfirm || ''}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new password"
+                  className="bg-[#1A1A1A] border-white/20 text-white"
+                />
+              </div>
+              <div>
+                <Label>Confirm New Password</Label>
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  value={passwordConfirm}
                   onChange={(e) => setPasswordConfirm(e.target.value)}
+                  placeholder="Confirm new password"
                   className="bg-[#1A1A1A] border-white/20 text-white"
                 />
               </div>
@@ -370,7 +500,12 @@ const UserProfile: React.FC = () => {
                       alt={movie.title}
                       className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                     />
-
+                    <button
+                      onClick={() => removeFromTop3(movie.id, 'movie')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 ))}
                 {profileData.top3Movies.length < 3 && (
@@ -411,6 +546,12 @@ const UserProfile: React.FC = () => {
                       alt={show.title}
                       className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                     />
+                    <button
+                      onClick={() => removeFromTop3(show.id, 'tv')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
                 ))}
                 {profileData.top3TvShows.length < 3 && (
@@ -525,39 +666,155 @@ const UserProfile: React.FC = () => {
         <CardContent className="space-y-6">
           <div>
             <h3 className="text-xl mb-4">Movies Watchlist ({profileData.movieWatchlist.length})</h3>
-            <div className="grid grid-cols-4 gap-4">
-              {profileData.movieWatchlist.map((movie) => (
-                <div key={movie.id} className="relative group">
-                  <img src={movie.poster} alt={movie.title} className="w-full rounded-lg" />
-                  <button
-                    onClick={() => removeFromWatchlist(movie.id, 'movie')}
-                    className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
-            </div>
+            {profileData.movieWatchlist.length === 0 ? (
+              <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
+                <p className="text-gray-400 mb-4">Your movie watchlist is empty</p>
+                <button
+                  onClick={() => {
+                    setSearchType('watchlist');
+                    setShowMovieWatchlistSearch(true);
+                  }}
+                  className="bg-blue-600 px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+                >
+                  ➕ Add a movie to your watchlist
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 gap-4">
+                {profileData.movieWatchlist.map((movie) => (
+                  <div key={movie.id} className="relative group">
+                    <img src={movie.poster} alt={movie.title} className="w-full rounded-lg" />
+                    <button
+                      onClick={() => removeFromWatchlist(movie.id, 'movie')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div>
             <h3 className="text-xl mb-4">TV Shows Watchlist ({profileData.tvShowWatchlist.length})</h3>
-            <div className="grid grid-cols-4 gap-4">
-              {profileData.tvShowWatchlist.map((show) => (
-                <div key={show.id} className="relative group">
-                  <img src={show.poster} alt={show.title} className="w-full rounded-lg" />
-                  <button
-                    onClick={() => removeFromWatchlist(show.id, 'tvshow')}
-                    className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
-            </div>
+            {profileData.tvShowWatchlist.length === 0 ? (
+              <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
+                <p className="text-gray-400 mb-4">Your TV show watchlist is empty</p>
+                <button
+                  onClick={() => {
+                    setSearchType('watchlist');
+                    setShowTvShowWatchlistSearch(true);
+                  }}
+                  className="bg-purple-600 px-6 py-3 rounded-lg hover:bg-purple-700 transition"
+                >
+                  ➕ Add a TV show to your watchlist
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 gap-4">
+                {profileData.tvShowWatchlist.map((show) => (
+                  <div key={show.id} className="relative group">
+                    <img src={show.poster} alt={show.title} className="w-full rounded-lg" />
+                    <button
+                      onClick={() => removeFromWatchlist(show.id, 'tvshow')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>
+
+      {/* Watchlist Movie Search Dialog */}
+      <Dialog open={showMovieWatchlistSearch} onOpenChange={setShowMovieWatchlistSearch}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Search Movies for Watchlist</DialogTitle>
+            <DialogDescription>
+              Search for a movie to add to your watchlist
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex gap-2 mb-6">
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch('movie')}
+              placeholder="Search for a movie..."
+              className="flex-1"
+            />
+            <Button onClick={() => handleSearch('movie')}>
+              <IoSearch />
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {searchResults.map((movie) => (
+              <div
+                key={movie.id}
+                className="cursor-pointer hover:scale-105 transition"
+                onClick={() => handleAddToWatchlist(movie, 'movie')}
+              >
+                <img
+                  src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : '/placeholder-movie.png'}
+                  alt={movie.title}
+                  className="w-full object-cover rounded-lg"
+                />
+                <p className="text-sm mt-2 text-center">{movie.title}</p>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Watchlist TV Show Search Dialog */}
+      <Dialog open={showTvShowWatchlistSearch} onOpenChange={setShowTvShowWatchlistSearch}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Search TV Shows for Watchlist</DialogTitle>
+            <DialogDescription>
+              Search for a TV show to add to your watchlist
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex gap-2 mb-6">
+            <Input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch('tv')}
+              placeholder="Search for a TV show..."
+              className="flex-1"
+            />
+            <Button onClick={() => handleSearch('tv')}>
+              <IoSearch />
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {searchResults.map((show) => (
+              <div
+                key={show.id}
+                className="cursor-pointer hover:scale-105 transition"
+                onClick={() => handleAddToWatchlist(show, 'tv')}
+              >
+                <img
+                  src={show.poster_path ? `https://image.tmdb.org/t/p/w500${show.poster_path}` : '/placeholder-tv.png'}
+                  alt={show.name}
+                  className="w-full object-cover rounded-lg"
+                />
+                <p className="text-sm mt-2 text-center">{show.name}</p>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Separator className="bg-white/20" />
 
