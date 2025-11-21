@@ -88,6 +88,137 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 };
 
+// ------------- UPDATE PROFILE INFOS
+export const updateProfileInfos = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const { UserFirstName, UserLastName, UserPseudo, UserLocation, UserAge } = req.body;
+
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        user.UserFirstName = UserFirstName || user.UserFirstName;
+        user.UserLastName = UserLastName || user.UserLastName;
+        user.UserPseudo = UserPseudo || user.UserPseudo;
+        user.UserLocation = UserLocation || user.UserLocation;
+        user.UserAge = UserAge || user.UserAge;
+        await user.save();
+
+        res.status(200).json({ message: "Profile updated successfully", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while updating profile", error: err });
+    }
+};
+
+// ------------- UPDATE PASSWORD
+export const updatePassword = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const { oldPassword, newPassword } = req.body;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        const isMatch = await bcrypt.compare(oldPassword, user.UserPassword);
+        if (!isMatch) return res.status(401).json({ message: "Old password is incorrect" });
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        user.UserPassword = hashedNewPassword;
+        await user.save();
+        res.status(200).json({ message: "Password updated successfully" });
+    } catch (err) {
+        res.status(500).json({ message: "Error while updating password", error: err });
+    }
+};
+
+// ------------- UPDATE PROFILE PICTURE
+export const updateProfilePicture = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        const profilePicUrl = req.file ? `uploads/${req.file.filename}` : null;
+        user.UserProfilePicture = profilePicUrl || user.UserProfilePicture;
+        await user.save();
+        res.status(200).json({ message: "Profile picture updated successfully", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while updating profile picture", error: err });
+    }
+};
+
+// ----------- GETS PROFILE
+export const getUserProfile = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        
+        console.log("🔍 Fetching profile for userId:", userId);
+        
+        const user = await User.findById(userId)
+            .populate('Top3Movies')
+            .populate('Top3TvShow')
+            .populate('MovieWatchlist')
+            .populate('TvShowWatchlist');
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        console.log("✅ User found:", user.UserPseudo);
+
+        const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
+            ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) / user.RatedMovies.length
+            : 0;
+
+        const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
+            ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) / user.RatedTvShows.length
+            : 0;
+
+        const profileData = {
+            userProfilePicture: user.UserProfilePicture || null,
+            userFirstName: user.UserFirstName || '',
+            userLastName: user.UserLastName || '',
+            userPseudo: user.UserPseudo || '',
+            userMail: user.UserMail || '',
+            userPassword: '',
+            top3Movies: (user.Top3Movies as any[]).map((movie: any) => ({
+                id: movie._id,
+                title: movie.title || 'Unknown Movie',
+                poster: movie.poster_path 
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : ''
+            })),
+            top3TvShows: (user.Top3TvShow as any[]).map((show: any) => ({
+                id: show._id,
+                title: show.name || 'Unknown Show',
+                poster: show.poster_path 
+                    ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
+                    : ''
+            })),
+            movieWatchlist: (user.MovieWatchlist as any[]).map((movie: any) => ({
+                id: movie._id,
+                title: movie.title || 'Unknown Movie',
+                poster: movie.poster_path 
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : ''
+            })),
+            tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
+                id: show._id,
+                title: show.name || 'Unknown Show',
+                poster: show.poster_path 
+                    ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
+                    : ''
+            })),
+            numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
+            numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
+            numberOfGivenReviews: user.NumberOfGivenReviews || 0,
+            averageMovieRating: Number(averageMovieRating.toFixed(1)),
+            averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
+            lastWatchedMovie: null
+        };
+
+        res.status(200).json(profileData);
+    } catch (err) {
+        console.error("❌ Error in getUserProfile:", err);
+        res.status(500).json({ message: "Error while fetching profile", error: String(err) });
+    }
+};
+
 // -------------- USER ADDS A FRIEND
 export const addAFriend = async (req: Request, res: Response) => {
     try {
@@ -280,82 +411,34 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
     }
 }
 
-// ----------- GETS PROFILE
-export const getUserProfile = async (req: Request, res: Response) => {
+// ------------- DELETE A MOVIE FROM TOP3 FAVORITES
+export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response) => {
     try {
-        const { userId } = req.params;
-        
-        console.log("🔍 Fetching profile for userId:", userId);
-        
-        const user = await User.findById(userId)
-            .populate('Top3Movies')
-            .populate('Top3TvShow')
-            .populate('MovieWatchlist')
-            .populate('TvShowWatchlist');
-        
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-
-        console.log("✅ User found:", user.UserPseudo);
-
-        const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
-            ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) / user.RatedMovies.length
-            : 0;
-
-        const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
-            ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) / user.RatedTvShows.length
-            : 0;
-
-        const profileData = {
-            userProfilePicture: user.UserProfilePicture || null,
-            userFirstName: user.UserFirstName || '',
-            userLastName: user.UserLastName || '',
-            userPseudo: user.UserPseudo || '',
-            userMail: user.UserMail || '',
-            userPassword: '',
-            top3Movies: (user.Top3Movies as any[]).map((movie: any) => ({
-                id: movie._id,
-                title: movie.title || 'Unknown Movie',
-                poster: movie.poster_path 
-                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                    : ''
-            })),
-            top3TvShows: (user.Top3TvShow as any[]).map((show: any) => ({
-                id: show._id,
-                title: show.name || 'Unknown Show',
-                poster: show.poster_path 
-                    ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
-                    : ''
-            })),
-            movieWatchlist: (user.MovieWatchlist as any[]).map((movie: any) => ({
-                id: movie._id,
-                title: movie.title || 'Unknown Movie',
-                poster: movie.poster_path 
-                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                    : ''
-            })),
-            tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
-                id: show._id,
-                title: show.name || 'Unknown Show',
-                poster: show.poster_path 
-                    ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
-                    : ''
-            })),
-            numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
-            numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
-            numberOfGivenReviews: user.NumberOfGivenReviews || 0,
-            averageMovieRating: Number(averageMovieRating.toFixed(1)),
-            averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
-            lastWatchedMovie: null
-        };
-
-        res.status(200).json(profileData);
+        const { userId, movieId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        user.Top3Movies = user.Top3Movies.filter((id: any) => id.MovieID.toString() !== movieId);
+        await user.save();
+        res.status(200).json({ message: "Movie deleted from your Top 3 favorites", user });
     } catch (err) {
-        console.error("❌ Error in getUserProfile:", err);
-        res.status(500).json({ message: "Error while fetching profile", error: String(err) });
+        res.status(500).json({ message: "Error while deleting a movie from your Top 3 favorites", error: err });
     }
 };
+
+// ------------- DELETE A TVSHOW FROM TOP3 FAVORITES
+export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response) => {
+    try {
+        const { userId, tvShowId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        user.Top3TvShow = user.Top3TvShow.filter((id: any) => id.TvShowID.toString() !== tvShowId);
+        await user.save();
+        res.status(200).json({ message: "TV Show deleted from your Top 3 favorites", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while deleting a TV Show from your Top 3 favorites", error: err });
+    }
+};
+
 // ------------- SAVE RATING AND REVIEW
 export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
@@ -414,56 +497,3 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
     }
 };
 
-// ------------- UPDATE PROFILE INFOS
-export const updateProfileInfos = async (req: Request, res: Response) => {
-    try {
-        const { userId } = req.params;
-        const { UserFirstName, UserLastName, UserPseudo, UserLocation, UserAge } = req.body;
-
-        const user = await User.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
-        user.UserFirstName = UserFirstName || user.UserFirstName;
-        user.UserLastName = UserLastName || user.UserLastName;
-        user.UserPseudo = UserPseudo || user.UserPseudo;
-        user.UserLocation = UserLocation || user.UserLocation;
-        user.UserAge = UserAge || user.UserAge;
-        await user.save();
-
-        res.status(200).json({ message: "Profile updated successfully", user });
-    } catch (err) {
-        res.status(500).json({ message: "Error while updating profile", error: err });
-    }
-};
-
-// ------------- UPDATE PASSWORD
-export const updatePassword = async (req: Request, res: Response) => {
-    try {
-        const { userId } = req.params;
-        const { oldPassword, newPassword } = req.body;
-        const user = await User.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
-        const isMatch = await bcrypt.compare(oldPassword, user.UserPassword);
-        if (!isMatch) return res.status(401).json({ message: "Old password is incorrect" });
-        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-        user.UserPassword = hashedNewPassword;
-        await user.save();
-        res.status(200).json({ message: "Password updated successfully" });
-    } catch (err) {
-        res.status(500).json({ message: "Error while updating password", error: err });
-    }
-};
-
-// ------------- UPDATE PROFILE PICTURE
-export const updateProfilePicture = async (req: Request, res: Response) => {
-    try {
-        const { userId } = req.params;
-        const user = await User.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
-        const profilePicUrl = req.file ? `uploads/${req.file.filename}` : null;
-        user.UserProfilePicture = profilePicUrl || user.UserProfilePicture;
-        await user.save();
-        res.status(200).json({ message: "Profile picture updated successfully", user });
-    } catch (err) {
-        res.status(500).json({ message: "Error while updating profile picture", error: err });
-    }
-};

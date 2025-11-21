@@ -4,21 +4,24 @@ import { uploadMiddleware } from "../middleware/uploadMiddleware";
 import {
   registerUser,
   loginUser,
+  getUserProfile,
+  updateProfileInfos,
+  updatePassword,
+  updateProfilePicture,
   addAFriend,
   deleteAFriend,
   blockAnUser,
+  unblockAnUser,
   addAMovieToWatchlist,
   addATvShowToWatchlist,
   deleteAMovieFromWatchlist,
   deleteATvShowFromWatchlist,
   addAMovieToTop3Favorites,
   addATvShowToTop3Favorites,
+  deleteAMovieFromTop3Favorites,
+  deleteATvShowFromTop3Favorites,
   saveRatingAndReview,
-  updateProfileInfos,
-  updatePassword,
-  updateProfilePicture,
-  unblockAnUser,
-  getUserProfile
+
 } from "../controllers/userController"
 
 const router = express.Router();
@@ -32,6 +35,8 @@ router.put("/:userId/profile-picture", authMiddleware, uploadMiddleware.single("
 router.post("/:userId/rate/:itemId", authMiddleware, saveRatingAndReview);
 router.post("/:userId/top3favorites/movie/:movieId", authMiddleware, addAMovieToTop3Favorites);
 router.post("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, addATvShowToTop3Favorites);
+router.delete("/:userId/top3favorites/movie/:movieId", authMiddleware, deleteAMovieFromTop3Favorites);
+router.delete("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, deleteATvShowFromTop3Favorites);
 router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);
 router.delete("/:userId/friends/:friendId", authMiddleware, deleteAFriend);
 router.post("/:userId/block/:blockedUserId", authMiddleware, blockAnUser);
