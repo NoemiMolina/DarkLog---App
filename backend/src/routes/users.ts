@@ -8,6 +8,9 @@ import {
   updateProfileInfos,
   updatePassword,
   updateProfilePicture,
+  searchUsers,
+  getPublicProfile,
+  getFriends,
   addAFriend,
   deleteAFriend,
   blockAnUser,
@@ -26,6 +29,7 @@ import {
 
 const router = express.Router();
 
+router.get("/search", authMiddleware, searchUsers);
 router.post("/register", uploadMiddleware.single("UserProfilePicture"), registerUser);
 router.post("/login", loginUser);
 router.get("/:userId/profile", authMiddleware, getUserProfile);
@@ -37,14 +41,18 @@ router.post("/:userId/top3favorites/movie/:movieId", authMiddleware, addAMovieTo
 router.post("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, addATvShowToTop3Favorites);
 router.delete("/:userId/top3favorites/movie/:movieId", authMiddleware, deleteAMovieFromTop3Favorites);
 router.delete("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, deleteATvShowFromTop3Favorites);
+router.get("/:userId/public-profile", authMiddleware, getPublicProfile);
+router.get("/:userId/friends", authMiddleware, getFriends);
+router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);
+router.delete("/:userId/friends/:friendId", authMiddleware, deleteAFriend);
 router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);
 router.delete("/:userId/friends/:friendId", authMiddleware, deleteAFriend);
 router.post("/:userId/block/:blockedUserId", authMiddleware, blockAnUser);
-router.post("/:userId/unblock/:blockedUserId", authMiddleware, unblockAnUser);
-router.post("/:userId/watchlist/:movieId", authMiddleware, addAMovieToWatchlist);
-router.post("/:userId/watchlist/:tvShowId", authMiddleware, addATvShowToWatchlist);
-router.delete("/:userId/watchlist/:movieId", authMiddleware, deleteAMovieFromWatchlist);
-router.delete("/:userId/watchlist/:tvShowId", authMiddleware, deleteATvShowFromWatchlist);
+router.delete("/:userId/unblock/:blockedUserId", authMiddleware, unblockAnUser);
+router.post("/:userId/watchlist/movie/:movieId", authMiddleware, addAMovieToWatchlist);
+router.post("/:userId/watchlist/tvshow/:tvShowId", authMiddleware, addATvShowToWatchlist);
+router.delete("/:userId/watchlist/movie/:movieId", authMiddleware, deleteAMovieFromWatchlist);
+router.delete("/:userId/watchlist/tvshow/:tvShowId", authMiddleware, deleteATvShowFromWatchlist);
 
 
 export default router;

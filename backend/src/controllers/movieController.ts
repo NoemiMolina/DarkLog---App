@@ -24,7 +24,9 @@ export const getMovieById = async (req: Request, res: Response) => {
     } catch (err) {
         res.status(500).json({ message: "Erreur lors de la récupération du film", error: err });
     }
-}
+};
+
+
 
 export const addRatingToMovie = async (req: Request, res: Response) => {
     try {

@@ -146,15 +146,15 @@ export const updateProfilePicture = async (req: Request, res: Response) => {
 export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
-        
+
         console.log("🔍 Fetching profile for userId:", userId);
-        
+
         const user = await User.findById(userId)
             .populate('Top3Movies')
             .populate('Top3TvShow')
             .populate('MovieWatchlist')
             .populate('TvShowWatchlist');
-        
+
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -179,28 +179,28 @@ export const getUserProfile = async (req: Request, res: Response) => {
             top3Movies: (user.Top3Movies as any[]).map((movie: any) => ({
                 id: movie._id,
                 title: movie.title || 'Unknown Movie',
-                poster: movie.poster_path 
+                poster: movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                     : ''
             })),
             top3TvShows: (user.Top3TvShow as any[]).map((show: any) => ({
                 id: show._id,
                 title: show.name || 'Unknown Show',
-                poster: show.poster_path 
+                poster: show.poster_path
                     ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
                     : ''
             })),
             movieWatchlist: (user.MovieWatchlist as any[]).map((movie: any) => ({
                 id: movie._id,
                 title: movie.title || 'Unknown Movie',
-                poster: movie.poster_path 
+                poster: movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                     : ''
             })),
             tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
                 id: show._id,
                 title: show.name || 'Unknown Show',
-                poster: show.poster_path 
+                poster: show.poster_path
                     ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
                     : ''
             })),
@@ -216,6 +216,95 @@ export const getUserProfile = async (req: Request, res: Response) => {
     } catch (err) {
         console.error("❌ Error in getUserProfile:", err);
         res.status(500).json({ message: "Error while fetching profile", error: String(err) });
+    }
+};
+
+// ------------- SEARCH USERS
+export const searchUsers = async (req: Request, res: Response) => {
+    try {
+        const { query } = req.query;
+        
+        if (!query || typeof query !== 'string') {
+            return res.status(400).json({ message: "Search query is required" });
+        }
+
+        const users = await User.find({
+            $or: [
+                { UserPseudo: { $regex: query, $options: 'i' } },
+                { UserMail: { $regex: query, $options: 'i' } }
+            ]
+        }).select('UserPseudo UserMail UserProfilePicture UserFirstName UserLastName').limit(10);
+
+        res.status(200).json(users);
+    } catch (err) {
+        res.status(500).json({ message: "Error searching users", error: err });
+    }
+};
+
+// ------------- GET PUBLIC PROFILE
+export const getPublicProfile = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId)
+            .populate('Top3Movies')
+            .populate('Top3TvShow')
+            .select('-UserPassword -MovieWatchlist -TvShowWatchlist -Friends -BlockedUsers');
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
+            ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) / user.RatedMovies.length
+            : 0;
+
+        const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
+            ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) / user.RatedTvShows.length
+            : 0;
+
+        res.status(200).json({
+            UserPseudo: user.UserPseudo,
+            UserFirstName: user.UserFirstName,
+            UserLastName: user.UserLastName,
+            UserProfilePicture: user.UserProfilePicture,
+            top3Movies: (user.Top3Movies as any[]).map((movie: any) => ({
+                id: movie._id,
+                title: movie.title || 'Unknown Movie',
+                poster: movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                    : ''
+            })),
+            top3TvShows: (user.Top3TvShow as any[]).map((show: any) => ({
+                id: show._id,
+                title: show.name || 'Unknown Show',
+                poster: show.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
+                    : ''
+            })),
+            numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
+            numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
+            numberOfGivenReviews: user.NumberOfGivenReviews || 0,
+            averageMovieRating: Number(averageMovieRating.toFixed(1)),
+            averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
+        });
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching public profile", error: err });
+    }
+};
+
+// ------------- GET USER FRIENDS
+export const getFriends = async (req: Request, res: Response) => {
+    try {
+        const { userId } = req.params;
+        const user = await User.findById(userId).populate('Friends', 'UserPseudo UserMail UserProfilePicture UserFirstName UserLastName');
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user.Friends);
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching friends", error: err });
     }
 };
 
@@ -263,17 +352,17 @@ export const blockAnUser = async (req: Request, res: Response) => {
         const blockedUser = await User.findById(blockedUserId);
 
         if (!user || !blockedUser) return res.status(404).json({ message: "user not found" });
-
+        user.Friends = user.Friends.filter(id => id.toString() !== blockedUserId);
         if (!user.BlockedUsers.includes(blockedUser._id as Types.ObjectId)) {
             user.BlockedUsers.push(blockedUser._id as Types.ObjectId);
-            await user.save();
         }
-
+        await user.save();
         res.status(200).json({ message: "User successfully blocked", user });
     } catch (err) {
         res.status(500).json({ message: "Error while blocking", error: err });
     }
-}
+};
+
 
 //------------ USER UNBLOCKS ANOTHER USER
 export const unblockAnUser = async (req: Request, res: Response) => {
@@ -362,6 +451,7 @@ export const deleteATvShowFromWatchlist = async (req: Request, res: Response) =>
 }
 
 // ------------- USER ADDS A MOVIE TO ITS TOP3 FAVORITES
+
 export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
@@ -372,14 +462,11 @@ export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
         if (user.Top3Movies.length >= 3) {
             return res.status(400).json({ message: "You can only have 3 favorite movies" });
         }
-        if (!user.Top3Movies.some((topMovie: any) => topMovie.MovieID?.toString() === movieId)) {
-            user.Top3Movies.push({
-                MovieID: movie._id as Types.ObjectId,
-                MovieName: movie.title,
-                MovieGenre: Array.isArray(movie.genres) ? movie.genres.join(", ") : String(movie.genres),
-            } as any);
+        if (!user.Top3Movies.includes(movie._id as Types.ObjectId)) {
+            user.Top3Movies.push(movie._id as Types.ObjectId);
             await user.save();
         }
+        
         res.status(200).json({ message: "Movie added to your Top 3 favorites", user });
     } catch (err) {
         res.status(500).json({ message: "Error while adding a movie to your Top 3 favorites", error: err });
@@ -392,24 +479,25 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
         const { userId, tvShowId } = req.params;
         const user = await User.findById(userId);
         const tvShow = await TVShow.findById(tvShowId);
-        if (!user || !tvShow) return res.status(404).json({ message: "User or TV Show not found" });
-
+        
+        if (!user || !tvShow) {
+            return res.status(404).json({ message: "User or TV Show not found" });
+        }
+        
         if (user.Top3TvShow.length >= 3) {
             return res.status(400).json({ message: "You can only have 3 favorite TV Shows" });
         }
-        if (!user.Top3TvShow.some((topTvShow: any) => topTvShow.TvShowID?.toString() === tvShowId)) {
-            user.Top3TvShow.push({
-                TvShowID: tvShow._id as Types.ObjectId,
-                TvShowName: tvShow.name ?? "",
-                TvShowGenre: Array.isArray(tvShow.genre_ids) ? tvShow.genre_ids.join(", ") : String(tvShow.genre_ids),
-            } as any);
+        if (!user.Top3TvShow.includes(tvShow._id as Types.ObjectId)) {
+            user.Top3TvShow.push(tvShow._id as Types.ObjectId);
             await user.save();
         }
+        
         res.status(200).json({ message: "TV Show added to your Top 3 favorites", user });
     } catch (err) {
+        console.error("❌ Error adding TV show to Top3:", err);
         res.status(500).json({ message: "Error while adding a TV Show to your Top 3 favorites", error: err });
     }
-}
+};
 
 // ------------- DELETE A MOVIE FROM TOP3 FAVORITES
 export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response) => {
@@ -417,13 +505,16 @@ export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response)
         const { userId, movieId } = req.params;
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
-        user.Top3Movies = user.Top3Movies.filter((id: any) => id.MovieID.toString() !== movieId);
+        user.Top3Movies = user.Top3Movies.filter((id: Types.ObjectId) => id.toString() !== movieId);
+        
         await user.save();
         res.status(200).json({ message: "Movie deleted from your Top 3 favorites", user });
     } catch (err) {
+        console.error("❌ Error deleting movie from Top3:", err);
         res.status(500).json({ message: "Error while deleting a movie from your Top 3 favorites", error: err });
     }
 };
+
 
 // ------------- DELETE A TVSHOW FROM TOP3 FAVORITES
 export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response) => {
@@ -431,14 +522,15 @@ export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response
         const { userId, tvShowId } = req.params;
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
-        user.Top3TvShow = user.Top3TvShow.filter((id: any) => id.TvShowID.toString() !== tvShowId);
+        user.Top3TvShow = user.Top3TvShow.filter((id: Types.ObjectId) => id.toString() !== tvShowId);
+        
         await user.save();
         res.status(200).json({ message: "TV Show deleted from your Top 3 favorites", user });
     } catch (err) {
+        console.error("❌ Error deleting TV show from Top3:", err);
         res.status(500).json({ message: "Error while deleting a TV Show from your Top 3 favorites", error: err });
     }
 };
-
 // ------------- SAVE RATING AND REVIEW
 export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
