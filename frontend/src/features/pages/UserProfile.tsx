@@ -375,6 +375,8 @@ const UserProfile: React.FC = () => {
         averageMovieRating={profileData.averageMovieRating}
         averageTvShowRating={profileData.averageTvShowRating}
         numberOfFriends={profileData.numberOfFriends}
+        userId={userId!}
+
       />
     </div>
   );
