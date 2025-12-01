@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                       : `http://localhost:5000/${userProfilePicture}`
                   }
                   alt={`${username}'s profile`}
-                  className="w-15 h-15 rounded-full object-cover border border-white/40"
+                  className="w-15 h-15 rounded-full object-cover border border-white/40 gap-5 cursor-pointer"
                 />
               ) : (
                 <div className="w-12 h-12 rounded-full bg-gray-600 border border-white/40 flex items-center justify-center text-white text-sm">
@@ -79,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               Forum
             </Button>
 
-            <div className="flex items-center gap-2 mt-9 px-6 z-50 xl:translate-y-[-17px]">
+           
               <Switch
                 id="tv-shows-switch"
                 className="mt-9"
@@ -93,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               >
                 {isTVShowMode ? "Movies" : "TV Shows"}
               </Label>
-            </div>
+           
             <FriendSearchDialog />
           </>
         )}

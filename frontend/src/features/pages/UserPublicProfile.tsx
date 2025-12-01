@@ -24,6 +24,7 @@ interface PublicProfileData {
     numberOfGivenReviews: number;
     averageMovieRating: number;
     averageTvShowRating: number;
+    numberOfFriends: number;
 }
 
 const UserPublicProfile: React.FC = () => {
@@ -289,6 +290,10 @@ const UserPublicProfile: React.FC = () => {
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
                                     <p className="text-4xl font-bold text-orange-400">{profileData.averageTvShowRating.toFixed(1)}</p>
                                     <p className="text-sm text-white/60">Avg TV Show Rating</p>
+                                </div>
+                                      <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-orange-400">{profileData.numberOfFriends}</p>
+                                    <p className="text-sm text-white/60">Friends</p>
                                 </div>
                             </div>
                         </CardContent>

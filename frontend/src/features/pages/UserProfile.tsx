@@ -30,6 +30,7 @@ interface UserProfileData {
   averageMovieRating: number;
   averageTvShowRating: number;
   lastWatchedMovie: { id: number; title: string; poster: string } | null;
+  numberOfFriends: number;
 }
 
 const UserProfile: React.FC = () => {
@@ -373,6 +374,7 @@ const UserProfile: React.FC = () => {
         numberOfGivenReviews={profileData.numberOfGivenReviews}
         averageMovieRating={profileData.averageMovieRating}
         averageTvShowRating={profileData.averageTvShowRating}
+        numberOfFriends={profileData.numberOfFriends}
       />
     </div>
   );

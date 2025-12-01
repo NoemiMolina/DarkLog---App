@@ -93,7 +93,7 @@ const FriendSearchDialog: React.FC = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <MdOutlinePersonSearch className="mt-9 text-white text-2xl cursor-pointer hover:text-gray-300 z-50" />
+        <MdOutlinePersonSearch className="order-5 mt-9 text-white text-2xl cursor-pointer hover:text-gray-300 z-50" />
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-[#2A2A2A] text-white">
         <DialogHeader>
