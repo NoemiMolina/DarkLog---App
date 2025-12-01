@@ -4,6 +4,7 @@ import PublicSearchBar from './PublicSearchBar';
 import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
 import GetLuckyDialog from './GetLuckyDialog';
+import FriendSearchDialog from './FriendSearchDialog';
 import { Button } from '../components/ui/button';
 import { Label } from "../components/ui/label";
 import { Switch } from "../components/ui/switch";
@@ -93,7 +94,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 {isTVShowMode ? "Movies" : "TV Shows"}
               </Label>
             </div>
-            <MdOutlinePersonSearch className="mt-9 text-white text-2xl cursor-pointer hover:text-gray-300 z-50" />
+            <FriendSearchDialog />
           </>
         )}
       </div>

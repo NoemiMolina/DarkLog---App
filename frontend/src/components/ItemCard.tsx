@@ -65,10 +65,11 @@ export default function ItemCard({ item, type }: ItemCardProps) {
       return;
     }
 
+    // Utiliser des routes différentes selon le type
     const route =
       type === "movie"
-        ? `http://localhost:5000/users/${userId}/watchlist/${item._id}`
-        : `http://localhost:5000/users/${userId}/watchlist/${item._id}`;
+        ? `http://localhost:5000/users/${userId}/watchlist/movie/${item._id}`
+        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${item._id}`;
 
     try {
       const res = await fetch(route, {
@@ -78,9 +79,17 @@ export default function ItemCard({ item, type }: ItemCardProps) {
         }
       });
 
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("❌ Error response:", errorData);
+        showMessage(`❌ ${errorData.message || 'Error adding to watchlist'}`);
+        return;
+      }
+
       const data = await res.json();
       console.log("🎉 Watchlist updated:", data);
       showMessage("🎬 Successfully added to watchlist!");
+      window.dispatchEvent(new Event('watchlistUpdated'));
 
     } catch (err) {
       console.error("❌ Error adding to watchlist:", err);
