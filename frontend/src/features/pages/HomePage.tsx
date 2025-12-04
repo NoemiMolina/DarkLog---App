@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import CarouselItems from "../../components/CarouselItems";
+import PopularWFriendsSection from "../../components/PopularWFriendsSection";
 
 const HomePage = () => {
 
@@ -85,7 +86,10 @@ const HomePage = () => {
       <Header username={username} userProfilePicture={profilePic} isTVShowMode={isTVShowMode} onToggleTVShowMode={setIsTVShowMode} />
 
       <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px] -z-10">
-        <div className="-translate-y-[420px] text-[1rem] text-center text-white px-4 mt-10 sm:translate-y-0 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-60 xl:-translate-y-30">
+        <div className="mb-10">
+           <PopularWFriendsSection />
+        </div>
+        <div className="-translate-y-[420px] text-[1rem] text-center text-white px-4 mt-10 sm:translate-y-0 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-70 xl:-translate-y-30">
           {!isTVShowMode ? (
             <>
               {CarouselItems("Popular slashers", slasherMovies)}
