@@ -318,10 +318,17 @@ export const addAFriend = async (req: Request, res: Response) => {
 
         if (!user || !friend) return res.status(404).json({ message: "User request not found" });
 
-        if (!user.Friends.includes(friend._id as Types.ObjectId)) {
-            user.Friends.push(friend._id as Types.ObjectId);
-            await user.save();
-        }
+     const isAlreadyFriend = user.Friends.some(f => f.friendId.toString() === friendId);
+
+     if (isAlreadyFriend) {
+        user.Friends.push({
+            friendId: friend._id as Types.ObjectId,
+            friendSince: new Date(),
+            friendPseudo: friend.UserPseudo,
+            friendProfilePicture: friend.UserProfilePicture || ""
+        })
+        await user.save();
+    }
 
         res.status(200).json({ message: "User successfully added", user });
     } catch (err) {
