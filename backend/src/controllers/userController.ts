@@ -153,7 +153,8 @@ export const getUserProfile = async (req: Request, res: Response) => {
             .populate('Top3Movies')
             .populate('Top3TvShow')
             .populate('MovieWatchlist')
-            .populate('TvShowWatchlist');
+            .populate('TvShowWatchlist')
+            .populate('Friends'); 
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -207,6 +208,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
             numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
             numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
             numberOfGivenReviews: user.NumberOfGivenReviews || 0,
+            numberOfFriends: user.Friends?.length || 0, 
             averageMovieRating: Number(averageMovieRating.toFixed(1)),
             averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
             lastWatchedMovie: null
@@ -218,7 +220,6 @@ export const getUserProfile = async (req: Request, res: Response) => {
         res.status(500).json({ message: "Error while fetching profile", error: String(err) });
     }
 };
-
 // ------------- SEARCH USERS
 export const searchUsers = async (req: Request, res: Response) => {
     try {
