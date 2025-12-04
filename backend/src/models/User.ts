@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
+import { ref } from "process";
 
 interface ITopMovie {
     MovieID: Types.ObjectId;
@@ -32,7 +33,12 @@ export interface IUser extends Document {
     TvShowWatchlist: Types.ObjectId[];
     Top3Movies: Types.ObjectId[];
     Top3TvShow: Types.ObjectId[];
-    Friends: Types.ObjectId[];
+    Friends: {
+        friendId: Types.ObjectId;
+        friendSince: Date;
+        friendPseudo: string;
+        friendProfilePicture?: string;
+    }[];
     BlockedUsers: Types.ObjectId[];
     UserBadge: string;
     RatedMovies: {
@@ -85,7 +91,12 @@ const UserSchema: Schema = new Schema({
     TvShowWatchlist: [{ type: Schema.Types.ObjectId, ref: "tvshows" }],
     Top3Movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
     Top3TvShow: [{ type: Schema.Types.ObjectId, ref: "tvshows" }],
-    Friends: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    Friends: [{
+        friendId: { type: Schema.Types.ObjectId, ref: "User" },
+        friendSince: { type: Date, default: Date.now },
+        friendPseudo: { type: String, required: true, ref: "User" },
+        friendProfilePicture: { type: String, default: "", ref: "User" }
+    }],
     BlockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     UserBadge: { type: String, default: "" }
 });
