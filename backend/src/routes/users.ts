@@ -24,6 +24,7 @@ import {
   deleteAMovieFromTop3Favorites,
   deleteATvShowFromTop3Favorites,
   saveRatingAndReview,
+  getFriendsReviews
 
 } from "../controllers/userController"
 
@@ -47,6 +48,7 @@ router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);
 router.delete("/:userId/friends/:friendId", authMiddleware, deleteAFriend);
 router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);
 router.delete("/:userId/friends/:friendId", authMiddleware, deleteAFriend);
+router.get("/:userId/friends-reviews", authMiddleware, getFriendsReviews);
 router.post("/:userId/block/:blockedUserId", authMiddleware, blockAnUser);
 router.delete("/:userId/unblock/:blockedUserId", authMiddleware, unblockAnUser);
 router.post("/:userId/watchlist/movie/:movieId", authMiddleware, addAMovieToWatchlist);

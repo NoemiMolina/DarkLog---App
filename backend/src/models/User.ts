@@ -81,9 +81,9 @@ const UserSchema: Schema = new Schema({
         rating: { type: Number }
     }],
     Reviews: [{
-        itemId: { type: String },
-        type: { type: String, enum: ["movie", "tv"] },
-        text: { type: String },
+        itemId: { type: String, required: true },  
+        type: { type: String, enum: ["movie", "tv"], required: true },  
+        text: { type: String, required: true }, 
         date: { type: Date, default: Date.now }
     }],
     LastWatchedMovie: { type: String, default: "" },

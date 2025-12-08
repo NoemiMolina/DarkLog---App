@@ -154,7 +154,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
             .populate('Top3TvShow')
             .populate('MovieWatchlist')
             .populate('TvShowWatchlist')
-            .populate('Friends'); 
+            .populate('Friends');
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -208,9 +208,12 @@ export const getUserProfile = async (req: Request, res: Response) => {
             numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
             numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
             numberOfGivenReviews: user.NumberOfGivenReviews || 0,
-            numberOfFriends: user.Friends?.length || 0, 
+            numberOfFriends: user.Friends?.length || 0,
             averageMovieRating: Number(averageMovieRating.toFixed(1)),
             averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
+            reviews: user.Reviews || [],
+            ratedMovies: user.RatedMovies || [],
+            ratedTvShows: user.RatedTvShows || [],
             lastWatchedMovie: null
         };
 
@@ -224,7 +227,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
 export const searchUsers = async (req: Request, res: Response) => {
     try {
         const { query } = req.query;
-        
+
         if (!query || typeof query !== 'string') {
             return res.status(400).json({ message: "Search query is required" });
         }
@@ -313,29 +316,66 @@ export const getFriends = async (req: Request, res: Response) => {
 export const addAFriend = async (req: Request, res: Response) => {
     try {
         const { userId, friendId } = req.params;
+        console.log('🔍 Adding friend - userId:', userId);
+        console.log('🔍 Adding friend - friendId:', friendId);
         const user = await User.findById(userId);
         const friend = await User.findById(friendId);
-
-        if (!user || !friend) return res.status(404).json({ message: "User request not found" });
-
-     const isAlreadyFriend = user.Friends.some(f => f.friendId.toString() === friendId);
-
-     if (isAlreadyFriend) {
-        user.Friends.push({
-            friendId: friend._id as Types.ObjectId,
-            friendSince: new Date(),
-            friendPseudo: friend.UserPseudo,
-            friendProfilePicture: friend.UserProfilePicture || ""
-        })
-        await user.save();
-    }
-
-        res.status(200).json({ message: "User successfully added", user });
+        console.log('👤 User found:', user ? 'Yes' : 'No');
+        console.log('👤 Friend found:', friend ? 'Yes' : 'No');
+        if (!user || !friend) {
+            return res.status(404).json({ message: "User request not found" });
+        }
+        console.log('👥 User.Friends BEFORE cleanup:', user.Friends);
+        user.Friends = user.Friends.filter(f =>
+            f.friendId && f.friendPseudo
+        );
+        console.log('👥 User.Friends AFTER cleanup:', user.Friends);
+        if (!Array.isArray(user.Friends)) {
+            console.log('⚠️ Friends is not an array, initializing...');
+            user.Friends = [];
+        }
+        const isAlreadyFriend = user.Friends.some(f =>
+            f.friendId && f.friendId.toString() === friendId
+        );
+        console.log('🤝 Already friends?', isAlreadyFriend);
+        if (!isAlreadyFriend) {
+            console.log('➕ Adding friend relationship...');
+            console.log('   Friend pseudo:', friend.UserPseudo);
+            console.log('   Friend ID:', friend._id);
+            user.Friends.push({
+                friendId: friend._id as Types.ObjectId,
+                friendSince: new Date(),
+                friendPseudo: friend.UserPseudo,
+                friendProfilePicture: friend.UserProfilePicture || ""
+            });
+            if (!Array.isArray(friend.Friends)) {
+                friend.Friends = [];
+            }
+            friend.Friends = friend.Friends.filter(f =>
+                f.friendId && f.friendPseudo
+            );
+            friend.Friends.push({
+                friendId: user._id as Types.ObjectId,
+                friendSince: new Date(),
+                friendPseudo: user.UserPseudo,
+                friendProfilePicture: user.UserProfilePicture || ""
+            });
+            await user.save();
+            console.log('✅ User saved');
+            await friend.save();
+            console.log('✅ Friend saved');
+        } else {
+            console.log('⚠️ Already friends, skipping');
+        }
+        res.status(200).json({ message: "Friend successfully added", user });
     } catch (err) {
-        res.status(500).json({ message: "Could not add this friend", error: err });
+        console.error('💥 Error in addAFriend:', err);
+        res.status(500).json({
+            message: "Could not add this friend",
+            error: err instanceof Error ? err.message : 'Unknown error'
+        });
     }
-}
-
+};
 // ------------ USER DELETES A FRIEND
 export const deleteAFriend = async (req: Request, res: Response) => {
     try {
@@ -383,6 +423,93 @@ export const unblockAnUser = async (req: Request, res: Response) => {
         res.status(200).json({ message: "User successfully unblocked", user });
     } catch (err) {
         res.status(500).json({ message: "Error while unblocking", error: err });
+    }
+};
+
+//-------------- USER GET FRIENDS REVIEWS
+export const getFriendsReviews = async (req: Request, res: Response) => {
+    try {
+        const userId = req.params.userId;
+        console.log('🔍 Backend - userId received:', userId);
+        const user = await User.findById(userId);
+        console.log('👤 Backend - User found:', user ? 'Yes' : 'No');
+        console.log('👥 Backend - Friends count:', user?.Friends?.length || 0);
+        console.log('👥 Backend - Friends IDs:', user?.Friends?.map(f => f.friendId) || []);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        const friendsList = user.Friends;
+        if (friendsList.length === 0) {
+            return res.json({ reviews: [] });
+        }
+        const friendsIds = friendsList.map(f => f.friendId);
+        console.log('🔎 Backend - Looking for reviews from friends:', friendsIds);
+        const friends = await User.find({ _id: { $in: friendsIds } });
+        console.log('👥 Backend - Friends found:', friends.length);
+        let allReviews = [];
+        for (const friend of friends) {
+            const friendInfo = friendsList.find(f => f.friendId.toString() === (friend._id as Types.ObjectId).toString());
+            console.log(`\n📝 Processing friend: ${friend.UserPseudo}`);
+            console.log(`   Reviews count: ${friend.Reviews?.length || 0}`);
+
+            for (const review of friend.Reviews) {
+                console.log(`   📄 Review:`, review);
+                console.log(`   📄 Review itemId:`, review.itemId);
+                let movieTitle = "Unknown";
+                let itemId = review.itemId;
+                let rating = null;
+                if (review.type === "movie") {
+                    const ratedMovie = friend.RatedMovies.find(r =>
+                        r.movieId && r.movieId.toString() === itemId.toString()
+                    );
+                    console.log(`   🔍 Searching for movie with itemId: ${itemId}`);
+                    console.log(`   🔍 Found ratedMovie:`, ratedMovie);
+                    if (ratedMovie && ratedMovie.movieId) {
+                        rating = ratedMovie.rating;
+                        const movie = await Movie.findById(itemId);
+                        movieTitle = movie ? movie.title : "Unknown movie";
+                        console.log(`   🎬 Movie found: ${movieTitle} (rating: ${rating})`);
+                    } else {
+                        console.log(`   ❌ No matching RatedMovie found for itemId: ${itemId}`);
+                    }
+                } else if (review.type === "tv") {
+                    const ratedShow = friend.RatedTvShows.find(r =>
+                        r.tvShowId && r.tvShowId.toString() === itemId.toString()
+                    );
+                    if (ratedShow && ratedShow.tvShowId) {
+                        rating = ratedShow.rating;
+                        const show = await TVShow.findById(itemId);
+                        movieTitle = show ? (show.name ?? "Unknown show") : "Unknown show";
+                        console.log(`   📺 Show found: ${movieTitle} (rating: ${rating})`);
+                    }
+                }
+
+                if (itemId && rating) {
+                    allReviews.push({
+                        friendId: friend._id,
+                        friendName: friendInfo?.friendPseudo || "Unknown Friend",
+                        friendProfilePicture: friendInfo?.friendProfilePicture || null,
+                        movieTitle: movieTitle,
+                        movieId: itemId,
+                        review: review.text,
+                        rating: rating,
+                        createdAt: review.date
+                    });
+                    console.log(`   ✅ Review added to results`);
+                } else {
+                    console.log(`   ⚠️ Skipping review - itemId: ${itemId}, rating: ${rating}`);
+                }
+            }
+        }
+
+        console.log(`\n📊 Total reviews found: ${allReviews.length}`);
+        allReviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        allReviews = allReviews.slice(0, 10);
+
+        return res.json({ reviews: allReviews });
+    } catch (error) {
+        console.error("💥 Error fetching friends reviews: ", error);
+        return res.status(500).json({ message: "Internal server error" });
     }
 };
 
@@ -474,7 +601,7 @@ export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
             user.Top3Movies.push(movie._id as Types.ObjectId);
             await user.save();
         }
-        
+
         res.status(200).json({ message: "Movie added to your Top 3 favorites", user });
     } catch (err) {
         res.status(500).json({ message: "Error while adding a movie to your Top 3 favorites", error: err });
@@ -487,11 +614,11 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
         const { userId, tvShowId } = req.params;
         const user = await User.findById(userId);
         const tvShow = await TVShow.findById(tvShowId);
-        
+
         if (!user || !tvShow) {
             return res.status(404).json({ message: "User or TV Show not found" });
         }
-        
+
         if (user.Top3TvShow.length >= 3) {
             return res.status(400).json({ message: "You can only have 3 favorite TV Shows" });
         }
@@ -499,7 +626,7 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
             user.Top3TvShow.push(tvShow._id as Types.ObjectId);
             await user.save();
         }
-        
+
         res.status(200).json({ message: "TV Show added to your Top 3 favorites", user });
     } catch (err) {
         console.error("❌ Error adding TV show to Top3:", err);
@@ -514,7 +641,7 @@ export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response)
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
         user.Top3Movies = user.Top3Movies.filter((id: Types.ObjectId) => id.toString() !== movieId);
-        
+
         await user.save();
         res.status(200).json({ message: "Movie deleted from your Top 3 favorites", user });
     } catch (err) {
@@ -531,7 +658,7 @@ export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
         user.Top3TvShow = user.Top3TvShow.filter((id: Types.ObjectId) => id.toString() !== tvShowId);
-        
+
         await user.save();
         res.status(200).json({ message: "TV Show deleted from your Top 3 favorites", user });
     } catch (err) {
@@ -542,58 +669,107 @@ export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response
 // ------------- SAVE RATING AND REVIEW
 export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
-        const { userId } = req.params;
-        const { itemId, type, rating, reviewText } = req.body;
+        console.log('🚀 saveRatingAndReview called!');
+        const { userId, itemId } = req.params;
+        const { type, rating, reviewText } = req.body;
 
-        if (!["movie", "tv"].includes(type))
+        console.log('📥 Request params:', { userId, itemId });
+        console.log('📥 Request body:', { type, rating, reviewText });
+
+        if (!itemId) {
+            console.log('❌ No itemId provided');
+            return res.status(400).json({ message: "itemId is required" });
+        }
+
+        if (!["movie", "tv"].includes(type)) {
+            console.log('❌ Invalid type:', type);
             return res.status(400).json({ message: "Invalid type" });
+        }
 
+        console.log('🔍 Finding user:', userId);
         const user = await User.findById(userId);
-        if (!user) return res.status(404).json({ message: "User not found" });
+
+        if (!user) {
+            console.log('❌ User not found');
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        console.log('✅ User found:', user.UserPseudo);
+        console.log('📊 Current RatedMovies:', user.RatedMovies.length);
+        console.log('📊 Current Reviews:', user.Reviews.length);
+
+        // Nettoie les anciennes reviews corrompues
+        console.log('🧹 Cleaning corrupted reviews...');
+        user.Reviews = user.Reviews.filter(r => r.itemId && r.itemId.trim().length > 0);
+        console.log('✅ Reviews after cleanup:', user.Reviews.length);
+
         if (type === "movie") {
+            console.log('🎬 Processing movie rating...');
             const existing = user.RatedMovies.find(
-                (r: any) => r.movieId.toString() === itemId
+                (r: any) => String(r.movieId) === String(itemId)
             );
 
-            if (existing) existing.rating = rating;
-            else user.RatedMovies.push({ movieId: itemId, rating });
+            if (existing) {
+                console.log('📝 Updating existing rating');
+                existing.rating = rating;
+            } else {
+                console.log('➕ Adding new rating');
+                user.RatedMovies.push({ movieId: itemId, rating });
+            }
 
             user.NumberOfWatchedMovies = user.RatedMovies.length;
             user.AverageMovieRating =
                 user.RatedMovies.reduce((acc: number, r: any) => acc + r.rating, 0) /
                 user.RatedMovies.length;
+
+            console.log('📊 Updated movie stats:', {
+                count: user.NumberOfWatchedMovies,
+                avg: user.AverageMovieRating
+            });
         }
 
         if (type === "tv") {
+            console.log('📺 Processing TV rating...');
             const existing = user.RatedTvShows.find(
-                (r: any) => r.tvShowId.toString() === itemId
+                (r: any) => String(r.tvShowId) === String(itemId)
             );
 
-            if (existing) existing.rating = rating;
-            else user.RatedTvShows.push({ tvShowId: itemId, rating });
+            if (existing) {
+                existing.rating = rating;
+            } else {
+                user.RatedTvShows.push({ tvShowId: itemId, rating });
+            }
+
             user.NumberOfWatchedTvShows = user.RatedTvShows.length;
             user.AverageTvShowRating =
                 user.RatedTvShows.reduce((acc: number, r: any) => acc + r.rating, 0) /
                 user.RatedTvShows.length;
         }
+
         if (reviewText && reviewText.trim().length > 0) {
+            console.log('💾 Saving review:', { itemId, type, reviewText });
+
             user.Reviews.push({
-                itemId,
+                itemId: String(itemId),
                 type,
                 text: reviewText,
                 date: new Date(),
             });
 
             user.NumberOfGivenReviews = user.Reviews.length;
+            console.log('📊 Total reviews after push:', user.Reviews.length);
         }
 
+        console.log('💾 Calling user.save()...');
         await user.save();
+        console.log('✅ User saved successfully!');
+        console.log('📊 Final RatedMovies:', user.RatedMovies.length);
+        console.log('📊 Final Reviews:', user.Reviews.length);
 
-        res.status(200).json({ message: "Saved successfully", user });
+        res.status(200).json({ message: "Saved successfully" });
 
     } catch (err) {
         console.error("❌ Error saving rating:", err);
         res.status(500).json({ message: "Saving error", error: err });
     }
 };
-
