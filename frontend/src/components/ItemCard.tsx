@@ -34,6 +34,16 @@ export default function ItemCard({ item, type }: ItemCardProps) {
   async function handleSave() {
     if (!userId) return;
 
+  console.log('💾 Attempting to save:', {
+    url: `http://localhost:5000/users/${userId}/rate/${item._id}`,
+    body: {
+      itemId: item._id,
+      type,
+      rating,
+      reviewText: review
+    }
+  }); 
+
     try {
       await fetch(
         `http://localhost:5000/users/${userId}/rate/${item._id}`,
@@ -44,9 +54,11 @@ export default function ItemCard({ item, type }: ItemCardProps) {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
+            itemId: item._id,
             type,
             rating,
-            reviewText: review
+            reviewText: review,
+           
           })
         }
       );

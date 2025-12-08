@@ -28,10 +28,9 @@ const getPosterUrl = (path?: string) => {
 };
 
 const CarouselItems = (title: string, items: Movie[]) => (
-    <section className="-translate-y-[-380px] xl:-translate-y-60">
+    <section className="xl:translate-y-[-120px]">
         <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[20px]">{title}</h2>
-
-        <Carousel className="w-full max-w-[90%] mx-auto mt-5 xl:mx-auto xl:max-w-[1100px]">
+        <Carousel className="w-full max-w-[90%] mx-auto mt-5 xl:mx-auto xl:max-w-[1500px]">
             <CarouselContent>
                 {items.length === 0 ? (
                     <p className="text-gray-400 xl:translate-x-[20px]">Loading…</p>
@@ -39,7 +38,7 @@ const CarouselItems = (title: string, items: Movie[]) => (
                     items.map((movie) => (
                         <CarouselItem
                             key={movie._id}
-                            className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/7 mt-2"
+                            className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/7 xl:basis-1/8 mt-2 "
                         >
                             <div className="relative group" tabIndex={0}>
 
@@ -50,7 +49,7 @@ const CarouselItems = (title: string, items: Movie[]) => (
                                         <img
                                             src={movie.poster_path ? getPosterUrl(movie.poster_path) : "https://via.placeholder.com/200x300?text=No+Image"}
                                             alt={movie.title}
-                                            className="rounded-lg shadow-md transition object-contain w-full h-auto xl:w-80 hover:opacity-15 cursor-pointer"
+                                            className="rounded-lg shadow-md transition object-contain w-full h-auto xl:w-80 hover:opacity-15 cursor-pointer aspect-[2/3] "
                                         />
                                     }
                                 />

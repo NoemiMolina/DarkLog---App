@@ -11,13 +11,27 @@ const HomePage = () => {
   const [supernaturalMovies, setSupernaturalMovies] = useState<any[]>([]);
   const [zombieMovies, setZombieMovies] = useState<any[]>([]);
   const [monsterMovies, setMonsterMovies] = useState<any[]>([]);
+  const [basedOnTrueStoryMovies, setBasedOnTrueStoryMovies] = useState<any[]>([]);
+  const [basedOnNovelOrBooksMovies, setBasedOnNovelOrBooksMovies] = useState<any[]>([]);
+  const [revengeStyleMovies, setRevengeStyleMovies] = useState<any[]>([]);
+  const [bodyHorrorMovies, setBodyHorrorMovies] = useState<any[]>([]);
+  const [vampireMovies, setVampireMovies] = useState<any[]>([]);
+  const [survivalMovies, setSurvivalMovies] = useState<any[]>([]);
+  const [aliensMovies, setAliensMovies] = useState<any[]>([]);  
 
   const [isTVShowMode, setIsTVShowMode] = useState<boolean>(false);
   const [slasherTVShows, setSlasherTVShows] = useState<any[]>([]);
   const [supernaturalTVShows, setSupernaturalTVShows] = useState<any[]>([]);
   const [zombieTVShows, setZombieTVShows] = useState<any[]>([]);
   const [monsterTVShows, setMonsterTVShows] = useState<any[]>([]);
-
+  const [basedOnTrueStoryTVShows, setBasedOnTrueStoryTVShows] = useState<any[]>([]);
+  const [basedOnNovelOrBooksTVShows, setBasedOnNovelOrBooksTVShows] = useState<any[]>([]);
+  const [revengeStyleTVShows, setRevengeStyleTVShows] = useState<any[]>([]);
+  const [bodyHorrorTVShows, setBodyHorrorTVShows] = useState<any[]>([]);
+  const [vampireTVShows, setVampireTVShows] = useState<any[]>([]);
+  const [survivalTVShows, setSurvivalTVShows] = useState<any[]>([]);
+  const [animeTVShows, setAnimeTVShows] = useState<any[]>([]);
+  const [aliensTVShows, setAliensTVShows] = useState<any[]>([]);
 
   useEffect(() => {
     const rawUser = localStorage.getItem("user");
@@ -73,35 +87,69 @@ const HomePage = () => {
       fetchTVShowCategory("supernatural", setSupernaturalTVShows);
       fetchTVShowCategory("zombie", setZombieTVShows);
       fetchTVShowCategory("monster", setMonsterTVShows);
+      fetchTVShowCategory("alien", setAliensTVShows);
+      fetchTVShowCategory("vampire", setVampireTVShows);
+      fetchTVShowCategory("revenge", setRevengeStyleTVShows);
+      fetchTVShowCategory("body horror", setBodyHorrorTVShows);
+      fetchTVShowCategory("survival horror", setSurvivalTVShows);
+      fetchTVShowCategory("based on novel or book", setBasedOnNovelOrBooksTVShows);
+      fetchTVShowCategory("based on true story", setBasedOnTrueStoryTVShows);
+      fetchTVShowCategory("anime", setAnimeTVShows);
     } else {
       fetchMovieCategory("slasher", setSlasherMovies);
       fetchMovieCategory("supernatural", setSupernaturalMovies);
       fetchMovieCategory("zombie", setZombieMovies);
       fetchMovieCategory("monster", setMonsterMovies);
+      fetchMovieCategory("alien", setAliensMovies);
+      fetchMovieCategory("vampire", setVampireMovies);
+      fetchMovieCategory("revenge", setRevengeStyleMovies);
+      fetchMovieCategory("body horror", setBodyHorrorMovies);
+      fetchMovieCategory("survival horror", setSurvivalMovies);
+      fetchMovieCategory("based on novel or book", setBasedOnNovelOrBooksMovies);
+      fetchMovieCategory("based on true story", setBasedOnTrueStoryMovies);
     }
-  }, [isTVShowMode]); // will be completed
+  }, [isTVShowMode]);
 
   return (
-    <main className="min-h-screen relative max-h-screen sm:max-h-none">
+    <main className="min-h-screen relative">
       <Header username={username} userProfilePicture={profilePic} isTVShowMode={isTVShowMode} onToggleTVShowMode={setIsTVShowMode} />
 
-      <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px] -z-10">
-        <div className="mb-10">
-           <PopularWFriendsSection />
+      <section className="mt-8 px-4">
+        <div className="mb-12">
+          <PopularWFriendsSection />
         </div>
-        <div className="-translate-y-[420px] text-[1rem] text-center text-white px-4 mt-10 sm:translate-y-0 md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-70 xl:-translate-y-30">
+        <div className="text-[1rem] text-center text-white">
+
           {!isTVShowMode ? (
             <>
               {CarouselItems("Popular slashers", slasherMovies)}
               {CarouselItems("Ghost and possession stories", supernaturalMovies)}
               {CarouselItems("Zombies universe", zombieMovies)}
               {CarouselItems("Monster core", monsterMovies)}
+              {CarouselItems("Aliens", aliensMovies)}
+              {CarouselItems("Vampire", vampireMovies)}
+              {CarouselItems("Revenge", revengeStyleMovies)}
+              {CarouselItems("Body horror", bodyHorrorMovies)}
+              {CarouselItems("Survival", survivalMovies)}
+              {CarouselItems("Based on novel or book", basedOnNovelOrBooksMovies)}
+              {CarouselItems("Based on true story", basedOnTrueStoryMovies)}
+
             </>
           ) : (
             <>
+              {CarouselItems("Anime", animeTVShows)}
+              {CarouselItems("Popular slashers", slasherTVShows)}
               {CarouselItems("Ghost and possession stories", supernaturalTVShows)}
               {CarouselItems("Zombies universe", zombieTVShows)}
               {CarouselItems("Monster core", monsterTVShows)}
+              {CarouselItems("Aliens", aliensTVShows)}
+              {CarouselItems("Vampire", vampireTVShows)}
+              {CarouselItems("Revenge", revengeStyleTVShows)}
+              {CarouselItems("Body horror", bodyHorrorTVShows)}
+              {CarouselItems("Survival", survivalTVShows)}
+              {CarouselItems("Based on novel or book", basedOnNovelOrBooksTVShows)}
+              {CarouselItems("Based on true story", basedOnTrueStoryTVShows)}
+
             </>
           )}
         </div>
