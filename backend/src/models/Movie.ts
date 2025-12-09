@@ -6,6 +6,7 @@ export interface IMovie extends Document {
   genres: string[];
   tags: string[];
   poster_path?: string;
+  runtime?: number;
   ratings: [
     {
       userId: Types.ObjectId,
@@ -20,6 +21,7 @@ const MovieSchema: Schema = new Schema({
   genres: { type: [String], required: true },
   tags: { type: [String], default: [] },
   poster_path: { type: String },
+  runtime: { type: Number },
   ratings: { type: [Number], default: [] }
 });
 

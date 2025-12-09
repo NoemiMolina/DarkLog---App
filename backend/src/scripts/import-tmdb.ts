@@ -21,6 +21,7 @@ const filmSchema = new mongoose.Schema(
     genre_ids: [Number],
     poster_path: String,
     keywords: [String],
+    runtime: Number,
     platforms: [
       {
         provider_id: Number,
@@ -103,6 +104,18 @@ async function fetchCast(movieId: number) {
   }
 }
 
+async function fetchMovieDetails(movieId: number) {
+  try {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}`,
+      { params: { api_key: TMDB_KEY } }
+    );
+    return res.data;
+  } catch {
+    return null;
+  }
+}
+
 async function main() {
   await mongoose.connect(MONGO_URI);
   console.log("Connecté à MongoDB");
@@ -119,6 +132,7 @@ async function main() {
       const keywords = await fetchKeywords(item.id);
       const platforms = await fetchPlatforms(item.id);
       const cast = await fetchCast(item.id);
+      const details = await fetchMovieDetails(item.id);
 
       await Film.updateOne(
         { tmdb_id: item.id },
@@ -135,6 +149,7 @@ async function main() {
             genre_ids: item.genre_ids,
             poster_path: item.poster_path,
             keywords,
+            runtime: details?.runtime || null,
             platforms,
             cast,
             raw: item,
@@ -144,7 +159,7 @@ async function main() {
       );
     }
 
-    await new Promise((res) => setTimeout(res, 300));
+    await new Promise((res) => setTimeout(res, 500));
   }
 
   console.log("🎉 Import terminé !");
