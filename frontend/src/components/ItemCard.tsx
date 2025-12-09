@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RatingStars from "./RatingStars";
 
 interface ItemCardProps {
@@ -7,13 +7,42 @@ interface ItemCardProps {
 }
 
 export default function ItemCard({ item, type }: ItemCardProps) {
-  const [rating, setRating] = useState<number>(item.myRating || 0);
+  const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>("");
   const [message, setMessage] = useState<string | null>(null);
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   const userId = user?._id;
   const token = localStorage.getItem("token");
+
+  // Charger les données utilisateur au montage
+  useEffect(() => {
+    async function loadUserData() {
+      if (!userId || !item._id) return;
+
+      try {
+        const res = await fetch(
+          `http://localhost:5000/users/${userId}/item/${item._id}/userdata?type=${type}`,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          }
+        );
+
+        if (res.ok) {
+          const data = await res.json();
+          setRating(data.myRating || 0);
+          setReview(data.myReview || "");
+          console.log("✅ User data loaded:", data);
+        }
+      } catch (err) {
+        console.error("❌ Error loading user data:", err);
+      }
+    }
+
+    loadUserData();
+  }, [userId, item._id, type, token]);
 
   const poster = item.poster_path
     ? (item.poster_path.startsWith("http")
@@ -34,15 +63,15 @@ export default function ItemCard({ item, type }: ItemCardProps) {
   async function handleSave() {
     if (!userId) return;
 
-  console.log('💾 Attempting to save:', {
-    url: `http://localhost:5000/users/${userId}/rate/${item._id}`,
-    body: {
-      itemId: item._id,
-      type,
-      rating,
-      reviewText: review
-    }
-  }); 
+    console.log('💾 Attempting to save:', {
+      url: `http://localhost:5000/users/${userId}/rate/${item._id}`,
+      body: {
+        itemId: item._id,
+        type,
+        rating,
+        reviewText: review
+      }
+    });
 
     try {
       await fetch(
@@ -58,7 +87,6 @@ export default function ItemCard({ item, type }: ItemCardProps) {
             type,
             rating,
             reviewText: review,
-           
           })
         }
       );
@@ -76,8 +104,6 @@ export default function ItemCard({ item, type }: ItemCardProps) {
       console.error("❌ userId missing in localStorage");
       return;
     }
-
-    // Utiliser des routes différentes selon le type
     const route =
       type === "movie"
         ? `http://localhost:5000/users/${userId}/watchlist/movie/${item._id}`
@@ -108,6 +134,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
       showMessage("❌ Error adding to watchlist.");
     }
   }
+  
 
   return (
     <div className="flex flex-col md:flex-row gap-5 mt-2">
@@ -189,6 +216,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
         <div>
           <h3 className="font-semibold mb-1">Your rating:</h3>
           <RatingStars
+            key={rating}
             value={rating}
             onChange={(r) => {
               console.log("Rating set:", r);

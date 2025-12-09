@@ -65,7 +65,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {movies.length < 3 && (
                 <button 
                   onClick={onAddMovie} 
-                  className="w-full h-80 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                  className="w-full h-116 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
                 >
                   <span className="text-6xl mb-2">➕</span>
                   <span className="text-gray-400">Add Movie</span>
@@ -111,7 +111,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {tvShows.length < 3 && (
                 <button 
                   onClick={onAddTvShow} 
-                  className="w-full h-80 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                  className="w-full h-116 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
                 >
                   <span className="text-6xl mb-2">➕</span>
                   <span className="text-gray-400">Add TV Show</span>

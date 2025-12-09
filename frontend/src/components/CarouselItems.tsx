@@ -29,7 +29,7 @@ const getPosterUrl = (path?: string) => {
 
 const CarouselItems = (title: string, items: Movie[]) => (
     <section className="xl:translate-y-[-120px]">
-        <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[20px]">{title}</h2>
+        <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[40px]">{title}</h2>
         <Carousel className="w-full max-w-[90%] mx-auto mt-5 xl:mx-auto xl:max-w-[1500px]">
             <CarouselContent>
                 {items.length === 0 ? (
@@ -38,10 +38,9 @@ const CarouselItems = (title: string, items: Movie[]) => (
                     items.map((movie) => (
                         <CarouselItem
                             key={movie._id}
-                            className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/7 xl:basis-1/8 mt-2 "
+                            className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-2"
                         >
                             <div className="relative group" tabIndex={0}>
-
                                 <ItemDialog
                                     item={movie}
                                     type="movie"
@@ -53,8 +52,6 @@ const CarouselItems = (title: string, items: Movie[]) => (
                                         />
                                     }
                                 />
-
-
                                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 group-focus:opacity-100">
                                     <div className="text-white text-sm font-semibold px-3 py-1 rounded">
                                         ⭐{" "}

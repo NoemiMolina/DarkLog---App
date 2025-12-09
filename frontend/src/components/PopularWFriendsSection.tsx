@@ -7,6 +7,7 @@ interface FriendReview {
     friendName: string;
     friendProfilePicture: string | null;
     movieTitle: string;
+    moviePosterPath: string | null;
     movieId: number;
     review: string;
     rating: number;
@@ -47,7 +48,7 @@ const PopularWFriendsSection: React.FC = () => {
     }
 
     return (
-        <section className="w-full px-4 py-6 mb-5 xl:translate-y-[-50px]">
+        <section className="w-full px-4 py-6 mb-5 xl:translate-y-[-50px] xl:translate-x-[168px] xl:max-w-[1550px]">
             <h2 className="text-xl font-bold text-white text-center mb-4">Popular with friends</h2>
             <Separator className="bg-white/20 mb-6" />
 
@@ -77,22 +78,29 @@ const PopularWFriendsSection: React.FC = () => {
                                     </span>
                                 </div>
                             )}
-                            
+
                             <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-2 flex-wrap">
                                     <span className="font-semibold text-white">{review.friendName}</span>
                                     <span className="text-gray-400 text-sm">reviewed</span>
                                     <span className="font-medium text-white">'{review.movieTitle}'</span>
-                                        (<Star className="w-4 h-4 fill-yellow-400" />
-                                        <span className="font-bold"> {review.rating}</span>)
-                                        <p className="text-sm text-gray-300 line-clamp-2"> : {review.review}</p>
+                                    <span className="text-gray-400 text-sm"> on {new Date(review.createdAt).toLocaleDateString()}</span>
+                                     (<Star className="w-4 h-4 fill-yellow-400" />
+                                    <span className="font-bold">{review.rating} ) :</span>
                                 </div>
-                                
+
+                                <div className="flex items-start gap-4">
+                                    <p className="text-sm text-gray-300 line-clamp-2"> {review.review}</p>
+                                </div>
+                        
+                                   
+                         
                             </div>
                         </div>
                     ))}
                 </div>
             )}
+            <Separator className="bg-white/20 mb-6" />
         </section>
     );
 };

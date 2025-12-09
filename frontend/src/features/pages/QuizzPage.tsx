@@ -27,9 +27,12 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [showResult, setShowResult] = useState(false);
     const [quizStarted, setQuizStarted] = useState(false);
-    
+
     useEffect(() => {
         setMediaType(isTVShowMode ? 'tvshows' : 'movies');
+        if (quizStarted) {
+            setQuizStarted(false);
+        }
     }, [isTVShowMode]);
 
     const handleCategoryClick = (category: 'culture' | 'dumbDescription') => {
@@ -40,6 +43,12 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
     const startQuiz = async (difficulty: 'easy' | 'medium' | 'hard') => {
         try {
             const token = localStorage.getItem('token');
+            console.log('🎯 Starting quiz with:', {
+                mediaType,
+                selectedCategory,
+                difficulty,
+                url: `http://localhost:5000/quiz/${mediaType}/${selectedCategory}/${difficulty}`
+            });
             const response = await fetch(
                 `http://localhost:5000/quiz/${mediaType}/${selectedCategory}/${difficulty}`,
                 {
@@ -52,6 +61,7 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
             }
 
             const data = await response.json();
+            console.log('✅ Quiz data fetched:', data);
             setQuestions(data.questions);
             setCurrentQuestionIndex(0);
             setScore(0);

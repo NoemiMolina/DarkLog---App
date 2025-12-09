@@ -31,6 +31,7 @@ interface UserProfileData {
   averageTvShowRating: number;
   lastWatchedMovie: { id: number; title: string; poster: string } | null;
   numberOfFriends: number;
+  watchedMovies?: Array<{ runtime: number }>;
 }
 
 const UserProfile: React.FC = () => {
@@ -47,6 +48,7 @@ const UserProfile: React.FC = () => {
   const [showTvShowWatchlistSearch, setShowTvShowWatchlistSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null);
 
   const token = localStorage.getItem("token");
   let userId: string | undefined;
@@ -59,7 +61,6 @@ const UserProfile: React.FC = () => {
       console.error("❌ Error decoding token:", error);
     }
   }
-
 
   useEffect(() => {
     if (!userId) return;
@@ -113,6 +114,27 @@ const UserProfile: React.FC = () => {
     }
 
     try {
+      if (profilePictureFile) {
+        const formData = new FormData();
+        formData.append('UserProfilePicture', profilePictureFile);
+
+        console.log('📤 Uploading new profile picture...');
+        const pictureResponse = await fetch(`http://localhost:5000/users/${userId}/profile-picture`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+          body: formData,
+        });
+
+        if (!pictureResponse.ok) {
+          const errorData = await pictureResponse.json();
+          console.error('❌ Failed to update profile picture:', errorData);
+          throw new Error('Failed to update profile picture');
+        }
+
+        console.log('✅ Profile picture updated successfully');
+      }
       const profileResponse = await fetch(`http://localhost:5000/users/${userId}/profile`, {
         method: 'PUT',
         headers: {
@@ -128,7 +150,6 @@ const UserProfile: React.FC = () => {
       });
 
       if (!profileResponse.ok) throw new Error('Failed to update profile');
-
       if (newPassword && oldPassword) {
         const passwordResponse = await fetch(`http://localhost:5000/users/${userId}/password`, {
           method: 'PUT',
@@ -140,12 +161,12 @@ const UserProfile: React.FC = () => {
         });
         if (!passwordResponse.ok) throw new Error('Failed to update password');
       }
-
       alert('Profile updated successfully!');
       setIsEditing(false);
       setOldPassword('');
       setNewPassword('');
       setPasswordConfirm('');
+      setProfilePictureFile(null);
       fetchProfileData();
     } catch (error: any) {
       alert(error.message || 'Failed to update profile');
@@ -154,6 +175,15 @@ const UserProfile: React.FC = () => {
 
   const handleInputChange = (field: string, value: any) => {
     setProfileData((prev) => prev ? { ...prev, [field]: value } : null);
+  };
+
+  const handleProfilePictureChange = (file: File) => {
+    setProfilePictureFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      handleInputChange('userProfilePicture', reader.result as string);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSearch = async (type: 'movie' | 'tv') => {
@@ -284,7 +314,11 @@ const UserProfile: React.FC = () => {
         passwordConfirm={passwordConfirm}
         onEdit={() => setIsEditing(true)}
         onSave={handleSave}
-        onCancel={() => setIsEditing(false)}
+        onCancel={() => {
+          setIsEditing(false);
+          setProfilePictureFile(null);
+          fetchProfileData();
+        }}
         onInputChange={handleInputChange}
         onPasswordChange={(field, value) => {
           if (field === 'old') setOldPassword(value);
@@ -292,6 +326,7 @@ const UserProfile: React.FC = () => {
           else setPasswordConfirm(value);
         }}
         onTogglePasswordVisibility={() => setShowPassword(!showPassword)}
+        onProfilePictureChange={handleProfilePictureChange}
       />
 
       <Separator className="bg-white/20" />
@@ -375,8 +410,8 @@ const UserProfile: React.FC = () => {
         averageMovieRating={profileData.averageMovieRating}
         averageTvShowRating={profileData.averageTvShowRating}
         numberOfFriends={profileData.numberOfFriends}
+        watchedMovies={profileData.watchedMovies || []}
         userId={userId!}
-
       />
     </div>
   );

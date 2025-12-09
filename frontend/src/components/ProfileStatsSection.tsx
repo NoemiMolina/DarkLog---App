@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
-import { Users } from 'lucide-react';
+import { Clock, Users } from 'lucide-react';
 
 interface ProfileStatsSection {
   numberOfWatchedMovies: number;
@@ -10,6 +10,7 @@ interface ProfileStatsSection {
   averageMovieRating: number;
   averageTvShowRating: number;
   numberOfFriends: number;
+  watchedMovies?: Array<{ runtime: number }>;
   userId?: string;
 }
 
@@ -20,11 +21,13 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   averageMovieRating = 0,
   averageTvShowRating = 0,
   numberOfFriends = 0,
+  watchedMovies = [],
   userId,
 }) => {
   const [showFriendsModal, setShowFriendsModal] = useState(false);
   const [friends, setFriends] = useState<any[]>([]);
   const [loadingFriends, setLoadingFriends] = useState(false);
+  const [totalWatchTimeMinutes, setTotalWatchTimeMinutes] = useState(0);
 
   const fetchFriends = async () => {
     setLoadingFriends(true);
@@ -46,6 +49,22 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   const handleFriendsClick = () => {
     setShowFriendsModal(true);
     fetchFriends();
+  };
+
+  useEffect(() => {
+    console.log("📊 watchedMovies received:", watchedMovies);
+    const totalMinutes = watchedMovies.reduce((sum, movie) => sum + (movie.runtime || 0), 0);
+    console
+    setTotalWatchTimeMinutes(totalMinutes);
+  }, [watchedMovies]);
+
+  const formatWatchTime = (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    if (days > 0) {
+      return `${days}d ${hours % 24}h`;
+    }
+    return `${hours}h ${minutes % 60}m`;
   };
 
   return (
@@ -75,6 +94,13 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
               <p className="text-4xl font-bold text-orange-400">{averageTvShowRating.toFixed(1)}</p>
               <p className="text-sm text-white/60">Avg TV Show Rating</p>
+            </div>
+            <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+              <p className="text-4xl font-bold text-cyan-400 flex items-center justify-center gap-2">
+                <Clock size={32} />
+                {formatWatchTime(totalWatchTimeMinutes)}
+              </p>
+              <p className="text-sm text-white/60">Total Watch Time</p>
             </div>
             <div
               className="text-center p-4 bg-[#1A1A1A] rounded-lg cursor-pointer hover:bg-[#333333] transition-colors"
