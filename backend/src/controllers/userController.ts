@@ -161,6 +161,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
         }
 
         console.log("✅ User found:", user.UserPseudo);
+        console.log("📊 RatedMovies:", user.RatedMovies);
 
         const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
             ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) / user.RatedMovies.length
@@ -169,6 +170,18 @@ export const getUserProfile = async (req: Request, res: Response) => {
         const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
             ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) / user.RatedTvShows.length
             : 0;
+
+        // Récupérer les films regardés avec leur durée
+        const watchedMoviesWithDetails = await Promise.all(
+            user.RatedMovies.map(async (ratedMovie: any) => {
+                console.log("🎬 Looking for movie with ID:", ratedMovie.movieId);
+                const movie = await Movie.findById(ratedMovie.movieId);
+                console.log("🎬 Movie found:", movie?.title, "Runtime:", movie?.runtime);
+                return movie ? { runtime: movie.runtime || 0 } : { runtime: 0 };
+            })
+        );
+
+        console.log("⏱️ Watched movies with details:", watchedMoviesWithDetails);
 
         const profileData = {
             userProfilePicture: user.UserProfilePicture || null,
@@ -214,8 +227,11 @@ export const getUserProfile = async (req: Request, res: Response) => {
             reviews: user.Reviews || [],
             ratedMovies: user.RatedMovies || [],
             ratedTvShows: user.RatedTvShows || [],
+            watchedMovies: watchedMoviesWithDetails,
             lastWatchedMovie: null
         };
+
+        console.log("📤 Sending watchedMovies:", profileData.watchedMovies);
 
         res.status(200).json(profileData);
     } catch (err) {
