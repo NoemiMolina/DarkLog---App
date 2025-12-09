@@ -44,10 +44,12 @@ export interface IUser extends Document {
     RatedMovies: {
         movieId: string;
         rating: number;
+        review?: string;
     }[];
     RatedTvShows: {
         tvShowId: string;
         rating: number;
+        review?: string;
     }[];
     Reviews: {
         itemId: string;
@@ -74,11 +76,13 @@ const UserSchema: Schema = new Schema({
     AverageTvShowRating: { type: Number, default: 0 },
     RatedMovies: [{
         movieId: { type: String },
-        rating: { type: Number }
+        rating: { type: Number },
+        review: { type: String }
     }],
     RatedTvShows: [{
         tvShowId: { type: String },
-        rating: { type: Number }
+        rating: { type: Number },
+        review: { type: String }
     }],
     Reviews: [{
         itemId: { type: String, required: true },  

@@ -24,7 +24,8 @@ import {
   deleteAMovieFromTop3Favorites,
   deleteATvShowFromTop3Favorites,
   saveRatingAndReview,
-  getFriendsReviews
+  getFriendsReviews,
+  getItemWithUserData
 
 } from "../controllers/userController"
 
@@ -37,6 +38,7 @@ router.get("/:userId/profile", authMiddleware, getUserProfile);
 router.put("/:userId/profile", authMiddleware, uploadMiddleware.single("UserProfilePicture"), updateProfileInfos);
 router.put("/:userId/password", authMiddleware, updatePassword);
 router.put("/:userId/profile-picture", authMiddleware, uploadMiddleware.single("UserProfilePicture"), updateProfilePicture);
+router.get("/:userId/item/:itemId/userdata", getItemWithUserData);
 router.post("/:userId/rate/:itemId", authMiddleware, saveRatingAndReview);
 router.post("/:userId/top3favorites/movie/:movieId", authMiddleware, addAMovieToTop3Favorites);
 router.post("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, addATvShowToTop3Favorites);
