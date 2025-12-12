@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import CarouselItems from "../../components/CarouselItems";
-import PopularWFriendsSection from "../../components/PopularWFriendsSection";
+import Header from "../../components/HeaderComponents/Header";
+import CarouselItems from "../../components/HomePageComponents/CarouselItems";
+import PopularWFriendsSection from "../../components/HomePageComponents/PopularWFriendsSection";
 
 const HomePage = () => {
 

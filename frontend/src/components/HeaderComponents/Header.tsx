@@ -4,11 +4,9 @@ import PublicSearchBar from './PublicSearchBar';
 import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
 import GetLuckyDialog from './GetLuckyDialog';
-import FriendSearchDialog from './FriendSearchDialog';
-import { Button } from '../components/ui/button';
-import { Label } from "../components/ui/label";
-import { Switch } from "../components/ui/switch";
-import { MdOutlinePersonSearch } from "react-icons/md";
+import { Button } from '../../components/ui/button';
+import { Label } from "../../components/ui/label";
+import { Switch } from "../../components/ui/switch";
 import { IoIosMenu } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import {
@@ -16,7 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 
 interface HeaderProps {
   username?: string;
@@ -26,7 +24,7 @@ interface HeaderProps {
   isTVShowMode?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onLogOut, onToggleTVShowMode, isTVShowMode }) => {
+const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onToggleTVShowMode, isTVShowMode }) => {
   console.log("🧩 userProfilePicture =", userProfilePicture);
   const navigate = useNavigate();
   const handleToggle = (value: boolean) => {
@@ -103,8 +101,10 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 >
                   Quizzes
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]">
-                  Forum
+                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
+                  onClick={() => navigate('/forum')}
+                >
+                   Forum
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

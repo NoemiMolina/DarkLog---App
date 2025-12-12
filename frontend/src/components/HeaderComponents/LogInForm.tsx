@@ -7,11 +7,11 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger
-} from "../components/ui/dialog";
+} from "../ui/dialog";
 
-import { Button } from "../components/ui/button";
-import { Label } from "../components/ui/label";
-import { Input } from "../components/ui/input";
+import { Button } from "../ui/button";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
 
 const DialogLoginForm: React.FC = () => {
   const [open, setOpen] = useState(false);

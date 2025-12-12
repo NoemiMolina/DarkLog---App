@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Separator } from '../../components/ui/separator';
 import { jwtDecode } from 'jwt-decode';
-import ProfileInfoSection from '../../components/ProfileInfosSection';
-import Top3Section from '../../components/Top3Section';
-import WatchlistSection from '../../components/WatchlistSection';
-import StatsSection from '../../components/ProfileStatsSection';
-import SearchDialog from '../../components/SearchDialog';
+import ProfileInfoSection from '../../components/ProfileComponents/ProfileInfosSection';
+import Top3Section from '../../components/ProfileComponents/Top3Section';
+import WatchlistSection from '../../components/ProfileComponents/WatchlistSection';
+import StatsSection from '../../components/ProfileComponents/ProfileStatsSection';
+import SearchDialog from '../../components/HeaderComponents/SearchDialog';
 
 interface JwtPayload {
   id: string;

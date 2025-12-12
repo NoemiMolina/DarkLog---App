@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
+} from "../ui/dialog";
 
 const GetLuckyDialog: React.FC = () => {
   const [movieOrTVShow, setMovieOrTVShow] = useState<any>(null);

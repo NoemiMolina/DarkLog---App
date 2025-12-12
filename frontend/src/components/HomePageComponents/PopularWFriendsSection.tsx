@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
 import { Star } from 'lucide-react';
 
 interface FriendReview {

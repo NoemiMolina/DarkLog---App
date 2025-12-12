@@ -15,7 +15,9 @@ export default function ItemCard({ item, type }: ItemCardProps) {
   const userId = user?._id;
   const token = localStorage.getItem("token");
 
-  // Charger les données utilisateur au montage
+  const itemId = item.tmdb_id || item.id; 
+  const itemTitle = item.title || item.name; 
+
   useEffect(() => {
     async function loadUserData() {
       if (!userId || !item._id) return;
@@ -64,18 +66,18 @@ export default function ItemCard({ item, type }: ItemCardProps) {
     if (!userId) return;
 
     console.log('💾 Attempting to save:', {
-      url: `http://localhost:5000/users/${userId}/rate/${item._id}`,
+      url: `http://localhost:5000/users/${userId}/rate/${itemId}`,
       body: {
-        itemId: item._id,
         type,
         rating,
-        reviewText: review
+        reviewText: review,
+        itemTitle,
       }
     });
 
     try {
       await fetch(
-        `http://localhost:5000/users/${userId}/rate/${item._id}`,
+        `http://localhost:5000/users/${userId}/rate/${itemId}`,
         {
           method: "POST",
           headers: {
@@ -83,10 +85,10 @@ export default function ItemCard({ item, type }: ItemCardProps) {
             "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify({
-            itemId: item._id,
             type,
             rating,
             reviewText: review,
+            itemTitle
           })
         }
       );
@@ -106,8 +108,8 @@ export default function ItemCard({ item, type }: ItemCardProps) {
     }
     const route =
       type === "movie"
-        ? `http://localhost:5000/users/${userId}/watchlist/movie/${item._id}`
-        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${item._id}`;
+        ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
+        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
 
     try {
       const res = await fetch(route, {

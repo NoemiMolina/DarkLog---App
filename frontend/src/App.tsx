@@ -4,6 +4,7 @@ import HomePage from "./features/pages/HomePage";
 import UserProfile from './features/pages/UserProfilePage';
 import UserPublicProfile from "./features/pages/UserPublicProfilePage";
 import QuizzPage from "./features/pages/QuizzPage";
+import  ForumPage  from "./features/pages/ForumPage";
 import { useEffect, useState } from "react";
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/user/:userId" element={<UserPublicProfile />} />
           <Route path="/quiz" element={<QuizzPage isTVShowMode={isTVShowMode} />} />
+          <Route path="/forum" element={<ForumPage />} />
         </Routes>
       </div>
     </BrowserRouter>

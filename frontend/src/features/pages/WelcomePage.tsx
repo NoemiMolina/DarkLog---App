@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderComponents/Header";
 import backgroundOption1 from "@/assets/images/WelcomePageBackgroundImgs/evilDeadRiseMainHomePic.jpg";
 import backgroundOption2 from "@/assets/images/WelcomePageBackgroundImgs/shaunOfTheDeadMainHomePic.jpg";
 import backgroundOption3 from "@/assets/images/WelcomePageBackgroundImgs/houseOf1000CorpsesMainHomePic.jpg";
@@ -16,7 +16,6 @@ import { LiaGhostSolid } from "react-icons/lia";
 import { RiUserCommunityLine } from "react-icons/ri";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
-
 
 const WelcomePage: React.FC = () => {
     const backgroundsImages = [
@@ -48,7 +47,7 @@ const WelcomePage: React.FC = () => {
 
     return (
         <main className="min-h-screen relative max-h-screen sm:max-h-none">
-            <Header isLoggedIn={isLoggedIn} onLogOut={handleLogout} />
+            <Header onLogOut={handleLogout} />
             <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px] -z-10">
                 <div className="relative max-w-6xl crt-effect mb-90 mx-auto w-[90%] sm:w-[85%] md:w-[70%] lg:w-[100%] xl:-translate-y-[60px]">
                     <img

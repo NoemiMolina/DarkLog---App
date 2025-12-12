@@ -4,9 +4,9 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from "../components/ui/input-group";
+} from "../ui/input-group";
 import { Search } from "lucide-react";
-import ItemDialog from "./ItemDialog";
+import ItemDialog from "../HomePageComponents/ItemDialog";
 
 const PublicSearchBar: React.FC = () => {
   const [query, setQuery] = useState("");
