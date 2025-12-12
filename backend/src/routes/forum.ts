@@ -13,6 +13,12 @@ import {
     addReactionToPost,
     addReactionToComment,
     getPostsByTag,
+    reportPost,
+    reportComment,
+    searchPosts,
+    getNotificationsForUser,
+    markNotificationAsRead,
+    addReactionToReply
 
 } from '../controllers/forumController';
 
@@ -30,7 +36,13 @@ router.delete('/posts/:id/comments/:commentId', authMiddleware, deleteCommentFro
 router.post('/posts/:id/comments/:commentId/replies', authMiddleware, replyToComment); // ok
 router.post('/posts/:id/comments/:commentId/reactions', authMiddleware, addReactionToComment); //ok 
 router.post('/posts/:id/reaction', authMiddleware, addReactionToPost,); // ok
+router.post('/posts/:id/comments/:commentId/replies/:replyId/reaction', authMiddleware, addReactionToReply);
 router.get('/posts/tags/:tag', getPostsByTag); // ok
+router.post('/posts/:id/report', authMiddleware, reportPost); 
+router.post('/posts/:id/comments/:commentId/report', authMiddleware, reportComment); 
+router.get('/posts/search/:query', searchPosts);
+router.get('/notifications', authMiddleware, getNotificationsForUser); 
+router.put('/notifications/:notificationId/read', authMiddleware, markNotificationAsRead); 
 
 export default router;
 

@@ -87,9 +87,17 @@ export const deletePost = async (req: Request, res: Response) => {
 
 export const getPublishedPosts = async (req: Request, res: Response) => {
     try {
-        const posts = await Forum.find({ published: true }).sort({ createdAt: -1 }).populate('author', 'username');
+        const posts = await Forum.find({ published: true })
+            .sort({ createdAt: -1 })
+            .populate('author', 'username UserPseudo UserFirstName UserProfilePicture')
+            .populate('comments.author', 'username UserPseudo UserFirstName UserProfilePicture')
+            .populate('comments.replies.author', 'username UserPseudo UserFirstName UserProfilePicture')
+            .lean();
+
+        console.log('📊 Posts found:', posts.length);
         res.status(200).json({ posts });
     } catch (error) {
+        console.error('❌ Error fetching posts:', error);
         res.status(500).json({ message: "Error fetching posts", error });
     }
 };
@@ -233,7 +241,6 @@ export const addReactionToComment = async (req: Request, res: Response) => {
         if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
         const { id, commentId } = req.params;
-        // ensure commentId is a non-empty string so TS / Mongoose accept it
         if (typeof commentId !== 'string' || !commentId.trim()) {
             return res.status(400).json({ message: "commentId is required" });
         }
@@ -274,6 +281,47 @@ export const addReactionToComment = async (req: Request, res: Response) => {
     }
 };
 
+export const addReactionToReply = async (req: Request, res: Response) => {
+    try {
+        const userId = getUserId(req);
+        if (!userId) return res.status(401).json({ message: "Unauthorized" });
+
+        const { id, commentId, replyId } = req.params;
+        const { type } = req.body;
+
+        if (!["like", "dislike"].includes(type)) {
+            return res.status(400).json({ message: "Type must be 'like' or 'dislike'" });
+        }
+
+        const post = await Forum.findById(id);
+        if (!post) return res.status(404).json({ message: "Post not found" });
+
+        const comment: any = post.comments.id(commentId);
+        if (!comment) return res.status(404).json({ message: "Comment not found" });
+
+        const reply: any = comment.replies.id(replyId);
+        if (!reply) return res.status(404).json({ message: "Reply not found" });
+        if (!reply.likes) reply.likes = [];
+        if (!reply.dislikes) reply.dislikes = [];
+        reply.likes = reply.likes.filter((uid: any) => String(uid) !== String(userId));
+        reply.dislikes = reply.dislikes.filter((uid: any) => String(uid) !== String(userId));
+        if (type === "like") reply.likes.push(userId);
+        else reply.dislikes.push(userId);
+
+        await post.save();
+
+        return res.status(200).json({
+            message: `Reply ${type}d successfully`,
+            likes: reply.likes.length,
+            dislikes: reply.dislikes.length,
+            reply
+        });
+    } catch (err: any) {
+        console.error(err);
+        return res.status(500).json({ error: err.message || "Server error" });
+    }
+};
+
 export const getPostsByTag = async (req: Request, res: Response) => {
     try {
         const tag = req.params.tag?.toLowerCase();
@@ -282,5 +330,102 @@ export const getPostsByTag = async (req: Request, res: Response) => {
         res.status(200).json({ posts });
     } catch (error) {
         res.status(500).json({ message: "Error fetching posts by tag", error });
+    }
+};
+
+export const reportPost = async (req: Request, res: Response) => {
+    try {
+        const userId = getUserId(req);
+        if (!userId) return res.status(401).json({ message: "Unauthorized" });
+        const { reason } = req.body;
+        if (!reason || !reason.trim()) {
+            return res.status(400).json({ message: "Reason is required" });
+        }
+        const post = await Forum.findById(req.params.id);
+        if (!post) return res.status(404).json({ message: "Post not found" });
+        post.reports.push({ reporter: userId, reason: reason.trim() } as any);
+        await post.save();
+        res.status(200).json({ message: "Post reported successfully", post });
+    } catch (error) {
+        res.status(500).json({ message: "Error reporting post", error });
+    }
+};
+
+export const reportComment = async (req: Request, res: Response) => {
+    try {
+        const userId = getUserId(req);
+        if (!userId) return res.status(401).json({ message: "Unauthorized" });
+        const { id, commentId } = req.params;
+        if (typeof commentId !== 'string' || !commentId.trim()) {
+            return res.status(400).json({ message: "commentId is required" });
+        }
+        const commentIdStr = commentId.trim();
+        const { reason } = req.body;
+        if (!reason || !reason.trim()) {
+            return res.status(400).json({ message: "Reason is required" });
+        }
+        const post = await Forum.findById(id);
+        if (!post) return res.status(404).json({ message: "Post not found" });
+        const comment: any = post.comments.id(commentIdStr);
+        if (!comment) return res.status(404).json({ message: "Comment not found" });
+        if (!comment.reports) comment.reports = [];
+        comment.reports.push({ reporter: userId, reason: reason.trim() } as any);
+        await post.save();
+        res.status(200).json({ message: "Comment reported successfully", comment });
+    } catch (error) {
+        res.status(500).json({ message: "Error reporting comment", error });
+    }
+};
+
+export const searchPosts = async (req: Request, res: Response) => {
+    try {
+        const { q } = req.query;
+        if (!q || typeof q !== 'string' || !q.trim()) {
+            return res.status(400).json({ message: "Query parameter 'q' is required" });
+        }
+
+        const query = q.trim();
+        const posts = await Forum.find(
+            { published: true, $text: { $search: query } },
+            { score: { $meta: "textScore" } }
+        )
+            .sort({ score: { $meta: "textScore" } })
+            .populate('author', 'username');
+        res.status(200).json({ posts });
+    } catch (error) {
+        res.status(500).json({ message: "Error searching posts", error });
+    }
+};
+
+export const getNotificationsForUser = async (req: Request, res: Response) => {
+    try {
+        const userId = getUserId(req);
+        if (!userId) return res.status(401).json({ message: "Unauthorized" });
+        const posts = await Forum.find({ author: userId });
+        const notifications = [];
+        for (const post of posts) {
+            for (const comment of post.comments) {
+                if (String(comment.author) !== String(userId)) {
+                    notifications.push({
+                        type: 'comment',
+                        postId: post._id,
+                        commentId: comment._id,
+                        message: `New comment on your post "${post.title}"`,
+                        createdAt: comment.createdAt
+                    });
+                }
+            }
+        }
+        res.status(200).json({ notifications });
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching notifications", error });
+    }
+};
+
+export const markNotificationAsRead = async (req: Request, res: Response) => {
+    try {
+        res.status(200).json({ message: "Notification marked as read (not implemented)" });
+    } catch (error) {
+        res.status(500).json({ message: "Error marking notification as read", error });
     }
 };
