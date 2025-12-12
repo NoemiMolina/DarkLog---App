@@ -443,86 +443,58 @@ export const unblockAnUser = async (req: Request, res: Response) => {
 export const getFriendsReviews = async (req: Request, res: Response) => {
     try {
         const userId = req.params.userId;
-        console.log('🔍 Backend - userId received:', userId);
-        const user = await User.findById(userId);
-        console.log('👤 Backend - User found:', user ? 'Yes' : 'No');
-        console.log('👥 Backend - Friends count:', user?.Friends?.length || 0);
-        console.log('👥 Backend - Friends IDs:', user?.Friends?.map(f => f.friendId) || []);
+        const user = await User.findById(userId).populate('Friends.friendId', 'UserPseudo UserFirstName UserProfilePicture RatedMovies RatedTvShows');       
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: 'User not found' });
         }
-        const friendsList = user.Friends;
-        if (friendsList.length === 0) {
-            return res.json({ reviews: [] });
-        }
-        const friendsIds = friendsList.map(f => f.friendId);
-        console.log('🔎 Backend - Looking for reviews from friends:', friendsIds);
-        const friends = await User.find({ _id: { $in: friendsIds } });
-        console.log('👥 Backend - Friends found:', friends.length);
-        let allReviews = [];
-        for (const friend of friends) {
-            const friendInfo = friendsList.find(f => f.friendId.toString() === (friend._id as Types.ObjectId).toString());
-            console.log(`\n📝 Processing friend: ${friend.UserPseudo}`);
-            console.log(`   Reviews count: ${friend.Reviews?.length || 0}`);
-
-            for (const review of friend.Reviews) {
-                console.log(`   📄 Review:`, review);
-                console.log(`   📄 Review itemId:`, review.itemId);
-                let movieTitle = "Unknown";
-                let itemId = review.itemId;
-                let rating = null;
-                if (review.type === "movie") {
-                    const ratedMovie = friend.RatedMovies.find(r =>
-                        r.movieId && r.movieId.toString() === itemId.toString()
-                    );
-                    console.log(`   🔍 Searching for movie with itemId: ${itemId}`);
-                    console.log(`   🔍 Found ratedMovie:`, ratedMovie);
-                    if (ratedMovie && ratedMovie.movieId) {
-                        rating = ratedMovie.rating;
-                        const movie = await Movie.findById(itemId);
-                        movieTitle = movie ? movie.title : "Unknown movie";
-                        console.log(`   🎬 Movie found: ${movieTitle} (rating: ${rating})`);
-                    } else {
-                        console.log(`   ❌ No matching RatedMovie found for itemId: ${itemId}`);
-                    }
-                } else if (review.type === "tv") {
-                    const ratedShow = friend.RatedTvShows.find(r =>
-                        r.tvShowId && r.tvShowId.toString() === itemId.toString()
-                    );
-                    if (ratedShow && ratedShow.tvShowId) {
-                        rating = ratedShow.rating;
-                        const show = await TVShow.findById(itemId);
-                        movieTitle = show ? (show.name ?? "Unknown show") : "Unknown show";
-                        console.log(`   📺 Show found: ${movieTitle} (rating: ${rating})`);
-                    }
-                }
-
-                if (itemId && rating) {
-                    allReviews.push({
-                        friendId: friend._id,
-                        friendName: friendInfo?.friendPseudo || "Unknown Friend",
-                        friendProfilePicture: friendInfo?.friendProfilePicture || null,
-                        movieTitle: movieTitle,
-                        movieId: itemId,
-                        review: review.text,
-                        rating: rating,
-                        createdAt: review.date
+        const friendReviews: any[] = [];
+        for (const friend of user.Friends) {
+            const friendData = friend.friendId as any;    
+            if (friendData) {
+                if (friendData.RatedMovies) {
+                    friendData.RatedMovies.forEach((ratedMovie: any) => {
+                        if (ratedMovie.review) {
+                            friendReviews.push({
+                                friendId: friendData._id,
+                                friendName: friendData.UserPseudo || friendData.UserFirstName,
+                                friendProfilePicture: friendData.UserProfilePicture || null,
+                                movieId: ratedMovie.tmdbMovieId,
+                                movieTitle: ratedMovie.movieTitle,
+                                moviePosterPath: null,
+                                review: ratedMovie.review,
+                                rating: ratedMovie.rating,
+                                createdAt: ratedMovie.createdAt || new Date(),
+                                type: 'movie'
+                            });
+                        }
                     });
-                    console.log(`   ✅ Review added to results`);
-                } else {
-                    console.log(`   ⚠️ Skipping review - itemId: ${itemId}, rating: ${rating}`);
+                }
+                if (friendData.RatedTvShows) {
+                    friendData.RatedTvShows.forEach((ratedShow: any) => {
+                        if (ratedShow.review) {
+                            friendReviews.push({
+                                friendId: friendData._id,
+                                friendName: friendData.UserPseudo || friendData.UserFirstName,
+                                friendProfilePicture: friendData.UserProfilePicture || null,
+                                movieId: ratedShow.tmdbTvShowId,
+                                movieTitle: ratedShow.tvShowTitle,
+                                moviePosterPath: null,
+                                review: ratedShow.review,
+                                rating: ratedShow.rating,
+                                createdAt: ratedShow.createdAt || new Date(),
+                                type: 'tv' 
+                            });
+                        }
+                    });
                 }
             }
         }
-
-        console.log(`\n📊 Total reviews found: ${allReviews.length}`);
-        allReviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-        allReviews = allReviews.slice(0, 10);
-
-        return res.json({ reviews: allReviews });
+        friendReviews.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        const limitedReviews = friendReviews.slice(0, 20);
+        res.json({ reviews: limitedReviews });
     } catch (error) {
-        console.error("💥 Error fetching friends reviews: ", error);
-        return res.status(500).json({ message: "Internal server error" });
+        console.error('Error fetching friends reviews:', error);
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
@@ -684,10 +656,10 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
         console.log('🚀 saveRatingAndReview called!');
         const { userId, itemId } = req.params;
-        const { type, rating, reviewText } = req.body;
+        const { type, rating, reviewText, itemTitle } = req.body;
 
         console.log('📥 Request params:', { userId, itemId });
-        console.log('📥 Request body:', { type, rating, reviewText });
+        console.log('📥 Request body:', { type, rating, reviewText, itemTitle });
 
         if (!itemId) {
             console.log('❌ No itemId provided');
@@ -711,11 +683,13 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
         console.log('🧹 Cleaning corrupted reviews...');
         user.Reviews = user.Reviews.filter(r => r.itemId && r.itemId.trim().length > 0);
         console.log('✅ Reviews after cleanup:', user.Reviews.length);
+
         if (type === "movie") {
             console.log('🎬 Processing movie rating...');
             const existing = user.RatedMovies.find(
-                (r: any) => String(r.movieId) === String(itemId)
+                (r: any) => r.tmdbMovieId === Number(itemId)
             );
+
             if (existing) {
                 console.log('📝 Updating existing rating and review');
                 existing.rating = rating;
@@ -723,10 +697,12 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             } else {
                 console.log('➕ Adding new rating and review');
                 user.RatedMovies.push({
-                    movieId: itemId,
+                    tmdbMovieId: Number(itemId),
+                    movieTitle: itemTitle || 'Unknown Movie',
                     rating,
-                    review: reviewText || ""
-                });
+                    review: reviewText || "",
+                    createdAt: new Date()
+                } as any);
             }
             user.NumberOfWatchedMovies = user.RatedMovies.length;
             user.AverageMovieRating =
@@ -741,8 +717,9 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
         if (type === "tv") {
             console.log('📺 Processing TV rating...');
             const existing = user.RatedTvShows.find(
-                (r: any) => String(r.tvShowId) === String(itemId)
+                (r: any) => r.tmdbTvShowId === Number(itemId)
             );
+
             if (existing) {
                 console.log('📝 Updating existing rating and review');
                 existing.rating = rating;
@@ -750,16 +727,19 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             } else {
                 console.log('➕ Adding new rating and review');
                 user.RatedTvShows.push({
-                    tvShowId: itemId,
+                    tmdbTvShowId: Number(itemId),
+                    tvShowTitle: itemTitle || 'Unknown TV Show',
                     rating,
-                    review: reviewText || ""
-                });
+                    review: reviewText || "",
+                    createdAt: new Date()
+                } as any);
             }
             user.NumberOfWatchedTvShows = user.RatedTvShows.length;
             user.AverageTvShowRating =
                 user.RatedTvShows.reduce((acc: number, r: any) => acc + r.rating, 0) /
                 user.RatedTvShows.length;
         }
+
         if (reviewText && reviewText.trim().length > 0) {
             console.log('💾 Saving review in Reviews array...');
             const existingReviewIndex = user.Reviews.findIndex(
@@ -784,14 +764,13 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
         console.log('💾 Calling user.save()...');
         await user.save();
         console.log('✅ User saved successfully!');
-
         res.status(200).json({ message: "Saved successfully" });
-
     } catch (err) {
         console.error("❌ Error saving rating:", err);
         res.status(500).json({ message: "Saving error", error: err });
     }
 };
+
 
 // ------------- GET MOVIE/TV WITH USER RATING AND REVIEW
 export const getItemWithUserData = async (req: Request, res: Response) => {
@@ -811,7 +790,7 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
 
         if (type === "movie") {
             const ratedMovie = user.RatedMovies.find(
-                (r: any) => String(r.movieId) === String(itemId)
+                (r: any) => r.tmdbMovieId === Number(itemId)
             );
             if (ratedMovie) {
                 userRating = ratedMovie.rating;
@@ -819,7 +798,7 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
             }
         } else if (type === "tv") {
             const ratedShow = user.RatedTvShows.find(
-                (r: any) => String(r.tvShowId) === String(itemId)
+                (r: any) => r.tmdbTvShowId === Number(itemId)
             );
             if (ratedShow) {
                 userRating = ratedShow.rating;

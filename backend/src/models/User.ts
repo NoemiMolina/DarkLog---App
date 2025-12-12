@@ -42,14 +42,18 @@ export interface IUser extends Document {
     BlockedUsers: Types.ObjectId[];
     UserBadge: string;
     RatedMovies: {
-        movieId: string;
+        tmdbMovieId: number;
+        movieTitle: string;
         rating: number;
         review?: string;
+        createdAt: Date;
     }[];
     RatedTvShows: {
-        tvShowId: string;
+        tmdbTvShowId: number;
+        tvShowTitle: string;
         rating: number;
         review?: string;
+        createdAt: Date;
     }[];
     Reviews: {
         itemId: string;
@@ -75,19 +79,23 @@ const UserSchema: Schema = new Schema({
     AverageMovieRating: { type: Number, default: 0 },
     AverageTvShowRating: { type: Number, default: 0 },
     RatedMovies: [{
-        movieId: { type: String },
+        tmdbMovieId: { type: Number, required: true },
+        movieTitle: { type: String, required: true },
         rating: { type: Number },
-        review: { type: String }
+        review: { type: String },
+        createdAt: { type: Date, default: Date.now }
     }],
     RatedTvShows: [{
-        tvShowId: { type: String },
+        tmdbTvShowId: { type: Number, required: true },
+        tvShowTitle: { type: String, required: true },
         rating: { type: Number },
-        review: { type: String }
+        review: { type: String },
+        createdAt: { type: Date, default: Date.now }
     }],
     Reviews: [{
-        itemId: { type: String, required: true },  
-        type: { type: String, enum: ["movie", "tv"], required: true },  
-        text: { type: String, required: true }, 
+        itemId: { type: String, required: true },
+        type: { type: String, enum: ["movie", "tv"], required: true },
+        text: { type: String, required: true },
         date: { type: Date, default: Date.now }
     }],
     LastWatchedMovie: { type: String, default: "" },
