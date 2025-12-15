@@ -46,6 +46,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
             <LogInForm />
             <SignUpForm />
             <GetLuckyDialog />
+            <PublicSearchBar />
           </>
         ) : (
           <>
@@ -91,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   size="sm"
                   className="mt-5 text-white hover:bg-[#4C4C4C] px-3 z-50 order-6"
                 >
-                   <IoIosMenu className="text-4xl w-12 h-12" />
+                  <IoIosMenu className="text-4xl w-12 h-12" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
@@ -104,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
                   onClick={() => navigate('/forum')}
                 >
-                   Forum
+                  Forum
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

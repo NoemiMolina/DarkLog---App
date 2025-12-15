@@ -31,7 +31,7 @@ export const useForumData = () => {
         }
     };
 
-    const createPost = async (title: string, content: string) => {
+    const createPost = async (title: string, content: string, tags: string[] = []) => {
         try {
             const res = await fetch('http://localhost:5000/forum/posts', {
                 method: 'POST',
@@ -39,7 +39,7 @@ export const useForumData = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ title, content, published: true })
+                body: JSON.stringify({ title, content, tags,published: true })
             });
             if (res.ok) {
                 await loadPosts();

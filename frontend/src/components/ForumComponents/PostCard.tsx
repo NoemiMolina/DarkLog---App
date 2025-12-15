@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../../components/ui/card';
 import { Avatar, AvatarFallback } from '../../components/ui/avatar';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Separator } from '../../components/ui/separator';
+import { Badge } from '../../components/ui/badge';
 import { Heart, MessageCircle, Send, Trash2 } from 'lucide-react';
 import { CommentItem } from './CommentItem';
 
 interface Post {
     _id: string;
-    author: { _id: string; username: string };
+    author: { _id: string; UserPseudo: string };
     title?: string;
     content: string;
     likes: any[];
     comments: any[];
+    tags?: string[];
     createdAt: string;
 }
 
@@ -28,12 +30,27 @@ interface PostCardProps {
 export const PostCard: React.FC<PostCardProps> = ({ post, currentUserId, onDelete, onLike, onUpdate }) => {
     const [showComments, setShowComments] = useState(false);
     const [newComment, setNewComment] = useState('');
+    const [isHighlighted, setIsHighlighted] = useState(false);
     const token = localStorage.getItem('token');
 
     const isLiked = Array.isArray(post.likes)
         ? post.likes.some((userId: any) => String(userId) === String(currentUserId))
         : false;
     const isAuthor = post.author?._id === currentUserId;
+
+    useEffect(() => {
+        const handleHighlight = () => {
+            const hash = window.location.hash;
+            if (hash === `#post-${post._id}`) {
+                setIsHighlighted(true);
+                setTimeout(() => setIsHighlighted(false), 2000);
+            }
+        };
+
+        handleHighlight();
+        window.addEventListener('hashchange', handleHighlight);
+        return () => window.removeEventListener('hashchange', handleHighlight);
+    }, [post._id]);
 
     const handleAddComment = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -82,17 +99,21 @@ export const PostCard: React.FC<PostCardProps> = ({ post, currentUserId, onDelet
     };
 
     return (
-        <Card className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+        <Card
+            id={`post-${post._id}`}
+            className={`bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all duration-500 ${isHighlighted ? 'ring-4 ring-blue-500/50 bg-blue-500/20 scale-[1.02] shadow-2xl shadow-blue-500/30' : ''
+                }`}
+        >
             <CardHeader>
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                         <Avatar>
-                            <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-                                {post.author?.username?.charAt(0).toUpperCase() || 'U'}
+                            <AvatarFallback className="bg-gradient-to-r from-violet-500 to-violet-700 text-white">
+                                {post.author?.UserPseudo?.charAt(0).toUpperCase() || 'U'}
                             </AvatarFallback>
                         </Avatar>
                         <div>
-                            <CardTitle className="text-white text-base">{post.author?.username || 'User'}</CardTitle>
+                            <CardTitle className="text-white text-base">{post.author?.UserPseudo || 'User'}</CardTitle>
                             <CardDescription className="text-white/50 text-xs">
                                 {new Date(post.createdAt).toLocaleDateString('en-US', {
                                     day: 'numeric',
@@ -130,6 +151,18 @@ export const PostCard: React.FC<PostCardProps> = ({ post, currentUserId, onDelet
                         <MessageCircle className="w-4 h-4" />
                         {post.comments?.length || 0}
                     </Button>
+                    {post.tags && post.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-2">
+                            {post.tags.map((tag, index) => (
+                                <Badge
+                                    key={index}
+                                    className="bg-violet-500/30 hover:bg-violet-500/40 text-white border-violet-500/50 text-xs"
+                                >
+                                    #{tag}
+                                </Badge>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {showComments && (

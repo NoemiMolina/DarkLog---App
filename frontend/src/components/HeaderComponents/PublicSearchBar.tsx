@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useLocation } from "react-router-dom";
 import {
   InputGroup,
   InputGroupAddon,
@@ -9,6 +10,10 @@ import { Search } from "lucide-react";
 import ItemDialog from "../HomePageComponents/ItemDialog";
 
 const PublicSearchBar: React.FC = () => {
+  const location = useLocation();
+  // const navigate = useNavigate();
+  const isForumPage = location.pathname === "/forum";
+
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [isVisible, setIsVisible] = useState(false);
@@ -34,26 +39,36 @@ const PublicSearchBar: React.FC = () => {
       return;
     }
 
-    const fetchMoviesAndTVShows = async () => {
+    const fetchData = async () => {
       try {
         const encoded = encodeURIComponent(query);
-        const [moviesRes, tvRes] = await Promise.all([
-          fetch(`http://localhost:5000/search?query=${encoded}&type=movie`),
-          fetch(`http://localhost:5000/search?query=${encoded}&type=tv`),
-        ]);
 
-        const movies = moviesRes.ok ? await moviesRes.json() : [];
-        const tvs = tvRes.ok ? await tvRes.json() : [];
+        if (isForumPage) {
+          const response = await fetch(`http://localhost:5000/forum/posts/search?q=${encoded}`);
+          const data = response.ok ? await response.json() : { posts: [] };
+          setResults(data.posts || []);
+        } else {
+          const [moviesRes, tvRes] = await Promise.all([
+            fetch(`http://localhost:5000/search?query=${encoded}&type=movie`),
+            fetch(`http://localhost:5000/search?query=${encoded}&type=tv`),
+          ]);
 
-        const mergedMap = new Map<string | number, any>();
-        [...movies, ...tvs].forEach((item: any) => {
-          const id = item._id ?? item.id;
-          if (id != null && !mergedMap.has(id)) mergedMap.set(id, item);
-        });
+          const movies = moviesRes.ok ? await moviesRes.json() : [];
+          const tvs = tvRes.ok ? await tvRes.json() : [];
+          const mergedMap = new Map<string | number, any>();
+          [...movies, ...tvs].forEach((item: any) => {
+            const id = item._id ?? item.id;
+            if (id != null && !mergedMap.has(id)) mergedMap.set(id, item);
+          });
 
-        const merged = Array.from(mergedMap.values());
-        setResults(merged);
+          setResults(Array.from(mergedMap.values()));
+        }
+
         setIsVisible(true);
+
+        // const merged = Array.from(mergedMap.values());
+        // setResults(merged);
+        // setIsVisible(true);
 
         const r = inputRef.current?.getBoundingClientRect();
         if (r)
@@ -70,7 +85,7 @@ const PublicSearchBar: React.FC = () => {
       }
     };
 
-    const debounce = setTimeout(fetchMoviesAndTVShows, 400);
+    const debounce = setTimeout(fetchData, 400);
     return () => clearTimeout(debounce);
   }, [query]);
 
@@ -94,120 +109,171 @@ const PublicSearchBar: React.FC = () => {
   }, []);
 
   useEffect(() => {
-  if (dialogData.trigger && triggerRef.current) {
-    triggerRef.current.click();
-  }
-}, [dialogData]);
+    if (dialogData.trigger && triggerRef.current) {
+      triggerRef.current.click();
+    }
+  }, [dialogData]);
 
-  const dropdown =
-    isVisible && rect
-      ? createPortal(
-        <div
-          style={{
-            position: "fixed",
-            top: rect.bottom + 4,
-            left: rect.left,
-            width: rect.width,
-            zIndex: 999999,
-          }}
-          className="transition-all duration-200 ease-in-out"
-        >
-          {results.length > 0 && (
-            <div
-              className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
-                     shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto xl:max-h-[25rem]"
-            >
-              {results.map((item) => {
-                const id =
-                  item._id ??
-                  item.id ??
-                  `${item.type ?? "item"}-${item.title ?? item.name ?? Math.random()
-                  }`;
-                const type =
-                  item.type ??
-                  item.media_type ??
-                  (item.title ? "movie" : "tv");
+  const handleResultClick = (item: any) => {
+    console.log("Clicked item:", item);
+    if (isForumPage) {
+      window.location.hash = `post-${item._id}`;
+      setTimeout(() => {
+        const postElement = document.getElementById(`post-${item._id}`);
+        if (postElement) {
+          postElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 100);
+    } else {
+      const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
+      setDialogData({
+        trigger: (
+          <div
+            ref={triggerRef}
+            style={{ width: 1, height: 1 }}
+            className="invisible"
+          />
+        ),
+        item,
+        type,
+      });
+    }
 
-                const rawRating = item.vote_average ?? item.rating ?? null;
-                const ratingStr = rawRating
-                  ? (Number(rawRating) / 2).toFixed(1)
-                  : "N/A";
+    setIsVisible(false);
+    setQuery("");
+    setResults([]);
+  };
 
-                return (
-                  <div
-                    key={`${id}-${type}`}
-                    className="bg-black bg-opacity-100 text-white p-3 
-               rounded-md w-full border border-white/30 mb-2 last:mb-0 cursor-pointer hover:bg-white/10"
-                    onClick={() => {
-                      console.log("Clicked item:", item);
-                      setDialogData({
-                        trigger: (
-                          <div
-                            ref={triggerRef}
-                            style={{ width: 1, height: 1 }}
-                            className="invisible"
-                          />
-                        ),
-                        item,
-                        type,
-                      });
-                      setIsVisible(false);
-                      setQuery("");
-                      setResults([]);
-                    }}
-                  >
-                    <h3 className="text-sm font-semibold">
-                      {item.title || item.name}
-                    </h3>
-                    <p className="text-xs italic text-gray-400">
-                      {type === "movie" ? "🎬 Movie" : "📺 TV Show"}
-                    </p>
-                    <p className="text-sm text-gray-300 line-clamp-4">
-                      {item.overview}
-                    </p>
-                    <p className="text-yellow-400 mt-1">⭐ {ratingStr}/5</p>
-                  </div>
-                );
-              })}
+  const renderDropdownContent = () => {
+     if (isForumPage) {
+      return results.map((post) => {
+        const author = post.author || {};
+        const authorName = author.UserPseudo || author.username || author.UserFirstName || 'Unknown';
+        const authorPic = author.UserProfilePicture;
+
+        return (
+          <div
+            key={post._id}
+            className="bg-black bg-opacity-100 text-white p-3 
+              rounded-md w-full border border-white/30 mb-2 last:mb-0 cursor-pointer hover:bg-white/10"
+            onClick={() => handleResultClick(post)}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              {authorPic ? (
+                <img
+                  src={authorPic.startsWith("http")
+                    ? authorPic
+                    : `http://localhost:5000/${authorPic}`}
+                  alt={authorName}
+                  className="w-6 h-6 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-xs font-bold">
+                  {authorName.charAt(0).toUpperCase()}
+                </div>
+              )}
+              <span className="text-sm font-semibold">{authorName}</span>
             </div>
-          )}
-        </div>,
-        document.body
-      )
-      : null;
+            {post.title && (
+              <h4 className="text-white font-bold text-sm mb-1">{post.title}</h4>
+            )}
+            <p className="text-sm text-gray-300 line-clamp-3">
+              {post.content || 'No content'}
+            </p>
+            
+            <div className="flex gap-3 mt-2 text-xs text-gray-400">
+              <span>❤️ {post.likes?.length || 0}</span>
+              <span>💬 {post.comments?.length || 0}</span>
+            </div>
+          </div>
+        );
+      });
+    } else {
+  return results.map((item) => {
+    const id = item._id ?? item.id ?? `${item.type ?? "item"}-${item.title ?? item.name ?? Math.random()}`;
+    const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
+    const rawRating = item.vote_average ?? item.rating ?? null;
+    const ratingStr = rawRating ? (Number(rawRating) / 2).toFixed(1) : "N/A";
 
-  return (
-    <>
-      <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-[2rem] ml-4">
-        <div className="relative z-[10000]">
-          <InputGroup className="w-70">
-            <InputGroupInput
-              ref={inputRef}
-              type="text"
-              placeholder="Search..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-60"
-            />
-            <InputGroupAddon>
-              <Search />
-            </InputGroupAddon>
-          </InputGroup>
-        </div>
+    return (
+      <div
+        key={`${id}-${type}`}
+        className="bg-black bg-opacity-100 text-white p-3 
+              rounded-md w-full border border-white/30 mb-2 last:mb-0 cursor-pointer hover:bg-white/10"
+        onClick={() => handleResultClick(item)}
+      >
+        <h3 className="text-sm font-semibold">{item.title || item.name}</h3>
+        <p className="text-xs italic text-gray-400">
+          {type === "movie" ? "🎬 Movie" : "📺 TV Show"}
+        </p>
+        <p className="text-sm text-gray-300 line-clamp-4">{item.overview}</p>
+        <p className="text-yellow-400 mt-1">⭐ {ratingStr}/5</p>
+      </div>
+    );
+  });
+}
+  };
 
-        {dropdown}
+const dropdown =
+  isVisible && rect
+    ? createPortal(
+      <div
+        style={{
+          position: "fixed",
+          top: rect.bottom + 4,
+          left: rect.left,
+          width: rect.width,
+          zIndex: 999999,
+        }}
+        className="transition-all duration-200 ease-in-out"
+      >
+        {results.length > 0 && (
+          <div
+            className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
+                  shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto xl:max-h-[25rem]"
+          >
+            {renderDropdownContent()}
+          </div>
+        )}
+      </div>,
+      document.body
+    )
+    : null;
+
+const placeholder = isForumPage
+  ? "Search posts by keywords..."
+  : "Search movies & TV shows...";
+
+return (
+  <>
+    <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-[2rem] ml-4">
+      <div className="relative z-[10000]">
+        <InputGroup className="w-70">
+          <InputGroupInput
+            ref={inputRef}
+            type="text"
+            placeholder={placeholder}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-60"
+          />
+          <InputGroupAddon>
+            <Search />
+          </InputGroupAddon>
+        </InputGroup>
       </div>
 
-      {/* ⭐ ItemDialog rendu EN DEHORS du dropdown */}
-      {dialogData.trigger && dialogData.item && dialogData.type && (
-        <ItemDialog
-          trigger={dialogData.trigger}
-          item={dialogData.item}
-          type={dialogData.type}
-        />
-      )}
-    </>
-  );
+      {dropdown}
+    </div>
+    {dialogData.trigger && dialogData.item && dialogData.type && (
+      <ItemDialog
+        trigger={dialogData.trigger}
+        item={dialogData.item}
+        type={dialogData.type}
+      />
+    )}
+  </>
+);
 };
 
 export default PublicSearchBar;
