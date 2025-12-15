@@ -326,7 +326,16 @@ export const getPostsByTag = async (req: Request, res: Response) => {
     try {
         const tag = req.params.tag?.toLowerCase();
         if (!tag) return res.status(400).json({ message: "Tag parameter is required" });
-        const posts = await Forum.find({ published: true, tags: tag }).sort({ createdAt: -1 }).populate('author', 'username');
+        const posts = await Forum.find({
+            published: true,
+            $or: [
+                { tags: tag },
+                { title: { $regex: tag, $options: 'i' } },
+                { content: { $regex: tag, $options: 'i' } },
+            ]
+        })
+            .sort({ createdAt: -1 })
+            .populate('author', 'username');
         res.status(200).json({ posts });
     } catch (error) {
         res.status(500).json({ message: "Error fetching posts by tag", error });
@@ -381,16 +390,24 @@ export const searchPosts = async (req: Request, res: Response) => {
     try {
         const { q } = req.query;
         if (!q || typeof q !== 'string' || !q.trim()) {
-            return res.status(400).json({ message: "Query parameter 'q' is required" });
+            return res.json({ posts: [] });
         }
 
         const query = q.trim();
-        const posts = await Forum.find(
-            { published: true, $text: { $search: query } },
-            { score: { $meta: "textScore" } }
-        )
-            .sort({ score: { $meta: "textScore" } })
-            .populate('author', 'username');
+        const posts = await Forum.find({
+            published: true,
+            $or: [
+                { title: { $regex: query, $options: 'i' } },
+                { content: { $regex: query, $options: 'i' } },
+                { tags: { $regex: query, $options: 'i' } }
+            ]
+        })
+            .sort({ createdAt: -1 })
+            .limit(50)
+            .populate('author', 'username', 'UserPseudo', 'UserProfilePicture')
+            .lean();
+        console.log('search results:', posts)
+
         res.status(200).json({ posts });
     } catch (error) {
         res.status(500).json({ message: "Error searching posts", error });

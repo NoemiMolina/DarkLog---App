@@ -26,6 +26,7 @@ import {
 const router = Router();
 
 router.post('/posts', authMiddleware, createPost); // ok
+router.get('/posts/search', searchPosts);
 router.put('/posts/:id/publish', authMiddleware, publishPost); // ok
 router.put('/posts/:id', authMiddleware, updatePost); // ok
 router.delete('/posts/:id', authMiddleware, deletePost); // ok
@@ -40,7 +41,6 @@ router.post('/posts/:id/comments/:commentId/replies/:replyId/reaction', authMidd
 router.get('/posts/tags/:tag', getPostsByTag); // ok
 router.post('/posts/:id/report', authMiddleware, reportPost); 
 router.post('/posts/:id/comments/:commentId/report', authMiddleware, reportComment); 
-router.get('/posts/search/:query', searchPosts);
 router.get('/notifications', authMiddleware, getNotificationsForUser); 
 router.put('/notifications/:notificationId/read', authMiddleware, markNotificationAsRead); 
 
