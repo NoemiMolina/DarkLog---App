@@ -443,13 +443,13 @@ export const unblockAnUser = async (req: Request, res: Response) => {
 export const getFriendsReviews = async (req: Request, res: Response) => {
     try {
         const userId = req.params.userId;
-        const user = await User.findById(userId).populate('Friends.friendId', 'UserPseudo UserFirstName UserProfilePicture RatedMovies RatedTvShows');       
+        const user = await User.findById(userId).populate('Friends.friendId', 'UserPseudo UserFirstName UserProfilePicture RatedMovies RatedTvShows');
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
         const friendReviews: any[] = [];
         for (const friend of user.Friends) {
-            const friendData = friend.friendId as any;    
+            const friendData = friend.friendId as any;
             if (friendData) {
                 if (friendData.RatedMovies) {
                     friendData.RatedMovies.forEach((ratedMovie: any) => {
@@ -482,7 +482,7 @@ export const getFriendsReviews = async (req: Request, res: Response) => {
                                 review: ratedShow.review,
                                 rating: ratedShow.rating,
                                 createdAt: ratedShow.createdAt || new Date(),
-                                type: 'tv' 
+                                type: 'tv'
                             });
                         }
                     });
@@ -502,19 +502,39 @@ export const getFriendsReviews = async (req: Request, res: Response) => {
 export const addAMovieToWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
-        const user = await User.findById(userId);
-        const movie = await Movie.findById(movieId);
+        console.log("🎬 Adding movie to watchlist:", { userId, movieId });
 
-        if (!user || !movie) return res.status(404).json({ message: "User or movie not found" });
+        const user = await User.findById(userId);
+        const movie = await Movie.findOne({ tmdb_id: Number(movieId) });
+
+        console.log("User:", !!user, "Movie:", !!movie);
+
+        if (!user || !movie) {
+            return res.status(404).json({ message: "User or movie not found" });
+        }
+        user.RatedMovies = user.RatedMovies.filter((r: any) =>
+            r.tmdbMovieId && r.movieTitle
+        );
+
+        user.RatedTvShows = user.RatedTvShows.filter((r: any) =>
+            r.tmdbTvShowId && r.tvShowTitle
+        );
 
         if (!user.MovieWatchlist.includes(movie._id as Types.ObjectId)) {
             user.MovieWatchlist.push(movie._id as Types.ObjectId);
             await user.save();
+            console.log("✅ Movie added to watchlist");
+        } else {
+            console.log("⚠️ Movie already in watchlist");
         }
 
         res.status(200).json({ message: "Movie added to your watchlist", user });
     } catch (err) {
-        res.status(500).json({ message: "Error while adding a movie to your watchlist", error: err });
+        console.error("❌ Error in addAMovieToWatchlist:", err);
+        res.status(500).json({
+            message: "Error while adding a movie to your watchlist",
+            error: err instanceof Error ? err.message : String(err)
+        });
     }
 }
 
@@ -522,19 +542,39 @@ export const addAMovieToWatchlist = async (req: Request, res: Response) => {
 export const addATvShowToWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, tvShowId } = req.params;
-        const user = await User.findById(userId);
-        const tvShow = await TVShow.findById(tvShowId);
+        console.log("📺 Adding TV show to watchlist:", { userId, tvShowId });
 
-        if (!user || !tvShow) return res.status(404).json({ message: "User or tV Show not found" });
+        const user = await User.findById(userId);
+        const tvShow = await TVShow.findOne({ tmdb_id: Number(tvShowId) });
+
+        console.log("User:", !!user, "TV Show:", !!tvShow);
+
+        if (!user || !tvShow) {
+            return res.status(404).json({ message: "User or TV Show not found" });
+        }
+        user.RatedMovies = user.RatedMovies.filter((r: any) =>
+            r.tmdbMovieId && r.movieTitle
+        );
+
+        user.RatedTvShows = user.RatedTvShows.filter((r: any) =>
+            r.tmdbTvShowId && r.tvShowTitle
+        );
 
         if (!user.TvShowWatchlist.includes(tvShow._id as Types.ObjectId)) {
             user.TvShowWatchlist.push(tvShow._id as Types.ObjectId);
             await user.save();
+            console.log("✅ TV show added to watchlist");
+        } else {
+            console.log("⚠️ TV show already in watchlist");
         }
 
         res.status(200).json({ message: "TV Show added to your watchlist", user });
     } catch (err) {
-        res.status(500).json({ message: "Error while adding a TV Show to your watchlist", error: err });
+        console.error("❌ Error in addATvShowToWatchlist:", err);
+        res.status(500).json({
+            message: "Error while adding a TV Show to your watchlist",
+            error: err instanceof Error ? err.message : String(err)
+        });
     }
 }
 
