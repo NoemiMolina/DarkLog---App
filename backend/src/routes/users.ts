@@ -32,7 +32,7 @@ import {
 const router = express.Router();
 
 router.get("/search", authMiddleware, searchUsers);
-router.post("/register", uploadMiddleware.single("UserProfilePicture"), registerUser);
+router.post("/signup", uploadMiddleware.single("UserProfilePicture"), registerUser);
 router.post("/login", loginUser);
 router.get("/:userId/profile", authMiddleware, getUserProfile);
 router.put("/:userId/profile", authMiddleware, uploadMiddleware.single("UserProfilePicture"), updateProfileInfos);
