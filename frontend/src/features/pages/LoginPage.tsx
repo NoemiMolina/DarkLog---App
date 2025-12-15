@@ -1,25 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogTrigger
-} from "../ui/dialog";
+import { Button } from "../../components/ui/button";
+import { Label } from "../../components/ui/label";
+import { Input } from "../../components/ui/input";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-
-const DialogLoginForm: React.FC = () => {
-  const [open, setOpen] = useState(false);
-
+const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
@@ -50,7 +38,6 @@ const DialogLoginForm: React.FC = () => {
       if (!res.ok) {
         throw new Error(data?.message || "Login failed");
       }
-
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
         localStorage.setItem("username", data.user.UserPseudo || "Guest");
@@ -63,16 +50,16 @@ const DialogLoginForm: React.FC = () => {
       }
 
       setSuccessMsg("✅ Successfully connected!");
-
       const pendingItem = pendingWatchlistService.getPendingItem();
-
+      
       if (pendingItem && data.user && data.token) {
         try {
           const userId = data.user._id;
+          const itemId = pendingItem.item.id || pendingItem.item.tmdb_id; 
           const route =
             pendingItem.type === "movie"
-              ? `http://localhost:5000/users/${userId}/watchlist/movie/${pendingItem.id}`
-              : `http://localhost:5000/users/${userId}/watchlist/tvshow/${pendingItem.id}`;
+              ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
+              : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
 
           const watchlistRes = await fetch(route, {
             method: "POST",
@@ -93,9 +80,8 @@ const DialogLoginForm: React.FC = () => {
       }
 
       setTimeout(() => {
-        setOpen(false);
         navigate("/home");
-      }, 800);
+      }, 1500);
 
     } catch (err: any) {
       setErrorMsg(err?.message || "Unknown error");
@@ -105,46 +91,23 @@ const DialogLoginForm: React.FC = () => {
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(v) => {
-        setOpen(v);
-        if (!v) {
-          setErrorMsg(null);
-          setSuccessMsg(null);
-          setEmail("");
-          setPassword("");
-        }
-      }}
-    >
-      <DialogTrigger asChild>
-        <Button
-          variant="outline"
-          size="sm"
-          className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50"
-        >
-          Login
-        </Button>
-      </DialogTrigger>
+    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-purple-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-black/80 backdrop-blur-lg border border-white/20 rounded-lg p-8 shadow-2xl">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <p className="text-gray-400">Enter your credentials to continue</p>
+        </div>
 
-      <DialogContent className="sm:max-w-[420px] bg-black text-white border border-white/20">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Login</DialogTitle>
-          <DialogDescription className="text-gray-400">
-            Enter your email and password to log in.
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="flex flex-col gap-4 py-2">
-
+        <div className="flex flex-col gap-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email *</Label>
+            <Label htmlFor="email" className="text-white">Email *</Label>
             <Input
               id="email"
               type="email"
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="bg-gray-800 border-gray-700 text-white"
             />
             {!emailValid && email.length > 0 && (
               <p className="text-xs text-red-400">Invalid email</p>
@@ -152,45 +115,56 @@ const DialogLoginForm: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Password *</Label>
+            <Label htmlFor="password" className="text-white">Password *</Label>
             <Input
               id="password"
               type="password"
               placeholder="Your password..."
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
 
           {errorMsg && (
-            <p className="text-sm text-red-400">{errorMsg}</p>
+            <p className="text-sm text-red-400 bg-red-400/10 p-3 rounded">{errorMsg}</p>
           )}
 
           {successMsg && (
-            <p className="text-sm text-green-400">{successMsg}</p>
+            <p className="text-sm text-green-400 bg-green-400/10 p-3 rounded">{successMsg}</p>
           )}
 
-          <div className="flex justify-end mt-4 gap-3">
-            <Button
-              variant="outline"
-              onClick={() => setOpen(false)}
-              className="text-white hover:bg-white/10"
-            >
-              Cancel
-            </Button>
+          <Button
+            onClick={handleLogin}
+            disabled={!canSubmit || loading}
+            className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white mt-4"
+          >
+            {loading ? "Connecting..." : "Login"}
+          </Button>
 
-            <Button
-              onClick={handleLogin}
-              disabled={!canSubmit || loading}
-              className="text-white"
-            >
-              {loading ? "Connecting..." : "Login"}
-            </Button>
+          <div className="text-center mt-4">
+            <p className="text-gray-400 text-sm">
+              Don't have an account?{" "}
+              <button
+                onClick={() => navigate("/signup")}
+                className="text-purple-400 hover:text-purple-300 font-semibold"
+              >
+                Sign up
+              </button>
+            </p>
           </div>
+
+          <Button
+            variant="outline"
+            onClick={() => navigate("/")}
+            className="w-full text-white border-gray-700 hover:bg-white/10 mt-2"
+          >
+            Back to Home
+          </Button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 };
 
-export default DialogLoginForm;
+export default LoginPage;

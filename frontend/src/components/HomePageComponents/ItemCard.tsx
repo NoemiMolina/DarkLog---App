@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import RatingStars from "./RatingStars";
+import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 
 interface ItemCardProps {
   item: any;
@@ -10,13 +12,14 @@ export default function ItemCard({ item, type }: ItemCardProps) {
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>("");
   const [message, setMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   const userId = user?._id;
   const token = localStorage.getItem("token");
 
-  const itemId = item.tmdb_id || item.id; 
-  const itemTitle = item.title || item.name; 
+  const itemId = item.tmdb_id || item.id;
+  const itemTitle = item.title || item.name;
 
   useEffect(() => {
     async function loadUserData() {
@@ -37,6 +40,10 @@ export default function ItemCard({ item, type }: ItemCardProps) {
           setRating(data.myRating || 0);
           setReview(data.myReview || "");
           console.log("✅ User data loaded:", data);
+        } else if (res.status === 403 || res.status === 401) {
+          console.warn("⚠ Unauthorized access when loading user data");
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
         }
       } catch (err) {
         console.error("❌ Error loading user data:", err);
@@ -64,7 +71,11 @@ export default function ItemCard({ item, type }: ItemCardProps) {
 
   async function handleSave() {
     if (!userId) return;
-
+    if (!token) {
+      showMessage("⚠️ Please sign in to save");
+      setTimeout(() => navigate("/login"), 1500);
+      return;
+    }
     console.log('💾 Attempting to save:', {
       url: `http://localhost:5000/users/${userId}/rate/${itemId}`,
       body: {
@@ -76,7 +87,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
     });
 
     try {
-      await fetch(
+      const res = await fetch(
         `http://localhost:5000/users/${userId}/rate/${itemId}`,
         {
           method: "POST",
@@ -93,6 +104,18 @@ export default function ItemCard({ item, type }: ItemCardProps) {
         }
       );
 
+      if (res.status === 403 || res.status === 401) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        showMessage("⚠️ Session expired. Please sign in again.");
+        setTimeout(() => navigate("/login"), 1500);
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error("Failed to save");
+      }
+
       showMessage("✔ Successfully saved!");
 
     } catch (err) {
@@ -102,8 +125,12 @@ export default function ItemCard({ item, type }: ItemCardProps) {
   }
 
   async function handleAddToWatchlist() {
-    if (!userId) {
-      console.error("❌ userId missing in localStorage");
+    if (!userId || !token) {
+      console.log("⚠️ User not logged in, saving item and redirecting...");
+      pendingWatchlistService.setPendingItem(item, type);
+      
+      showMessage("⚠️ Please sign in to add to watchlist");
+      setTimeout(() => navigate("/login"), 1500);
       return;
     }
     const route =
@@ -118,6 +145,19 @@ export default function ItemCard({ item, type }: ItemCardProps) {
           "Authorization": `Bearer ${token}`
         }
       });
+
+      if (res.status === 403 || res.status === 401) {
+        console.warn("⚠️ Token expired, saving item and redirecting...");
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+      
+        pendingWatchlistService.setPendingItem(item, type);
+        
+        showMessage("⚠️ Session expired. Please sign in again.");
+        setTimeout(() => navigate("/login"), 1500);
+        return;
+      }
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -136,7 +176,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
       showMessage("❌ Error adding to watchlist.");
     }
   }
-  
+
 
   return (
     <div className="flex flex-col md:flex-row gap-5 mt-2">

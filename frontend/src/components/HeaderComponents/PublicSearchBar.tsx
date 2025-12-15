@@ -6,12 +6,15 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "../ui/input-group";
+import { Button } from "../ui/button";
 import { Search } from "lucide-react";
 import ItemDialog from "../HomePageComponents/ItemDialog";
+import AuthRequiredDialog from "./AuthRequiredDialog";
+import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 
 const PublicSearchBar: React.FC = () => {
   const location = useLocation();
-  // const navigate = useNavigate();
+  const [isAddingToWatchlist, setIsAddingToWatchlist] = useState(false);
   const isForumPage = location.pathname === "/forum";
 
   const [query, setQuery] = useState("");
@@ -31,6 +34,11 @@ const PublicSearchBar: React.FC = () => {
     item: any;
     type: "movie" | "tv" | null;
   }>({ trigger: null, item: null, type: null });
+
+  const [authDialogState, setAuthDialogState] = useState<{
+    isOpen: boolean;
+    itemTitle: string;
+  }>({ isOpen: false, itemTitle: '' });
 
   useEffect(() => {
     if (query.trim().length === 0) {
@@ -65,10 +73,6 @@ const PublicSearchBar: React.FC = () => {
         }
 
         setIsVisible(true);
-
-        // const merged = Array.from(mergedMap.values());
-        // setResults(merged);
-        // setIsVisible(true);
 
         const r = inputRef.current?.getBoundingClientRect();
         if (r)
@@ -114,6 +118,62 @@ const PublicSearchBar: React.FC = () => {
     }
   }, [dialogData]);
 
+  const handleAddToWatchlist = async (item: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
+    const title = item.title || item.name;
+    const token = localStorage.getItem('token') || localStorage.getItem('userToken');
+
+    if (!token) {
+      pendingWatchlistService.setPendingItem(item, type);
+      setAuthDialogState({ isOpen: true, itemTitle: title });
+      return;
+    }
+
+    setIsAddingToWatchlist(true);
+    try {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const userId = user?._id;
+
+      if (!userId) {
+        throw new Error('User ID not found');
+      }
+
+      const itemId = item.tmdb_id || item.id;
+      const route = type === "movie"
+        ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
+        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
+
+      const response = await fetch(route, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
+      if (response.status === 403 || response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userToken');
+        pendingWatchlistService.setPendingItem(item, type);
+        setAuthDialogState({ isOpen: true, itemTitle: title });
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error('Failed to add to watchlist');
+      }
+
+      alert(`"${title}" added to your watchlist!`);
+    } catch (error) {
+      console.error('Failed to add to watchlist:', error);
+      alert('Failed to add to watchlist. Please try again.');
+    } finally {
+      setIsAddingToWatchlist(false);
+    }
+  };
+
+
   const handleResultClick = (item: any) => {
     console.log("Clicked item:", item);
     if (isForumPage) {
@@ -145,7 +205,7 @@ const PublicSearchBar: React.FC = () => {
   };
 
   const renderDropdownContent = () => {
-     if (isForumPage) {
+    if (isForumPage) {
       return results.map((post) => {
         const author = post.author || {};
         const authorName = author.UserPseudo || author.username || author.UserFirstName || 'Unknown';
@@ -180,7 +240,7 @@ const PublicSearchBar: React.FC = () => {
             <p className="text-sm text-gray-300 line-clamp-3">
               {post.content || 'No content'}
             </p>
-            
+
             <div className="flex gap-3 mt-2 text-xs text-gray-400">
               <span>❤️ {post.likes?.length || 0}</span>
               <span>💬 {post.comments?.length || 0}</span>
@@ -189,91 +249,107 @@ const PublicSearchBar: React.FC = () => {
         );
       });
     } else {
-  return results.map((item) => {
-    const id = item._id ?? item.id ?? `${item.type ?? "item"}-${item.title ?? item.name ?? Math.random()}`;
-    const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
-    const rawRating = item.vote_average ?? item.rating ?? null;
-    const ratingStr = rawRating ? (Number(rawRating) / 2).toFixed(1) : "N/A";
+      return results.map((item) => {
+        const id = item._id ?? item.id ?? `${item.type ?? "item"}-${item.title ?? item.name ?? Math.random()}`;
+        const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
+        const rawRating = item.vote_average ?? item.rating ?? null;
+        const ratingStr = rawRating ? (Number(rawRating) / 2).toFixed(1) : "N/A";
 
-    return (
-      <div
-        key={`${id}-${type}`}
-        className="bg-black bg-opacity-100 text-white p-3 
-              rounded-md w-full border border-white/30 mb-2 last:mb-0 cursor-pointer hover:bg-white/10"
-        onClick={() => handleResultClick(item)}
-      >
-        <h3 className="text-sm font-semibold">{item.title || item.name}</h3>
-        <p className="text-xs italic text-gray-400">
-          {type === "movie" ? "🎬 Movie" : "📺 TV Show"}
-        </p>
-        <p className="text-sm text-gray-300 line-clamp-4">{item.overview}</p>
-        <p className="text-yellow-400 mt-1">⭐ {ratingStr}/5</p>
-      </div>
-    );
-  });
-}
-  };
-
-const dropdown =
-  isVisible && rect
-    ? createPortal(
-      <div
-        style={{
-          position: "fixed",
-          top: rect.bottom + 4,
-          left: rect.left,
-          width: rect.width,
-          zIndex: 999999,
-        }}
-        className="transition-all duration-200 ease-in-out"
-      >
-        {results.length > 0 && (
+        return (
           <div
-            className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
-                  shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto xl:max-h-[25rem]"
+            key={`${id}-${type}`}
+            className="bg-black bg-opacity-100 text-white p-3 
+              rounded-md w-full border border-white/30 mb-2 last:mb-0 hover:bg-white/10 relative group"
           >
-            {renderDropdownContent()}
+            <div onClick={() => handleResultClick(item)} className="cursor-pointer">
+              <h3 className="text-sm font-semibold">{item.title || item.name}</h3>
+              <p className="text-xs italic text-gray-400">
+                {type === "movie" ? "🎬 Movie" : "📺 TV Show"}
+              </p>
+              <p className="text-sm text-gray-300 line-clamp-4">{item.overview}</p>
+              <p className="text-yellow-400 mt-1">⭐ {ratingStr}/5</p>
+            </div>
+
+            <Button
+              onClick={(e) => handleAddToWatchlist(item, e)}
+              disabled={isAddingToWatchlist}
+              variant="outline"
+              className="absolute top-2 right-2 bg-purple-600 hover:bg-purple-700 
+                         text-white rounded-full p-2 opacity-0 group-hover:opacity-100 
+                         transition-opacity duration-200 disabled:opacity-50"
+            >
+              Add to watchlist
+            </Button>
           </div>
-        )}
-      </div>,
-      document.body
-    )
-    : null;
+        );
+      });
+    }
+  };
+  const dropdown =
+    isVisible && rect
+      ? createPortal(
+        <div
+          style={{
+            position: "fixed",
+            top: rect.bottom + 4,
+            left: rect.left,
+            width: rect.width,
+            zIndex: 999999,
+          }}
+          className="transition-all duration-200 ease-in-out"
+        >
+          {results.length > 0 && (
+            <div
+              className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
+                  shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto xl:max-h-[25rem]"
+            >
+              {renderDropdownContent()}
+            </div>
+          )}
+        </div>,
+        document.body
+      )
+      : null;
 
-const placeholder = isForumPage
-  ? "Search posts by keywords..."
-  : "Search movies & TV shows...";
+  const placeholder = isForumPage
+    ? "Search posts by keywords..."
+    : "Search movies & TV shows...";
 
-return (
-  <>
-    <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-[2rem] ml-4">
-      <div className="relative z-[10000]">
-        <InputGroup className="w-70">
-          <InputGroupInput
-            ref={inputRef}
-            type="text"
-            placeholder={placeholder}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-60"
-          />
-          <InputGroupAddon>
-            <Search />
-          </InputGroupAddon>
-        </InputGroup>
+  return (
+    <>
+      <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-[2rem] ml-4">
+        <div className="relative z-[10000]">
+          <InputGroup className="w-70">
+            <InputGroupInput
+              ref={inputRef}
+              type="text"
+              placeholder={placeholder}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-60"
+            />
+            <InputGroupAddon>
+              <Search />
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
+
+        {dropdown}
       </div>
-
-      {dropdown}
-    </div>
-    {dialogData.trigger && dialogData.item && dialogData.type && (
-      <ItemDialog
-        trigger={dialogData.trigger}
-        item={dialogData.item}
-        type={dialogData.type}
+      {dialogData.trigger && dialogData.item && dialogData.type && (
+        <ItemDialog
+          trigger={dialogData.trigger}
+          item={dialogData.item}
+          type={dialogData.type}
+        />
+      )}
+      <AuthRequiredDialog
+        isOpen={authDialogState.isOpen}
+        onClose={() => setAuthDialogState({ isOpen: false, itemTitle: '' })}
+        itemTitle={authDialogState.itemTitle}
       />
-    )}
-  </>
-);
+    </>
+  );
 };
 
 export default PublicSearchBar;
