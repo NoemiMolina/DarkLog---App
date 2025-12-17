@@ -47,6 +47,7 @@ export interface IUser extends Document {
         rating: number;
         review?: string;
         createdAt: Date;
+        runtime: number;
     }[];
     RatedTvShows: {
         tmdbTvShowId: number;
@@ -83,7 +84,8 @@ const UserSchema: Schema = new Schema({
         movieTitle: { type: String, required: true },
         rating: { type: Number },
         review: { type: String },
-        createdAt: { type: Date, default: Date.now }
+        createdAt: { type: Date, default: Date.now },
+        runtime: { type: Number }
     }],
     RatedTvShows: [{
         tmdbTvShowId: { type: Number, required: true },

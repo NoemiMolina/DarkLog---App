@@ -5,6 +5,7 @@ import User from "../models/User";
 import Movie from "../models/Movie";
 import { Types } from "mongoose";
 import TVShow from "../models/TVShow";
+import { isNumberObject } from "util/types";
 
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
@@ -176,14 +177,10 @@ export const getUserProfile = async (req: Request, res: Response) => {
         const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
             ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) / user.RatedTvShows.length
             : 0;
-        const watchedMoviesWithDetails = await Promise.all(
-            user.RatedMovies.map(async (ratedMovie: any) => {
-                console.log("🎬 Looking for movie with ID:", ratedMovie.movieId);
-                const movie = await Movie.findById(ratedMovie.movieId);
-                console.log("🎬 Movie found:", movie?.title, "Runtime:", movie?.runtime);
-                return movie ? { runtime: movie.runtime || 0 } : { runtime: 0 };
-            })
-        );
+        const watchedMoviesWithDetails = user.RatedMovies.map((ratedMovie: any) => {
+            console.log("🎬 Movie:", ratedMovie.movieTitle, "Runtime:", ratedMovie.runtime);
+            return { runtime: ratedMovie.runtime || 0 };
+        });
 
         console.log("⏱️ Watched movies with details:", watchedMoviesWithDetails);
 
@@ -272,7 +269,7 @@ export const getPublicProfile = async (req: Request, res: Response) => {
         const user = await User.findById(userId)
             .populate('Top3Movies')
             .populate('Top3TvShow')
-            .select('-UserPassword -MovieWatchlist -TvShowWatchlist -Friends -BlockedUsers');
+            .select('-UserPassword -BlockedUsers');
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -308,8 +305,11 @@ export const getPublicProfile = async (req: Request, res: Response) => {
             numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
             numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
             numberOfGivenReviews: user.NumberOfGivenReviews || 0,
+            MovieWatchlist: user.MovieWatchlist,
+            TvShowWatchlist: user.TvShowWatchlist,
             averageMovieRating: Number(averageMovieRating.toFixed(1)),
             averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
+            numberOfFriends: user.Friends?.length || 0,
         });
     } catch (err) {
         res.status(500).json({ message: "Error fetching public profile", error: err });
@@ -713,7 +713,7 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "itemId is required" });
         }
 
-        if (!["movie", "tv"].includes(type)) {
+        if (!["movie", "tvshow"].includes(type)) {
             console.log('❌ Invalid type:', type);
             return res.status(400).json({ message: "Invalid type" });
         }
@@ -731,6 +731,21 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
         user.Reviews = user.Reviews.filter(r => r.itemId && r.itemId.trim().length > 0);
         console.log('✅ Reviews after cleanup:', user.Reviews.length);
 
+        // ✅ Récupère le runtime depuis TMDB pour les films
+        let runtime = 0;
+        if (type === "movie") {
+            try {
+                const tmdbResponse = await fetch(
+                    `https://api.themoviedb.org/3/movie/${itemId}?api_key=${process.env.TMDB_API_KEY}`
+                );
+                const tmdbData = await tmdbResponse.json();
+                runtime = tmdbData.runtime || 0;
+                console.log(`⏱️ Fetched runtime: ${runtime} minutes`);
+            } catch (err) {
+                console.error("❌ Error fetching movie runtime:", err);
+            }
+        }
+
         if (type === "movie") {
             console.log('🎬 Processing movie rating...');
             const existing = user.RatedMovies.find(
@@ -741,6 +756,9 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 console.log('📝 Updating existing rating and review');
                 existing.rating = rating;
                 existing.review = reviewText || "";
+                existing.movieTitle = itemTitle || existing.movieTitle;
+                existing.runtime = runtime; 
+                existing.createdAt = new Date();
             } else {
                 console.log('➕ Adding new rating and review');
                 user.RatedMovies.push({
@@ -748,6 +766,7 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                     movieTitle: itemTitle || 'Unknown Movie',
                     rating,
                     review: reviewText || "",
+                    runtime, 
                     createdAt: new Date()
                 } as any);
             }
@@ -758,10 +777,12 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
 
             console.log('📊 Updated movie stats:', {
                 count: user.NumberOfWatchedMovies,
-                avg: user.AverageMovieRating
+                avg: user.AverageMovieRating,
+                runtime: runtime
             });
         }
-        if (type === "tv") {
+        
+        if (type === "tvshow") {
             console.log('📺 Processing TV rating...');
             const existing = user.RatedTvShows.find(
                 (r: any) => r.tmdbTvShowId === Number(itemId)
@@ -771,6 +792,8 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 console.log('📝 Updating existing rating and review');
                 existing.rating = rating;
                 existing.review = reviewText || "";
+                existing.tvShowTitle = itemTitle || existing.tvShowTitle;
+                existing.createdAt = new Date();
             } else {
                 console.log('➕ Adding new rating and review');
                 user.RatedTvShows.push({
@@ -785,6 +808,11 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             user.AverageTvShowRating =
                 user.RatedTvShows.reduce((acc: number, r: any) => acc + r.rating, 0) /
                 user.RatedTvShows.length;
+
+            console.log('📊 Updated TV stats:', {
+                count: user.NumberOfWatchedTvShows,
+                avg: user.AverageTvShowRating
+            });
         }
 
         if (reviewText && reviewText.trim().length > 0) {
@@ -808,10 +836,15 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             user.NumberOfGivenReviews = user.Reviews.length;
             console.log('📊 Total reviews after push:', user.Reviews.length);
         }
+        
         console.log('💾 Calling user.save()...');
         await user.save();
         console.log('✅ User saved successfully!');
-        res.status(200).json({ message: "Saved successfully" });
+        
+        res.status(200).json({ 
+            message: "Saved successfully",
+            runtime: runtime 
+        });
     } catch (err) {
         console.error("❌ Error saving rating:", err);
         res.status(500).json({ message: "Saving error", error: err });
@@ -843,7 +876,7 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
                 userRating = ratedMovie.rating;
                 userReview = ratedMovie.review || "";
             }
-        } else if (type === "tv") {
+        } else if (type === "tvshow") {
             const ratedShow = user.RatedTvShows.find(
                 (r: any) => r.tmdbTvShowId === Number(itemId)
             );
