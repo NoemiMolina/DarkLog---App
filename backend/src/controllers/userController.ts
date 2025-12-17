@@ -269,6 +269,7 @@ export const getPublicProfile = async (req: Request, res: Response) => {
         const user = await User.findById(userId)
             .populate('Top3Movies')
             .populate('Top3TvShow')
+            .populate('MovieWatchlist')
             .select('-UserPassword -BlockedUsers');
 
         if (!user) {
@@ -282,6 +283,10 @@ export const getPublicProfile = async (req: Request, res: Response) => {
         const averageTvShowRating = user.RatedTvShows && user.RatedTvShows.length > 0
             ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) / user.RatedTvShows.length
             : 0;
+
+        const watchedMoviesWithDetails = user.RatedMovies.map((ratedMovie: any) => {
+            return { runtime: ratedMovie.runtime || 0 };
+        });
 
         res.status(200).json({
             UserPseudo: user.UserPseudo,
@@ -310,6 +315,7 @@ export const getPublicProfile = async (req: Request, res: Response) => {
             averageMovieRating: Number(averageMovieRating.toFixed(1)),
             averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
             numberOfFriends: user.Friends?.length || 0,
+            watchedMovies: watchedMoviesWithDetails,
         });
     } catch (err) {
         res.status(500).json({ message: "Error fetching public profile", error: err });
@@ -757,7 +763,7 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 existing.rating = rating;
                 existing.review = reviewText || "";
                 existing.movieTitle = itemTitle || existing.movieTitle;
-                existing.runtime = runtime; 
+                existing.runtime = runtime;
                 existing.createdAt = new Date();
             } else {
                 console.log('➕ Adding new rating and review');
@@ -766,7 +772,7 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                     movieTitle: itemTitle || 'Unknown Movie',
                     rating,
                     review: reviewText || "",
-                    runtime, 
+                    runtime,
                     createdAt: new Date()
                 } as any);
             }
@@ -781,7 +787,7 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 runtime: runtime
             });
         }
-        
+
         if (type === "tvshow") {
             console.log('📺 Processing TV rating...');
             const existing = user.RatedTvShows.find(
@@ -836,14 +842,14 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             user.NumberOfGivenReviews = user.Reviews.length;
             console.log('📊 Total reviews after push:', user.Reviews.length);
         }
-        
+
         console.log('💾 Calling user.save()...');
         await user.save();
         console.log('✅ User saved successfully!');
-        
-        res.status(200).json({ 
+
+        res.status(200).json({
             message: "Saved successfully",
-            runtime: runtime 
+            runtime: runtime
         });
     } catch (err) {
         console.error("❌ Error saving rating:", err);
