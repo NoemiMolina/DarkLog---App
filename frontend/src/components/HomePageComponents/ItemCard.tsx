@@ -23,11 +23,11 @@ export default function ItemCard({ item, type }: ItemCardProps) {
 
   useEffect(() => {
     async function loadUserData() {
-      if (!userId || !item._id) return;
+      if (!userId || !itemId) return;
 
       try {
         const res = await fetch(
-          `http://localhost:5000/users/${userId}/item/${item._id}/userdata?type=${type}`,
+          `http://localhost:5000/users/${userId}/items/${itemId}?type=${type}`, 
           {
             headers: {
               "Authorization": `Bearer ${token}`
@@ -51,7 +51,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
     }
 
     loadUserData();
-  }, [userId, item._id, type, token]);
+  }, [userId, itemId, type, token]);
 
   const poster = item.poster_path
     ? (item.poster_path.startsWith("http")
@@ -77,7 +77,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
       return;
     }
     console.log('💾 Attempting to save:', {
-      url: `http://localhost:5000/users/${userId}/rate/${itemId}`,
+      url: `http://localhost:5000/users/${userId}/items/${itemId}/rating-review`,
       body: {
         type,
         rating,
@@ -88,7 +88,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/users/${userId}/rate/${itemId}`,
+        `http://localhost:5000/users/${userId}/items/${itemId}/rating-review`,
         {
           method: "POST",
           headers: {
@@ -125,13 +125,13 @@ export default function ItemCard({ item, type }: ItemCardProps) {
   }
 
   async function handleAddToWatchlist() {
- const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
+    const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
     const token = localStorage.getItem("token");
     if (!userId || !token) {
-        console.log("⚠️ User not logged in, saving item and redirecting...");
-        pendingWatchlistService.setPendingItem(item, type);
-        navigate("/login"); 
-        return; 
+      console.log("⚠️ User not logged in, saving item and redirecting...");
+      pendingWatchlistService.setPendingItem(item, type);
+      navigate("/login");
+      return;
     }
     const route =
       type === "movie"
@@ -151,9 +151,9 @@ export default function ItemCard({ item, type }: ItemCardProps) {
 
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-      
+
         pendingWatchlistService.setPendingItem(item, type);
-        
+
         showMessage("⚠️ Session expired. Please sign in again.");
         setTimeout(() => navigate("/login"), 1500);
         return;

@@ -25,6 +25,8 @@ interface PublicProfileData {
     averageMovieRating: number;
     averageTvShowRating: number;
     numberOfFriends: number;
+    MovieWatchlist: Array<{ movieId: number; title: string; poster: string }>;
+    TvShowWatchlist: Array<{ tvshowId: number; title: string; poster: string }>;
 }
 
 const UserPublicProfile: React.FC = () => {
@@ -262,42 +264,9 @@ const UserPublicProfile: React.FC = () => {
                     )}
                 </CardHeader>
             </Card>
+
             {!isBlocked ? (
                 <>
-                    <Separator className="bg-white/20" />
-                    <Card className="bg-[#2A2A2A] border-white/20 text-white">
-                        <CardHeader>
-                            <CardTitle className="text-2xl">Stats</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="grid grid-cols-3 gap-6">
-                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-blue-400">{profileData.numberOfWatchedMovies}</p>
-                                    <p className="text-sm text-white/60">Movies Watched</p>
-                                </div>
-                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-purple-400">{profileData.numberOfWatchedTvShows}</p>
-                                    <p className="text-sm text-white/60">TV Shows Watched</p>
-                                </div>
-                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-green-400">{profileData.numberOfGivenReviews}</p>
-                                    <p className="text-sm text-white/60">Reviews Given</p>
-                                </div>
-                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-yellow-400">{profileData.averageMovieRating.toFixed(1)}</p>
-                                    <p className="text-sm text-white/60">Avg Movie Rating</p>
-                                </div>
-                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-orange-400">{profileData.averageTvShowRating.toFixed(1)}</p>
-                                    <p className="text-sm text-white/60">Avg TV Show Rating</p>
-                                </div>
-                                      <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-orange-400">{profileData.numberOfFriends}</p>
-                                    <p className="text-sm text-white/60">Friends</p>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
                     <Separator className="bg-white/20" />
                     <Card className="bg-[#2A2A2A] border-white/20 text-white">
                         <CardHeader>
@@ -322,6 +291,7 @@ const UserPublicProfile: React.FC = () => {
                             )}
                         </CardContent>
                     </Card>
+
                     <Separator className="bg-white/20" />
                     <Card className="bg-[#2A2A2A] border-white/20 text-white">
                         <CardHeader>
@@ -344,6 +314,92 @@ const UserPublicProfile: React.FC = () => {
                             ) : (
                                 <p className="text-center text-gray-400">No favorite TV shows yet</p>
                             )}
+                        </CardContent>
+                    </Card>
+
+                    <Separator className="bg-white/20" />
+                    <Card className="bg-[#2A2A2A] border-white/20 text-white">
+                        <CardHeader>
+                            <CardTitle className="text-2xl">📋 Watchlist</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-8">
+                            <div>
+                                <h3 className="text-xl font-semibold mb-4 text-blue-400">🎬 Movies</h3>
+                                {profileData.MovieWatchlist && profileData.MovieWatchlist.length > 0 ? (
+                                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                                        {profileData.MovieWatchlist.map((movie) => (
+                                            <div key={movie.movieId} className="relative group">
+                                                <img
+                                                    src={movie.poster}
+                                                    alt={movie.title}
+                                                    className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                                <p className="text-center mt-2 text-xs truncate">{movie.title}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-gray-400 py-8">No movies in watchlist</p>
+                                )}
+                            </div>
+
+                            <Separator className="bg-white/10" />
+
+                            <div>
+                                <h3 className="text-xl font-semibold mb-4 text-purple-400">📺 TV Shows</h3>
+                                {profileData.TvShowWatchlist && profileData.TvShowWatchlist.length > 0 ? (
+                                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                                        {profileData.TvShowWatchlist.map((show) => (
+                                            <div key={show.tvshowId} className="relative group">
+                                                <img
+                                                    src={show.poster}
+                                                    alt={show.title}
+                                                    className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                                <p className="text-center mt-2 text-xs truncate">{show.title}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-gray-400 py-8">No TV shows in watchlist</p>
+                                )}
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Separator className="bg-white/20" />
+
+                    <Card className="bg-[#2A2A2A] border-white/20 text-white">
+                        <CardHeader>
+                            <CardTitle className="text-2xl">📊 Stats</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="grid grid-cols-3 gap-6">
+                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-blue-400">{profileData.numberOfWatchedMovies}</p>
+                                    <p className="text-sm text-white/60">Movies Watched</p>
+                                </div>
+                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-purple-400">{profileData.numberOfWatchedTvShows}</p>
+                                    <p className="text-sm text-white/60">TV Shows Watched</p>
+                                </div>
+                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-green-400">{profileData.numberOfGivenReviews}</p>
+                                    <p className="text-sm text-white/60">Reviews Given</p>
+                                </div>
+                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-yellow-400">{profileData.averageMovieRating.toFixed(1)}</p>
+                                    <p className="text-sm text-white/60">Avg Movie Rating</p>
+                                </div>
+                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-orange-400">{profileData.averageTvShowRating.toFixed(1)}</p>
+                                    <p className="text-sm text-white/60">Avg TV Show Rating</p>
+                                </div>
+                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-pink-400">{profileData.numberOfFriends}</p>
+                                    <p className="text-sm text-white/60">Friends</p>
+                                </div>
+                            </div>
                         </CardContent>
                     </Card>
                 </>
