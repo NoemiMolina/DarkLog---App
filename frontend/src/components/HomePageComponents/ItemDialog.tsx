@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,12 +12,15 @@ import ItemCard from "./ItemCard";
 interface ItemDialogProps {
   trigger: React.ReactNode;
   item: any;
-  type: "movie" | "tv";
+  type: "movie" | "tvshow";
+  onClose?: () => void;
 }
 
-export default function ItemDialog({ trigger, item, type }: ItemDialogProps) {
+export default function ItemDialog({ trigger, item, type, onClose }: ItemDialogProps) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
 
       <DialogContent
@@ -31,7 +35,7 @@ export default function ItemDialog({ trigger, item, type }: ItemDialogProps) {
 
         <DialogDescription className="hidden" />
 
-        <ItemCard item={item} type={type} />
+        <ItemCard item={item} type={type} onClose={() => setOpen(false)}  />
       </DialogContent>
     </Dialog>
   );

@@ -27,6 +27,7 @@ interface PublicProfileData {
     numberOfFriends: number;
     MovieWatchlist: Array<{ movieId: number; title: string; poster: string }>;
     TvShowWatchlist: Array<{ tvshowId: number; title: string; poster: string }>;
+    watchedMovies: Array<{ runtime: number }>;
 }
 
 const UserPublicProfile: React.FC = () => {
@@ -36,6 +37,7 @@ const UserPublicProfile: React.FC = () => {
     const [isFriend, setIsFriend] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
     const [message, setMessage] = useState<string | null>(null);
+    const [totalWatchTimeMinutes, setTotalWatchTimeMinutes] = useState(0);
     const token = localStorage.getItem("token");
 
     let currentUserId: string | undefined;
@@ -53,6 +55,25 @@ const UserPublicProfile: React.FC = () => {
         checkFriendship();
         checkIfBlocked();
     }, [userId]);
+
+    useEffect(() => {
+        if (profileData?.watchedMovies) {
+            const totalMinutes = profileData.watchedMovies.reduce(
+                (sum, movie) => sum + (movie.runtime || 0),
+                0
+            );
+            setTotalWatchTimeMinutes(totalMinutes);
+        }
+    }, [profileData]);
+
+    const formatWatchTime = (minutes: number) => {
+        const hours = Math.floor(minutes / 60);
+        const days = Math.floor(hours / 24);
+        if (days > 0) {
+            return `${days}d ${hours % 24}h`;
+        }
+        return `${hours}h ${minutes % 60}m`;
+    };
 
     const fetchPublicProfile = async () => {
         try {
@@ -186,7 +207,10 @@ const UserPublicProfile: React.FC = () => {
     if (loading || !profileData) {
         return <div className="flex justify-center items-center h-screen text-white">Loading...</div>;
     }
+
+
     const isOwnProfile = currentUserId === userId;
+
 
     return (
         <div className="container mx-auto p-6 space-y-8 max-w-6xl">
@@ -382,6 +406,12 @@ const UserPublicProfile: React.FC = () => {
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
                                     <p className="text-4xl font-bold text-purple-400">{profileData.numberOfWatchedTvShows}</p>
                                     <p className="text-sm text-white/60">TV Shows Watched</p>
+                                </div>
+                                <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+                                    <p className="text-4xl font-bold text-cyan-400">
+                                        {formatWatchTime(totalWatchTimeMinutes)}
+                                    </p>
+                                    <p className="text-sm text-white/60">Watch Time</p>
                                 </div>
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
                                     <p className="text-4xl font-bold text-green-400">{profileData.numberOfGivenReviews}</p>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
+import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +16,10 @@ const GetLuckyDialog: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showFullOverview, setShowFullOverview] = useState(false);
   const [open, setOpen] = useState(false);
+  const [addingToWatchlist, setAddingToWatchlist] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const navigate = useNavigate();
 
   const handleClick = async () => {
     if (loading) return;
@@ -39,6 +45,80 @@ const GetLuckyDialog: React.FC = () => {
       setError("Impossible de récupérer un contenu aléatoire.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAddToWatchlist = async () => {
+    if (!movieOrTVShow) return;
+    setAddingToWatchlist(true);
+
+    try {
+      const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
+      const token = localStorage.getItem("token");
+
+      if (!userId || !token) {
+        console.log("⚠️ User not logged in, saving item and redirecting...");
+        const item = {
+          _id: movieOrTVShow.id,
+          title: movieOrTVShow.title || movieOrTVShow.name,
+          poster_path: movieOrTVShow.poster_path,
+          vote_average: movieOrTVShow.vote_average,
+          overview: movieOrTVShow.overview,
+          genre: movieOrTVShow.genre
+        };
+        pendingWatchlistService.setPendingItem(item, movieOrTVShow.type);
+        navigate("/login");
+        return;
+      }
+
+      const route = movieOrTVShow.type === "movie"
+        ? `http://localhost:5000/users/${userId}/watchlist/movie/${movieOrTVShow.id}`
+        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${movieOrTVShow.id}`;
+
+      const res = await fetch(route, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (res.status === 403 || res.status === 401) {
+        console.warn("⚠️ Token expired, saving item and redirecting...");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+
+        const item = {
+          _id: movieOrTVShow.id,
+          title: movieOrTVShow.title || movieOrTVShow.name,
+          poster_path: movieOrTVShow.poster_path,
+          vote_average: movieOrTVShow.vote_average,
+          overview: movieOrTVShow.overview,
+          genre: movieOrTVShow.genre
+        };
+        pendingWatchlistService.setPendingItem(item, movieOrTVShow.type);
+
+        setSuccessMessage("⚠️ Session expired. Please sign in again.");
+        setTimeout(() => navigate("/login"), 1500);
+        return;
+      }
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("❌ Error response:", errorData);
+        setSuccessMessage(`❌ ${errorData.message || 'Error adding to watchlist'}`);
+        return;
+      }
+
+      const data = await res.json();
+      console.log("🎉 Watchlist updated:", data);
+      setSuccessMessage("🎬 Successfully added to watchlist!");
+      window.dispatchEvent(new Event('watchlistUpdated'));
+
+    } catch (err: any) {
+      console.error("❌ Error adding to watchlist:", err);
+      setSuccessMessage("❌ Error adding to watchlist.");
+    } finally {
+      setAddingToWatchlist(false);
     }
   };
 
@@ -126,6 +206,13 @@ const GetLuckyDialog: React.FC = () => {
                     : "N/A"}
                   /5
                 </p>
+                <Button
+                  onClick={handleAddToWatchlist}
+                  disabled={addingToWatchlist}
+                  className="mt-4 bg-white text-black hover:bg-gray-200 px-6 py-2 text-sm font-semibold"
+                >
+                  {addingToWatchlist ? "Adding..." : "Add to Watchlist"}
+                </Button>
               </div>
             )}
           </div>

@@ -6,12 +6,14 @@ import { pendingWatchlistService } from "../../services/pendingWatchlistService"
 interface ItemCardProps {
   item: any;
   type: "movie" | "tvshow";
+  onClose?: () => void;
 }
 
-export default function ItemCard({ item, type }: ItemCardProps) {
+export default function ItemCard({ item, type, onClose }: ItemCardProps) {
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>("");
   const [message, setMessage] = useState<string | null>(null);
+
   const navigate = useNavigate();
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
@@ -27,7 +29,7 @@ export default function ItemCard({ item, type }: ItemCardProps) {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/users/${userId}/items/${itemId}?type=${type}`, 
+          `http://localhost:5000/users/${userId}/items/${itemId}?type=${type}`,
           {
             headers: {
               "Authorization": `Bearer ${token}`
@@ -118,6 +120,14 @@ export default function ItemCard({ item, type }: ItemCardProps) {
 
       showMessage("✔ Successfully saved!");
 
+      setTimeout(() => {
+        window.dispatchEvent(new Event('userDataUpdated'));
+        if (onClose) {
+          onClose();
+        }
+      }, 500);
+
+
     } catch (err) {
       console.error(err);
       showMessage("❌ Error saving.");
@@ -195,6 +205,18 @@ export default function ItemCard({ item, type }: ItemCardProps) {
       <div className="w-full md:w-2/3 space-y-4">
         <p className="text-gray-300 italic">Release year : {releaseYear}</p>
         <p className="text-sm md:text-base leading-relaxed">{item.overview}</p>
+        {item.trailer_key && (
+          <div>
+            <a
+              href={`https://www.youtube.com/watch?v=${item.trailer_key}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white underline font-semibold"
+            >
+              Trailer
+            </a>
+          </div>
+        )}
 
         <div className="mt-4">
           <h3 className="font-semibold mb-2">Main cast:</h3>
