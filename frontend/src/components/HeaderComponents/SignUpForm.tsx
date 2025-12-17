@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
@@ -39,7 +40,6 @@ const DialogSignUpForm: React.FC = () => {
   const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [location, setLocation] = useState("");
   const [profilePic, setProfilePic] = useState<File | null>(null);
-
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
@@ -50,7 +50,15 @@ const DialogSignUpForm: React.FC = () => {
   const [qShows, setQShows] = useState("");
   const [resShows, setResShows] = useState<SearchItem[]>([]);
   const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]);
+  
   const navigate = useNavigate();
+  const locationDialog = useLocation();
+
+  useEffect(() => {
+    if (locationDialog.pathname === "/signup") {
+      setOpen(true);
+    }
+  }, [locationDialog.pathname]);
 
   useEffect(() => {
     if (!qMovies.trim()) { setResMovies([]); return; }
@@ -164,7 +172,27 @@ const DialogSignUpForm: React.FC = () => {
         top3TvShow: [...top3TvShow],
       };
       localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("userId", data.user._id);
       localStorage.setItem("firstConnection", "true");
+
+      const pendingItem = pendingWatchlistService.getPendingItem();
+      if (pendingItem && data.user && data.token) {
+        try {
+          const route = pendingItem.type === "movie"
+            ? `http://localhost:5000/users/${data.user._id}/watchlist/movie/${pendingItem.id}`
+            : `http://localhost:5000/users/${data.user._id}/watchlist/tvshow/${pendingItem.id}`;
+
+          await fetch(route, {
+            method: "POST",
+            headers: { Authorization: `Bearer ${data.token}` }
+          });
+
+          pendingWatchlistService.clearPendingItem();
+          console.log(`🎬 "${pendingItem.title}" added to watchlist!`);
+        } catch (err) {
+          console.error("❌ Failed to add pending item:", err);
+        }
+      }
 
       setTimeout(() => {
         setOpen(false);
@@ -179,7 +207,16 @@ const DialogSignUpForm: React.FC = () => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={(v) => { setOpen(v); if (!v) { setSubmitError(null); setSubmitSuccess(null); } }}>
+    <Dialog open={open} onOpenChange={(v) => { 
+      setOpen(v); 
+      if (!v) { 
+        setSubmitError(null); 
+        setSubmitSuccess(null);
+        if (locationDialog.pathname === "/signup") {
+          navigate("/");
+        }
+      } 
+    }}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm" className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50">Sign Up</Button>
       </DialogTrigger>
@@ -195,7 +232,6 @@ const DialogSignUpForm: React.FC = () => {
 
         <ScrollArea className="max-h-[70vh] pr-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4 lg:mr-50">
-
             <Label htmlFor="profilePic">Profile picture (optional)</Label>
 
             <div

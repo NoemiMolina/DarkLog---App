@@ -6,15 +6,12 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "../ui/input-group";
-import { Button } from "../ui/button";
 import { Search } from "lucide-react";
 import ItemDialog from "../HomePageComponents/ItemDialog";
 import AuthRequiredDialog from "./AuthRequiredDialog";
-import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 
 const PublicSearchBar: React.FC = () => {
   const location = useLocation();
-  const [isAddingToWatchlist, setIsAddingToWatchlist] = useState(false);
   const isForumPage = location.pathname === "/forum";
 
   const [query, setQuery] = useState("");
@@ -118,62 +115,6 @@ const PublicSearchBar: React.FC = () => {
     }
   }, [dialogData]);
 
-  const handleAddToWatchlist = async (item: any, e: React.MouseEvent) => {
-    e.stopPropagation();
-
-    const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
-    const title = item.title || item.name;
-    const token = localStorage.getItem('token') || localStorage.getItem('userToken');
-
-    if (!token) {
-      pendingWatchlistService.setPendingItem(item, type);
-      setAuthDialogState({ isOpen: true, itemTitle: title });
-      return;
-    }
-
-    setIsAddingToWatchlist(true);
-    try {
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
-      const userId = user?._id;
-
-      if (!userId) {
-        throw new Error('User ID not found');
-      }
-
-      const itemId = item.tmdb_id || item.id;
-      const route = type === "movie"
-        ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
-        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
-
-      const response = await fetch(route, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      
-      if (response.status === 403 || response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userToken');
-        pendingWatchlistService.setPendingItem(item, type);
-        setAuthDialogState({ isOpen: true, itemTitle: title });
-        return;
-      }
-
-      if (!response.ok) {
-        throw new Error('Failed to add to watchlist');
-      }
-
-      alert(`"${title}" added to your watchlist!`);
-    } catch (error) {
-      console.error('Failed to add to watchlist:', error);
-      alert('Failed to add to watchlist. Please try again.');
-    } finally {
-      setIsAddingToWatchlist(false);
-    }
-  };
-
-
   const handleResultClick = (item: any) => {
     console.log("Clicked item:", item);
     if (isForumPage) {
@@ -269,17 +210,6 @@ const PublicSearchBar: React.FC = () => {
               <p className="text-sm text-gray-300 line-clamp-4">{item.overview}</p>
               <p className="text-yellow-400 mt-1">⭐ {ratingStr}/5</p>
             </div>
-
-            <Button
-              onClick={(e) => handleAddToWatchlist(item, e)}
-              disabled={isAddingToWatchlist}
-              variant="outline"
-              className="absolute top-2 right-2 bg-purple-600 hover:bg-purple-700 
-                         text-white rounded-full p-2 opacity-0 group-hover:opacity-100 
-                         transition-opacity duration-200 disabled:opacity-50"
-            >
-              Add to watchlist
-            </Button>
           </div>
         );
       });

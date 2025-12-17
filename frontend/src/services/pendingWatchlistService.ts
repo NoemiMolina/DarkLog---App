@@ -1,6 +1,6 @@
 interface PendingWatchlistItem {
     id: number;
-    type: 'movie' | 'tv';
+    type: 'movie' | 'tvshow';
     title: string;
     poster_path?: string;
     timestamp: number;
@@ -10,15 +10,16 @@ const STORAGE_KEY = 'darklog_pending_watchlist';
 const EXPIRY_TIME = 30 * 60 * 1000;
 
 export const pendingWatchlistService = {
-    setPendingItem: (item: any, type: 'movie' | 'tv') => {
+    setPendingItem: (item: any, type: 'movie' | 'tvshow') => {
         const pendingItem: PendingWatchlistItem = {
-            id: item.id || item._id,
+            id: item.tmdb_id || item.id,
             type,
             title: item.title || item.name,
             poster_path: item.poster_path,
             timestamp: Date.now()
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(pendingItem));
+        console.log("💾 Saved pending item:", pendingItem);
     },
 
     getPendingItem: (): PendingWatchlistItem | null => {

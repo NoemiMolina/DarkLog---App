@@ -5,7 +5,7 @@ import { pendingWatchlistService } from "../../services/pendingWatchlistService"
 
 interface ItemCardProps {
   item: any;
-  type: "movie" | "tv";
+  type: "movie" | "tvshow";
 }
 
 export default function ItemCard({ item, type }: ItemCardProps) {
@@ -125,13 +125,13 @@ export default function ItemCard({ item, type }: ItemCardProps) {
   }
 
   async function handleAddToWatchlist() {
+ const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
+    const token = localStorage.getItem("token");
     if (!userId || !token) {
-      console.log("⚠️ User not logged in, saving item and redirecting...");
-      pendingWatchlistService.setPendingItem(item, type);
-      
-      showMessage("⚠️ Please sign in to add to watchlist");
-      setTimeout(() => navigate("/login"), 1500);
-      return;
+        console.log("⚠️ User not logged in, saving item and redirecting...");
+        pendingWatchlistService.setPendingItem(item, type);
+        navigate("/login"); 
+        return; 
     }
     const route =
       type === "movie"

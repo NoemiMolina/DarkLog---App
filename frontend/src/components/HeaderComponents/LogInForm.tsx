@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -15,18 +15,25 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
 const DialogLoginForm: React.FC = () => {
-  const [open, setOpen] = useState(false);
 
+  const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
   const navigate = useNavigate();
+  const locationDialog = useLocation();
 
   const emailValid = /\S+@\S+\.\S+/.test(email);
   const canSubmit = emailValid && password.trim().length > 0;
+
+  useEffect(() => {
+    if (locationDialog.pathname === "/login") {
+      setOpen(true);
+    }
+  }, [locationDialog.pathname]);
 
   const handleLogin = async () => {
     if (!canSubmit || loading) return;
@@ -47,32 +54,40 @@ const DialogLoginForm: React.FC = () => {
 
       const data = await res.json();
 
+      console.log("📡 Login response status:", res.status);
+      console.log("📡 Login response data:", data);
+
       if (!res.ok) {
         throw new Error(data?.message || "Login failed");
       }
 
-      if (data.user) {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        localStorage.setItem("username", data.user.UserPseudo || "Guest");
-      }
-
-      localStorage.setItem("firstConnection", "false");
-
       if (data.token) {
         localStorage.setItem("token", data.token);
       }
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("userId", data.user._id);
+        localStorage.setItem("username", data.user.UserPseudo || "Guest");
+      }
+      localStorage.setItem("firstConnection", "false");
 
       setSuccessMsg("✅ Successfully connected!");
-
       const pendingItem = pendingWatchlistService.getPendingItem();
+      console.log("🔍 Pending item:", pendingItem);
 
       if (pendingItem && data.user && data.token) {
         try {
           const userId = data.user._id;
+          const itemId = pendingItem.id;
+
+          console.log("🎬 Trying to add pending item:", { userId, itemId, type: pendingItem.type });
+
           const route =
             pendingItem.type === "movie"
-              ? `http://localhost:5000/users/${userId}/watchlist/movie/${pendingItem.id}`
-              : `http://localhost:5000/users/${userId}/watchlist/tvshow/${pendingItem.id}`;
+              ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
+              : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
+
+          console.log("📡 POST request to:", route);
 
           const watchlistRes = await fetch(route, {
             method: "POST",
@@ -81,6 +96,10 @@ const DialogLoginForm: React.FC = () => {
             }
           });
 
+          console.log("📥 Response status:", watchlistRes.status);
+          const responseData = await watchlistRes.json();
+          console.log("📥 Response data:", responseData);
+
           if (watchlistRes.ok) {
             console.log(`🎬 "${pendingItem.title}" automatically added to watchlist!`);
             setSuccessMsg(`✅ Connected! "${pendingItem.title}" added to your watchlist!`);
@@ -88,14 +107,14 @@ const DialogLoginForm: React.FC = () => {
 
           pendingWatchlistService.clearPendingItem();
         } catch (err) {
-          console.error("Failed to add pending item to watchlist:", err);
+          console.error("❌ Failed to add pending item to watchlist:", err);
         }
       }
 
       setTimeout(() => {
         setOpen(false);
         navigate("/home");
-      }, 800);
+      }, 1500);
 
     } catch (err: any) {
       setErrorMsg(err?.message || "Unknown error");
@@ -112,8 +131,9 @@ const DialogLoginForm: React.FC = () => {
         if (!v) {
           setErrorMsg(null);
           setSuccessMsg(null);
-          setEmail("");
-          setPassword("");
+          if (locationDialog.pathname === "/login") {
+            navigate("/");
+          }
         }
       }}
     >
@@ -186,6 +206,20 @@ const DialogLoginForm: React.FC = () => {
             >
               {loading ? "Connecting..." : "Login"}
             </Button>
+          </div>
+            <div className="text-center pt-2 border-t border-white/10">
+            <p className="text-sm text-gray-400">
+              Don't have an account?{" "}
+              <button
+                onClick={() => {
+                  setOpen(false);
+                  navigate("/signup");
+                }}
+                className="text-purple-400 hover:text-purple-300 font-semibold underline"
+              >
+                Sign up
+              </button>
+            </p>
           </div>
         </div>
       </DialogContent>
