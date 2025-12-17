@@ -22,6 +22,7 @@ const filmSchema = new mongoose.Schema(
     poster_path: String,
     keywords: [String],
     runtime: Number,
+    trailer_key: String,
     platforms: [
       {
         provider_id: Number,
@@ -116,6 +117,28 @@ async function fetchMovieDetails(movieId: number) {
   }
 }
 
+async function fetchTrailer(movieId: number) {
+  try {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movieId}/videos`,
+      {
+        params: {
+          api_key: TMDB_KEY,
+          language: 'en-US'
+        }
+      }
+    );
+
+    const trailer = res.data.results.find(
+      (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
+    );
+
+    return trailer?.key || null;
+  } catch {
+    return null;
+  }
+}
+
 async function main() {
   await mongoose.connect(MONGO_URI);
   console.log("Connecté à MongoDB");
@@ -133,6 +156,7 @@ async function main() {
       const platforms = await fetchPlatforms(item.id);
       const cast = await fetchCast(item.id);
       const details = await fetchMovieDetails(item.id);
+      const trailer_key = await fetchTrailer(item.id);
 
       await Film.updateOne(
         { tmdb_id: item.id },
@@ -150,6 +174,7 @@ async function main() {
             poster_path: item.poster_path,
             keywords,
             runtime: details?.runtime || null,
+            trailer_key,
             platforms,
             cast,
             raw: item,
