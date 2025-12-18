@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/HeaderComponents/Header";
 import CarouselItems from "../../components/HomePageComponents/CarouselItems";
 import PopularWFriendsSection from "../../components/HomePageComponents/PopularWFriendsSection";
+// import HomemadeWatchlists from "../../components/HomePageComponents/HomemadeWatchlists";
 
 const HomePage = () => {
 
@@ -119,37 +120,36 @@ const HomePage = () => {
           <PopularWFriendsSection />
         </div>
         <div className="text-[1rem] text-center text-white">
+          {/* <HomemadeWatchlists allMovies={allMovies} /> */}
 
-          {!isTVShowMode ? (
+            {!isTVShowMode ? (
             <>
-              {CarouselItems("Popular slashers", slasherMovies)}
-              {CarouselItems("Ghost and possession stories", supernaturalMovies)}
-              {CarouselItems("Zombies universe", zombieMovies)}
-              {CarouselItems("Monster core", monsterMovies)}
-              {CarouselItems("Aliens", aliensMovies)}
-              {CarouselItems("Vampire", vampireMovies)}
-              {CarouselItems("Revenge", revengeStyleMovies)}
-              {CarouselItems("Body horror", bodyHorrorMovies)}
-              {CarouselItems("Survival", survivalMovies)}
-              {CarouselItems("Based on novel or book", basedOnNovelOrBooksMovies)}
-              {CarouselItems("Based on true story", basedOnTrueStoryMovies)}
-
+              <CarouselItems title="Popular slashers" items={slasherMovies} />
+              <CarouselItems title="Ghost and possession stories" items={supernaturalMovies} />
+              <CarouselItems title="Zombies universe" items={zombieMovies} />
+              <CarouselItems title="Monster core" items={monsterMovies} />
+              <CarouselItems title="Aliens" items={aliensMovies} />
+              <CarouselItems title="Vampire" items={vampireMovies} />
+              <CarouselItems title="Revenge" items={revengeStyleMovies} />
+              <CarouselItems title="Body horror" items={bodyHorrorMovies} />
+              <CarouselItems title="Survival" items={survivalMovies} />
+              <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksMovies} />
+              <CarouselItems title="Based on true story" items={basedOnTrueStoryMovies} />
             </>
           ) : (
             <>
-              {CarouselItems("Anime", animeTVShows)}
-              {CarouselItems("Popular slashers", slasherTVShows)}
-              {CarouselItems("Ghost and possession stories", supernaturalTVShows)}
-              {CarouselItems("Zombies universe", zombieTVShows)}
-              {CarouselItems("Monster core", monsterTVShows)}
-              {CarouselItems("Aliens", aliensTVShows)}
-              {CarouselItems("Vampire", vampireTVShows)}
-              {CarouselItems("Revenge", revengeStyleTVShows)}
-              {CarouselItems("Body horror", bodyHorrorTVShows)}
-              {CarouselItems("Survival", survivalTVShows)}
-              {CarouselItems("Based on novel or book", basedOnNovelOrBooksTVShows)}
-              {CarouselItems("Based on true story", basedOnTrueStoryTVShows)}
-
+              <CarouselItems title="Anime" items={animeTVShows} />
+              <CarouselItems title="Popular slashers" items={slasherTVShows} />
+              <CarouselItems title="Ghost and possession stories" items={supernaturalTVShows} />
+              <CarouselItems title="Zombies universe" items={zombieTVShows} />
+              <CarouselItems title="Monster core" items={monsterTVShows} />
+              <CarouselItems title="Aliens" items={aliensTVShows} />
+              <CarouselItems title="Vampire" items={vampireTVShows} />
+              <CarouselItems title="Revenge" items={revengeStyleTVShows} />
+              <CarouselItems title="Body horror" items={bodyHorrorTVShows} />
+              <CarouselItems title="Survival" items={survivalTVShows} />
+              <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksTVShows} />
+              <CarouselItems title="Based on true story" items={basedOnTrueStoryTVShows} />
             </>
           )}
         </div>
