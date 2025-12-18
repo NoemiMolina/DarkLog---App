@@ -39,6 +39,7 @@ const tvSchema = new mongoose.Schema(
     genre_ids: [Number],
     poster_path: String,
     keywords: [String],
+    trailer_key: String,
 
     cast: [
       {
@@ -177,6 +178,26 @@ async function fetchEpisodes(tvId: number, seasonNumber: number) {
   }
 }
 
+async function fetchTrailer(tvId: number) {
+  try {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/tv/${tvId}/videos`,
+      {
+        params: {
+          api_key: TMDB_KEY,
+          language: 'en-US'
+        }
+      }
+    );
+    const trailer = res.data.results.find(
+      (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
+    );
+    return trailer?.key || null;
+  } catch {
+    return null;
+  }
+}
+
 async function main() {
   await mongoose.connect(MONGO_URI);
   console.log("Connecté à MongoDB pour TV shows");
@@ -194,6 +215,7 @@ async function main() {
       const keywords = await fetchKeywords(item.id);
       const platforms = await fetchPlatforms(item.id);
       const cast = await fetchCast(item.id);
+      const trailer_key = await fetchTrailer(item.id);
 
       const seasonsRaw = await fetchSeasons(item.id);
       const seasons: Season[] = [];
@@ -237,6 +259,7 @@ async function main() {
             keywords,
             platforms,
             cast,
+            trailer_key : trailer_key,
             seasons,
             raw: item,
           },
