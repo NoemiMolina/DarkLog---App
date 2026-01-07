@@ -11,6 +11,7 @@ interface ProfileStatsSection {
   averageTvShowRating: number;
   numberOfFriends: number;
   watchedMovies?: Array<{ runtime: number }>;
+  totalWatchTimeFromWatchlists?: number;
   userId?: string;
 }
 
@@ -22,6 +23,7 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   averageTvShowRating = 0,
   numberOfFriends = 0,
   watchedMovies = [],
+  totalWatchTimeFromWatchlists = 0,
   userId,
 }) => {
   const [showFriendsModal, setShowFriendsModal] = useState(false);
@@ -54,9 +56,8 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   useEffect(() => {
     console.log("📊 watchedMovies received:", watchedMovies);
     const totalMinutes = watchedMovies.reduce((sum, movie) => sum + (movie.runtime || 0), 0);
-    console
-    setTotalWatchTimeMinutes(totalMinutes);
-  }, [watchedMovies]);
+    setTotalWatchTimeMinutes(totalMinutes + totalWatchTimeFromWatchlists);
+  }, [watchedMovies, totalWatchTimeFromWatchlists]);
 
   const formatWatchTime = (minutes: number) => {
     const hours = Math.floor(minutes / 60);

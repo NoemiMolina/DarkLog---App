@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "../../components/HeaderComponents/Header";
 import CarouselItems from "../../components/HomePageComponents/CarouselItems";
 import PopularWFriendsSection from "../../components/HomePageComponents/PopularWFriendsSection";
-// import HomemadeWatchlists from "../../components/HomePageComponents/HomemadeWatchlists";
+import HomemadeWatchlistsCarousel from "../../components/HomePageComponents/HomemadeWatchlistsCarousel";
 
 const HomePage = () => {
 
@@ -119,8 +119,12 @@ const HomePage = () => {
         <div className="mb-12">
           <PopularWFriendsSection />
         </div>
+
+        <div className="mb-12">
+          <HomemadeWatchlistsCarousel />
+        </div>
+
         <div className="text-[1rem] text-center text-white">
-          {/* <HomemadeWatchlists allMovies={allMovies} /> */}
 
             {!isTVShowMode ? (
             <>

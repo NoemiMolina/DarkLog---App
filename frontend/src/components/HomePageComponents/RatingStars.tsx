@@ -1,52 +1,57 @@
-import { useState } from "react";
-
-// will be upgraded to custom skulls later instead of stars
+import { Star, Moon } from "lucide-react";
 
 interface RatingStarsProps {
-    value?: number;            
-    onChange?: (rating: number) => void;
+  value: number; 
+  onChange: (value: number) => void;
 }
 
-export default function RatingStars({ value = 0, onChange }: RatingStarsProps) {
-    const [rating, setRating] = useState(value);
+export default function RatingStars({ value, onChange }: RatingStarsProps) {
+  function handleClick(index: number) {
+    const current = value - index;
+    let newValue = index + 1;
+    
+    if (current >= 1) {
+      newValue = index + 0.5;
+    } else if (current === 0.5) {
+      newValue = index;
+    }
+    
+    onChange(newValue);
+  }
 
-    const handleClick = (index: number) => {
-        const current = rating - index;
+  function getStarState(index: number) {
+    const fullValue = index + 1;
 
-        let newValue = rating;
-        if (current >= 1) {
-            newValue = index + 0.5;
-        }
-        else if (current === 0.5) {
-            newValue = index;
-        }
-        else {
-            newValue = index + 1;
-        }
+    if (value >= fullValue) return "full";
+    if (value === fullValue - 0.5) return "half-moon";
+    return "empty";
+  }
 
-        setRating(newValue);
-        onChange && onChange(newValue);
-    };
+  return (
+    <div className="flex gap-1">
+      {[0, 1, 2, 3, 4].map((index) => {
+        const state = getStarState(index);
 
-    const getState = (index: number) => {
-        if (rating >= index + 1) return "full";
-        if (rating >= index + 0.5) return "half";
-        return "empty";
-    };
+        return (
+          <div
+            key={index}
+            onClick={() => handleClick(index)}
+            className="cursor-pointer"
+          >
+            {state === "full" && (
+              <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+            )}
 
-    return (
-        <div className="flex gap-1 cursor-pointer xl:text-2xl">
-            {[0, 1, 2, 3, 4].map((i) => {
-                const state = getState(i);
+            {state === "half-moon" && (
+              <Moon className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+            )}
 
-                return (
-                    <div key={i} onClick={() => handleClick(i)}>
-                        {state === "full" && "⭐"}
-                        {state === "half" && "🌓"}
-                        {state === "empty" && "☆"}
-                    </div>
-                );
-            })}
-        </div>
-    );
+            {state === "empty" && (
+              <Star className="w-6 h-6 text-gray-500" />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 }

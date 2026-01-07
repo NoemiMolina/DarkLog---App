@@ -24,6 +24,7 @@ interface UserProfileData {
   top3TvShows: Array<{ id: number; title: string; poster: string }>;
   movieWatchlist: Array<{ _id: string; id: number; title: string; poster: string }>;
   tvShowWatchlist: Array<{ _id: string; id: number; title: string; poster: string }>;
+  savedHomemadeWatchlists: Array<{ _id: string; id: string; title: string; poster: string }>;
   numberOfWatchedMovies: number;
   numberOfWatchedTvShows: number;
   numberOfGivenReviews: number;
@@ -32,6 +33,7 @@ interface UserProfileData {
   lastWatchedMovie: { id: number; title: string; poster: string } | null;
   numberOfFriends: number;
   watchedMovies?: Array<{ runtime: number }>;
+  totalWatchTimeFromWatchlists?: number;
 }
 
 const UserProfile: React.FC = () => {
@@ -370,6 +372,7 @@ const UserProfile: React.FC = () => {
       <WatchlistSection
         movieWatchlist={profileData?.movieWatchlist || []}
         tvShowWatchlist={profileData?.tvShowWatchlist || []}
+        savedHomemadeWatchlists={profileData?.savedHomemadeWatchlists || []}
         onAddMovie={() => setShowMovieWatchlistSearch(true)}
         onAddTvShow={() => setShowTvShowWatchlistSearch(true)}
         onRemove={removeFromWatchlist}
@@ -411,6 +414,7 @@ const UserProfile: React.FC = () => {
         averageTvShowRating={profileData.averageTvShowRating}
         numberOfFriends={profileData.numberOfFriends}
         watchedMovies={profileData.watchedMovies || []}
+        totalWatchTimeFromWatchlists={profileData.totalWatchTimeFromWatchlists || 0}
         userId={userId!}
       />
     </div>

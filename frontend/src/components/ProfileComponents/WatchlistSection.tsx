@@ -9,9 +9,17 @@ interface WatchlistItem {
   poster: string;
 }
 
+interface HomemadeWatchlistItem {
+  _id: string;
+  id: string;
+  title: string;
+  poster: string;
+}
+
 interface WatchlistSectionProps {
   movieWatchlist: WatchlistItem[];
   tvShowWatchlist: WatchlistItem[];
+  savedHomemadeWatchlists?: HomemadeWatchlistItem[];
   onAddMovie: () => void;
   onAddTvShow: () => void;
   onRemove: (id: string, type: 'movie' | 'tv') => void;
@@ -20,6 +28,7 @@ interface WatchlistSectionProps {
 const WatchlistSection: React.FC<WatchlistSectionProps> = ({
   movieWatchlist = [],
   tvShowWatchlist = [],
+  savedHomemadeWatchlists = [],
   onAddMovie,
   onAddTvShow,
   onRemove
@@ -82,6 +91,27 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
                   >
                     <Trash2 size={16} />
                   </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Homemade Watchlists */}
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-2xl border border-purple-500/20">
+          <h3 className="text-xl mb-4">Homemade Watchlists ({savedHomemadeWatchlists.length})</h3>
+          {savedHomemadeWatchlists.length === 0 ? (
+            <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
+              <p className="text-gray-400">No homemade watchlists added yet</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-4 gap-4">
+              {savedHomemadeWatchlists.map((watchlist) => (
+                <div key={watchlist._id} className="relative group">
+                  <img src={watchlist.poster} alt={watchlist.title} className="w-full rounded-lg" />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                    <p className="text-white text-center text-sm">{watchlist.title}</p>
+                  </div>
                 </div>
               ))}
             </div>
