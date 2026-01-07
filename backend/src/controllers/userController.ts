@@ -161,6 +161,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
             .populate('Top3TvShow')
             .populate('MovieWatchlist')
             .populate('TvShowWatchlist')
+            .populate('SavedHomemadeWatchlists')
             .populate('Friends');
 
         if (!user) {
@@ -212,6 +213,13 @@ export const getUserProfile = async (req: Request, res: Response) => {
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                     : ''
             })),
+            savedHomemadeWatchlists: (user.SavedHomemadeWatchlists as any[]).map((watchlist: any) => ({
+                id: watchlist._id,
+                title: watchlist.title || 'Unknown Watchlist',
+                poster: watchlist.posterPath
+                    ? `https://image.tmdb.org/t/p/w500${watchlist.posterPath}`
+                    : ''
+            })),
             tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
                 id: show._id,
                 title: show.name || 'Unknown Show',
@@ -229,6 +237,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
             ratedMovies: user.RatedMovies || [],
             ratedTvShows: user.RatedTvShows || [],
             watchedMovies: watchedMoviesWithDetails,
+            totalWatchTimeFromWatchlists: user.TotalWatchTimeFromWatchlists || 0,
             lastWatchedMovie: null
         };
 
@@ -733,11 +742,12 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
         console.log('✅ User found:', user.UserPseudo);
         console.log('📊 Current RatedMovies:', user.RatedMovies.length);
         console.log('📊 Current Reviews:', user.Reviews.length);
+        console.log('🧹 Cleaning corrupted rated movies...');
+        user.RatedMovies = user.RatedMovies.filter(r => r.tmdbMovieId && r.movieTitle);
+        console.log('✅ RatedMovies after cleanup:', user.RatedMovies.length);  
         console.log('🧹 Cleaning corrupted reviews...');
         user.Reviews = user.Reviews.filter(r => r.itemId && r.itemId.trim().length > 0);
         console.log('✅ Reviews after cleanup:', user.Reviews.length);
-
-        // ✅ Récupère le runtime depuis TMDB pour les films
         let runtime = 0;
         if (type === "movie") {
             try {

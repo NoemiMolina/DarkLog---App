@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const TMDB_KEY = process.env.TMDB_API_KEY!;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/HorrorDB";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
 const KEYWORD_ID = 315058; // Mot-clé Horror pour les séries
 const MAX_PAGES = 15;
 

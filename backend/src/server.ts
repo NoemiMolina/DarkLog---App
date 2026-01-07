@@ -11,6 +11,7 @@ import reaiperRoutes from "./routes/reaiper";
 import forumRoutes from "./routes/forum";
 import quizRoutes from "./routes/quiz";
 import searchRoutes from "./routes/search";
+import homemadeWatchlistsRoutes from "./routes/homemadeWatchlists";
 
 console.log("✅ LETSGO !");
 
@@ -35,6 +36,7 @@ app.use("/reaiper", reaiperRoutes);
 app.use("/forum", forumRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/search", searchRoutes);
+app.use("/homemade-watchlists", homemadeWatchlistsRoutes);
 // app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {

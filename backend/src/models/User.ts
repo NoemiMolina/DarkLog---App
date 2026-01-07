@@ -62,6 +62,19 @@ export interface IUser extends Document {
         text: string;
         date: Date;
     }[];
+    SavedHomemadeWatchlists: Types.ObjectId[];
+    RatedWatchlists: {
+        watchlistId: Types.ObjectId;
+        rating: number;
+        comment?: string;
+        createdAt: Date;
+        totalWatchlistRuntime: number;
+    }[];
+    WatchedMoviesInWatchlists: {
+        watchlistId: Types.ObjectId;
+        movieIds: Types.ObjectId[];
+    }[];
+    TotalWatchTimeFromWatchlists: number;
 };
 
 const UserSchema: Schema = new Schema({
@@ -112,7 +125,20 @@ const UserSchema: Schema = new Schema({
         friendProfilePicture: { type: String, default: "", ref: "User" }
     }],
     BlockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    UserBadge: { type: String, default: "" }
+    UserBadge: { type: String, default: "" },
+    SavedHomemadeWatchlists: [{ type: Schema.Types.ObjectId, ref: "HomemadeWatchlist" }],
+    RatedWatchlists: [{
+        watchlistId: { type: Schema.Types.ObjectId, ref: "HomemadeWatchlist", required: true },
+        rating: { type: Number, required: true },
+        comment: { type: String },
+        createdAt: { type: Date, default: Date.now },
+        totalWatchlistRuntime: { type: Number }
+    }],
+    WatchedMoviesInWatchlists: [{
+        watchlistId: { type: Schema.Types.ObjectId, ref: "HomemadeWatchlist" },
+        movieIds: [{ type: Schema.Types.ObjectId, ref: "Movie" }]
+    }],
+    TotalWatchTimeFromWatchlists: { type: Number, default: 0 }
 });
 
 export default mongoose.model<IUser>("User", UserSchema);

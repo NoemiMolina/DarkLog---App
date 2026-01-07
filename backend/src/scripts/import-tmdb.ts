@@ -4,9 +4,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const TMDB_KEY = process.env.TMDB_API_KEY!;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/HorrorDB";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
 const GENRE_ID = 27;
-const MAX_PAGES = 50;
+const MAX_PAGES = 99;
+const MANUAL_TMDB_IDS = [46633]; //sale un peu mdr
 
 const filmSchema = new mongoose.Schema(
   {
@@ -188,6 +189,50 @@ async function main() {
   }
 
   console.log("🎉 Import terminé !");
+
+  // Importer les films manuels
+  if (MANUAL_TMDB_IDS.length > 0) {
+    console.log(`\n➡️ Import de ${MANUAL_TMDB_IDS.length} film(s) manuel(s)...`);
+    for (const tmdbId of MANUAL_TMDB_IDS) {
+      try {
+        const keywords = await fetchKeywords(tmdbId);
+        const platforms = await fetchPlatforms(tmdbId);
+        const cast = await fetchCast(tmdbId);
+        const details = await fetchMovieDetails(tmdbId);
+        const trailer_key = await fetchTrailer(tmdbId);
+
+        await Film.updateOne(
+          { tmdb_id: tmdbId },
+          {
+            $set: {
+              tmdb_id: tmdbId,
+              title: details?.title,
+              original_title: details?.original_title,
+              overview: details?.overview,
+              release_date: details?.release_date,
+              popularity: details?.popularity,
+              vote_average: details?.vote_average,
+              vote_count: details?.vote_count,
+              genre_ids: details?.genre_ids || [],
+              poster_path: details?.poster_path,
+              keywords,
+              runtime: details?.runtime || null,
+              trailer_key,
+              platforms,
+              cast,
+              raw: details,
+            },
+          },
+          { upsert: true }
+        );
+        console.log(`✅ Film ${tmdbId} ajouté/mis à jour`);
+      } catch (err) {
+        console.error(`❌ Erreur pour le film ${tmdbId}:`, err);
+      }
+    }
+  }
+
+  console.log("🎉 Import complètement terminé !");
   process.exit(0);
 }
 
