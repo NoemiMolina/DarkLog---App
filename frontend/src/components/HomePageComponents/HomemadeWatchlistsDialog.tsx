@@ -38,15 +38,6 @@ const HomemadeWatchlistsDialog = ({ watchlist }: { watchlist: Watchlist }) => {
     const [comment, setComment] = useState<string>("");
     const [message, setMessage] = useState<string | null>(null);
 
-    const colors = [
-        "bg-red-900",
-        "bg-red-800",
-        "bg-red-700",
-        "bg-rose-900",
-        "bg-rose-800",
-    ];
-    const bgColor = colors[watchlist._id.charCodeAt(0) % colors.length];
-
     const storedUser = localStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
     const userId = user?._id;
@@ -192,19 +183,18 @@ const HomemadeWatchlistsDialog = ({ watchlist }: { watchlist: Watchlist }) => {
                 onClick={() => setIsOpen(true)}
                 className={`relative group cursor-pointer rounded-lg shadow-md overflow-hidden aspect-[2/3] w-full h-auto xl:w-40 flex items-center justify-center transition-transform hover:scale-105 mx-12`}
             >
-                <div
-                    className={`absolute inset-0 ${bgColor} opacity-80`}
-                />
-                <div className="relative z-10 text-center px-4">
-                    <h3 className="text-white text-lg font-bold tracking-wide line-clamp-3">
-                        {watchlist.title}
-                    </h3>
-                </div>
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100">
+                {watchlist.posterPath ? (
+                    <img
+                        src={`http://localhost:5000${watchlist.posterPath}`}
+                        alt={watchlist.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="absolute inset-0 bg-gray-800" />
+                )}
                     <p className="text-white text-sm font-semibold px-3 py-1 bg-opacity-70 rounded xl:translate-y-[50px]">
                         {watchlist.movies.length} movies
                     </p>
-                </div>
             </div>
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className="max-w-4xl bg-gray-900 border-gray-700">

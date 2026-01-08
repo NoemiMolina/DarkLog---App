@@ -285,13 +285,19 @@ const UserProfile: React.FC = () => {
     }
   };
 
-  const removeFromWatchlist = async (id: string, type: 'movie' | 'tv') => {
+  const removeFromWatchlist = async (id: string, type: 'movie' | 'tv' | 'homemadewatchlist') => {
     try {
-      const endpoint = type === 'movie'
-        ? `http://localhost:5000/users/${userId}/watchlist/movie/${id}`
-        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${id}`;
+      let endpoint: string;
+      
+      if (type === 'movie') {
+        endpoint = `http://localhost:5000/users/${userId}/watchlist/movie/${id}`;
+      } else if (type === 'tv') {
+        endpoint = `http://localhost:5000/users/${userId}/watchlist/tvshow/${id}`;
+      } else if (type === 'homemadewatchlist') {
+        endpoint = `http://localhost:5000/users/${userId}/saved-homemade-watchlists/${id}`;
+      }
 
-      await fetch(endpoint, {
+      await fetch(endpoint!, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
