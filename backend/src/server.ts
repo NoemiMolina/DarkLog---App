@@ -29,6 +29,10 @@ const uploadsPath = path.resolve("uploads");
 console.log("🗂️ Static folder served from:", uploadsPath);
 app.use("/uploads", express.static(uploadsPath));
 
+const publicPath = path.resolve("public");
+console.log("🗂️ Public folder served from:", publicPath);
+app.use("/", express.static(publicPath));
+
 app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);
 app.use("/tvShows", tvShowsRoutes);

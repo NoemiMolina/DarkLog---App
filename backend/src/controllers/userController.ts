@@ -5,6 +5,7 @@ import User from "../models/User";
 import Movie from "../models/Movie";
 import { Types } from "mongoose";
 import TVShow from "../models/TVShow";
+import HomemadeWatchlist from "../models/HomemadeWatchlists";
 import { isNumberObject } from "util/types";
 
 // ------ REGISTER
@@ -214,11 +215,10 @@ export const getUserProfile = async (req: Request, res: Response) => {
                     : ''
             })),
             savedHomemadeWatchlists: (user.SavedHomemadeWatchlists as any[]).map((watchlist: any) => ({
+                _id: watchlist._id,
                 id: watchlist._id,
                 title: watchlist.title || 'Unknown Watchlist',
-                poster: watchlist.posterPath
-                    ? `https://image.tmdb.org/t/p/w500${watchlist.posterPath}`
-                    : ''
+                posterPath: watchlist.posterPath || ''
             })),
             tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
                 id: show._id,
@@ -629,6 +629,21 @@ export const deleteATvShowFromWatchlist = async (req: Request, res: Response) =>
         res.status(200).json({ message: "TV Show deleted from your watchlist", user });
     } catch (err) {
         res.status(500).json({ message: "Error while deleting a TV Show from your watchlist", error: err });
+    }
+}
+
+// ---------- USER DELETES A HOMEMADE WATCHLIST FROM ITS SAVED WATCHLISTS
+export const deleteAHomemadeWatchlistFromSavedWatchlists = async (req: Request, res: Response) => {
+    try {
+        const { userId, watchlistId } = req.params;
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        
+        user.SavedHomemadeWatchlists = user.SavedHomemadeWatchlists.filter(id => id.toString() !== watchlistId);
+        await user.save();
+        res.status(200).json({ message: "Homemade watchlist deleted from your saved watchlists", user });
+    } catch (err) {
+        res.status(500).json({ message: "Error while deleting a homemade watchlist from your saved watchlists", error: err });
     }
 }
 

@@ -19,6 +19,7 @@ import {
   addATvShowToWatchlist,
   deleteAMovieFromWatchlist,
   deleteATvShowFromWatchlist,
+  deleteAHomemadeWatchlistFromSavedWatchlists,
   addAMovieToTop3Favorites,
   addATvShowToTop3Favorites,
   deleteAMovieFromTop3Favorites,
@@ -44,6 +45,7 @@ router.post("/:userId/top3favorites/movie/:movieId", authMiddleware, addAMovieTo
 router.post("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, addATvShowToTop3Favorites);
 router.delete("/:userId/top3favorites/movie/:movieId", authMiddleware, deleteAMovieFromTop3Favorites);
 router.delete("/:userId/top3favorites/tvshow/:tvShowId", authMiddleware, deleteATvShowFromTop3Favorites);
+router.delete("/:userId/saved-homemade-watchlists/:watchlistId", authMiddleware, deleteAHomemadeWatchlistFromSavedWatchlists);
 router.get("/:userId/public-profile", authMiddleware, getPublicProfile);
 router.get("/:userId/friends", authMiddleware, getFriends);
 router.post("/:userId/friends/:friendId", authMiddleware, addAFriend);

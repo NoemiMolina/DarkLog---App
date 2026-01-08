@@ -7,21 +7,36 @@ const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp
 
 const watchlistsData = [
     {
-        title: "Scream Saga",
-        description: "Tous les films de la saga Scream",
-        tmdbIds: [4232, 4233, 4234, 41446, 646385, 934433],
+        title: "The Dev's favorites",
+        description: "The developer's favorite movies",
+        tmdbIds: [46633, 530385, 694, 493922, 4232, 1197137, 755, 348, 346364, 1151031, 1100988],
+        posterPath: "/HomemadeWatchlistsFigmaCards/devsfavs.png",
     },
     {
-        title: "The Dev's favorites",
-        description: "Les films préférés du développeur",
-        tmdbIds: [46633, 530385, 694, 493922, 4232, 1197137, 755, 348, 346364, 1151031],
+        title: "Scream Saga",
+        description: "All movies from the Scream saga",
+        tmdbIds: [4232, 4233, 4234, 41446, 646385, 934433],
+        posterPath: "/HomemadeWatchlistsFigmaCards/screamsaga.png",
     },
+    {
+        title: 'October marathon',
+        description: 'A selection of 31 horror movies perfect for October',
+        tmdbIds: [760104, 663712, 170, 610253, 5876, 713704, 1562, 9378, 19994, 338967, 489430, 396535, 913290, 744857, 1100988, 747, 1373445, 588, 426063, 132232, 565, 1285965, 1111873, 43593, 949423, 6466, 1690, 10066, 8851, 762441, 9358],
+        posterPath: "/HomemadeWatchlistsFigmaCards/31moviesuntilhalloween.png",
+    },
+    {
+        title: 'A24 Horrors',
+        description: 'A selection of horror movies produced by A24',
+        tmdbIds: [310131, 246403, 493922, 530385, 426487, 780609, 520023, 760104, 949423, 1023922, 1138194, 1008042, 1151031],
+        posterPath: "/HomemadeWatchlistsFigmaCards/a24horrors.png",
+    }
+
 ];
 
 async function seedWatchlists() {
     try {
         console.log("🌱 Démarrage du seed des watchlists...");
-        
+
         await mongoose.connect(MONGO_URI);
         console.log("✅ Connecté à MongoDB");
 
@@ -59,6 +74,7 @@ async function seedWatchlists() {
                     $set: {
                         title: watchlist.title,
                         description: watchlist.description,
+                        posterPath: watchlist.posterPath,
                         movies: movieIds,
                         updatedAt: new Date(),
                     },
