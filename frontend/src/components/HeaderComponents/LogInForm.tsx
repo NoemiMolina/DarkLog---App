@@ -14,7 +14,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
-const DialogLoginForm: React.FC = () => {
+const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean }> = ({ onClose, isMobileModal = false }) => {
 
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -113,15 +113,88 @@ const DialogLoginForm: React.FC = () => {
 
       setTimeout(() => {
         setOpen(false);
+        onClose?.();
         navigate("/home");
       }, 1500);
 
-    } catch (err: any) {
-      setErrorMsg(err?.message || "Unknown error");
     } finally {
       setLoading(false);
     }
   };
+  // MOBILE
+  if (isMobileModal) {
+    return (
+      <div className="flex flex-col gap-4 py-2">
+        <div className="space-y-2">
+          <Label htmlFor="email">Email *</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {!emailValid && email.length > 0 && (
+            <p className="text-xs text-red-400">Invalid email</p>
+          )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="password">Password *</Label>
+          <Input
+            id="password"
+            type="password"
+            placeholder="Your password..."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        {errorMsg && (
+          <p className="text-sm text-red-400">{errorMsg}</p>
+        )}
+
+        {successMsg && (
+          <p className="text-sm text-green-400">{successMsg}</p>
+        )}
+
+        <div className="flex justify-end mt-4 gap-3">
+          <Button
+            variant="outline"
+            onClick={() => {
+              onClose?.();
+            }}
+            className="text-white hover:bg-white/10"
+          >
+            Cancel
+          </Button>
+
+          <Button
+            onClick={handleLogin}
+            disabled={!canSubmit || loading}
+            className="text-white"
+          >
+            {loading ? "Connecting..." : "Login"}
+          </Button>
+        </div>
+
+        <div className="text-center pt-2 border-t border-white/10">
+          <p className="text-sm text-gray-400">
+            Don't have an account?{" "}
+            <button
+              onClick={() => {
+                onClose?.();
+                navigate("/signup");
+              }}
+              className="text-purple-400 hover:text-purple-300 font-semibold underline"
+            >
+              Sign up
+            </button>
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Dialog
@@ -193,7 +266,10 @@ const DialogLoginForm: React.FC = () => {
           <div className="flex justify-end mt-4 gap-3">
             <Button
               variant="outline"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                onClose?.();
+              }}
               className="text-white hover:bg-white/10"
             >
               Cancel
@@ -207,7 +283,8 @@ const DialogLoginForm: React.FC = () => {
               {loading ? "Connecting..." : "Login"}
             </Button>
           </div>
-            <div className="text-center pt-2 border-t border-white/10">
+
+          <div className="text-center pt-2 border-t border-white/10">
             <p className="text-sm text-gray-400">
               Don't have an account?{" "}
               <button

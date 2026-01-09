@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/HeaderComponents/Header";
 import CarouselItems from "../../components/HomePageComponents/CarouselItems";
+import TinderStyleCarousel from "../../components/HomePageComponents/TinderStyleCarousel";
 import PopularWFriendsSection from "../../components/HomePageComponents/PopularWFriendsSection";
 import HomemadeWatchlistsCarousel from "../../components/HomePageComponents/HomemadeWatchlistsCarousel";
+import TinderStyleWatchlistsCarousel from "../../components/HomePageComponents/TinderStyleWatchlistsCarousel";
 
 const HomePage = () => {
 
@@ -18,7 +20,8 @@ const HomePage = () => {
   const [bodyHorrorMovies, setBodyHorrorMovies] = useState<any[]>([]);
   const [vampireMovies, setVampireMovies] = useState<any[]>([]);
   const [survivalMovies, setSurvivalMovies] = useState<any[]>([]);
-  const [aliensMovies, setAliensMovies] = useState<any[]>([]);  
+  const [aliensMovies, setAliensMovies] = useState<any[]>([]); 
+  const [satireMovies, setSatireMovies] = useState<any[]>([]);
 
   const [isTVShowMode, setIsTVShowMode] = useState<boolean>(false);
   const [slasherTVShows, setSlasherTVShows] = useState<any[]>([]);
@@ -108,6 +111,7 @@ const HomePage = () => {
       fetchMovieCategory("survival horror", setSurvivalMovies);
       fetchMovieCategory("based on novel or book", setBasedOnNovelOrBooksMovies);
       fetchMovieCategory("based on true story", setBasedOnTrueStoryMovies);
+      fetchMovieCategory("satire", setSatireMovies);
     }
   }, [isTVShowMode]);
 
@@ -121,6 +125,7 @@ const HomePage = () => {
         </div>
 
         <div className="mb-12">
+          <TinderStyleWatchlistsCarousel />
           <HomemadeWatchlistsCarousel />
         </div>
 
@@ -128,32 +133,105 @@ const HomePage = () => {
 
             {!isTVShowMode ? (
             <>
-              <CarouselItems title="Popular slashers" items={slasherMovies} />
-              <CarouselItems title="Ghost and possession stories" items={supernaturalMovies} />
-              <CarouselItems title="Zombies universe" items={zombieMovies} />
-              <CarouselItems title="Monster core" items={monsterMovies} />
-              <CarouselItems title="Aliens" items={aliensMovies} />
-              <CarouselItems title="Vampire" items={vampireMovies} />
-              <CarouselItems title="Revenge" items={revengeStyleMovies} />
-              <CarouselItems title="Body horror" items={bodyHorrorMovies} />
-              <CarouselItems title="Survival" items={survivalMovies} />
-              <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksMovies} />
-              <CarouselItems title="Based on true story" items={basedOnTrueStoryMovies} />
+              <>
+                <TinderStyleCarousel title="Popular slashers" items={slasherMovies} />
+                <CarouselItems title="Popular slashers" items={slasherMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalMovies} />
+                <CarouselItems title="Ghost and possession stories" items={supernaturalMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Zombies universe" items={zombieMovies} />
+                <CarouselItems title="Zombies universe" items={zombieMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Monster core" items={monsterMovies} />
+                <CarouselItems title="Monster core" items={monsterMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Aliens" items={aliensMovies} />
+                <CarouselItems title="Aliens" items={aliensMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Vampire" items={vampireMovies} />
+                <CarouselItems title="Vampire" items={vampireMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Revenge" items={revengeStyleMovies} />
+                <CarouselItems title="Revenge" items={revengeStyleMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Body horror" items={bodyHorrorMovies} />
+                <CarouselItems title="Body horror" items={bodyHorrorMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Survival" items={survivalMovies} />
+                <CarouselItems title="Survival" items={survivalMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksMovies} />
+                <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryMovies} />
+                <CarouselItems title="Based on true story" items={basedOnTrueStoryMovies} />
+              </>
+              <>
+                <TinderStyleCarousel title="Satire" items={satireMovies} />
+                <CarouselItems title="Satire" items={satireMovies} />
+              </>
             </>
           ) : (
             <>
-              <CarouselItems title="Anime" items={animeTVShows} />
-              <CarouselItems title="Popular slashers" items={slasherTVShows} />
-              <CarouselItems title="Ghost and possession stories" items={supernaturalTVShows} />
-              <CarouselItems title="Zombies universe" items={zombieTVShows} />
-              <CarouselItems title="Monster core" items={monsterTVShows} />
-              <CarouselItems title="Aliens" items={aliensTVShows} />
-              <CarouselItems title="Vampire" items={vampireTVShows} />
-              <CarouselItems title="Revenge" items={revengeStyleTVShows} />
-              <CarouselItems title="Body horror" items={bodyHorrorTVShows} />
-              <CarouselItems title="Survival" items={survivalTVShows} />
-              <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksTVShows} />
-              <CarouselItems title="Based on true story" items={basedOnTrueStoryTVShows} />
+              <>
+                <TinderStyleCarousel title="Anime" items={animeTVShows} />
+                <CarouselItems title="Anime" items={animeTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Popular slashers" items={slasherTVShows} />
+                <CarouselItems title="Popular slashers" items={slasherTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalTVShows} />
+                <CarouselItems title="Ghost and possession stories" items={supernaturalTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Zombies universe" items={zombieTVShows} />
+                <CarouselItems title="Zombies universe" items={zombieTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Monster core" items={monsterTVShows} />
+                <CarouselItems title="Monster core" items={monsterTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Aliens" items={aliensTVShows} />
+                <CarouselItems title="Aliens" items={aliensTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Vampire" items={vampireTVShows} />
+                <CarouselItems title="Vampire" items={vampireTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Revenge" items={revengeStyleTVShows} />
+                <CarouselItems title="Revenge" items={revengeStyleTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Body horror" items={bodyHorrorTVShows} />
+                <CarouselItems title="Body horror" items={bodyHorrorTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Survival" items={survivalTVShows} />
+                <CarouselItems title="Survival" items={survivalTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksTVShows} />
+                <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksTVShows} />
+              </>
+              <>
+                <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryTVShows} />
+                <CarouselItems title="Based on true story" items={basedOnTrueStoryTVShows} />
+              </>
             </>
           )}
         </div>

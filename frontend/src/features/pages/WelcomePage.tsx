@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/HeaderComponents/Header";
+import appLogo from "@/assets/logo/appLogo.png";
 import backgroundOption1 from "@/assets/images/WelcomePageBackgroundImgs/evilDeadRiseMainHomePic.jpg";
 import backgroundOption2 from "@/assets/images/WelcomePageBackgroundImgs/shaunOfTheDeadMainHomePic.jpg";
 import backgroundOption3 from "@/assets/images/WelcomePageBackgroundImgs/houseOf1000CorpsesMainHomePic.jpg";
@@ -46,30 +47,40 @@ const WelcomePage: React.FC = () => {
     };
 
     return (
-        <main className="min-h-screen relative max-h-screen sm:max-h-none">
+        <main className="min-h-screen relative sm:max-h-screen">
             <Header onLogOut={handleLogout} />
-            <section className="translate-y-[-300px] sm:translate-y-0 xl:translate-y-[70px] -z-10">
-                <div className="relative max-w-6xl crt-effect mb-90 mx-auto w-[90%] sm:w-[85%] md:w-[70%] lg:w-[100%] xl:-translate-y-[60px]">
+            <section className="translate-y-0 sm:translate-y-0 xl:translate-y-[70px] -z-10">
+                <div className="relative crt-effect mb-20 sm:mb-90 w-screen mx-0 sm:w-[85%] sm:mx-auto sm:max-w-6xl md:w-[70%] lg:w-[100%] xl:-translate-y-[60px]">
                     <img
                         src={randomImageSelection}
                         alt="MainPic"
-                        className="block mx-auto w-full h-auto object-contain
+                        style={{
+                            height: window.innerWidth < 640 ? '30vh' : 'auto'
+                        }}
+                        className="block mx-auto w-screen sm:w-full sm:h-auto object-cover sm:object-contain
         mask-t-from-85% mask-t-to-100%
         mask-b-from-40% mask-b-to-100%
         mask-l-from-85% mask-l-to-100%
         mask-r-from-85% mask-r-to-100%
         transition-all duration-500"
                     />
+                    <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 sm:hidden z-10">
+                        <img
+                            src={appLogo}
+                            alt="App Logo"
+                            className="h-2 w-2 sm:h-auto sm:w-10"
+                        />
+                    </div>
                 </div>
 
-                <div className="-translate-y-[420px] text-[1rem] text-center text-white px-4 mt-10 sm:translate-y-0  md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-60 xl:-translate-y-110">
+                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-60 xl:-translate-y-110">
                     <h1
-                        className="font-bold tracking-wide xl:text-[1.5rem]"
+                        className="font-bold tracking-wide text-[0.85rem] sm:text-[1rem] xl:text-[1.5rem]"
                     >
                         A logbook for the dark side of cinema.
                     </h1>
                     <div
-                        className="flex items-center justify-center gap-3 mb-90 text-white xl:mt-5"
+                        className="flex items-center justify-center gap-3 mb-10 sm:mb-90 mt-4 text-white xl:mt-5"
                         style={{ gap: "var(--join-gap, 0.5rem)" }}
                     >
                     
@@ -78,19 +89,19 @@ const WelcomePage: React.FC = () => {
                             aria-label="Instagram"
                             className="text-white hover:opacity-90 inline-flex items-center"
                         >
-                            <FaInstagram color="#fff" className="w-6 h-6 md:w-7 md:h-7 xl:w-5" />
+                            <FaInstagram color="#fff" className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 xl:w-5" />
                         </a>
                         <a
                             href="#"
                             aria-label="TikTok"
                             className="text-white hover:opacity-90 inline-flex items-center"
                         >
-                            <FaTiktok color="#fff" className="w-6 h-6 md:w-7 md:h-7 xl:w-5" />
+                            <FaTiktok color="#fff" className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 xl:w-5" />
                         </a>
 
                     </div>
                 </div>
-                <div className="grid grid-cols-1 mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 xl:-translate-y-95 xl:w-[50%] xl:mx-auto">
+                <div className="grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 xl:-translate-y-95 xl:w-[50%] xl:mx-auto">
                   <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
                     <IoSkullOutline className="text-4xl mb-2" />
                     <p className="text-sm">Discover and explore a vast collection of horror movies or series. Rate and comment the ones you've already seen, add to your wishlist the ones you did not watch yet.</p>

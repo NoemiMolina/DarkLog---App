@@ -28,7 +28,7 @@ const getPosterUrl = (path?: string) => {
 };
 
 const CarouselItems = ({ title, items }: { title: string; items: Movie[] }) => (
-    <section className="xl:translate-y-[-120px]">
+    <section className="hidden sm:block xl:translate-y-[-120px]">
         <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[40px]">{title}</h2>
         <Carousel className="w-full max-w-[90%] mx-auto mt-5 xl:mx-auto xl:max-w-[1500px]">
             <CarouselContent>

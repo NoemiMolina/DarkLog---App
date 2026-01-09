@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
+import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
 import {
   Dialog,
   DialogContent,
@@ -133,7 +134,7 @@ const GetLuckyDialog: React.FC = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center mt-6">
+    <div className="relative flex flex-col items-center sm:mt-6">
       <Dialog open={open} onOpenChange={(v) => {
         setOpen(v);
         if (!v) {
@@ -147,14 +148,25 @@ const GetLuckyDialog: React.FC = () => {
             onClick={handleClick}
             variant="outline"
             size="sm"
-            className="button-text mt-3 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold z-50"
+            className="hidden sm:inline-flex button-text sm:mt-3 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold z-50"
           >
             {loading ? "Loading..." : "Get Lucky"}
           </Button>
         </DialogTrigger>
 
+        <DialogTrigger asChild>
+          <Button
+            onClick={handleClick}
+            variant="ghost"
+            size="sm"
+            className="sm:hidden text-white hover:bg-[#4C4C4C] p-2"
+          >
+            <GiPerspectiveDiceSixFacesRandom className="text-2xl w-6 h-6" />
+          </Button>
+        </DialogTrigger>
+
         <DialogContent
-          className="z-[60] w-[15rem] bg-black text-white rounded-md border border-white/80 shadow-lg mr-25 translate-y-[-65%] md:ml-5 md:w-[30rem]"
+          className="z-[60] w-[90vw] sm:w-[30rem] bg-black text-white rounded-md border border-white/80 shadow-lg mr-25 translate-y-[-50%] md:ml-5"
         >
           <DialogHeader>
             <DialogTitle className="sr-only">Random pick</DialogTitle>

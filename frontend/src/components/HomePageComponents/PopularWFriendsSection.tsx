@@ -48,14 +48,52 @@ const PopularWFriendsSection: React.FC = () => {
     }
 
     return (
-        <section className="w-full px-4 py-6 mb-5 xl:translate-y-[-50px] xl:translate-x-[168px] xl:max-w-[1550px]">
-            <h2 className="text-xl font-bold text-white text-center mb-4">Popular with friends</h2>
+        <section className="w-full px-4 py-6 mb-5 -mt-12 sm:mt-0 xl:translate-y-[-50px] xl:translate-x-[168px] xl:max-w-[1550px]">
+            <h2 className="text-sm sm:text-xl font-bold text-white text-center mb-4">Popular with friends</h2>
             <Separator className="bg-white/20 mb-6" />
 
             {friendReviews.length === 0 ? (
                 <p className="text-center text-gray-400 mb-8">No recent activity from friends</p>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+                <>
+                  <div className="grid grid-cols-3 gap-2 mb-12 sm:hidden">
+                    {friendReviews.map((review, index) => (
+                        <div
+                            key={index}
+                            className="flex flex-col items-center p-2 bg-[#2A2A2A] rounded-lg"
+                        >
+                            {review.friendProfilePicture ? (
+                                <img
+                                    src={
+                                        review.friendProfilePicture.startsWith('http')
+                                            ? review.friendProfilePicture
+                                            : `http://localhost:5000/${review.friendProfilePicture}`
+                                    }
+                                    alt={review.friendName}
+                                    className="w-8 h-8 rounded-full object-cover mb-1"
+                                />
+                            ) : (
+                                <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center mb-1">
+                                    <span className="text-white font-semibold text-xs">
+                                        {review.friendName.charAt(0).toUpperCase()}
+                                    </span>
+                                </div>
+                            )}
+                            <p className="text-[0.65rem] text-white font-semibold text-center line-clamp-2 mb-1">
+                              '{review.movieTitle}'
+                            </p>
+                            <div className="flex items-center gap-0.5 mb-1">
+                              <Star className="w-2.5 h-2.5 fill-yellow-400" />
+                              <span className="text-[0.6rem] font-bold text-white">{review.rating}</span>
+                            </div>
+                            <p className="text-[0.6rem] text-gray-300 text-center line-clamp-2">
+                              {review.review}
+                            </p>
+                        </div>
+                    ))}
+                  </div>
+                  
+                  <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
                     {friendReviews.map((review, index) => (
                         <div
                             key={index}
@@ -92,13 +130,11 @@ const PopularWFriendsSection: React.FC = () => {
                                 <div className="flex items-start gap-4">
                                     <p className="text-sm text-gray-300 line-clamp-2"> {review.review}</p>
                                 </div>
-                        
-                                   
-                         
                             </div>
                         </div>
                     ))}
-                </div>
+                  </div>
+                </>
             )}
             <Separator className="bg-white/20 mb-6" />
         </section>

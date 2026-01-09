@@ -29,7 +29,7 @@ const PublicSearchBar: React.FC = () => {
   const [dialogData, setDialogData] = useState<{
     trigger: React.ReactNode | null;
     item: any;
-    type: "movie" | "tv" | null;
+    type: "movie" | "tvshow" | null;
   }>({ trigger: null, item: null, type: null });
 
   const [authDialogState, setAuthDialogState] = useState<{

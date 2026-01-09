@@ -55,7 +55,7 @@ const HomemadeWatchlistsCarousel = () => {
     }
 
     return (
-        <section className="xl:translate-y-[-120px]">
+        <section className="hidden sm:block xl:translate-y-[-120px]">
             <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[40px] xl:text-center">
                 Homemade Watchlists
             </h2>

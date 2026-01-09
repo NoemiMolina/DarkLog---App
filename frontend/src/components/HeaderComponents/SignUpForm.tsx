@@ -30,7 +30,7 @@ function calcAgeFromDate(date: Date | null) {
   return Math.max(age, 0);
 }
 
-const DialogSignUpForm: React.FC = () => {
+const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const [open, setOpen] = useState(false);
   const [userPseudo, setUserPseudo] = useState("");
   const [userFirstName, setUserFirstName] = useState("");
@@ -196,6 +196,7 @@ const DialogSignUpForm: React.FC = () => {
 
       setTimeout(() => {
         setOpen(false);
+        onClose?.();
         navigate("/home");
       }, 800);
 

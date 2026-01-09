@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import appLogo from "@/assets/logo/appLogo.png";
 import PublicSearchBar from './PublicSearchBar';
 import SignUpForm from './SignUpForm';
@@ -8,7 +8,14 @@ import { Button } from '../../components/ui/button';
 import { Label } from "../../components/ui/label";
 import { Switch } from "../../components/ui/switch";
 import { IoIosMenu } from "react-icons/io";
+import { GiShamblingZombie } from "react-icons/gi";
+import { IoSearchSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "../../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +32,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onToggleTVShowMode, isTVShowMode }) => {
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [searchBarOpen, setSearchBarOpen] = useState(false);
   console.log("🧩 userProfilePicture =", userProfilePicture);
   const navigate = useNavigate();
   const handleToggle = (value: boolean) => {
@@ -33,25 +42,163 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   };
 
   return (
-    <header className="text-center -translate-y-[20px] flex flex-col items-center justify-center gap-4 p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-5 xl:space-x-6 xl:p-8 xl:mt-4 xl:translate-y-5">
+    <>
+    <header className="text-center translate-y-0 sm:-translate-y-[20px] flex flex-col items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-5 xl:space-x-6 xl:p-8 xl:mt-4 xl:translate-y-5">
       <img
         src={appLogo}
         alt="App Logo"
-        className="h-auto w-20 order-1 w-60 sm:w-32 md:w-40 xl:w-60 xl:translate-y-0 xl:order-1"
+        className="hidden sm:block h-auto w-20 order-1 sm:w-32 md:w-40 xl:w-60 xl:translate-y-0 xl:order-1"
       />
 
-      <div className="flex flex-row items-center -translate-y-[65px] order-2 gap-2 mb-50 sm:flex-row sm:gap-4 xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row">
+      <div className="flex flex-row items-center translate-y-0 sm:-translate-y-[65px] order-1 sm:order-2 gap-2 sm:gap-4 sm:mb-50 sm:flex-row xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row w-full sm:w-auto justify-between sm:justify-start">
         {username === "Guest" ? (
           <>
-            <LogInForm />
-            <SignUpForm />
-            <GetLuckyDialog />
-            <PublicSearchBar />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="text-white hover:bg-[#4C4C4C] px-2 sm:px-3 z-50 sm:hidden order-1"
+                >
+                  <IoIosMenu className="text-2xl w-6 h-6" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
+                <DropdownMenuItem
+                  onClick={() => navigate('/quiz')}
+                  className="cursor-pointer hover:bg-[#4C4C4C]"
+                >
+                  Quizzes
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
+                  onClick={() => navigate('/forum')}
+                >
+                  Forum
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
+                  onClick={() => navigate('/homemade-watchlists')}
+                >
+                  Watchlists
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <div className="sm:hidden order-2 flex gap-2">
+              <Dialog open={authModalOpen} onOpenChange={setAuthModalOpen}>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-white hover:bg-[#4C4C4C] p-2"
+                  >
+                    <GiShamblingZombie className="text-2xl w-6 h-6" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-[#1A1A1A] border-white/20 text-white">
+                  <LogInForm onClose={() => setAuthModalOpen(false)} isMobileModal={true} />
+                </DialogContent>
+              </Dialog>
+              <div className="sm:hidden">
+                <GetLuckyDialog />
+              </div>
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-white hover:bg-[#4C4C4C] p-2"
+                onClick={() => setSearchBarOpen(!searchBarOpen)}
+              >
+                <IoSearchSharp className="text-2xl w-6 h-6" />
+              </Button>
+            </div>
+            <div className="hidden sm:flex sm:gap-4">
+              <LogInForm />
+              <SignUpForm />
+            </div>
+            <div className="hidden sm:block">
+              <GetLuckyDialog />
+            </div>
+            <div className="hidden sm:block">
+              <PublicSearchBar />
+            </div>
           </>
         ) : (
           <>
-            <div
-              className="flex flex-row items-center gap-2 mt-9"
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="sm:hidden text-white hover:bg-[#4C4C4C] px-2 z-50 order-1"
+                >
+                  <IoIosMenu className="text-2xl w-6 h-6" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
+                <DropdownMenuItem
+                  onClick={() => navigate('/quiz')}
+                  className="cursor-pointer hover:bg-[#4C4C4C]"
+                >
+                  Quizzes
+                </DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
+                  onClick={() => navigate('/forum')}
+                >
+                  Forum
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <img
+              src={appLogo}
+              alt="App Logo"
+              className="sm:hidden h-auto w-36 order-2"
+            />
+            <div className="sm:hidden order-3 flex gap-2 items-center">
+              <div
+                onClick={() => navigate('/profile')}
+                className="cursor-pointer"
+              >
+                {userProfilePicture ? (
+                  <img
+                    src={
+                      userProfilePicture?.startsWith("http")
+                        ? userProfilePicture
+                        : `http://localhost:5000/${userProfilePicture}`
+                    }
+                    alt={`${username}'s profile`}
+                    className="w-12 h-12 rounded-full object-cover border border-white/40"
+                  />
+                ) : (
+                  <div className="w-12 h-12 rounded-full bg-gray-600 border border-white/40 flex items-center justify-center text-white text-sm">
+                    {username.charAt(0).toUpperCase()}
+                  </div>
+                )}
+              </div>
+
+              <div className="sm:hidden flex flex-col items-center gap-1">
+                <Switch
+                  id="tv-shows-switch-mobile"
+                  className="scale-75"
+                  checked={isTVShowMode}
+                  onCheckedChange={handleToggle}
+                />
+                <Label
+                  htmlFor="tv-shows-switch-mobile"
+                  className="text-white text-[0.65rem] font-semibold z-50"
+                >
+                  {isTVShowMode ? "Movies" : "TV Shows"}
+                </Label>
+              </div>
+
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-white hover:bg-[#4C4C4C] p-2"
+                onClick={() => setSearchBarOpen(!searchBarOpen)}
+              >
+                <IoSearchSharp className="text-2xl w-6 h-6" />
+              </Button>
+            </div>
+
+            <div className="hidden sm:flex sm:flex-row sm:items-center sm:gap-2 sm:mt-9"
               onClick={() => navigate('/profile')}
             >
               {userProfilePicture ? (
@@ -73,14 +220,14 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
 
             <Switch
               id="tv-shows-switch"
-              className="mt-9"
+              className="hidden sm:block sm:mt-9"
               checked={isTVShowMode}
               onCheckedChange={handleToggle}
             />
 
             <Label
               htmlFor="tv-shows-switch"
-              className="mt-9 text-white text-sm font-semibold z-50"
+              className="hidden sm:block sm:mt-9 text-white text-sm font-semibold z-50"
             >
               {isTVShowMode ? "Movies" : "TV Shows"}
             </Label>
@@ -90,9 +237,9 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 <Button
                   variant="default"
                   size="sm"
-                  className="mt-5 text-white hover:bg-[#4C4C4C] px-3 z-50 order-6"
+                  className="hidden sm:inline-flex text-white hover:bg-[#4C4C4C] px-2 sm:px-3 z-50 sm:mt-9"
                 >
-                  <IoIosMenu className="text-4xl w-12 h-12" />
+                  <IoIosMenu className="text-2xl sm:text-4xl w-6 sm:w-12 h-6 sm:h-12" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
@@ -110,13 +257,19 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <div className="order-3 -translate-y-[300px] w-20 pt-0.2 mr-60 sm:w-80 xl:translate-x-2 xl:translate-y-[-5px] xl:mr-0 xl:w-80 xl:gap-4 xl:order-3">
+            <div className="hidden sm:block sm:w-80 sm:order-3 sm:translate-x-2 sm:translate-y-[-5px] sm:gap-4">
               <PublicSearchBar />
             </div>
           </>
         )}
       </div>
     </header>
+    {searchBarOpen && (
+      <div className="sm:hidden w-full -mt-8">
+        <PublicSearchBar />
+      </div>
+    )}
+    </>
   );
 };
 
