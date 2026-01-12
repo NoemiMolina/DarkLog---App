@@ -66,14 +66,17 @@ const HomemadeWatchlistsCarousel = () => {
                             There's no watchlist available.
                         </p>
                     ) : (
-                        watchlists.map((watchlist) => (
-                            <CarouselItem
-                                key={watchlist._id}
-                                className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-16"
-                            >
-                                <HomemadeWatchlistsDialog watchlist={watchlist} />
-                            </CarouselItem>
-                        ))
+                        watchlists.map((watchlist, index) => {
+                            console.log(`📍 Index ${index} - Mapping watchlist: ${watchlist.title} with key: ${watchlist._id}`);
+                            return (
+                                <CarouselItem
+                                    key={watchlist._id}
+                                    className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-16"
+                                >
+                                    <HomemadeWatchlistsDialog watchlist={watchlist} />
+                                </CarouselItem>
+                            );
+                        })
                     )}
                 </CarouselContent>
 

@@ -60,7 +60,7 @@ const TinderStyleWatchlistsCarousel = () => {
     if (loading) {
         return (
             <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0 sm:hidden">
-                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide">
+                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide text-center">
                     Homemade Watchlists
                 </h2>
                 <div className="w-full h-80 flex items-center justify-center bg-[#2A2A2A] rounded-lg">
@@ -73,7 +73,7 @@ const TinderStyleWatchlistsCarousel = () => {
     if (!currentWatchlist || currentIndex >= watchlists.length) {
         return (
             <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0 sm:hidden">
-                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide">
+                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide text-center">
                     Homemade Watchlists
                 </h2>
                 <div className="w-full h-80 flex items-center justify-center bg-[#2A2A2A] rounded-lg">
@@ -85,7 +85,7 @@ const TinderStyleWatchlistsCarousel = () => {
 
     return (
         <section className="w-full px-4 py-6 mb-5 -mt-8 sm:hidden">
-            <h2 className="text-sm font-bold text-white mb-4 tracking-wide">
+            <h2 className="text-sm font-bold text-white mb-4 tracking-wide text-center">
                 Homemade Watchlists
             </h2>
 

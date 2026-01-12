@@ -50,17 +50,19 @@ const PopularWFriendsSection: React.FC = () => {
     return (
         <section className="w-full px-4 py-6 mb-5 -mt-12 sm:mt-0 xl:translate-y-[-50px] xl:translate-x-[168px] xl:max-w-[1550px]">
             <h2 className="text-sm sm:text-xl font-bold text-white text-center mb-4">Popular with friends</h2>
-            <Separator className="bg-white/20 mb-6" />
+            <Separator className="bg-white/20 mb-4" />
 
             {friendReviews.length === 0 ? (
                 <p className="text-center text-gray-400 mb-8">No recent activity from friends</p>
             ) : (
                 <>
-                  <div className="grid grid-cols-3 gap-2 mb-12 sm:hidden">
-                    {friendReviews.map((review, index) => (
+                  {/* Mobile: Horizontal scroll */}
+                  <div className="mb-3 sm:hidden overflow-x-auto pb-2 -mx-4 px-4">
+                    <div className="flex gap-3 w-max">
+                      {friendReviews.map((review, index) => (
                         <div
                             key={index}
-                            className="flex flex-col items-center p-2 bg-[#2A2A2A] rounded-lg"
+                            className="flex flex-col items-center p-2 bg-[#2A2A2A] rounded-lg w-24 flex-shrink-0"
                         >
                             {review.friendProfilePicture ? (
                                 <img
@@ -90,9 +92,11 @@ const PopularWFriendsSection: React.FC = () => {
                               {review.review}
                             </p>
                         </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                   
+                  {/* Desktop: Grid */}
                   <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
                     {friendReviews.map((review, index) => (
                         <div
@@ -136,7 +140,7 @@ const PopularWFriendsSection: React.FC = () => {
                   </div>
                 </>
             )}
-            <Separator className="bg-white/20 mb-6" />
+            <Separator className="bg-white/20 -mb-8 sm:mb-6" />
         </section>
     );
 };

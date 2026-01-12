@@ -36,7 +36,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
   return (
     <Card className="bg-[#2A2A2A] border-white/20 text-white">
       <CardHeader>
-        <CardTitle className="text-2xl">Watchlist</CardTitle>
+        <CardTitle className="text-lg">Watchlist</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-2xl border border-purple-500/20">

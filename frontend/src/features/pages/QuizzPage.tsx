@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { API_URL } from "../../config/api";
 import { GiRaiseZombie } from "react-icons/gi";
 import { Card, CardContent } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
@@ -47,10 +48,10 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
                 mediaType,
                 selectedCategory,
                 difficulty,
-                url: `http://localhost:5000/quiz/${mediaType}/${selectedCategory}/${difficulty}`
+                url: `${API_URL}/quiz/${mediaType}/${selectedCategory}/${difficulty}`
             });
             const response = await fetch(
-                `http://localhost:5000/quiz/${mediaType}/${selectedCategory}/${difficulty}`,
+                `${API_URL}/quiz/${mediaType}/${selectedCategory}/${difficulty}`,
                 {
                     headers: { 'Authorization': `Bearer ${token}` }
                 }

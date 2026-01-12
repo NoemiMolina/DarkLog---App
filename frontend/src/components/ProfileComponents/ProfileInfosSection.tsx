@@ -59,28 +59,31 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
 
   return (
     <Card className="bg-[#2A2A2A] border-white/20 text-white">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-2xl">Profile Information</CardTitle>
-        <div className="flex gap-2">
+      <CardHeader className="flex flex-row items-start justify-between">
+        <CardTitle className="text-xl">Profile Information</CardTitle>
+        <div className="flex gap-2 sm:mt-0 mt-0 -mt-3 mr-2">
           {!isEditing ? (
-            <Button onClick={onEdit} className="bg-blue-600 hover:bg-blue-700">
-              <Edit className="mr-2 h-4 w-4" /> Edit
+            <Button onClick={onEdit} className="bg-blue-600 hover:bg-blue-700 p-1 sm:p-2">
+              <Edit className="h-4 w-4" />
+              <span className="hidden sm:inline ml-2">Edit</span>
             </Button>
           ) : (
             <>
-              <Button onClick={onSave} className="bg-green-600 hover:bg-green-700">
-                <Save className="mr-2 h-4 w-4" /> Save
+              <Button onClick={onSave} className="bg-green-600 hover:bg-green-700 p-1 sm:p-2">
+                <Save className="h-4 w-4" />
+                <span className="hidden sm:inline ml-2">Save</span>
               </Button>
-              <Button onClick={onCancel} variant="outline" className="bg-gray-600 hover:bg-gray-700 text-white border-gray-600">
-                <X className="mr-2 h-4 w-4" /> Cancel
+              <Button onClick={onCancel} variant="outline" className="bg-gray-600 hover:bg-gray-700 text-white border-gray-600 p-1 sm:p-2">
+                <X className="h-4 w-4" />
+                <span className="hidden sm:inline ml-2">Cancel</span>
               </Button>
             </>
           )}
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="flex items-center gap-6">
-          <div className="relative">
+        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+          <div className="relative flex-shrink-0">
             {profileData.userProfilePicture ? (
               <img
                 src={profileData.userProfilePicture.startsWith('http')
@@ -115,7 +118,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
             />
           </div>
 
-          <div className="flex-1 grid grid-cols-2 gap-4">
+          <div className="w-full sm:flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <Label>First Name</Label>
               <Input
@@ -159,7 +162,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
         {isEditing && (
           <div className="space-y-4 p-4 bg-[#1A1A1A] rounded-lg border border-white/10">
             <h3 className="text-lg font-semibold text-white">Change Password (Optional)</h3>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <Label>Current Password</Label>
                 <div className="relative">

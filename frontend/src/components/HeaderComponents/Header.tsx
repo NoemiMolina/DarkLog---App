@@ -43,11 +43,39 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
 
   return (
     <>
-    <header className="text-center translate-y-0 sm:-translate-y-[20px] flex flex-col items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-5 xl:space-x-6 xl:p-8 xl:mt-4 xl:translate-y-5">
+    <header className="text-center translate-y-0 sm:-translate-y-[20px] flex flex-col items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-6 xl:space-x-4 xl:p-8 xl:mt-4 xl:translate-y-5">
+      {/* Desktop: Menu first */}
+      {username !== "Guest" && (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="default"
+              size="sm"
+              className="hidden sm:inline-flex text-white hover:bg-[#4C4C4C] px-2 sm:px-3 z-50 sm:mt-2 order-first"
+            >
+              <IoIosMenu className="text-3xl sm:text-5xl xl:text-6xl w-7 sm:w-14 xl:w-16 h-7 sm:h-14 xl:h-16" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
+            <DropdownMenuItem
+              onClick={() => navigate('/quiz')}
+              className="cursor-pointer hover:bg-[#4C4C4C]"
+            >
+              Quizzes
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
+              onClick={() => navigate('/forum')}
+            >
+              Forum
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
+
       <img
         src={appLogo}
         alt="App Logo"
-        className="hidden sm:block h-auto w-20 order-1 sm:w-32 md:w-40 xl:w-60 xl:translate-y-0 xl:order-1"
+        className="hidden sm:block h-auto w-20 order-2 sm:w-32 md:w-40 xl:w-60 xl:translate-y-0"
       />
 
       <div className="flex flex-row items-center translate-y-0 sm:-translate-y-[65px] order-1 sm:order-2 gap-2 sm:gap-4 sm:mb-50 sm:flex-row xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row w-full sm:w-auto justify-between sm:justify-start">
@@ -134,6 +162,12 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               </DropdownMenuTrigger>
               <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
                 <DropdownMenuItem
+                  onClick={() => navigate('/profile')}
+                  className="cursor-pointer hover:bg-[#4C4C4C]"
+                >
+                  Profil
+                </DropdownMenuItem>
+                <DropdownMenuItem
                   onClick={() => navigate('/quiz')}
                   className="cursor-pointer hover:bg-[#4C4C4C]"
                 >
@@ -152,27 +186,6 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               className="sm:hidden h-auto w-36 order-2"
             />
             <div className="sm:hidden order-3 flex gap-2 items-center">
-              <div
-                onClick={() => navigate('/profile')}
-                className="cursor-pointer"
-              >
-                {userProfilePicture ? (
-                  <img
-                    src={
-                      userProfilePicture?.startsWith("http")
-                        ? userProfilePicture
-                        : `http://localhost:5000/${userProfilePicture}`
-                    }
-                    alt={`${username}'s profile`}
-                    className="w-12 h-12 rounded-full object-cover border border-white/40"
-                  />
-                ) : (
-                  <div className="w-12 h-12 rounded-full bg-gray-600 border border-white/40 flex items-center justify-center text-white text-sm">
-                    {username.charAt(0).toUpperCase()}
-                  </div>
-                )}
-              </div>
-
               <div className="sm:hidden flex flex-col items-center gap-1">
                 <Switch
                   id="tv-shows-switch-mobile"
@@ -191,14 +204,14 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="text-white hover:bg-[#4C4C4C] p-2"
+                className="text-white hover:bg-[#4C4C4C] p-2 -mt-3"
                 onClick={() => setSearchBarOpen(!searchBarOpen)}
               >
                 <IoSearchSharp className="text-2xl w-6 h-6" />
               </Button>
             </div>
 
-            <div className="hidden sm:flex sm:flex-row sm:items-center sm:gap-2 sm:mt-9"
+            <div className="hidden sm:flex sm:flex-row sm:items-center sm:gap-2 sm:mt-9 sm:mr-3 order-3"
               onClick={() => navigate('/profile')}
             >
               {userProfilePicture ? (
@@ -209,7 +222,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                       : `http://localhost:5000/${userProfilePicture}`
                   }
                   alt={`${username}'s profile`}
-                  className="w-15 h-15 rounded-full object-cover border border-white/40 gap-5 cursor-pointer xl:order-1"
+                  className="w-15 h-15 rounded-full object-cover border border-white/40 gap-5 cursor-pointer"
                 />
               ) : (
                 <div className="w-12 h-12 rounded-full bg-gray-600 border border-white/40 flex items-center justify-center text-white text-sm">
@@ -220,44 +233,19 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
 
             <Switch
               id="tv-shows-switch"
-              className="hidden sm:block sm:mt-9"
+              className="hidden sm:block sm:mt-9 order-4"
               checked={isTVShowMode}
               onCheckedChange={handleToggle}
             />
 
             <Label
               htmlFor="tv-shows-switch"
-              className="hidden sm:block sm:mt-9 text-white text-sm font-semibold z-50"
+              className="hidden sm:block sm:mt-9 text-white text-sm font-semibold z-50 order-4"
             >
               {isTVShowMode ? "Movies" : "TV Shows"}
             </Label>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="hidden sm:inline-flex text-white hover:bg-[#4C4C4C] px-2 sm:px-3 z-50 sm:mt-9"
-                >
-                  <IoIosMenu className="text-2xl sm:text-4xl w-6 sm:w-12 h-6 sm:h-12" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
-                <DropdownMenuItem
-                  onClick={() => navigate('/quiz')}
-                  className="cursor-pointer hover:bg-[#4C4C4C]"
-                >
-                  Quizzes
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
-                  onClick={() => navigate('/forum')}
-                >
-                  Forum
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <div className="hidden sm:block sm:w-80 sm:order-3 sm:translate-x-2 sm:translate-y-[-5px] sm:gap-4">
+            <div className="hidden sm:block sm:w-80 sm:gap-4 order-5">
               <PublicSearchBar />
             </div>
           </>

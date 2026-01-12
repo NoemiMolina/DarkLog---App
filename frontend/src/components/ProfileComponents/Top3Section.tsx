@@ -26,12 +26,12 @@ const Top3Section: React.FC<Top3SectionProps> = ({
   return (
     <Card className="bg-[#2A2A2A] border-white/20 text-white">
       <CardHeader>
-        <CardTitle className="text-2xl">My Top 3</CardTitle>
+        <CardTitle className="text-lg">My Top 3</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Movies Section */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-2xl border border-purple-500/20">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+          <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
             🎬 Top 3 Favorite Movies
           </h2>
           
@@ -77,7 +77,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
 
         {/* TV Shows Section */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 mb-8 shadow-2xl border border-purple-500/20">
-          <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+          <h2 className="text-lg font-bold mb-6 flex items-center gap-2">
             📺 Top 3 Favorite TV Shows
           </h2>
           

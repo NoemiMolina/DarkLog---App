@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
+import { API_URL } from '../../config/api';
+import { jwtDecode } from 'jwt-decode';
+import ItemDialog from './ItemDialog';
 
 interface Movie {
     _id: string;
@@ -11,12 +14,12 @@ interface Movie {
     vote_average?: number;
 }
 
-const getPosterUrl = (path?: string) => {
+const getPosterUrl = (path?: string | null) => {
     if (!path) return "";
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     if (path.startsWith("/")) return `https://image.tmdb.org/t/p/w500${path}`;
     if (path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png")) {
-        return `http://localhost:5000/uploads/${path}`;
+        return `${API_URL}/uploads/${path}`;
     }
     return path;
 };
@@ -31,7 +34,13 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
     const [exitDirection, setExitDirection] = useState<'left' | 'right' | null>(null);
     const [swipeDelta, setSwipeDelta] = useState(0); 
     const [swiping, setSwiping] = useState(false);
+    
+    const token = localStorage.getItem('token');
+    const userId = token ? (jwtDecode<any>(token)).id : null;
+    console.log('UserId extrait du token:', userId);
+    
     const currentMovie = items[currentIndex];
+    console.log('🎬 Current movie:', currentMovie);
     const addToWatchlist = async (movie: Movie) => {
         try {
             const token = localStorage.getItem('token');
@@ -43,18 +52,13 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
             }
 
             console.log('Ajout du film à la watchlist:', movie.title);
-            const response = await fetch('http://localhost:5000/watchlist', {
+            const url = `${API_URL}/users/${userId}/watchlist/movie/${movie._id}`;
+            console.log('URL de la requête:', url);
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify({
-                    mediaId: movie._id,
-                    mediaType: 'movie',
-                    title: movie.title,
-                    poster: movie.poster_path,
-                }),
             });
 
             console.log('Réponse du serveur:', response.status);
@@ -122,27 +126,57 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
             <h2 className="text-sm font-bold text-white mb-4 tracking-wide sm:hidden">
                 {title}
             </h2>
-            <div className="sm:hidden w-full flex flex-col items-center">
-                <div
-                    {...handlers}
-                    style={{
-                        transform: swiping ? `translateX(${swipeDelta}px)` : 'translateX(0)',
-                        transition: swiping ? 'none' : 'transform 0.3s ease-out',
-                    }}
-                    className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing ${
-                        exitDirection === 'left' ? 'opacity-0' : ''
-                    } ${
-                        exitDirection === 'right' ? 'opacity-0' : ''
-                    }`}
-                >
-                    <img
-                        src={
-                            currentMovie.poster_path
-                                ? getPosterUrl(currentMovie.poster_path)
-                                : 'https://via.placeholder.com/200x300?text=No+Image'
+            <div className="sm:hidden w-full flex flex-col items-center relative">
+                <div className="relative w-full max-w-xs h-80">
+                    {/* Carte du dessous */}
+                    {currentIndex + 1 < items.length && (
+                        <div 
+                            className="absolute inset-0 w-full aspect-[2/3] rounded-lg overflow-hidden z-0 transform translate-y-3 scale-95"
+                            style={{
+                                opacity: 0.1 + (Math.abs(swipeDelta) / 100) * 0.9,
+                                transition: swiping ? 'none' : 'opacity 0.3s ease-out',
+                            }}
+                        >
+                            <img
+                                src={
+                                    items[currentIndex + 1].poster_path
+                                        ? getPosterUrl(items[currentIndex + 1].poster_path)
+                                        : 'https://via.placeholder.com/200x300?text=No+Image'
+                                }
+                                alt={items[currentIndex + 1].title}
+                                className="w-full h-full object-contain rounded-lg"
+                            />
+                        </div>
+                    )}
+                    
+                    {/* Carte actuelle */}
+                    <ItemDialog
+                        trigger={
+                            <div
+                                {...handlers}
+                                style={{
+                                    transform: swiping ? `translateX(${swipeDelta}px)` : 'translateX(0)',
+                                    transition: swiping ? 'none' : 'transform 0.3s ease-out',
+                                }}
+                                className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 ${
+                                    exitDirection === 'left' ? 'opacity-0' : ''
+                                } ${
+                                    exitDirection === 'right' ? 'opacity-0' : ''
+                                }`}
+                            >
+                                <img
+                                    src={
+                                        currentMovie.poster_path
+                                            ? getPosterUrl(currentMovie.poster_path)
+                                            : 'https://via.placeholder.com/200x300?text=No+Image'
+                                    }
+                                    alt={currentMovie.title}
+                                    className="w-full h-full object-contain rounded-lg"
+                                />
+                            </div>
                         }
-                        alt={currentMovie.title}
-                        className="w-full h-full object-contain rounded-lg"
+                        item={currentMovie}
+                        type="movie"
                     />
                 </div>
                 <div className="mt-4 text-sm text-white">
@@ -150,6 +184,7 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
                 </div>
             </div>
         </section>
+
     );
 };
 

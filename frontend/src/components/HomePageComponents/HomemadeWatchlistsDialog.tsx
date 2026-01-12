@@ -32,11 +32,15 @@ interface Watchlist {
     movies: Movie[];
 }
 
-const HomemadeWatchlistsDialog = ({ watchlist }: { watchlist: Watchlist }) => {
-    const [isOpen, setIsOpen] = useState(false);
+const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchlist: Watchlist; isOpen?: boolean; onOpenChange?: (open: boolean) => void }) => {
+    const [internalOpen, setInternalOpen] = useState(false);
+    const open = isOpen !== undefined ? isOpen : internalOpen;
+    const setOpen = onOpenChange || setInternalOpen;
     const [rating, setRating] = useState<number>(0);
     const [comment, setComment] = useState<string>("");
     const [message, setMessage] = useState<string | null>(null);
+
+    console.log('🎪 HomemadeWatchlistsDialog received:', { _id: watchlist._id, title: watchlist.title, posterPath: watchlist.posterPath });
 
     const storedUser = localStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
@@ -196,9 +200,9 @@ const HomemadeWatchlistsDialog = ({ watchlist }: { watchlist: Watchlist }) => {
                         {watchlist.movies.length} movies
                     </p>
             </div>
-            <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="max-w-4xl bg-gray-900 border-gray-700">
-                    <DialogHeader>
+            <Dialog key={`dialog-${watchlist._id}`} open={open} onOpenChange={setOpen}>
+                <DialogContent className="w-screen h-screen rounded-none p-2 sm:w-auto sm:h-auto sm:max-w-4xl sm:rounded-lg sm:p-6 bg-gray-900 border-gray-700 flex flex-col">
+                    <DialogHeader className="sm:block hidden">
                         <DialogTitle className="text-white text-2xl">
                             {watchlist.title}
                         </DialogTitle>
@@ -208,7 +212,7 @@ const HomemadeWatchlistsDialog = ({ watchlist }: { watchlist: Watchlist }) => {
                             </p>
                         )}
                     </DialogHeader>
-                    <div className="mt-6">
+                    <div className="mt-2 sm:mt-6 flex-1 overflow-y-auto">
                         <Carousel className="w-full">
                             <CarouselContent>
                                 {watchlist.movies.length === 0 ? (
@@ -219,7 +223,7 @@ const HomemadeWatchlistsDialog = ({ watchlist }: { watchlist: Watchlist }) => {
                                     watchlist.movies.map((movie) => (
                                         <CarouselItem
                                             key={movie._id}
-                                            className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 px-2"
+                                            className="basis-1/3 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 px-1 sm:px-2"
                                         >
                                             <div className="relative group">
                                                 <ItemDialog
