@@ -70,7 +70,7 @@ export const getMoviesByStyle = async (req: Request, res: Response) => {
 
     const movies = await Movie.find({
       keywords: { $regex: style, $options: "i" }
-    }).limit(40);
+    });
 
     res.json(movies);
   } catch (err) {
