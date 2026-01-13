@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   return (
     <>
     <header className="text-center translate-y-0 sm:-translate-y-[20px] flex flex-col items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-6 xl:space-x-4 xl:p-8 xl:mt-4 xl:translate-y-5">
-      {/* Desktop: Menu first */}
+      {/* Desktop: Menu first - Only for logged in users */}
       {username !== "Guest" && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -56,14 +56,14 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               <IoIosMenu className="text-3xl sm:text-5xl xl:text-6xl w-7 sm:w-14 xl:w-16 h-7 sm:h-14 xl:h-16" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
+          <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
             <DropdownMenuItem
               onClick={() => navigate('/quiz')}
-              className="cursor-pointer hover:bg-[#4C4C4C]"
+              className="cursor-pointer hover:bg-white/10"
             >
               Quizzes
             </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
+            <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
               onClick={() => navigate('/forum')}
             >
               Forum
@@ -81,36 +81,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
       <div className="flex flex-row items-center translate-y-0 sm:-translate-y-[65px] order-1 sm:order-2 gap-2 sm:gap-4 sm:mb-50 sm:flex-row xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row w-full sm:w-auto justify-between sm:justify-start">
         {username === "Guest" ? (
           <>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="text-white hover:bg-[#4C4C4C] px-2 sm:px-3 z-50 sm:hidden order-1"
-                >
-                  <IoIosMenu className="text-2xl w-6 h-6" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
-                <DropdownMenuItem
-                  onClick={() => navigate('/quiz')}
-                  className="cursor-pointer hover:bg-[#4C4C4C]"
-                >
-                  Quizzes
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
-                  onClick={() => navigate('/forum')}
-                >
-                  Forum
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
-                  onClick={() => navigate('/homemade-watchlists')}
-                >
-                  Watchlists
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <div className="sm:hidden order-2 flex gap-2">
+            <div className="sm:hidden flex gap-2 flex-1 justify-center">
               <Dialog open={authModalOpen} onOpenChange={setAuthModalOpen}>
                 <DialogTrigger asChild>
                   <Button 
@@ -121,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                     <GiShamblingZombie className="text-2xl w-6 h-6" />
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="bg-[#1A1A1A] border-white/20 text-white">
+                <DialogContent className="bg-black/40 backdrop-blur-md border-white/20 text-white">
                   <LogInForm onClose={() => setAuthModalOpen(false)} isMobileModal={true} />
                 </DialogContent>
               </Dialog>
@@ -160,20 +131,20 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   <IoIosMenu className="text-2xl w-6 h-6" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#2A2A2A] border-white/20 text-white translate-y-2">
+              <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
                 <DropdownMenuItem
                   onClick={() => navigate('/profile')}
-                  className="cursor-pointer hover:bg-[#4C4C4C]"
+                  className="cursor-pointer hover:bg-white/10"
                 >
                   Profil
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => navigate('/quiz')}
-                  className="cursor-pointer hover:bg-[#4C4C4C]"
+                  className="cursor-pointer hover:bg-white/10"
                 >
                   Quizzes
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-[#4C4C4C]"
+                <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
                   onClick={() => navigate('/forum')}
                 >
                   Forum
@@ -183,10 +154,10 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
             <img
               src={appLogo}
               alt="App Logo"
-              className="sm:hidden h-auto w-36 order-2"
+              className="sm:hidden h-auto w-40 order-2"
             />
             <div className="sm:hidden order-3 flex gap-2 items-center">
-              <div className="sm:hidden flex flex-col items-center gap-1">
+              <div className="sm:hidden flex flex-col items-center gap-1 -mt-2">
                 <Switch
                   id="tv-shows-switch-mobile"
                   className="scale-75"
@@ -195,7 +166,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 />
                 <Label
                   htmlFor="tv-shows-switch-mobile"
-                  className="text-white text-[0.65rem] font-semibold z-50"
+                  className="text-white text-[0.65rem] font-semibold z-50 hidden sm:block"
                 >
                   {isTVShowMode ? "Movies" : "TV Shows"}
                 </Label>
@@ -204,7 +175,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="text-white hover:bg-[#4C4C4C] p-2 -mt-3"
+                className="text-white hover:bg-[#4C4C4C] p-2 -mt-2"
                 onClick={() => setSearchBarOpen(!searchBarOpen)}
               >
                 <IoSearchSharp className="text-2xl w-6 h-6" />
@@ -253,7 +224,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
       </div>
     </header>
     {searchBarOpen && (
-      <div className="sm:hidden w-full -mt-8">
+      <div className="sm:hidden w-full -mt-12">
         <PublicSearchBar />
       </div>
     )}

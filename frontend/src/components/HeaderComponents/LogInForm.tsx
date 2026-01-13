@@ -220,7 +220,7 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[420px] bg-black text-white border border-white/20">
+      <DialogContent className="sm:max-w-[420px] bg-black/40 backdrop-blur-md text-white border border-white/20">
         <DialogHeader>
           <DialogTitle className="text-xl">Login</DialogTitle>
           <DialogDescription className="text-gray-400">

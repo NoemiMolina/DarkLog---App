@@ -122,12 +122,12 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
     }
 
     return (
-        <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0 sm:translate-y-[-120px]">
+        <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0 sm:translate-y-[-120px] overflow-hidden">
             <h2 className="text-sm font-bold text-white mb-4 tracking-wide sm:hidden">
                 {title}
             </h2>
-            <div className="sm:hidden w-full flex flex-col items-center relative">
-                <div className="relative w-full max-w-xs h-80">
+            <div className="sm:hidden w-full flex flex-col items-center relative overflow-hidden">
+                <div className="relative w-full max-w-xs h-80 overflow-hidden">
                     {/* Carte du dessous */}
                     {currentIndex + 1 < items.length && (
                         <div 
@@ -158,7 +158,7 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
                                     transform: swiping ? `translateX(${swipeDelta}px)` : 'translateX(0)',
                                     transition: swiping ? 'none' : 'transform 0.3s ease-out',
                                 }}
-                                className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 ${
+                                className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 touch-none ${
                                     exitDirection === 'left' ? 'opacity-0' : ''
                                 } ${
                                     exitDirection === 'right' ? 'opacity-0' : ''

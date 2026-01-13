@@ -65,10 +65,10 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {movies.length < 3 && (
                 <button 
                   onClick={onAddMovie} 
-                  className="w-full h-116 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                  className="w-full h-32 sm:h-116 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
                 >
-                  <span className="text-6xl mb-2">➕</span>
-                  <span className="text-gray-400">Add Movie</span>
+                  <span className="text-3xl sm:text-6xl mb-2">➕</span>
+                  <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add Movie</span>
                 </button>
               )}
             </div>
@@ -85,7 +85,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             <div className="text-center py-12">
               <button 
                 onClick={onAddTvShow} 
-                className="bg-purple-600 px-6 py-3 rounded-lg hover:bg-purple-700 transition"
+                className="bg-purple-600 px-3 py-2 rounded-lg hover:bg-purple-700 transition"
               >
                 ➕ Add Your Top 3 TV Shows
               </button>
@@ -111,10 +111,10 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {tvShows.length < 3 && (
                 <button 
                   onClick={onAddTvShow} 
-                  className="w-full h-116 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                  className="w-full h-32 sm:h-116 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
                 >
-                  <span className="text-6xl mb-2">➕</span>
-                  <span className="text-gray-400">Add TV Show</span>
+                  <span className="text-3xl sm:text-6xl mb-2">➕</span>
+                  <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add TV Show</span>
                 </button>
               )}
             </div>

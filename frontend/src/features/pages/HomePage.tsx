@@ -126,11 +126,10 @@ const HomePage = () => {
         </div>
 
         <div className="mb-12">
-          {/* Mobile: Swipeable carousel */}
           <div className="sm:hidden">
             <TinderStyleWatchlistsCarousel />
           </div>
-          {/* Desktop: Regular carousel */}
+         
           <div className="hidden sm:block">
             <HomemadeWatchlistsCarousel />
           </div>
@@ -140,102 +139,102 @@ const HomePage = () => {
 
             {!isTVShowMode ? (
             <>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Popular slashers" items={slasherMovies} />
                 <CarouselItems title="Popular slashers" items={slasherMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalMovies} />
                 <CarouselItems title="Ghost and possession stories" items={supernaturalMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Zombies universe" items={zombieMovies} />
                 <CarouselItems title="Zombies universe" items={zombieMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Monster core" items={monsterMovies} />
                 <CarouselItems title="Monster core" items={monsterMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Aliens" items={aliensMovies} />
                 <CarouselItems title="Aliens" items={aliensMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Vampire" items={vampireMovies} />
                 <CarouselItems title="Vampire" items={vampireMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Revenge" items={revengeStyleMovies} />
                 <CarouselItems title="Revenge" items={revengeStyleMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Body horror" items={bodyHorrorMovies} />
                 <CarouselItems title="Body horror" items={bodyHorrorMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Survival" items={survivalMovies} />
                 <CarouselItems title="Survival" items={survivalMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksMovies} />
                 <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryMovies} />
                 <CarouselItems title="Based on true story" items={basedOnTrueStoryMovies} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Satire" items={satireMovies} />
                 <CarouselItems title="Satire" items={satireMovies} />
               </div>
             </>
           ) : (
             <>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Anime" items={animeTVShows} />
                 <CarouselItems title="Anime" items={animeTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Popular slashers" items={slasherTVShows} />
                 <CarouselItems title="Popular slashers" items={slasherTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalTVShows} />
                 <CarouselItems title="Ghost and possession stories" items={supernaturalTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Zombies universe" items={zombieTVShows} />
                 <CarouselItems title="Zombies universe" items={zombieTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Monster core" items={monsterTVShows} />
                 <CarouselItems title="Monster core" items={monsterTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Aliens" items={aliensTVShows} />
                 <CarouselItems title="Aliens" items={aliensTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Vampire" items={vampireTVShows} />
                 <CarouselItems title="Vampire" items={vampireTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Revenge" items={revengeStyleTVShows} />
                 <CarouselItems title="Revenge" items={revengeStyleTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Body horror" items={bodyHorrorTVShows} />
                 <CarouselItems title="Body horror" items={bodyHorrorTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Survival" items={survivalTVShows} />
                 <CarouselItems title="Survival" items={survivalTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksTVShows} />
                 <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksTVShows} />
               </div>
-              <div className="mb-16 sm:mb-0">
+              <div className="mb-32 sm:mb-0">
                 <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryTVShows} />
                 <CarouselItems title="Based on true story" items={basedOnTrueStoryTVShows} />
               </div>

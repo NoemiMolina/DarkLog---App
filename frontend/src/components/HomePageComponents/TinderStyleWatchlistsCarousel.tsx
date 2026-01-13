@@ -85,10 +85,12 @@ const TinderStyleWatchlistsCarousel = () => {
 
     return (
         <section className="w-full px-4 py-6 mb-5 -mt-8 sm:hidden">
-            <h2 className="text-sm font-bold text-white mb-4 tracking-wide text-center">
+            <div className="-mt-3 mb-6 text-center text-xs text-gray-400">
+                    <p>← Swipe LEFT or RIGHT to browse →</p>
+            </div>
+            <h2 className="text-sm font-bold text-white mb-7 tracking-wide text-center">
                 Homemade Watchlists
             </h2>
-
             <div className="w-full flex flex-col items-center">
                 <div
                     {...handlers}
@@ -99,12 +101,6 @@ const TinderStyleWatchlistsCarousel = () => {
                     }`}
                 >
                     <HomemadeWatchlistsDialog watchlist={currentWatchlist} />
-                </div>
-                <div className="mt-6 text-center text-xs text-gray-400">
-                    <p>← Swipe LEFT or RIGHT to browse →</p>
-                </div>
-                <div className="mt-4 text-sm text-white">
-                    {currentIndex + 1} / {watchlists.length}
                 </div>
             </div>
         </section>

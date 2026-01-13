@@ -222,7 +222,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         <Button variant="outline" size="sm" className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50">Sign Up</Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[720px] bg-black text-white border border-white/20">
+      <DialogContent className="sm:max-w-[720px] bg-black/40 backdrop-blur-md text-white border border-white/20">
         <DialogHeader>
           <DialogTitle className="text-xl">Create an account</DialogTitle>
           <DialogDescription className="text-gray-400">

@@ -216,10 +216,18 @@ const UserProfile: React.FC = () => {
         return;
       }
 
+      console.log('Adding to Top3 with ID:', existingItem._id);
       const addResponse = await fetch(
         `http://localhost:5000/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${existingItem._id}`,
         { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } }
       );
+
+      if (!addResponse.ok) {
+        const errorData = await addResponse.json();
+        console.error('Error response:', errorData);
+        alert(`Error: ${errorData.message || 'Failed to add to Top 3'}`);
+        return;
+      }
 
       if (addResponse.ok) {
         alert(`${item.title || item.name} added to Top 3!`);
