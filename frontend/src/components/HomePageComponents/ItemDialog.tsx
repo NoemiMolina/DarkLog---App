@@ -16,7 +16,7 @@ interface ItemDialogProps {
   onClose?: () => void;
 }
 
-export default function ItemDialog({ trigger, item, type, onClose }: ItemDialogProps) {
+export default function ItemDialog({ trigger, item, type }: ItemDialogProps) {
   const [open, setOpen] = useState(false);
 
   return (

@@ -13,7 +13,7 @@ interface HomemadeWatchlistItem {
   _id: string;
   id: string;
   title: string;
-  posterPath: string;
+  poster: string;
 }
 
 interface WatchlistSectionProps {
@@ -103,7 +103,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <div className="grid grid-cols-4 gap-4">
               {savedHomemadeWatchlists.map((watchlist) => (
                 <div key={watchlist._id} className="relative group">
-                  <img src={`http://localhost:5000${watchlist.posterPath}`} alt={watchlist.title} className="w-full rounded-lg group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" />
+                  <img src={watchlist.poster} alt={watchlist.title} className="w-full rounded-lg group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" />
                   <button
                     onClick={() => onRemove(watchlist._id, 'homemadewatchlist')}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"

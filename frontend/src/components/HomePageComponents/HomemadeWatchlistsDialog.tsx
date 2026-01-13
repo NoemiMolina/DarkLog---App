@@ -184,7 +184,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
     return (
         <>
             <div
-                onClick={() => setIsOpen(true)}
+                onClick={() => setOpen(true)}
                 className={`relative group cursor-pointer rounded-lg shadow-md overflow-hidden aspect-[2/3] w-full h-auto xl:w-40 flex items-center justify-center transition-transform hover:scale-105 mx-12`}
             >
                 {watchlist.posterPath ? (

@@ -18,7 +18,6 @@ const GetLuckyDialog: React.FC = () => {
   const [showFullOverview, setShowFullOverview] = useState(false);
   const [open, setOpen] = useState(false);
   const [addingToWatchlist, setAddingToWatchlist] = useState(false);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -98,7 +97,6 @@ const GetLuckyDialog: React.FC = () => {
         };
         pendingWatchlistService.setPendingItem(item, movieOrTVShow.type);
 
-        setSuccessMessage("⚠️ Session expired. Please sign in again.");
         setTimeout(() => navigate("/login"), 1500);
         return;
       }
@@ -106,18 +104,18 @@ const GetLuckyDialog: React.FC = () => {
       if (!res.ok) {
         const errorData = await res.json();
         console.error("❌ Error response:", errorData);
-        setSuccessMessage(`❌ ${errorData.message || 'Error adding to watchlist'}`);
+        setError(errorData.message || 'Error adding to watchlist');
         return;
       }
 
       const data = await res.json();
       console.log("🎉 Watchlist updated:", data);
-      setSuccessMessage("🎬 Successfully added to watchlist!");
+      setError(null);
       window.dispatchEvent(new Event('watchlistUpdated'));
 
     } catch (err: any) {
       console.error("❌ Error adding to watchlist:", err);
-      setSuccessMessage("❌ Error adding to watchlist.");
+      setError("❌ Error adding to watchlist.");
     } finally {
       setAddingToWatchlist(false);
     }
