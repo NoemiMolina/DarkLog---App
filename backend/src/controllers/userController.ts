@@ -158,10 +158,6 @@ export const getUserProfile = async (req: Request, res: Response) => {
         console.log("🔍 Fetching profile for userId:", userId);
 
         const user = await User.findById(userId)
-            .populate('Top3Movies')
-            .populate('Top3TvShow')
-            .populate('MovieWatchlist')
-            .populate('TvShowWatchlist')
             .populate('SavedHomemadeWatchlists')
             .populate('Friends');
 
@@ -171,6 +167,28 @@ export const getUserProfile = async (req: Request, res: Response) => {
 
         console.log("✅ User found:", user.UserPseudo);
         console.log("📊 RatedMovies:", user.RatedMovies);
+
+        // Fetch movies for Top3 and Watchlist using tmdb_id
+        const top3MovieIds = (user.Top3Movies || []) as number[];
+        const movieWatchlistIds = (user.MovieWatchlist || []) as number[];
+        const tvShowWatchlistIds = (user.TvShowWatchlist || []) as number[];
+        const top3TvShowIds = (user.Top3TvShow || []) as number[];
+
+        const top3Movies = top3MovieIds.length > 0 
+            ? await Movie.find({ tmdb_id: { $in: top3MovieIds } })
+            : [];
+
+        const movieWatchlist = movieWatchlistIds.length > 0
+            ? await Movie.find({ tmdb_id: { $in: movieWatchlistIds } })
+            : [];
+
+        const top3TvShows = top3TvShowIds.length > 0
+            ? await TVShow.find({ tmdb_id: { $in: top3TvShowIds } })
+            : [];
+
+        const tvShowWatchlist = tvShowWatchlistIds.length > 0
+            ? await TVShow.find({ tmdb_id: { $in: tvShowWatchlistIds } })
+            : [];
 
         const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
             ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) / user.RatedMovies.length
@@ -193,22 +211,22 @@ export const getUserProfile = async (req: Request, res: Response) => {
             userPseudo: user.UserPseudo || '',
             userMail: user.UserMail || '',
             userPassword: '',
-            top3Movies: (user.Top3Movies as any[]).map((movie: any) => ({
-                id: movie._id,
+            top3Movies: top3Movies.map((movie: any) => ({
+                id: movie.tmdb_id,
                 title: movie.title || 'Unknown Movie',
                 poster: movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                     : ''
             })),
-            top3TvShows: (user.Top3TvShow as any[]).map((show: any) => ({
-                id: show._id,
+            top3TvShows: top3TvShows.map((show: any) => ({
+                id: show.tmdb_id,
                 title: show.name || 'Unknown Show',
                 poster: show.poster_path
                     ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
                     : ''
             })),
-            movieWatchlist: (user.MovieWatchlist as any[]).map((movie: any) => ({
-                id: movie._id,
+            movieWatchlist: movieWatchlist.map((movie: any) => ({
+                id: movie.tmdb_id,
                 title: movie.title || 'Unknown Movie',
                 poster: movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -220,8 +238,8 @@ export const getUserProfile = async (req: Request, res: Response) => {
                 title: watchlist.title || 'Unknown Watchlist',
                 posterPath: watchlist.posterPath || ''
             })),
-            tvShowWatchlist: (user.TvShowWatchlist as any[]).map((show: any) => ({
-                id: show._id,
+            tvShowWatchlist: tvShowWatchlist.map((show: any) => ({
+                id: show.tmdb_id,
                 title: show.name || 'Unknown Show',
                 poster: show.poster_path
                     ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
@@ -276,14 +294,33 @@ export const getPublicProfile = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
         const user = await User.findById(userId)
-            .populate('Top3Movies')
-            .populate('Top3TvShow')
-            .populate('MovieWatchlist')
             .select('-UserPassword -BlockedUsers');
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
+
+        // Fetch movies and shows using tmdb_id
+        const top3MovieIds = user.Top3Movies as number[];
+        const movieWatchlistIds = user.MovieWatchlist as number[];
+        const tvShowWatchlistIds = user.TvShowWatchlist as number[];
+        const top3TvShowIds = user.Top3TvShow as number[];
+
+        const top3Movies = top3MovieIds.length > 0 
+            ? await Movie.find({ tmdb_id: { $in: top3MovieIds } })
+            : [];
+
+        const movieWatchlist = movieWatchlistIds.length > 0
+            ? await Movie.find({ tmdb_id: { $in: movieWatchlistIds } })
+            : [];
+
+        const top3TvShows = top3TvShowIds.length > 0
+            ? await TVShow.find({ tmdb_id: { $in: top3TvShowIds } })
+            : [];
+
+        const tvShowWatchlist = tvShowWatchlistIds.length > 0
+            ? await TVShow.find({ tmdb_id: { $in: tvShowWatchlistIds } })
+            : [];
 
         const averageMovieRating = user.RatedMovies && user.RatedMovies.length > 0
             ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) / user.RatedMovies.length
@@ -302,15 +339,15 @@ export const getPublicProfile = async (req: Request, res: Response) => {
             UserFirstName: user.UserFirstName,
             UserLastName: user.UserLastName,
             UserProfilePicture: user.UserProfilePicture,
-            top3Movies: (user.Top3Movies as any[]).map((movie: any) => ({
-                id: movie._id,
+            top3Movies: top3Movies.map((movie: any) => ({
+                id: movie.tmdb_id,
                 title: movie.title || 'Unknown Movie',
                 poster: movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                     : ''
             })),
-            top3TvShows: (user.Top3TvShow as any[]).map((show: any) => ({
-                id: show._id,
+            top3TvShows: top3TvShows.map((show: any) => ({
+                id: show.tmdb_id,
                 title: show.name || 'Unknown Show',
                 poster: show.poster_path
                     ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
@@ -319,8 +356,20 @@ export const getPublicProfile = async (req: Request, res: Response) => {
             numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
             numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
             numberOfGivenReviews: user.NumberOfGivenReviews || 0,
-            MovieWatchlist: user.MovieWatchlist,
-            TvShowWatchlist: user.TvShowWatchlist,
+            MovieWatchlist: movieWatchlist.map((m: any) => ({
+                id: m.tmdb_id,
+                title: m.title || 'Unknown Movie',
+                poster: m.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${m.poster_path}`
+                    : ''
+            })),
+            TvShowWatchlist: tvShowWatchlist.map((show: any) => ({
+                id: show.tmdb_id,
+                title: show.name || 'Unknown Show',
+                poster: show.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
+                    : ''
+            })),
             averageMovieRating: Number(averageMovieRating.toFixed(1)),
             averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
             numberOfFriends: user.Friends?.length || 0,
@@ -542,8 +591,9 @@ export const addAMovieToWatchlist = async (req: Request, res: Response) => {
             r.tmdbTvShowId && r.tvShowTitle
         );
 
-        if (!user.MovieWatchlist.includes(movie._id as Types.ObjectId)) {
-            user.MovieWatchlist.push(movie._id as Types.ObjectId);
+        const movieTmdbId = Number(movieId);
+        if (!user.MovieWatchlist.includes(movieTmdbId)) {
+            user.MovieWatchlist.push(movieTmdbId);
             await user.save();
             console.log("✅ Movie added to watchlist");
         } else {
@@ -582,8 +632,9 @@ export const addATvShowToWatchlist = async (req: Request, res: Response) => {
             r.tmdbTvShowId && r.tvShowTitle
         );
 
-        if (!user.TvShowWatchlist.includes(tvShow._id as Types.ObjectId)) {
-            user.TvShowWatchlist.push(tvShow._id as Types.ObjectId);
+        const tvShowTmdbId = Number(tvShowId);
+        if (!user.TvShowWatchlist.includes(tvShowTmdbId)) {
+            user.TvShowWatchlist.push(tvShowTmdbId);
             await user.save();
             console.log("✅ TV show added to watchlist");
         } else {
@@ -607,7 +658,8 @@ export const deleteAMovieFromWatchlist = async (req: Request, res: Response) => 
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        user.MovieWatchlist = user.MovieWatchlist.filter(id => id.toString() !== movieId);
+        const movieTmdbId = Number(movieId);
+        user.MovieWatchlist = user.MovieWatchlist.filter(id => id !== movieTmdbId);
         await user.save();
 
         res.status(200).json({ message: "Movie deleted from your watchlist", user });
@@ -623,7 +675,8 @@ export const deleteATvShowFromWatchlist = async (req: Request, res: Response) =>
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
 
-        user.TvShowWatchlist = user.TvShowWatchlist.filter(id => id.toString() !== tvShowId);
+        const tvShowTmdbId = Number(tvShowId);
+        user.TvShowWatchlist = user.TvShowWatchlist.filter(id => id !== tvShowTmdbId);
         await user.save();
 
         res.status(200).json({ message: "TV Show deleted from your watchlist", user });
@@ -653,14 +706,15 @@ export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
         const user = await User.findById(userId);
-        const movie = await Movie.findById(movieId);
+        const movie = await Movie.findOne({ tmdb_id: Number(movieId) });
         if (!user || !movie) return res.status(404).json({ message: "User or movie not found" });
 
         if (user.Top3Movies.length >= 3) {
             return res.status(400).json({ message: "You can only have 3 favorite movies" });
         }
-        if (!user.Top3Movies.includes(movie._id as Types.ObjectId)) {
-            user.Top3Movies.push(movie._id as Types.ObjectId);
+        const movieTmdbId = Number(movieId);
+        if (!user.Top3Movies.includes(movieTmdbId)) {
+            user.Top3Movies.push(movieTmdbId);
             await user.save();
         }
 
@@ -675,7 +729,7 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
     try {
         const { userId, tvShowId } = req.params;
         const user = await User.findById(userId);
-        const tvShow = await TVShow.findById(tvShowId);
+        const tvShow = await TVShow.findOne({ tmdb_id: Number(tvShowId) });
 
         if (!user || !tvShow) {
             return res.status(404).json({ message: "User or TV Show not found" });
@@ -684,8 +738,9 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
         if (user.Top3TvShow.length >= 3) {
             return res.status(400).json({ message: "You can only have 3 favorite TV Shows" });
         }
-        if (!user.Top3TvShow.includes(tvShow._id as Types.ObjectId)) {
-            user.Top3TvShow.push(tvShow._id as Types.ObjectId);
+        const tvShowTmdbId = Number(tvShowId);
+        if (!user.Top3TvShow.includes(tvShowTmdbId)) {
+            user.Top3TvShow.push(tvShowTmdbId);
             await user.save();
         }
 
@@ -702,7 +757,8 @@ export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response)
         const { userId, movieId } = req.params;
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
-        user.Top3Movies = user.Top3Movies.filter((id: Types.ObjectId) => id.toString() !== movieId);
+        const movieTmdbId = Number(movieId);
+        user.Top3Movies = user.Top3Movies.filter((id: number) => id !== movieTmdbId);
 
         await user.save();
         res.status(200).json({ message: "Movie deleted from your Top 3 favorites", user });
@@ -719,7 +775,8 @@ export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response
         const { userId, tvShowId } = req.params;
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
-        user.Top3TvShow = user.Top3TvShow.filter((id: Types.ObjectId) => id.toString() !== tvShowId);
+        const tvShowTmdbId = Number(tvShowId);
+        user.Top3TvShow = user.Top3TvShow.filter((id: number) => id !== tvShowTmdbId);
 
         await user.save();
         res.status(200).json({ message: "TV Show deleted from your Top 3 favorites", user });

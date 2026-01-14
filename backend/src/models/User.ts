@@ -29,10 +29,10 @@ export interface IUser extends Document {
     AverageMovieRating: number;
     AverageTvShowRating: number;
     LastWatchedMovie: string;
-    MovieWatchlist: Types.ObjectId[];
-    TvShowWatchlist: Types.ObjectId[];
-    Top3Movies: Types.ObjectId[];
-    Top3TvShow: Types.ObjectId[];
+    MovieWatchlist: number[];
+    TvShowWatchlist: number[];
+    Top3Movies: number[];
+    Top3TvShow: number[];
     Friends: {
         friendId: Types.ObjectId;
         friendSince: Date;
@@ -114,10 +114,10 @@ const UserSchema: Schema = new Schema({
         date: { type: Date, default: Date.now }
     }],
     LastWatchedMovie: { type: String, default: "" },
-    MovieWatchlist: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
-    TvShowWatchlist: [{ type: Schema.Types.ObjectId, ref: "tvshows" }],
-    Top3Movies: [{ type: Schema.Types.ObjectId, ref: "Movie" }],
-    Top3TvShow: [{ type: Schema.Types.ObjectId, ref: "tvshows" }],
+    MovieWatchlist: [{ type: Number }],
+    TvShowWatchlist: [{ type: Number }],
+    Top3Movies: [{ type: Number }],
+    Top3TvShow: [{ type: Number }],
     Friends: [{
         friendId: { type: Schema.Types.ObjectId, ref: "User" },
         friendSince: { type: Date, default: Date.now },

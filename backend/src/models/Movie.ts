@@ -16,6 +16,7 @@ export interface IMovie extends Document {
 }
 
 const MovieSchema: Schema = new Schema({
+  tmdb_id: { type: Number, unique: true, required: true },
   title: { type: String, required: true },
   year: { type: Number, required: true },
   genres: { type: [String], required: true },
@@ -23,6 +24,6 @@ const MovieSchema: Schema = new Schema({
   poster_path: { type: String },
   runtime: { type: Number },
   ratings: { type: [Number], default: [] }
-});
+}, { timestamps: true });
 
 export default mongoose.model<IMovie>("Movie", MovieSchema, "movies");
