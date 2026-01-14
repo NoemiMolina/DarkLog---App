@@ -119,7 +119,7 @@ export const ForumPage: React.FC = () => {
             <section className="py-8 px-4 max-w-4xl mx-auto">
                 <div className="space-y-4">
                     <div className="text-center mb-4">
-                        <h1 className="text-5xl font-bold text-white mb-2">Forum</h1>
+                        <h1 className="text-5xl font-bold text-white mb-2">The Crypt</h1>
                         <p className="text-white/70">Share your opinions about the horror genre and discuss with the community</p>
                     </div>
 

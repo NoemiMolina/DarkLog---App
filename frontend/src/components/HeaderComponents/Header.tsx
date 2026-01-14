@@ -4,6 +4,7 @@ import PublicSearchBar from './PublicSearchBar';
 import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
 import GetLuckyDialog from './GetLuckyDialog';
+import AddFriendDialog from './AddFriendDialog';
 import { Button } from '../../components/ui/button';
 import { Label } from "../../components/ui/label";
 import { Switch } from "../../components/ui/switch";
@@ -34,6 +35,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onToggleTVShowMode, isTVShowMode }) => {
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [searchBarOpen, setSearchBarOpen] = useState(false);
+  const [addFriendOpen, setAddFriendOpen] = useState(false);
   console.log("🧩 userProfilePicture =", userProfilePicture);
   const navigate = useNavigate();
   const handleToggle = (value: boolean) => {
@@ -67,6 +69,12 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               onClick={() => navigate('/forum')}
             >
               Forum
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setAddFriendOpen(true)}
+              className="cursor-pointer hover:bg-white/10"
+            >
+              Add Friend
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -149,6 +157,12 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 >
                   Forum
                 </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setAddFriendOpen(true)}
+                  className="cursor-pointer hover:bg-white/10"
+                >
+                  Add Friend
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
             <img
@@ -223,6 +237,11 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
         )}
       </div>
     </header>
+    <AddFriendDialog 
+      currentUserId={username}
+      open={addFriendOpen}
+      onOpenChange={setAddFriendOpen}
+    />
     {searchBarOpen && (
       <div className="sm:hidden w-full -mt-12">
         <PublicSearchBar />

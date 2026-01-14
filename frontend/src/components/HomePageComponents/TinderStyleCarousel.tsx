@@ -122,13 +122,12 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
     }
 
     return (
-        <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0 sm:translate-y-[-120px] overflow-hidden">
-            <h2 className="text-sm font-bold text-white mb-4 tracking-wide sm:hidden">
+        <section className="w-full px-4 -mt-8 sm:mt-0 sm:translate-y-[-120px] overflow-hidden -mb-18">
+            <h2 className="text-sm font-bold text-white mb-3 tracking-wide sm:hidden">
                 {title}
             </h2>
             <div className="sm:hidden w-full flex flex-col items-center relative overflow-hidden">
-                <div className="relative w-full max-w-xs h-80 overflow-hidden">
-                    {/* Carte du dessous */}
+                <div className="relative w-full max-w-xs overflow-hidden">
                     {currentIndex + 1 < items.length && (
                         <div 
                             className="absolute inset-0 w-full aspect-[2/3] rounded-lg overflow-hidden z-0 transform translate-y-3 scale-95"
@@ -144,12 +143,11 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
                                         : 'https://via.placeholder.com/200x300?text=No+Image'
                                 }
                                 alt={items[currentIndex + 1].title}
-                                className="w-full h-full object-contain rounded-lg"
+                                className="w-full h-full object-cover rounded-lg"
                             />
                         </div>
                     )}
                     
-                    {/* Carte actuelle */}
                     <ItemDialog
                         trigger={
                             <div
@@ -178,9 +176,6 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
                         item={currentMovie}
                         type="movie"
                     />
-                </div>
-                <div className="mt-4 text-sm text-white">
-                    {currentIndex + 1} / {items.length}
                 </div>
             </div>
         </section>

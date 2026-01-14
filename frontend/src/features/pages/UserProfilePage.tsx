@@ -204,21 +204,11 @@ const UserProfile: React.FC = () => {
   const handleAddToTop3 = async (item: any, type: 'movie' | 'tv') => {
     if (!userId) return;
     try {
-      const searchResponse = await fetch(
-        `http://localhost:5000/${type === 'movie' ? 'movies' : 'tvshows'}`,
-        { headers: { 'Authorization': `Bearer ${token}` } }
-      );
-      const allItems = await searchResponse.json();
-      const existingItem = allItems.find((i: any) => i.tmdb_id === item.id);
-
-      if (!existingItem) {
-        alert(`This ${type} doesn't exist in our database yet.`);
-        return;
-      }
-
-      console.log('Adding to Top3 with ID:', existingItem._id);
+      const tmdbId = item.id;
+      
+      console.log('Adding to Top3 with TMDB ID:', tmdbId);
       const addResponse = await fetch(
-        `http://localhost:5000/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${existingItem._id}`,
+        `http://localhost:5000/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${tmdbId}`,
         { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } }
       );
 
@@ -261,26 +251,22 @@ const UserProfile: React.FC = () => {
   const handleAddToWatchlist = async (item: any, type: 'movie' | 'tv') => {
     if (!userId) return;
     try {
-      const searchResponse = await fetch(
-        `http://localhost:5000/${type === 'movie' ? 'movies' : 'tvshows'}`,
-        { headers: { 'Authorization': `Bearer ${token}` } }
-      );
-      const allItems = await searchResponse.json();
-      const existingItem = allItems.find((i: any) => i.tmdb_id === item.id);
-
-      if (!existingItem) {
-        alert(`This ${type} doesn't exist in our database yet.`);
-        return;
-      }
+      const tmdbId = item.id;
 
       const endpoint = type === 'movie'
-        ? `http://localhost:5000/users/${userId}/watchlist/movie/${existingItem._id}`
-        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${existingItem._id}`;
+        ? `http://localhost:5000/users/${userId}/watchlist/movie/${tmdbId}`
+        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${tmdbId}`;
 
-      await fetch(endpoint, {
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.message || 'Failed to add to watchlist'}`);
+        return;
+      }
 
       alert(`${item.title || item.name} added to watchlist!`);
       setShowMovieWatchlistSearch(false);

@@ -178,14 +178,14 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
         <div className="min-h-screen bg-gradient-to-b from-[#1A1A1A] to-[#0A0A0A] text-white flex flex-col items-center justify-center p-8">
             <GiRaiseZombie className="text-9xl mb-4 text-red-600 animate-pulse" />
             <p className="text-sm text-gray-400 mb-2">Welcome to our</p>
-            <h1 className="text-6xl font-bold mb-4 text-red-600 tracking-wider">HORROR QUIZZ</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-red-600 tracking-wider text-center animate-pulse">HORROR QUIZZ</h1>
             <p className="text-lg font-bold text-gray-300 mb-12 text-center max-w-2xl">
                 Challenge your horrific knowledge with our home made quizz
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
                 <Card
-                    className="bg-[#2A2A2A] border-red-900/50 border-2 cursor-pointer hover:scale-105 transition-transform duration-300 hover:border-red-600 text-red-600"
+                    className="bg-[#2A2A2A] border-red-900/50 border-2 cursor-pointer hover:scale-105 transition-transform duration-300 hover:border-red-600 text-red-600 animate-pulse"
                     onClick={() => handleCategoryClick('culture')}
                 >
                     <CardContent className="p-8 text-center">
@@ -197,7 +197,7 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
                 </Card>
 
                 <Card
-                    className="bg-[#2A2A2A] border-red-900/50 border-2 cursor-pointer hover:scale-105 transition-transform duration-300 hover:border-red-600 text-red-600"
+                    className="bg-[#2A2A2A] border-red-900/50 border-2 cursor-pointer hover:scale-105 transition-transform duration-300 hover:border-red-600 text-red-600 animate-pulse"
                     onClick={() => handleCategoryClick('dumbDescription')}
                 >
                     <CardContent className="p-8 text-center">

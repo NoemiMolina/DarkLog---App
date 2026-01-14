@@ -28,9 +28,9 @@ const getPosterUrl = (path?: string) => {
 };
 
 const CarouselItems = ({ title, items }: { title: string; items: Movie[] }) => (
-    <section className="hidden sm:block xl:translate-y-[-120px]">
-        <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[40px]">{title}</h2>
-        <Carousel className="w-full max-w-[90%] mx-auto mt-5 xl:mx-auto xl:max-w-[1500px]">
+    <section className="hidden sm:block xl:translate-y-0 xl:mb-20">
+        <h2 className="text-xl font-bold text-white mb-6 tracking-wide xl:translate-y-10 xl:mb-2">{title}</h2>
+        <Carousel className="w-full max-w-[90%] mx-auto mt-8 xl:mx-auto xl:max-w-[1500px] xl:mt-2">
             <CarouselContent>
                 {items.length === 0 ? (
                     <p className="text-gray-400 xl:translate-x-[20px]">Loading…</p>
@@ -66,9 +66,8 @@ const CarouselItems = ({ title, items }: { title: string; items: Movie[] }) => (
                     ))
                 )}
             </CarouselContent>
-
-            <CarouselPrevious />
-            <CarouselNext />
+            <CarouselPrevious className="hidden" />
+            <CarouselNext className="hidden" />
         </Carousel>
     </section>
 );

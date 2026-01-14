@@ -4,6 +4,8 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Eye, EyeOff, Save, Edit, X, Camera } from 'lucide-react';
+import { IoReturnDownBack } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileInfoSectionProps {
   profileData: {
@@ -43,6 +45,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
   onProfilePictureChange
 }) => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   
   const handleProfilePictureClick = () => {
     if (isEditing && fileInputRef.current) {
@@ -58,9 +61,18 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
   };
 
   return (
-    <Card className="bg-[#2A2A2A] border-white/20 text-white">
-      <CardHeader className="flex flex-row items-start justify-between">
-        <CardTitle className="text-xl">Profile Information</CardTitle>
+    <div className="flex gap-0 items-start">
+      <Button 
+        onClick={() => navigate(-1)} 
+        variant="ghost"
+        className="text-white hover:bg-white/10 p-2 mt-4 -ml-10"
+        title="Go back"
+      >
+        <IoReturnDownBack className="h-5 w-5" />
+      </Button>
+      <Card className="bg-[#2A2A2A] border-white/20 text-white flex-1">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-xl">Profile Information</CardTitle>
         <div className="flex gap-2 sm:mt-0 mt-0 -mt-3 mr-2">
           {!isEditing ? (
             <Button onClick={onEdit} className="bg-blue-600 hover:bg-blue-700 p-1 sm:p-2">
@@ -207,6 +219,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
         )}
       </CardContent>
     </Card>
+    </div>
   );
 };
 
