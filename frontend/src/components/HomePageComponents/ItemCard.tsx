@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RatingStars from "./RatingSkulls";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
+import RatingSkulls from "./RatingSkulls";
 
 interface ItemCardProps {
   item: any;
@@ -279,7 +279,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
         </div>
         <div>
           <h3 className="font-semibold mb-1">Your rating:</h3>
-          <RatingStars
+          <RatingSkulls
             key={rating}
             value={rating}
             onChange={(r) => {

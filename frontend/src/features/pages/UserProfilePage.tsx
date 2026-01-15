@@ -33,6 +33,7 @@ interface UserProfileData {
   lastWatchedMovie: { id: number; title: string; poster: string } | null;
   numberOfFriends: number;
   watchedMovies?: Array<{ runtime: number }>;
+  watchedTvShows?: Array<{ total_runtime: number }>;
   totalWatchTimeFromWatchlists?: number;
 }
 
@@ -414,6 +415,7 @@ const UserProfile: React.FC = () => {
         averageTvShowRating={profileData.averageTvShowRating}
         numberOfFriends={profileData.numberOfFriends}
         watchedMovies={profileData.watchedMovies || []}
+        watchedTvShows={profileData.watchedTvShows || []}
         totalWatchTimeFromWatchlists={profileData.totalWatchTimeFromWatchlists || 0}
         userId={userId!}
       />

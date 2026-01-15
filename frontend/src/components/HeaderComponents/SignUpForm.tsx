@@ -14,6 +14,8 @@ import { X } from "lucide-react";
 
 type SearchItem = {
   _id: string;
+  tmdb_id?: number;
+  id?: number;
   title?: string;
   name?: string;
   type?: "movie" | "tvshow";
@@ -131,24 +133,20 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         UserPassword: password,
         UserAge: age,
         UserLocation: location.trim(),
-        Top3Movies: top3Movies.map(x => x._id),
-        Top3TvShow: top3TvShow.map(x => x._id),
+        Top3Movies: JSON.stringify(top3Movies.map(x => x.tmdb_id || x.id)),
+        Top3TvShow: JSON.stringify(top3TvShow.map(x => x.tmdb_id || x.id)),
       };
 
       const formData = new FormData();
       for (const [key, value] of Object.entries(payload)) {
-        if (Array.isArray(value)) {
-          formData.append(key, JSON.stringify(value));
-        } else {
-          formData.append(key, String(value));
-        }
+        formData.append(key, String(value));
       }
 
       if (profilePic) {
         formData.append("UserProfilePicture", profilePic);
       }
 
-      const res = await fetch("http://localhost:5000/users/register", {
+      const res = await fetch("http://localhost:5000/users/signup", {
         method: "POST",
         body: formData,
       });

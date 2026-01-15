@@ -17,6 +17,7 @@ interface PublicProfileData {
     UserFirstName: string;
     UserLastName: string;
     UserProfilePicture: string | null;
+    isBlocked: boolean;
     top3Movies: Array<{ id: number; title: string; poster: string }>;
     top3TvShows: Array<{ id: number; title: string; poster: string }>;
     numberOfWatchedMovies: number;
@@ -53,7 +54,6 @@ const UserPublicProfile: React.FC = () => {
     useEffect(() => {
         fetchPublicProfile();
         checkFriendship();
-        checkIfBlocked();
     }, [userId]);
 
     useEffect(() => {
@@ -80,8 +80,15 @@ const UserPublicProfile: React.FC = () => {
             const response = await fetch(`http://localhost:5000/users/${userId}/public-profile`, {
                 headers: { 'Authorization': `Bearer ${token}` },
             });
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                console.error('Error response:', errorData);
+                setLoading(false);
+                return;
+            }
             const data = await response.json();
             setProfileData(data);
+            setIsBlocked(data.isBlocked || false);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching public profile:', error);
@@ -100,22 +107,6 @@ const UserPublicProfile: React.FC = () => {
             setIsFriend(isAlreadyFriend);
         } catch (error) {
             console.error('Error checking friendship:', error);
-        }
-    };
-    const checkIfBlocked = async () => {
-        if (!currentUserId) return;
-        try {
-            const response = await fetch(`http://localhost:5000/users/${currentUserId}/blocked-users`, {
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                const blockedUsers = data.blockedUsers || [];
-                setIsBlocked(blockedUsers.includes(userId));
-            }
-        } catch (error) {
-            console.error('Error checking if user is blocked:', error);
         }
     };
 
@@ -215,47 +206,46 @@ const UserPublicProfile: React.FC = () => {
     return (
         <div className="container mx-auto p-6 space-y-8 max-w-6xl">
             <Card className="bg-[#2A2A2A] border-white/20 text-white">
-                <CardHeader>
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-6">
-                            {profileData.UserProfilePicture ? (
-                                <img
-                                    src={
-                                        profileData.UserProfilePicture.startsWith('http')
-                                            ? profileData.UserProfilePicture
-                                            : `http://localhost:5000/${profileData.UserProfilePicture}`
-                                    }
-                                    alt="Profile"
-                                    className="w-24 h-24 rounded-full object-cover border-2 border-white/40"
-                                />
-                            ) : (
-                                <div className="w-24 h-24 rounded-full bg-gray-600 border-2 border-white/40 flex items-center justify-center text-3xl">
-                                    {profileData.UserPseudo.charAt(0).toUpperCase()}
-                                </div>
-                            )}
-                            <div>
-                                <CardTitle className="text-3xl">{profileData.UserPseudo}</CardTitle>
-                                <p className="text-gray-400">
-                                    {profileData.UserFirstName} {profileData.UserLastName}
-                                </p>
+                <CardHeader className="relative">
+                    <div className="flex items-center gap-6">
+                        {profileData.UserProfilePicture ? (
+                            <img
+                                src={
+                                    profileData.UserProfilePicture.startsWith('http')
+                                        ? profileData.UserProfilePicture
+                                        : `http://localhost:5000/${profileData.UserProfilePicture}`
+                                }
+                                alt="Profile"
+                                className="w-24 h-24 rounded-full object-cover border-2 border-white/40"
+                            />
+                        ) : (
+                            <div className="w-24 h-24 rounded-full bg-gray-600 border-2 border-white/40 flex items-center justify-center text-3xl">
+                                {profileData.UserPseudo.charAt(0).toUpperCase()}
                             </div>
+                        )}
+                        <div>
+                            <CardTitle className="text-3xl">{profileData.UserPseudo}</CardTitle>
+                            <p className="text-gray-400">
+                                {profileData.UserFirstName} {profileData.UserLastName}
+                            </p>
                         </div>
-                        {!isOwnProfile && (
-                            <div className="flex gap-3">
+                    </div>
+                    {!isOwnProfile && (
+                        <div className="absolute top-3 right-6 flex gap-2">
                                 {!isBlocked && (
                                     <>
                                         {isFriend ? (
-                                            <Button disabled className="bg-green-600/50 cursor-not-allowed">
-                                                <UserCheck className="mr-2" size={18} />
-                                                Friends
+                                            <Button disabled className="bg-green-600/50 cursor-not-allowed h-9 px-3">
+                                                <UserCheck className="mr-0 md:mr-2" size={18} />
+                                                <span className="hidden md:inline">Friends</span>
                                             </Button>
                                         ) : (
                                             <Button
                                                 onClick={handleAddFriend}
-                                                className="bg-blue-600 hover:bg-blue-700"
+                                                className="bg-blue-600 hover:bg-blue-700 h-9 px-3"
                                             >
-                                                <UserPlus className="mr-2" size={18} />
-                                                Add Friend
+                                                <UserPlus className="mr-0 md:mr-2" size={18} />
+                                                <span className="hidden md:inline">Add Friend</span>
                                             </Button>
                                         )}
                                     </>
@@ -263,24 +253,23 @@ const UserPublicProfile: React.FC = () => {
                                 {isBlocked ? (
                                     <Button
                                         onClick={handleUnblockUser}
-                                        className="bg-green-600 hover:bg-green-700"
+                                        className="bg-green-600 hover:bg-green-700 h-9 px-3"
                                     >
-                                        <ShieldOff className="mr-2" size={18} />
-                                        Unblock User
+                                        <ShieldOff className="mr-0 md:mr-2" size={18} />
+                                        <span className="hidden md:inline">Unblock User</span>
                                     </Button>
                                 ) : (
                                     <Button
                                         onClick={handleBlockUser}
                                         variant="destructive"
-                                        className="bg-red-600 hover:bg-red-700"
+                                        className="bg-red-600 hover:bg-red-700 h-9 px-3"
                                     >
-                                        <Ban className="mr-2" size={18} />
-                                        Block User
+                                        <Ban className="mr-0 md:mr-2" size={18} />
+                                        <span className="hidden md:inline">Block User</span>
                                     </Button>
                                 )}
                             </div>
                         )}
-                    </div>
                     {message && (
                         <div className="mt-4 p-3 bg-blue-500/20 border border-blue-500/50 rounded-lg text-center">
                             {message}

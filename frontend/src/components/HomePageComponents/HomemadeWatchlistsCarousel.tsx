@@ -71,7 +71,7 @@ const HomemadeWatchlistsCarousel = () => {
                             return (
                                 <CarouselItem
                                     key={watchlist._id}
-                                    className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-16"
+                                    className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-2 bg-transparent"
                                 >
                                     <HomemadeWatchlistsDialog watchlist={watchlist} />
                                 </CarouselItem>

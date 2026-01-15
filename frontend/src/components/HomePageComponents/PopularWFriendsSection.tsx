@@ -56,7 +56,6 @@ const PopularWFriendsSection: React.FC = () => {
                 <p className="text-center text-gray-400 mb-8">No recent activity from friends</p>
             ) : (
                 <>
-                  {/* Mobile: Horizontal scroll */}
                   <div className="mb-3 sm:hidden overflow-x-auto pb-2 -mx-4 px-4">
                     <div className="flex gap-3 w-max">
                       {friendReviews.map((review, index) => (
@@ -95,8 +94,7 @@ const PopularWFriendsSection: React.FC = () => {
                       ))}
                     </div>
                   </div>
-                  
-                  {/* Desktop: Grid */}
+                 
                   <div className="hidden sm:grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
                     {friendReviews.map((review, index) => (
                         <div

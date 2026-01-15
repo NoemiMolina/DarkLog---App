@@ -26,7 +26,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
   return (
     <Card className="bg-[#2A2A2A] border-white/20 text-white">
       <CardHeader>
-        <CardTitle className="text-lg">My Top 3</CardTitle>
+        <CardTitle className="text-lg">Favorites</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Movies Section */}

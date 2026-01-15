@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { FaUserPlus } from "react-icons/fa";
@@ -41,28 +41,39 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState<'success' | 'error'>('success');
 
-  const handleSearch = async (query: string) => {
-    setSearchQuery(query);
-    if (!query.trim()) {
+  useEffect(() => {
+    if (!searchQuery.trim()) {
       setSearchResults([]);
       return;
     }
 
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `http://localhost:5000/users/search?query=${encodeURIComponent(query)}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setSearchResults(data);
+    const debounceTimer = setTimeout(async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(
+          `http://localhost:5000/users/search?query=${encodeURIComponent(searchQuery)}`,
+          {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setSearchResults(data);
+        }
+      } catch (error) {
+        console.error('Error searching users:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error searching users:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    }, 350);
+
+    return () => clearTimeout(debounceTimer);
+  }, [searchQuery]);
 
   const handleSelectUser = (user: User) => {
     setSelectedUser(user);
@@ -136,7 +147,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
             <Input
               placeholder="Enter friend's username"
               value={searchQuery}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="bg-white/10 border-white/20 text-white placeholder:text-white/50"
             />
           </div>
@@ -159,14 +170,6 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
               ))}
             </div>
           )}
-
-          {selectedUser && (
-            <div className="p-3 rounded bg-white/10 border border-white/20">
-              <div className="text-sm text-white/80">Selected:</div>
-              <div className="font-semibold">{selectedUser.UserPseudo}</div>
-            </div>
-          )}
-
           {message && (
             <div
               className={`p-2 rounded text-sm text-center ${

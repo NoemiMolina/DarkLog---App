@@ -6,6 +6,7 @@ import {
     CarouselPrevious,
 } from "../../components/ui/carousel";
 import ItemDialog from "./ItemDialog";
+import { IoSkull } from "react-icons/io5";
 
 interface Movie {
     _id: string;
@@ -27,7 +28,7 @@ const getPosterUrl = (path?: string) => {
     return path;
 };
 
-const CarouselItems = ({ title, items }: { title: string; items: Movie[] }) => (
+const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; type: "movie" | "tvshow" }) => (
     <section className="hidden sm:block xl:translate-y-0 xl:mb-20">
         <h2 className="text-xl font-bold text-white mb-6 tracking-wide xl:translate-y-10 xl:mb-2">{title}</h2>
         <Carousel className="w-full max-w-[90%] mx-auto mt-8 xl:mx-auto xl:max-w-[1500px] xl:mt-2">
@@ -43,7 +44,7 @@ const CarouselItems = ({ title, items }: { title: string; items: Movie[] }) => (
                             <div className="relative group" tabIndex={0}>
                                 <ItemDialog
                                     item={movie}
-                                    type="movie"
+                                    type={type}
                                     trigger={
                                         <img
                                             src={movie.poster_path ? getPosterUrl(movie.poster_path) : "https://via.placeholder.com/200x300?text=No+Image"}
@@ -53,8 +54,8 @@ const CarouselItems = ({ title, items }: { title: string; items: Movie[] }) => (
                                     }
                                 />
                                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 group-focus:opacity-100">
-                                    <div className="text-white text-sm font-semibold px-3 py-1 rounded">
-                                        ⭐{" "}
+                                    <div className="text-white text-sm font-semibold px-3 py-1 rounded flex items-center gap-1">
+                                        <IoSkull className="text-yellow-400" size={16} />
                                         {movie.vote_average != null
                                             ? (Number(movie.vote_average) / 2).toFixed(1)
                                             : "N/A"}

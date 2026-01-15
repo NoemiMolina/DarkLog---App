@@ -185,7 +185,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
         <>
             <div
                 onClick={() => setOpen(true)}
-                className={`relative group cursor-pointer rounded-lg shadow-md overflow-hidden aspect-[2/3] w-full h-auto xl:w-40 flex items-center justify-center transition-transform hover:scale-105 mx-12`}
+                className={`relative group cursor-pointer rounded-lg shadow-md overflow-hidden aspect-[2/3] w-full max-w-[270px] sm:max-w-none h-auto xl:w-80 flex items-center justify-center transition-transform hover:scale-105 object-contain ml-14`}
             >
                 {watchlist.posterPath ? (
                     <img
@@ -194,7 +194,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                         className="absolute inset-0 w-full h-full object-cover"
                     />
                 ) : (
-                    <div className="absolute inset-0 bg-gray-800" />
+                    <div className="absolute inset-0 bg-transparent" />
                 )}
                     <p className="text-white text-sm font-semibold px-3 py-1 bg-opacity-70 rounded xl:translate-y-[50px]">
                         {watchlist.movies.length} movies

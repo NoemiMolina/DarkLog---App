@@ -27,9 +27,10 @@ const getPosterUrl = (path?: string | null) => {
 interface TinderStyleCarouselProps {
     title: string;
     items: Movie[];
+    type?: "movie" | "tvshow";
 }
 
-const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
+const TinderStyleCarousel = ({ title, items, type = "movie" }: TinderStyleCarouselProps) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [exitDirection, setExitDirection] = useState<'left' | 'right' | null>(null);
     const [swipeDelta, setSwipeDelta] = useState(0); 
@@ -174,7 +175,7 @@ const TinderStyleCarousel = ({ title, items }: TinderStyleCarouselProps) => {
                             </div>
                         }
                         item={currentMovie}
-                        type="movie"
+                        type={type}
                     />
                 </div>
             </div>

@@ -38,6 +38,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   const [addFriendOpen, setAddFriendOpen] = useState(false);
   console.log("🧩 userProfilePicture =", userProfilePicture);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId') || '';
   const handleToggle = (value: boolean) => {
     localStorage.setItem('mediaType', value ? 'tvshows' : 'movies');
     onToggleTVShowMode?.(value);
@@ -46,7 +47,6 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   return (
     <>
     <header className="text-center translate-y-0 sm:-translate-y-[20px] flex flex-col items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-6 xl:space-x-4 xl:p-8 xl:mt-4 xl:translate-y-5">
-      {/* Desktop: Menu first - Only for logged in users */}
       {username !== "Guest" && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -238,7 +238,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
       </div>
     </header>
     <AddFriendDialog 
-      currentUserId={username}
+      currentUserId={userId}
       open={addFriendOpen}
       onOpenChange={setAddFriendOpen}
     />
