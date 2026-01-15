@@ -92,7 +92,7 @@ const tvSchema = new mongoose.Schema(
 
 const TVShow = mongoose.model("tvshows", tvSchema);
 
-async function fetchTVShows(page: number) {
+const fetchTVShows = async (page: number) => {
   return axios
     .get("https://api.themoviedb.org/3/discover/tv", {
       params: {
@@ -103,9 +103,9 @@ async function fetchTVShows(page: number) {
       },
     })
     .then((r) => r.data);
-}
+};
 
-async function fetchKeywords(tvId: number) {
+const fetchKeywords = async (tvId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/keywords`,
@@ -116,9 +116,9 @@ async function fetchKeywords(tvId: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchPlatforms(tvId: number) {
+const fetchPlatforms = async (tvId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/watch/providers`,
@@ -136,9 +136,9 @@ async function fetchPlatforms(tvId: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchCast(tvId: number) {
+const fetchCast = async (tvId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/credits`,
@@ -153,9 +153,9 @@ async function fetchCast(tvId: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchSeasons(tvId: number) {
+const fetchSeasons = async (tvId: number) => {
   try {
     const res = await axios.get(`https://api.themoviedb.org/3/tv/${tvId}`, {
       params: { api_key: TMDB_KEY },
@@ -164,9 +164,9 @@ async function fetchSeasons(tvId: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchEpisodes(tvId: number, seasonNumber: number) {
+const fetchEpisodes = async (tvId: number, seasonNumber: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}`,
@@ -176,9 +176,9 @@ async function fetchEpisodes(tvId: number, seasonNumber: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchTrailer(tvId: number) {
+const fetchTrailer = async (tvId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/videos`,
@@ -196,9 +196,9 @@ async function fetchTrailer(tvId: number) {
   } catch {
     return null;
   }
-}
+};
 
-async function main() {
+const main = async () => {
   await mongoose.connect(MONGO_URI);
   console.log("Connecté à MongoDB pour TV shows");
 
@@ -273,7 +273,7 @@ async function main() {
 
   console.log("🎉 Import TV shows terminé !");
   process.exit(0);
-}
+};
 
 main().catch((err) => {
   console.error(err);

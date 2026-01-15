@@ -33,7 +33,7 @@ const watchlistsData = [
 
 ];
 
-async function seedWatchlists() {
+const seedWatchlists = async () => {
     try {
         console.log("🌱 Démarrage du seed des watchlists...");
 
@@ -112,6 +112,6 @@ async function seedWatchlists() {
         console.log("\n✅ Déconnecté de MongoDB");
         process.exit(0);
     }
-}
+};
 
 seedWatchlists();

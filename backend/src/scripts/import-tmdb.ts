@@ -45,7 +45,7 @@ const filmSchema = new mongoose.Schema(
 
 const Film = mongoose.model("movies", filmSchema);
 
-async function fetchPage(page: number) {
+const fetchPage = async (page: number) => {
   const res = await axios.get("https://api.themoviedb.org/3/discover/movie", {
     params: {
       api_key: TMDB_KEY,
@@ -55,9 +55,9 @@ async function fetchPage(page: number) {
     },
   });
   return res.data;
-}
+};
 
-async function fetchKeywords(movieId: number) {
+const fetchKeywords = async (movieId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/keywords`,
@@ -67,9 +67,9 @@ async function fetchKeywords(movieId: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchPlatforms(id: number) {
+const fetchPlatforms = async (id: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/watch/providers`,
@@ -87,9 +87,9 @@ async function fetchPlatforms(id: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchCast(movieId: number) {
+const fetchCast = async (movieId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/credits`,
@@ -104,9 +104,9 @@ async function fetchCast(movieId: number) {
   } catch {
     return [];
   }
-}
+};
 
-async function fetchMovieDetails(movieId: number) {
+const fetchMovieDetails = async (movieId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}`,
@@ -116,9 +116,9 @@ async function fetchMovieDetails(movieId: number) {
   } catch {
     return null;
   }
-}
+};
 
-async function fetchTrailer(movieId: number) {
+const fetchTrailer = async (movieId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/videos`,
@@ -138,9 +138,9 @@ async function fetchTrailer(movieId: number) {
   } catch {
     return null;
   }
-}
+};
 
-async function main() {
+const main = async () => {
   await mongoose.connect(MONGO_URI);
   console.log("Connecté à MongoDB");
 
@@ -234,7 +234,7 @@ async function main() {
 
   console.log("🎉 Import complètement terminé !");
   process.exit(0);
-}
+};
 
 main().catch((err) => {
   console.error(err);
