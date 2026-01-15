@@ -37,6 +37,9 @@ const tvShowSchema = new mongoose.Schema({
     vote_count: Number,
     genre_ids: [Number],
     poster_path: String,
+    episode_runtime: { type: Number, default: 0 }, 
+    number_of_episodes: { type: Number, default: 0 }, 
+    total_runtime: { type: Number, default: 0 }, 
     seasons: [seasonSchema],
     raw: Object,
 }, { timestamps: true });

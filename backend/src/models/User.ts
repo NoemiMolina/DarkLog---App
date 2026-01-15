@@ -55,6 +55,7 @@ export interface IUser extends Document {
         rating: number;
         review?: string;
         createdAt: Date;
+        total_runtime: number;
     }[];
     Reviews: {
         itemId: string;
@@ -105,7 +106,8 @@ const UserSchema: Schema = new Schema({
         tvShowTitle: { type: String, required: true },
         rating: { type: Number },
         review: { type: String },
-        createdAt: { type: Date, default: Date.now }
+        createdAt: { type: Date, default: Date.now },
+        total_runtime: { type: Number, default: 0 }
     }],
     Reviews: [{
         itemId: { type: String, required: true },
@@ -119,10 +121,10 @@ const UserSchema: Schema = new Schema({
     Top3Movies: [{ type: Number }],
     Top3TvShow: [{ type: Number }],
     Friends: [{
-        friendId: { type: Schema.Types.ObjectId, ref: "User" },
+        friendId: { type: Schema.Types.ObjectId, ref: "User", required: true },
         friendSince: { type: Date, default: Date.now },
-        friendPseudo: { type: String, required: true, ref: "User" },
-        friendProfilePicture: { type: String, default: "", ref: "User" }
+        friendPseudo: { type: String, required: true },
+        friendProfilePicture: { type: String, default: "" }
     }],
     BlockedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
     UserBadge: { type: String, default: "" },

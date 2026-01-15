@@ -57,6 +57,10 @@ const tvSchema = new mongoose.Schema(
       },
     ],
 
+    episode_runtime: { type: Number, default: 0 },
+    number_of_episodes: { type: Number, default: 0 },
+    total_runtime: { type: Number, default: 0 },
+
     seasons: [
       new mongoose.Schema(
         {
@@ -160,9 +164,17 @@ const fetchSeasons = async (tvId: number) => {
     const res = await axios.get(`https://api.themoviedb.org/3/tv/${tvId}`, {
       params: { api_key: TMDB_KEY },
     });
-    return res.data.seasons || [];
+    return {
+      seasons: res.data.seasons || [],
+      episode_runtime: res.data.episode_run_time?.[0] || 0,
+      number_of_episodes: res.data.number_of_episodes || 0,
+    };
   } catch {
-    return [];
+    return {
+      seasons: [],
+      episode_runtime: 0,
+      number_of_episodes: 0,
+    };
   }
 };
 
@@ -218,9 +230,11 @@ const main = async () => {
       const trailer_key = await fetchTrailer(item.id);
 
       const seasonsRaw = await fetchSeasons(item.id);
+      const { seasons: rawSeasons, episode_runtime, number_of_episodes } = seasonsRaw;
       const seasons: Season[] = [];
+      const total_runtime = episode_runtime * number_of_episodes;
 
-      for (const season of seasonsRaw) {
+      for (const season of rawSeasons) {
         const epsRaw = await fetchEpisodes(item.id, season.season_number);
 
         const episodes: Episode[] = epsRaw.map((ep: any) => ({
@@ -260,6 +274,9 @@ const main = async () => {
             platforms,
             cast,
             trailer_key : trailer_key,
+            episode_runtime,
+            number_of_episodes,
+            total_runtime,
             seasons,
             raw: item,
           },
