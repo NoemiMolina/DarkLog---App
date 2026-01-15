@@ -21,14 +21,14 @@ type SearchItem = {
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
 
-function calcAgeFromDate(date: Date | null) {
+const calcAgeFromDate = (date: Date | null) => {
   if (!date) return 0;
   const now = new Date();
   let age = now.getFullYear() - date.getFullYear();
   const m = now.getMonth() - date.getMonth();
   if (m < 0 || (m === 0 && now.getDate() < date.getDate())) age--;
   return Math.max(age, 0);
-}
+};
 
 const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const [open, setOpen] = useState(false);

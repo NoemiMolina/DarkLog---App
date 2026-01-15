@@ -66,7 +66,7 @@ const HomePage = () => {
 
   }, []);
 
-  async function fetchMovieCategory(endpoint: string, setter: any) {
+  const fetchMovieCategory = async (endpoint: string, setter: any) => {
     try {
       const res = await fetch(`${API_URL}/movies/style/${endpoint}`);
       const data = await res.json();
@@ -74,9 +74,9 @@ const HomePage = () => {
     } catch (error) {
       console.error("Failed to fetch movie category:", error);
     }
-  }
+  };
 
-  async function fetchTVShowCategory(endpoint: string, setter: any) {
+  const fetchTVShowCategory = async (endpoint: string, setter: any) => {
     try {
       const res = await fetch(`${API_URL}/tvshows/style/${endpoint}`);
       const data = await res.json();
@@ -84,7 +84,7 @@ const HomePage = () => {
     } catch (error) {
       console.error("Failed to fetch TV show category:", error);
     }
-  }
+  };
 
   useEffect(() => {
     if (isTVShowMode) {

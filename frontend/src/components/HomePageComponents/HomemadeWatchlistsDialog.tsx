@@ -14,7 +14,7 @@ import {
 } from "../../components/ui/carousel";
 import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
-import RatingStars from "./RatingStars";
+import RatingStars from "./RatingSkulls";
 import ItemDialog from "./ItemDialog";
 
 interface Movie {
@@ -47,7 +47,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
     const userId = user?._id;
     const token = localStorage.getItem("token");
     useEffect(() => {
-        async function loadUserData() {
+        const loadUserData = async () => {
             if (!userId || !watchlist._id) return;
 
             try {
@@ -71,17 +71,17 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
             } catch (err) {
                 console.error("❌ Error loading user data:", err);
             }
-        }
+        };
 
         loadUserData();
     }, [userId, watchlist._id, token]);
 
-    function showMessage(text: string) {
+    const showMessage = (text: string) => {
         setMessage(text);
         setTimeout(() => setMessage(null), 2000);
-    }
+    };
 
-    async function handleSave() {
+    const handleSave = async () => {
         if (!userId) {
             showMessage("⚠️ Please sign in to save");
             return;
@@ -144,9 +144,9 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
             console.error(err);
             showMessage("❌ Error saving.");
         }
-    }
+    };
 
-    async function handleAddToWatchlist() {
+    const handleAddToWatchlist = async () => {
         if (!userId) {
             showMessage("⚠️ Please sign in to add to watchlist");
             return;
@@ -179,7 +179,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
             console.error(err);
             showMessage("❌ Error adding to watchlist.");
         }
-    }
+    };
 
     return (
         <>

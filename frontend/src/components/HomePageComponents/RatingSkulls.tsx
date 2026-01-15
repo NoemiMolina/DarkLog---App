@@ -1,12 +1,12 @@
-import { Star, Moon } from "lucide-react";
+import { IoSkull, IoSkullOutline } from "react-icons/io5";
 
-interface RatingStarsProps {
+interface RatingSkullsProps {
   value: number; 
   onChange: (value: number) => void;
 }
 
-export default function RatingStars({ value, onChange }: RatingStarsProps) {
-  function handleClick(index: number) {
+export default function RatingSkulls({ value, onChange }: RatingSkullsProps) {
+  const handleClick = (index: number) => {
     const current = value - index;
     let newValue = index + 1;
     
@@ -17,20 +17,20 @@ export default function RatingStars({ value, onChange }: RatingStarsProps) {
     }
     
     onChange(newValue);
-  }
+  };
 
-  function getStarState(index: number) {
+  const getSkullState = (index: number) => {
     const fullValue = index + 1;
 
     if (value >= fullValue) return "full";
     if (value === fullValue - 0.5) return "half-moon";
     return "empty";
-  }
+  };
 
   return (
     <div className="flex gap-1">
       {[0, 1, 2, 3, 4].map((index) => {
-        const state = getStarState(index);
+        const state = getSkullState(index);
 
         return (
           <div
@@ -39,15 +39,15 @@ export default function RatingStars({ value, onChange }: RatingStarsProps) {
             className="cursor-pointer"
           >
             {state === "full" && (
-              <Star className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+              <IoSkull className="w-6 h-6 text-yellow-400" />
             )}
 
             {state === "half-moon" && (
-              <Moon className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+              <img src="/src/assets/homemadeIcons/halfskull.png" alt="half skull" className="w-6 h-6 object-contain" />
             )}
 
             {state === "empty" && (
-              <Star className="w-6 h-6 text-gray-500" />
+              <IoSkullOutline className="w-6 h-6 text-gray-500" />
             )}
           </div>
         );

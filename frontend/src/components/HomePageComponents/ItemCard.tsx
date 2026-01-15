@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RatingStars from "./RatingStars";
+import RatingStars from "./RatingSkulls";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 
 interface ItemCardProps {
@@ -9,7 +9,7 @@ interface ItemCardProps {
   onClose?: () => void;
 }
 
-export default function ItemCard({ item, type, onClose }: ItemCardProps) {
+const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
   const [rating, setRating] = useState<number>(0);
   const [review, setReview] = useState<string>("");
   const [message, setMessage] = useState<string | null>(null);
@@ -24,7 +24,7 @@ export default function ItemCard({ item, type, onClose }: ItemCardProps) {
   const itemTitle = item.title || item.name;
 
   useEffect(() => {
-    async function loadUserData() {
+    const loadUserData = async () => {
       if (!userId || !itemId) return;
 
       try {
@@ -50,7 +50,7 @@ export default function ItemCard({ item, type, onClose }: ItemCardProps) {
       } catch (err) {
         console.error("❌ Error loading user data:", err);
       }
-    }
+    };
 
     loadUserData();
   }, [userId, itemId, type, token]);
@@ -66,12 +66,12 @@ export default function ItemCard({ item, type, onClose }: ItemCardProps) {
       ? item.release_date?.slice(0, 4)
       : item.first_air_date?.slice(0, 4);
 
-  function showMessage(text: string) {
+  const showMessage = (text: string) => {
     setMessage(text);
     setTimeout(() => setMessage(null), 2000);
-  }
+  };
 
-  async function handleSave() {
+  const handleSave = async () => {
     if (!userId) return;
     if (!token) {
       showMessage("⚠️ Please sign in to save");
@@ -132,9 +132,9 @@ export default function ItemCard({ item, type, onClose }: ItemCardProps) {
       console.error(err);
       showMessage("❌ Error saving.");
     }
-  }
+  };
 
-  async function handleAddToWatchlist() {
+  const handleAddToWatchlist = async () => {
     const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
     const token = localStorage.getItem("token");
     if (!userId || !token) {
@@ -185,7 +185,7 @@ export default function ItemCard({ item, type, onClose }: ItemCardProps) {
       console.error("❌ Error adding to watchlist:", err);
       showMessage("❌ Error adding to watchlist.");
     }
-  }
+  };
 
 
   return (
@@ -321,4 +321,6 @@ export default function ItemCard({ item, type, onClose }: ItemCardProps) {
       </div>
     </div>
   );
-}
+};
+
+export default ItemCard;
