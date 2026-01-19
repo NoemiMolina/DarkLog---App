@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
+import http from "http";
+import { Server as SocketIOServer } from "socket.io";
 import connectDB from "./config/database";
 
 import userRoutes from "./routes/users";
@@ -12,13 +14,23 @@ import forumRoutes from "./routes/forum";
 import quizRoutes from "./routes/quiz";
 import searchRoutes from "./routes/search";
 import homemadeWatchlistsRoutes from "./routes/homemadeWatchlists";
+import notificationRoutes from "./routes/notification";
 
 console.log("✅ LETSGO !");
 
 dotenv.config();
 
 const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
+
+// 🔌 Socket.IO setup
+export const io = new SocketIOServer(server, {
+  cors: {
+    origin: "http://localhost:5173", // Adjust to your frontend URL
+    methods: ["GET", "POST"],
+  },
+});
 
 app.use(cors());
 app.use(express.json());
@@ -41,12 +53,24 @@ app.use("/forum", forumRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/search", searchRoutes);
 app.use("/homemade-watchlists", homemadeWatchlistsRoutes);
+app.use("/notifications", notificationRoutes);
 // app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {
   res.send("Backend's app is online, gg");
 });
 
-app.listen(PORT, () => {
+io.on("connection", (socket) => {
+  console.log(`✅ User connected: ${socket.id}`);
+  socket.on("joinRoom", (userId: string) => {
+    socket.join(userId);
+    console.log(`📌 User ${userId} joined room`);
+  });
+  socket.on("disconnect", () => {
+    console.log(`❌ User disconnected: ${socket.id}`);
+  });
+});
+
+server.listen(PORT, () => {
   console.log(`server is on on port : ${PORT}`);
 });

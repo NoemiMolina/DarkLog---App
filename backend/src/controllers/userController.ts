@@ -7,6 +7,7 @@ import { Types } from "mongoose";
 import TVShow from "../models/TVShow";
 import HomemadeWatchlist from "../models/HomemadeWatchlists";
 import { isNumberObject } from "util/types";
+import { createNotification } from "./notificationController";
 
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
@@ -508,6 +509,12 @@ export const addAFriend = async (req: Request, res: Response) => {
             console.log('✅ User saved');
             await User.updateOne({ _id: friendId }, { Friends: friend.Friends });
             console.log('✅ Friend saved');
+            await createNotification(
+                friendId,
+                userId,
+                "friend_request",
+                `has added you as a friend`
+            );
         } else {
             console.log('⚠️ Already friends, skipping');
         }

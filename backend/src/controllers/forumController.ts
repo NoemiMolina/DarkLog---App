@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import Forum from '../models/Forum';
+import { createNotification } from './notificationController';
 
 const getUserId = (req: Request) => (req as any).userId || (req as any).user?.id || (req as any).user?._id;
 
@@ -105,9 +106,9 @@ export const getPublishedPosts = async (req: Request, res: Response) => {
 export const getPost = async (req: Request, res: Response) => {
     try {
         const post = await Forum.findById(req.params.id)
-            .populate('author', 'username avatar')
-            .populate('comments.author', 'username avatar')
-            .populate('comments.replies.author', 'username avatar');
+            .populate('author', 'username UserPseudo UserFirstName UserProfilePicture')
+            .populate('comments.author', 'username UserPseudo UserFirstName UserProfilePicture')
+            .populate('comments.replies.author', 'username UserPseudo UserFirstName UserProfilePicture');
         if (!post) return res.status(404).json({ message: "Post not found" });
         if (!post.published) {
             const userId = getUserId(req);
@@ -136,7 +137,17 @@ export const addCommentToPost = async (req: Request, res: Response) => {
         }
 
         post.comments.push({ author: userId, content: content.trim(), replies: [] } as any)
-        await post.save()
+        await post.save();
+        if (post.author.toString() !== String(userId)) {
+            await createNotification(
+                post.author.toString(),
+                userId,
+                "forum_comment",
+                `has commented on your post`,
+                req.params.id
+            );
+        }
+        
         res.status(201).json({ message: "Comment added successfully", post })
     } catch (error) {
         res.status(500).json({ message: "Error adding comment", error })
@@ -193,6 +204,17 @@ export const replyToComment = async (req: Request, res: Response) => {
 
         comment.replies.push({ author: userId, content: content.trim() } as any);
         await post.save();
+        if (comment.author.toString() !== String(userId)) {
+            await createNotification(
+                comment.author.toString(),
+                userId,
+                "comment_reply",
+                `has replied to your comment`,
+                id,
+                commentIdStr
+            );
+        }
+        
         return res.status(201).json({ message: "Reply added successfully", post });
     } catch (error) {
         res.status(500).json({ message: "Error adding reply", error });
@@ -218,7 +240,18 @@ export const addReactionToPost = async (req: Request, res: Response) => {
 
         if (type === 'like') {
             const already = post.likes.some((u: any) => String(u) === uid);
-            if (!already) post.likes.push(userId as any);
+            if (!already) {
+                post.likes.push(userId as any);
+                if (post.author.toString() !== String(userId)) {
+                    await createNotification(
+                        post.author.toString(),
+                        userId,
+                        "forum_like",
+                        `has liked your post`,
+                        req.params.id
+                    );
+                }
+            }
         } else {
             const already = post.dislikes.some((u: any) => String(u) === uid);
             if (!already) post.dislikes.push(userId as any);
@@ -264,8 +297,21 @@ export const addReactionToComment = async (req: Request, res: Response) => {
         comment.likes = comment.likes.filter((uid: any) => String(uid) !== String(userId));
         comment.dislikes = comment.dislikes.filter((uid: any) => String(uid) !== String(userId));
 
-        if (type === "like") comment.likes.push(userId);
-        else comment.dislikes.push(userId);
+        if (type === "like") {
+            comment.likes.push(userId);
+            if (comment.author.toString() !== String(userId)) {
+                await createNotification(
+                    comment.author.toString(),
+                    userId,
+                    "comment_like",
+                    `has liked your comment`,
+                    id,
+                    commentIdStr
+                );
+            }
+        } else {
+            comment.dislikes.push(userId);
+        }
 
         await post.save();
 
@@ -305,8 +351,22 @@ export const addReactionToReply = async (req: Request, res: Response) => {
         if (!reply.dislikes) reply.dislikes = [];
         reply.likes = reply.likes.filter((uid: any) => String(uid) !== String(userId));
         reply.dislikes = reply.dislikes.filter((uid: any) => String(uid) !== String(userId));
-        if (type === "like") reply.likes.push(userId);
-        else reply.dislikes.push(userId);
+        
+        if (type === "like") {
+            reply.likes.push(userId);
+            if (reply.author.toString() !== String(userId)) {
+                await createNotification(
+                    reply.author.toString(),
+                    userId,
+                    "comment_like",
+                    `has liked your reply`,
+                    id,
+                    commentId
+                );
+            }
+        } else {
+            reply.dislikes.push(userId);
+        }
 
         await post.save();
 
