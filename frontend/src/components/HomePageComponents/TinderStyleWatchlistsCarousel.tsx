@@ -1,41 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import HomemadeWatchlistsDialog from './HomemadeWatchlistsDialog';
-
-interface Watchlist {
-    _id: string;
-    title: string;
-    description?: string;
-    posterPath?: string;
-    movies: any[];
-    createdAt: Date;
-    updatedAt: Date;
-}
+import { useWatchlists } from '../../hooks/useWatchlists';
 
 const TinderStyleWatchlistsCarousel = () => {
-    const [watchlists, setWatchlists] = useState<Watchlist[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { watchlists, loading } = useWatchlists();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [exitDirection, setExitDirection] = useState<'left' | 'right' | null>(null);
-
-    useEffect(() => {
-        const fetchWatchlists = async () => {
-            try {
-                const response = await fetch(
-                    "http://localhost:5000/homemade-watchlists"
-                );
-                if (!response.ok) throw new Error("Erreur lors du chargement");
-                const data = await response.json();
-                setWatchlists(data);
-            } catch (error) {
-                console.error("Erreur:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchWatchlists();
-    }, []);
 
     const currentWatchlist = watchlists[currentIndex];
 
@@ -60,7 +31,7 @@ const TinderStyleWatchlistsCarousel = () => {
     if (loading) {
         return (
             <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0 sm:hidden">
-                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide text-center">
+                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide text-center" style={{ fontFamily: "'Metal Mania', serif" }}>
                     Homemade Watchlists
                 </h2>
                 <div className="w-full h-80 flex items-center justify-center bg-[#2A2A2A] rounded-lg">
@@ -73,7 +44,7 @@ const TinderStyleWatchlistsCarousel = () => {
     if (!currentWatchlist || currentIndex >= watchlists.length) {
         return (
             <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0 sm:hidden">
-                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide text-center">
+                <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide text-center" style={{ fontFamily: "'Metal Mania', serif" }}>
                     Homemade Watchlists
                 </h2>
                 <div className="w-full h-80 flex items-center justify-center bg-[#2A2A2A] rounded-lg">

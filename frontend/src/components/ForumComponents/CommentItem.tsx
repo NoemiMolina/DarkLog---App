@@ -7,7 +7,7 @@ import { Heart, Reply, Send } from 'lucide-react';
 
 interface Comment {
     _id: string;
-    author: { _id: string; username: string };
+    author: { _id: string; username?: string; UserPseudo?: string; UserProfilePicture?: string };
     content: string;
     likes: any[];
     replies: Comment[];
@@ -69,17 +69,28 @@ export const CommentItem: React.FC<CommentItemProps> = ({
     };
 
     return (
-        <div className={`${level > 0 ? 'ml-8 mt-2' : ''}`}>
+        <div className={`${level > 0 ? 'ml-8 mt-2' : ''}`} id={`comment-${commentIdToUse}`}>
             <Card className="bg-white/5 border-l-2 border-l-purple-500/50">
                 <CardHeader className="pb-3">
                     <div className="flex items-center gap-2">
                         <Avatar className="w-8 h-8">
+                            {comment.author?.UserProfilePicture && (
+                                <img 
+                                    src={
+                                        comment.author.UserProfilePicture?.startsWith("http")
+                                            ? comment.author.UserProfilePicture
+                                            : `http://localhost:5000/${comment.author.UserProfilePicture}`
+                                    }
+                                    alt={comment.author?.UserPseudo}
+                                    className="w-8 h-8 rounded-full object-cover"
+                                />
+                            )}
                             <AvatarFallback className="bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs">
-                                {comment.author?.username?.charAt(0).toUpperCase() || 'U'}
+                                {comment.author?.UserPseudo?.charAt(0).toUpperCase() || 'U'}
                             </AvatarFallback>
                         </Avatar>
                         <div>
-                            <p className="text-white text-sm font-medium">{comment.author?.username || 'User'}</p>
+                            <p className="text-white text-sm font-medium">{comment.author?.UserPseudo || 'User'}</p>
                             <p className="text-white/50 text-xs">
                                 {new Date(comment.createdAt).toLocaleDateString('en-US', {
                                     day: 'numeric',

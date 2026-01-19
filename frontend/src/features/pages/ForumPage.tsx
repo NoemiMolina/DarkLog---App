@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "../../components/HeaderComponents/Header";
+import { ForumNotificationBell } from "../../components/ForumNotificationBell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { CreatePostCard } from "../../components/ForumComponents/CreatePostCard";
 import { PostCard } from "../../components/ForumComponents/PostCard";
@@ -7,6 +9,7 @@ import { TagFilter } from "../../components/ForumComponents/TagFilter";
 import { useForumData } from "../../components/ForumComponents/hooks/useForumData";
 
 export const ForumPage: React.FC = () => {
+    const location = useLocation();
     const [username, setUsername] = useState<string>("Guest");
     const [profilePic, setProfilePic] = useState<string | null>(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -43,6 +46,27 @@ export const ForumPage: React.FC = () => {
         const userToken = localStorage.getItem("token");
         setIsLoggedIn(!!userToken);
     }, []);
+
+    // Scroll to comment if coming from notification
+    useEffect(() => {
+        if (location.state?.commentId) {
+            setTimeout(() => {
+                const commentElement = document.getElementById(`comment-${location.state.commentId}`);
+                if (commentElement) {
+                    commentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    commentElement.classList.add('highlight');
+                }
+            }, 500);
+        } else if (location.state?.postId) {
+            // If coming from notification with just postId, scroll to that post
+            setTimeout(() => {
+                const postElement = document.getElementById(`post-${location.state.postId}`);
+                if (postElement) {
+                    postElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 500);
+        }
+    }, [location.state?.commentId, location.state?.postId]);
 
      useEffect(() => {
         if (!selectedTag) {
@@ -118,9 +142,14 @@ export const ForumPage: React.FC = () => {
             <Header username={username} userProfilePicture={profilePic} />
             <section className="py-8 px-4 max-w-4xl mx-auto">
                 <div className="space-y-4">
-                    <div className="text-center mb-4">
-                        <h1 className="text-5xl font-bold text-white mb-2">The Crypt</h1>
-                        <p className="text-white/70">Share your opinions about the horror genre and discuss with the community</p>
+                    <div className="flex justify-between items-center mb-4">
+                        <div className="text-center flex-1">
+                            <h1 className="text-5xl font-bold text-white mb-2" style={{ fontFamily: "'Metal Mania', serif" }}>The Crypt</h1>
+                            <p className="text-white/70">Share your opinions about the horror genre and discuss with the community</p>
+                        </div>
+                        <div className="ml-4">
+                            <ForumNotificationBell />
+                        </div>
                     </div>
 
                     <TagFilter onTagClick={handleTagClick} selectedTag={selectedTag} posts={posts} />

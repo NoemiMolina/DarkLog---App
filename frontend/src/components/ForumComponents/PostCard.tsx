@@ -10,7 +10,7 @@ import { CommentItem } from './CommentItem';
 
 interface Post {
     _id: string;
-    author: { _id: string; UserPseudo: string };
+    author: { _id: string; UserPseudo: string; UserProfilePicture?: string };
     title?: string;
     content: string;
     likes: any[];
@@ -108,6 +108,17 @@ export const PostCard: React.FC<PostCardProps> = ({ post, currentUserId, onDelet
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                         <Avatar>
+                            {post.author?.UserProfilePicture && (
+                                <img 
+                                    src={
+                                        post.author.UserProfilePicture?.startsWith("http")
+                                            ? post.author.UserProfilePicture
+                                            : `http://localhost:5000/${post.author.UserProfilePicture}`
+                                    }
+                                    alt={post.author?.UserPseudo}
+                                    className="w-10 h-10 rounded-full object-cover"
+                                />
+                            )}
                             <AvatarFallback className="bg-gradient-to-r from-violet-500 to-violet-700 text-white">
                                 {post.author?.UserPseudo?.charAt(0).toUpperCase() || 'U'}
                             </AvatarFallback>

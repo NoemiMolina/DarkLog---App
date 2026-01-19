@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
     Carousel,
     CarouselContent,
@@ -7,39 +6,10 @@ import {
     CarouselPrevious,
 } from "../../components/ui/carousel";
 import HomemadeWatchlistsDialog from "./HomemadeWatchlistsDialog";
-
-interface Watchlist {
-    _id: string;
-    title: string;
-    description?: string;
-    posterPath?: string;
-    movies: any[];
-    createdAt: Date;
-    updatedAt: Date;
-}
+import { useWatchlists } from "../../hooks/useWatchlists";
 
 const HomemadeWatchlistsCarousel = () => {
-    const [watchlists, setWatchlists] = useState<Watchlist[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const fetchWatchlists = async () => {
-            try {
-                const response = await fetch(
-                    "http://localhost:5000/homemade-watchlists"
-                );
-                if (!response.ok) throw new Error("Erreur lors du chargement");
-                const data = await response.json();
-                setWatchlists(data);
-            } catch (error) {
-                console.error("Erreur:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchWatchlists();
-    }, []);
+    const { watchlists, loading } = useWatchlists();
 
     if (loading) {
         return (
@@ -56,7 +26,7 @@ const HomemadeWatchlistsCarousel = () => {
 
     return (
         <section className="hidden sm:block xl:translate-y-[-120px]">
-            <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[40px] xl:text-center">
+            <h2 className="text-xl font-bold text-white mb-4 tracking-wide xl:translate-y-[40px] xl:text-center" style={{ fontFamily: "'Metal Mania', serif" }}>
                 Homemade Watchlists
             </h2>
             <Carousel className="w-full max-w-[90%] mx-auto mt-5 xl:mx-auto xl:max-w-[1500px]">

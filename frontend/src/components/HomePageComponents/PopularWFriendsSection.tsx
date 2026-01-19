@@ -49,7 +49,7 @@ const PopularWFriendsSection: React.FC = () => {
 
     return (
         <section className="w-full px-4 py-6 mb-5 -mt-12 sm:mt-0 xl:translate-y-[-50px] xl:translate-x-[168px] xl:max-w-[1550px]">
-            <h2 className="text-sm sm:text-xl font-bold text-white text-center mb-4">Popular with friends</h2>
+            <h2 className="text-sm sm:text-xl font-bold text-white text-center mb-4" style={{ fontFamily: "'Metal Mania', serif" }}>Popular with friends</h2>
             <Separator className="bg-white/20 mb-4" />
 
             {friendReviews.length === 0 ? (

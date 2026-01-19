@@ -87,33 +87,59 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if (isTVShowMode) {
-      fetchTVShowCategory("slasher", setSlasherTVShows);
-      fetchTVShowCategory("supernatural", setSupernaturalTVShows);
-      fetchTVShowCategory("zombie", setZombieTVShows);
-      fetchTVShowCategory("monster", setMonsterTVShows);
-      fetchTVShowCategory("alien", setAliensTVShows);
-      fetchTVShowCategory("vampire", setVampireTVShows);
-      fetchTVShowCategory("revenge", setRevengeStyleTVShows);
-      fetchTVShowCategory("body horror", setBodyHorrorTVShows);
-      fetchTVShowCategory("survival horror", setSurvivalTVShows);
-      fetchTVShowCategory("based on novel or book", setBasedOnNovelOrBooksTVShows);
-      fetchTVShowCategory("based on true story", setBasedOnTrueStoryTVShows);
-      fetchTVShowCategory("anime", setAnimeTVShows);
-    } else {
-      fetchMovieCategory("slasher", setSlasherMovies);
-      fetchMovieCategory("supernatural", setSupernaturalMovies);
-      fetchMovieCategory("zombie", setZombieMovies);
-      fetchMovieCategory("monster", setMonsterMovies);
-      fetchMovieCategory("alien", setAliensMovies);
-      fetchMovieCategory("vampire", setVampireMovies);
-      fetchMovieCategory("revenge", setRevengeStyleMovies);
-      fetchMovieCategory("body horror", setBodyHorrorMovies);
-      fetchMovieCategory("survival horror", setSurvivalMovies);
-      fetchMovieCategory("based on novel or book", setBasedOnNovelOrBooksMovies);
-      fetchMovieCategory("based on true story", setBasedOnTrueStoryMovies);
-      fetchMovieCategory("satire", setSatireMovies);
-    }
+    const loadCategoriesProgressively = async () => {
+      if (isTVShowMode) {
+        // Priority 1: Load critical categories first
+        await Promise.all([
+          fetchTVShowCategory("slasher", setSlasherTVShows),
+          fetchTVShowCategory("supernatural", setSupernaturalTVShows),
+          fetchTVShowCategory("zombie", setZombieTVShows),
+        ]);
+
+        // Priority 2: Load secondary categories
+        setTimeout(() => {
+          fetchTVShowCategory("monster", setMonsterTVShows);
+          fetchTVShowCategory("alien", setAliensTVShows);
+          fetchTVShowCategory("vampire", setVampireTVShows);
+          fetchTVShowCategory("revenge", setRevengeStyleTVShows);
+        }, 500);
+
+        // Priority 3: Load remaining categories
+        setTimeout(() => {
+          fetchTVShowCategory("body horror", setBodyHorrorTVShows);
+          fetchTVShowCategory("survival horror", setSurvivalTVShows);
+          fetchTVShowCategory("based on novel or book", setBasedOnNovelOrBooksTVShows);
+          fetchTVShowCategory("based on true story", setBasedOnTrueStoryTVShows);
+          fetchTVShowCategory("anime", setAnimeTVShows);
+        }, 1000);
+      } else {
+        // Priority 1: Load critical categories first
+        await Promise.all([
+          fetchMovieCategory("slasher", setSlasherMovies),
+          fetchMovieCategory("supernatural", setSupernaturalMovies),
+          fetchMovieCategory("zombie", setZombieMovies),
+        ]);
+
+        // Priority 2: Load secondary categories
+        setTimeout(() => {
+          fetchMovieCategory("monster", setMonsterMovies);
+          fetchMovieCategory("alien", setAliensMovies);
+          fetchMovieCategory("vampire", setVampireMovies);
+          fetchMovieCategory("revenge", setRevengeStyleMovies);
+        }, 500);
+
+        // Priority 3: Load remaining categories
+        setTimeout(() => {
+          fetchMovieCategory("body horror", setBodyHorrorMovies);
+          fetchMovieCategory("survival horror", setSurvivalMovies);
+          fetchMovieCategory("based on novel or book", setBasedOnNovelOrBooksMovies);
+          fetchMovieCategory("based on true story", setBasedOnTrueStoryMovies);
+          fetchMovieCategory("satire", setSatireMovies);
+        }, 1000);
+      }
+    };
+
+    loadCategoriesProgressively();
   }, [isTVShowMode]);
 
   return (

@@ -5,6 +5,9 @@ import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
 import GetLuckyDialog from './GetLuckyDialog';
 import AddFriendDialog from './AddFriendDialog';
+import { FriendRequestDialog } from '../FriendRequestDialog';
+import { NotificationBadge } from '../NotificationBadge';
+import { useNotifications } from '../../context/NotificationContext';
 import { Button } from '../../components/ui/button';
 import { Label } from "../../components/ui/label";
 import { Switch } from "../../components/ui/switch";
@@ -36,6 +39,8 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [addFriendOpen, setAddFriendOpen] = useState(false);
+  const [friendRequestOpen, setFriendRequestOpen] = useState(false);
+  const { unreadCount, friendRequestsCount, forumNotificationsCount } = useNotifications();
   console.log("🧩 userProfilePicture =", userProfilePicture);
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId') || '';
@@ -50,13 +55,16 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
       {username !== "Guest" && (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="default"
-              size="sm"
-              className="hidden sm:inline-flex text-white hover:bg-[#4C4C4C] px-2 sm:px-3 z-50 sm:mt-2 order-first"
-            >
-              <IoIosMenu className="text-3xl sm:text-5xl xl:text-6xl w-7 sm:w-14 xl:w-16 h-7 sm:h-14 xl:h-16" />
-            </Button>
+            <div className="relative">
+              <Button
+                variant="default"
+                size="sm"
+                className="hidden sm:inline-flex text-white hover:bg-[#4C4C4C] px-2 sm:px-3 z-50 sm:mt-2 order-first"
+              >
+                <IoIosMenu className="text-3xl sm:text-5xl xl:text-6xl w-7 sm:w-14 xl:w-16 h-7 sm:h-14 xl:h-16" />
+              </Button>
+              <NotificationBadge count={unreadCount} className="top-1 right-0" />
+            </div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
             <DropdownMenuItem
@@ -68,13 +76,24 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
             <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
               onClick={() => navigate('/forum')}
             >
-              Forum
+              <div className="flex items-center gap-2">
+                Forum
+                <NotificationBadge count={forumNotificationsCount} />
+              </div>
             </DropdownMenuItem>
             <DropdownMenuItem
-              onClick={() => setAddFriendOpen(true)}
+              onClick={() => {
+                setAddFriendOpen(true);
+                if (friendRequestsCount > 0) {
+                  setTimeout(() => setFriendRequestOpen(true), 100);
+                }
+              }}
               className="cursor-pointer hover:bg-white/10"
             >
-              Add Friend
+              <div className="flex items-center gap-2">
+                Add Friend
+                <NotificationBadge count={friendRequestsCount} />
+              </div>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -83,7 +102,8 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
       <img
         src={appLogo}
         alt="App Logo"
-        className="hidden sm:block h-auto w-20 order-2 sm:w-32 md:w-40 xl:w-60 xl:translate-y-0"
+        onClick={() => navigate('/home')}
+        className="hidden sm:block h-auto w-20 order-2 sm:w-32 md:w-40 xl:w-60 xl:translate-y-0 cursor-pointer hover:opacity-80 transition-opacity"
       />
 
       <div className="flex flex-row items-center translate-y-0 sm:-translate-y-[65px] order-1 sm:order-2 gap-2 sm:gap-4 sm:mb-50 sm:flex-row xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row w-full sm:w-auto justify-between sm:justify-start">
@@ -242,6 +262,13 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
       open={addFriendOpen}
       onOpenChange={setAddFriendOpen}
     />
+    
+    {/* Friend Request Dialog */}
+    <FriendRequestDialog 
+      open={friendRequestOpen}
+      onOpenChange={setFriendRequestOpen}
+    />
+    
     {searchBarOpen && (
       <div className="sm:hidden w-full -mt-12">
         <PublicSearchBar />

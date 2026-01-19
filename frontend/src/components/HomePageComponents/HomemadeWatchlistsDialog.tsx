@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     Dialog,
     DialogContent,
@@ -46,35 +46,6 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
     const user = storedUser ? JSON.parse(storedUser) : null;
     const userId = user?._id;
     const token = localStorage.getItem("token");
-    useEffect(() => {
-        const loadUserData = async () => {
-            if (!userId || !watchlist._id) return;
-
-            try {
-                const res = await fetch(
-                    `http://localhost:5000/users/${userId}`,
-                    {
-                        headers: {
-                            "Authorization": `Bearer ${token}`
-                        }
-                    }
-                );
-
-                if (res.ok) {
-                    const data = await res.json();
-                    console.log("✅ User data loaded:", data);
-                } else if (res.status === 403 || res.status === 401) {
-                    console.warn("⚠ Unauthorized access when loading user data");
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("user");
-                }
-            } catch (err) {
-                console.error("❌ Error loading user data:", err);
-            }
-        };
-
-        loadUserData();
-    }, [userId, watchlist._id, token]);
 
     const showMessage = (text: string) => {
         setMessage(text);
