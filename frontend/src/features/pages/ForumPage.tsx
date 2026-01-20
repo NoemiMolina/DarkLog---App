@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../../components/HeaderComponents/Header";
-import { ForumNotificationBell } from "../../components/ForumNotificationBell";
+import { ForumNotificationBell } from "../../components/NotificationsComponents/ForumNotificationBell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
 import { CreatePostCard } from "../../components/ForumComponents/CreatePostCard";
 import { PostCard } from "../../components/ForumComponents/PostCard";

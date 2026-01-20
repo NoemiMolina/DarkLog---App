@@ -7,6 +7,7 @@ import QuizzPage from "./features/pages/QuizzPage";
 import  ForumPage  from "./features/pages/ForumPage";
 import LoginPage from "./features/pages/LoginPage";
 import SignUpPage from "./features/pages/SignUpPage";
+import { Footer } from "./components/Footer";
 import { NotificationProvider } from "./context/NotificationContext";
 import { useEffect, useState } from "react";
 
@@ -36,17 +37,20 @@ export default function App() {
   return (
     <BrowserRouter>
       <NotificationProvider>
-        <div className="min-h-screen bg-[var(--background)]">
-          <Routes>
-            <Route path="/" element={<WelcomePage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/user/:userId" element={<UserPublicProfile />} />
-            <Route path="/quiz" element={<QuizzPage isTVShowMode={isTVShowMode} />} />
-            <Route path="/forum" element={<ForumPage />} />
-          </Routes>
+        <div className="min-h-screen bg-[var(--background)] flex flex-col">
+          <div className="flex-1">
+            <Routes>
+              <Route path="/" element={<WelcomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/profile" element={<UserProfile />} />
+              <Route path="/user/:userId" element={<UserPublicProfile />} />
+              <Route path="/quiz" element={<QuizzPage isTVShowMode={isTVShowMode} />} />
+              <Route path="/forum" element={<ForumPage />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
       </NotificationProvider>
     </BrowserRouter>

@@ -72,7 +72,7 @@ const Calendar = ({
           defaultClassNames.dropdown_root
         ),
         dropdown: cn(
-          "bg-popover absolute inset-0 opacity-0",
+          "bg-popover absolute inset-0 opacity-0 max-h-[8rem] overflow-y-auto",
           defaultClassNames.dropdown
         ),
         caption_label: cn(

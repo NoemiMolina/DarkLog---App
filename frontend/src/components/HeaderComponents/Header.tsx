@@ -5,8 +5,8 @@ import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
 import GetLuckyDialog from './GetLuckyDialog';
 import AddFriendDialog from './AddFriendDialog';
-import { FriendRequestDialog } from '../FriendRequestDialog';
-import { NotificationBadge } from '../NotificationBadge';
+import { FriendRequestDialog } from '../NotificationsComponents/FriendRequestDialog';
+import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
 import { useNotifications } from '../../context/NotificationContext';
 import { Button } from '../../components/ui/button';
 import { Label } from "../../components/ui/label";
@@ -78,7 +78,11 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
             >
               <div className="flex items-center gap-2">
                 Forum
-                <NotificationBadge count={forumNotificationsCount} />
+                {forumNotificationsCount > 0 && (
+                  <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {forumNotificationsCount > 99 ? '99+' : forumNotificationsCount}
+                  </span>
+                )}
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -92,7 +96,11 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
             >
               <div className="flex items-center gap-2">
                 Add Friend
-                <NotificationBadge count={friendRequestsCount} />
+                {friendRequestsCount > 0 && (
+                  <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {friendRequestsCount > 99 ? '99+' : friendRequestsCount}
+                  </span>
+                )}
               </div>
             </DropdownMenuItem>
           </DropdownMenuContent>

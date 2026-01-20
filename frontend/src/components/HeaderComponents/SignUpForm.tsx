@@ -8,6 +8,7 @@ import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { Calendar } from "../ui/calendar";
 import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
+import { CountrySelect } from "../ui/country-select";
 import { format } from "date-fns";
 import { enUS, fr } from "date-fns/locale";
 import { X } from "lucide-react";
@@ -298,7 +299,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
 
           <div className="space-y-2">
             <Label htmlFor="email">Email *</Label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="stumacher@ghostface.com" />
+            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="stumacherisnotdead@ghostface.com" />
             {!emailValid && email.length > 0 && (
               <p className="text-xs text-red-400">Invalid email address.</p>
             )}
@@ -323,7 +324,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
 
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="location">Location *</Label>
-            <Input id="location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="ex : Woodsboro" />
+            <CountrySelect value={location} onChange={setLocation} placeholder="Search for a country..." />
           </div>
 
           <div className="space-y-2">
@@ -334,7 +335,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
                   {birthDate ? format(birthDate, "dd MMM yyyy", { locale: fr }) : "Choose a date"}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="p-0 w-full bg-black text-white border border-white/20" align="start">
+              <PopoverContent className="w-auto p-0" align="start">
                 <Calendar
                   mode="single"
                   selected={birthDate || undefined}
@@ -344,7 +345,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
                   captionLayout="dropdown"
                   fromYear={1930}
                   toYear={new Date().getFullYear()}
-                  className="rounded-md border w-70"
+                  className="rounded-md border w-95 h-105"
                 />
               </PopoverContent>
             </Popover>
