@@ -6,7 +6,7 @@ dotenv.config();
 const TMDB_KEY = process.env.TMDB_API_KEY!;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
 const GENRE_ID = 27;
-const MAX_PAGES = 250;
+const MAX_PAGES = 5;
 const MANUAL_TMDB_IDS = [46633]; //sale un peu mdr
 
 const filmSchema = new mongoose.Schema(
