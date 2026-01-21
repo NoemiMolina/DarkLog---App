@@ -14,8 +14,9 @@ import {
 } from "../../components/ui/carousel";
 import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
-import RatingStars from "./RatingSkulls";
+import { IoSkull } from "react-icons/io5";
 import ItemDialog from "./ItemDialog";
+import RatingSkulls from "./RatingSkulls";
 
 interface Movie {
     _id: string;
@@ -156,7 +157,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
         <>
             <div
                 onClick={() => setOpen(true)}
-                className={`relative group cursor-pointer rounded-lg shadow-md overflow-hidden aspect-[2/3] w-full max-w-[270px] sm:max-w-none h-auto xl:w-80 flex items-center justify-center transition-transform hover:scale-105 object-contain ml-14`}
+                className="relative group cursor-pointer rounded-lg shadow-xl overflow-hidden aspect-[2/3] h-80 w-65 translate-x- sm:w-44 sm:h-66 bg-red-800 flex flex-col items-center justify-end transition-all duration-200 hover:brightness-75"
             >
                 {watchlist.posterPath ? (
                     <img
@@ -165,11 +166,10 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                         className="absolute inset-0 w-full h-full object-cover"
                     />
                 ) : (
-                    <div className="absolute inset-0 bg-transparent" />
+                    <div className="absolute inset-0 bg-red-800 flex items-center justify-center">
+                        <span className="text-white text-lg font-bold text-center px-2">{watchlist.title}</span>
+                    </div>
                 )}
-                    <p className="text-white text-sm font-semibold px-3 py-1 bg-opacity-70 rounded xl:translate-y-[50px]">
-                        {watchlist.movies.length} movies
-                    </p>
             </div>
             <Dialog key={`dialog-${watchlist._id}`} open={open} onOpenChange={setOpen}>
                 <DialogContent className="w-screen h-screen rounded-none p-2 sm:w-auto sm:h-auto sm:max-w-4xl sm:rounded-lg sm:p-6 bg-gray-900 border-gray-700 flex flex-col">
@@ -194,7 +194,11 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                                     watchlist.movies.map((movie) => (
                                         <CarouselItem
                                             key={movie._id}
-                                            className="basis-1/3 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 px-1 sm:px-2"
+                                            className={
+                                                watchlist.movies.length === 1
+                                                    ? "basis-full px-1 sm:px-2"
+                                                    : "basis-1/3 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 px-1 sm:px-2"
+                                            }
                                         >
                                             <div className="relative group">
                                                 <ItemDialog
@@ -213,14 +217,10 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                                                     }
                                                 />
                                                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100">
-                                                    <div className="text-white text-sm font-semibold px-3 py-1 rounded bg-black bg-opacity-70">
-                                                        ⭐{" "}
-                                                        {movie.vote_average
-                                                            ? (
-                                                                Number(
-                                                                    movie.vote_average
-                                                                ) / 2
-                                                            ).toFixed(1)
+                                                    <div className="px-3 py-1 rounded bg-black bg-opacity-70 flex items-center gap-1">
+                                                        <IoSkull className="text-yellow-400" size={16} />
+                                                        {movie.vote_average != null
+                                                            ? (Number(movie.vote_average) / 2).toFixed(1)
                                                             : "N/A"}
                                                         /5
                                                     </div>
@@ -244,7 +244,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                         </Button>
                         <div>
                             <h3 className="font-semibold mb-2 text-white">Rate this watchlist:</h3>
-                            <RatingStars
+                            <RatingSkulls
                                 key={rating}
                                 value={rating}
                                 onChange={(r) => {

@@ -1,9 +1,7 @@
 import {
     Carousel,
     CarouselContent,
-    CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+    CarouselItem
 } from "../../components/ui/carousel";
 import HomemadeWatchlistsDialog from "./HomemadeWatchlistsDialog";
 import { useWatchlists } from "../../hooks/useWatchlists";
@@ -49,9 +47,6 @@ const HomemadeWatchlistsCarousel = () => {
                         })
                     )}
                 </CarouselContent>
-
-                <CarouselPrevious />
-                <CarouselNext />
             </Carousel>
         </section>
     );
