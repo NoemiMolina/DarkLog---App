@@ -59,7 +59,7 @@ export interface IUser extends Document {
     }[];
     Reviews: {
         itemId: string;
-        type: "movie" | "tv";
+        type: "movie" | "tv" | "tvshow";
         text: string;
         date: Date;
     }[];
@@ -111,7 +111,7 @@ const UserSchema: Schema = new Schema({
     }],
     Reviews: [{
         itemId: { type: String, required: true },
-        type: { type: String, enum: ["movie", "tv"], required: true },
+        type: { type: String, enum: ["movie", "tv", "tvshow"], required: true },
         text: { type: String, required: true },
         date: { type: Date, default: Date.now }
     }],
