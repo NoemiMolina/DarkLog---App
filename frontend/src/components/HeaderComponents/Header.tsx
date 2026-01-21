@@ -5,6 +5,7 @@ import SignUpForm from './SignUpForm';
 import LogInForm from './LogInForm';
 import GetLuckyDialog from './GetLuckyDialog';
 import AddFriendDialog from './AddFriendDialog';
+import { ImportModal } from '../ImportComponents';
 import { FriendRequestDialog } from '../NotificationsComponents/FriendRequestDialog';
 import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
 import { useNotifications } from '../../context/NotificationContext';
@@ -40,6 +41,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [addFriendOpen, setAddFriendOpen] = useState(false);
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
+  const [importModalOpen, setImportModalOpen] = useState(false);
   const { unreadCount, friendRequestsCount, forumNotificationsCount } = useNotifications();
   console.log("🧩 userProfilePicture =", userProfilePicture);
   const navigate = useNavigate();
@@ -102,6 +104,12 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   </span>
                 )}
               </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => setImportModalOpen(true)}
+              className="cursor-pointer hover:bg-white/10"
+            >
+              📥 Import from
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -275,6 +283,17 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
     <FriendRequestDialog 
       open={friendRequestOpen}
       onOpenChange={setFriendRequestOpen}
+    />
+
+    {/* Import Modal */}
+    <ImportModal
+      isOpen={importModalOpen}
+      onClose={() => setImportModalOpen(false)}
+      userId={userId}
+      onSuccess={(stats) => {
+        console.log("✅ Import réussi avec stats:", stats);
+        // Tu peux ajouter ici une callback pour mettre à jour les stats du profil
+      }}
     />
     
     {searchBarOpen && (

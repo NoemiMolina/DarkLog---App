@@ -7,7 +7,7 @@ import QuizzPage from "./features/pages/QuizzPage";
 import  ForumPage  from "./features/pages/ForumPage";
 import LoginPage from "./features/pages/LoginPage";
 import SignUpPage from "./features/pages/SignUpPage";
-import { Footer } from "./components/Footer";
+import { Footer } from "./components/FooterComponents/Footer";
 import { NotificationProvider } from "./context/NotificationContext";
 import { useEffect, useState } from "react";
 
