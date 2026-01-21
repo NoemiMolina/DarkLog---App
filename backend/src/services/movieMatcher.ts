@@ -17,13 +17,7 @@ export interface MovieMatchResult {
  * @param name - Titre du film (ex: "Scream")
  * @param year - Année du film (ex: 1996)
  * @param minScore - Score minimum pour accepter un match (défaut: 0.6 = 60% de similarité)
- * @returns Résultat du matching avec film trouvé ou erreur
- * 
- * EXEMPLE:
- * const result = await matchMovieByNameAndYear("Scream", 1996);
- * if (result.found) {
- *   console.log("Film trouvé:", result.movie.title); // "Scream"
- * }
+ * @returns 
  */
 export const matchMovieByNameAndYear = async (
   name: string,
@@ -31,24 +25,19 @@ export const matchMovieByNameAndYear = async (
   minScore: number = 0.92
 ): Promise<MovieMatchResult> => {
   try {
-    // ✅ NETTOYAGE du titre : supprime les parenthèses et l'année
-    // Ex: "Late Night with the Devil (2023)" → "Late Night with the Devil"
     const cleanName = name.replace(/\s*\(\d{4}\)\s*$/g, '').trim();
-    
     console.log(`\n🔍 === MATCHING: "${name}" (${year}) ===`);
     if (cleanName !== name) {
-      console.log(`   🧹 Titre nettoyé: "${cleanName}"`);
+      console.log(`   🧹 title cleaned: "${cleanName}"`);
     }
-    
-    // ✅ ÉTAPE 1 : Cherche exact (titre + année exacte)
     let exactMatch = await Movie.findOne({
       title: cleanName,
       year: year
     });
 
     if (exactMatch) {
-      console.log(`✅ Exact match trouvé: "${cleanName}" (${year})`);
-      console.log(`   genres: [${exactMatch.genres?.join(', ') || 'AUCUN'}]`);
+      console.log(`✅ Exact match found: "${cleanName}" (${year})`);
+      console.log(`   genres: [${exactMatch.genres?.join(', ') || 'NONE'}]`);
       return {
         found: true,
         movie: exactMatch,
@@ -56,9 +45,7 @@ export const matchMovieByNameAndYear = async (
       };
     }
 
-    console.log(`   ❌ Pas de match exact`);
-
-    // ✅ ÉTAPE 2 : Cherche d'abord par fuzzy matching sur le TITRE (sans dépendre de l'année)
+    console.log(`   ❌ No exact match found`);
     console.log(`   🔍 Recherche fuzzy du titre dans tous les films...`);
     
     const allMovies = await Movie.find({
@@ -68,20 +55,18 @@ export const matchMovieByNameAndYear = async (
       ]
     }).limit(2000);
 
-    console.log(`   📽️ ${allMovies.length} films dans la plage ${year-3}-${year+3}`);
+    console.log(`   📽️ ${allMovies.length} movies in the range ${year-3}-${year+3}`);
 
     if (allMovies.length === 0) {
-      console.log(`   ❌ Aucun film trouvé dans la plage d'années`);
+      console.log(`   ❌ No movies found in the year range`);
       return {
         found: false,
         error: `No movies found in year range ${year-3}-${year+3}`
       };
     }
-
-    // ✅ ÉTAPE 3 : Utilise Fuse.js pour fuzzy matching sur les titres
     const fuse = new Fuse(allMovies, {
       keys: ['title'],
-      threshold: 0.1, // 10% = accepte seulement 90%+ de similarité
+      threshold: 0.1, 
       distance: 100,
       includeScore: true
     });
@@ -95,29 +80,19 @@ export const matchMovieByNameAndYear = async (
         error: `No matching movies found for "${cleanName}"`
       };
     }
-
-    // DEBUG: Affiche les top 3 résultats du fuzzy matching
     console.log(`   📋 Top 3 résultats du fuzzy matching:`);
     fuzzyResults.slice(0, 3).forEach((result, idx) => {
       const score = 1 - (result.score || 0);
       console.log(`      ${idx + 1}. "${result.item.title}" (${result.item.year}) - Score: ${(score * 100).toFixed(1)}% (fuse_score: ${(result.score || 0).toFixed(3)})`);
     });
-
-    // ✅ ÉTAPE 4 : Récupère le meilleur match
     const bestMatch = fuzzyResults[0];
     const score = 1 - (bestMatch.score || 0);
-
     console.log(`   🔍 Meilleur match sélectionné: "${cleanName}" → "${bestMatch.item.title}" (${bestMatch.item.year})`);
     console.log(`      Score: ${(score * 100).toFixed(1)}% (fuse_score: ${(bestMatch.score || 0).toFixed(3)})`);
     console.log(`      Seuil minimum accepté: ${(minScore * 100).toFixed(1)}%`);
-    
-    // ✅ SANITY CHECK : Si les titres sont très différents en longueur, rejette
     const titleLengthDiff = Math.abs(cleanName.length - bestMatch.item.title.length);
     const titleLengthRatio = Math.min(cleanName.length, bestMatch.item.title.length) / Math.max(cleanName.length, bestMatch.item.title.length);
-    
     console.log(`      Longueur: "${cleanName}" (${cleanName.length}) vs "${bestMatch.item.title}" (${bestMatch.item.title.length}) - Ratio: ${(titleLengthRatio * 100).toFixed(0)}%`);
-    
-    // Si un titre est 50%+ plus court/long que l'autre, c'est suspect
     if (titleLengthRatio < 0.5) {
       console.log(`   ⚠️ ❌ REJETÉ: Titres trop différents en longueur (${(titleLengthRatio * 100).toFixed(0)}%)`);
       return {
@@ -134,7 +109,7 @@ export const matchMovieByNameAndYear = async (
       };
     }
     
-    console.log(`   ✅ Score accepté!`);
+    console.log(`   ✅ Score accepted!`);
     console.log(`      TMDB ID: ${bestMatch.item.tmdb_id}, genre_ids: [${bestMatch.item.genre_ids?.join(', ') || 'N/A'}]`);
 
     return {
@@ -144,7 +119,7 @@ export const matchMovieByNameAndYear = async (
     };
 
   } catch (err) {
-    console.error('❌ Erreur dans matchMovieByNameAndYear:', err);
+    console.error('❌ Error in matchMovieByNameAndYear:', err);
     return {
       found: false,
       error: `Error matching movie: ${err instanceof Error ? err.message : 'Unknown error'}`
@@ -162,23 +137,17 @@ export const matchMovieByNameAndYear = async (
  * const isHorror = isHorrorGenre(movie);
  */
 export const isHorrorGenre = (movie: any): boolean => {
-  // Vérifie si le film a le genre 27 (horreur TMDB)
-  // PRIORITÉ: genre_ids (array de nombres) → genres (array de strings)
-  
   let genreArray = movie.genre_ids || movie.genres || [];
-  
   if (!Array.isArray(genreArray) || genreArray.length === 0) {
-    console.warn(`⚠️ Film "${movie.title}" n'a pas de genres valides. genre_ids: ${movie.genre_ids}, genres: ${movie.genres}`);
+    console.warn(`⚠️ Movie "${movie.title}" has no valid genres. genre_ids: ${movie.genre_ids}, genres: ${movie.genres}`);
     return false;
   }
-
-  // Cherche 27 en tant que nombre OU string
   const hasHorrorGenre = genreArray.some((genre: any) => {
     const genreNum = Number(genre);
     return genreNum === 27;
   });
 
-  console.log(`🎬 "${movie.title}" - genre_ids: [${movie.genre_ids?.join(', ') || 'N/A'}] - Horreur: ${hasHorrorGenre ? '✅' : '❌'}`);
+  console.log(`🎬 "${movie.title}" - genre_ids: [${movie.genre_ids?.join(', ') || 'N/A'}] - Horror: ${hasHorrorGenre ? '✅' : '❌'}`);
   return hasHorrorGenre;
 };
 
