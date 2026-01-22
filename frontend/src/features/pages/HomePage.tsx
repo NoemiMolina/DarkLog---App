@@ -89,14 +89,12 @@ const HomePage = () => {
   useEffect(() => {
     const loadCategoriesProgressively = async () => {
       if (isTVShowMode) {
-        // Priority 1: Load critical categories first
         await Promise.all([
           fetchTVShowCategory("slasher", setSlasherTVShows),
           fetchTVShowCategory("supernatural", setSupernaturalTVShows),
           fetchTVShowCategory("zombie", setZombieTVShows),
         ]);
 
-        // Priority 2: Load secondary categories
         setTimeout(() => {
           fetchTVShowCategory("monster", setMonsterTVShows);
           fetchTVShowCategory("alien", setAliensTVShows);
@@ -104,7 +102,6 @@ const HomePage = () => {
           fetchTVShowCategory("revenge", setRevengeStyleTVShows);
         }, 500);
 
-        // Priority 3: Load remaining categories
         setTimeout(() => {
           fetchTVShowCategory("body horror", setBodyHorrorTVShows);
           fetchTVShowCategory("survival horror", setSurvivalTVShows);
@@ -113,14 +110,12 @@ const HomePage = () => {
           fetchTVShowCategory("anime", setAnimeTVShows);
         }, 1000);
       } else {
-        // Priority 1: Load critical categories first
         await Promise.all([
           fetchMovieCategory("slasher", setSlasherMovies),
           fetchMovieCategory("supernatural", setSupernaturalMovies),
           fetchMovieCategory("zombie", setZombieMovies),
         ]);
 
-        // Priority 2: Load secondary categories
         setTimeout(() => {
           fetchMovieCategory("monster", setMonsterMovies);
           fetchMovieCategory("alien", setAliensMovies);
@@ -128,7 +123,6 @@ const HomePage = () => {
           fetchMovieCategory("revenge", setRevengeStyleMovies);
         }, 500);
 
-        // Priority 3: Load remaining categories
         setTimeout(() => {
           fetchMovieCategory("body horror", setBodyHorrorMovies);
           fetchMovieCategory("survival horror", setSurvivalMovies);
@@ -156,7 +150,7 @@ const HomePage = () => {
             <TinderStyleWatchlistsCarousel />
           </div>
          
-          <div className="hidden sm:block">
+          <div className="hidden sm:block" >
             <HomemadeWatchlistsCarousel />
           </div>
         </div>

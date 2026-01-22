@@ -29,7 +29,7 @@ const getPosterUrl = (path?: string) => {
 };
 
 const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; type: "movie" | "tvshow" }) => (
-    <section className="hidden sm:block xl:translate-y-0 xl:mb-20">
+    <section className="hidden sm:block xl:translate-y-0 xl:mb-20"  >
         <h2 className="text-xl font-bold text-white mb-6 tracking-wide xl:translate-y-10 xl:mb-2" style={{ fontFamily: "'Metal Mania', serif" }}>{title}</h2>
         <Carousel className="w-full max-w-[90%] mx-auto mt-8 xl:mx-auto xl:max-w-[1500px] xl:mt-2">
             <CarouselContent>
@@ -39,7 +39,7 @@ const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; 
                     items.map((movie) => (
                         <CarouselItem
                             key={movie._id}
-                            className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-2"
+                            className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-2" 
                         >
                             <div className="relative group" tabIndex={0}>
                                 <ItemDialog

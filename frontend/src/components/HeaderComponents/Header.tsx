@@ -180,7 +180,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   onClick={() => navigate('/profile')}
                   className="cursor-pointer hover:bg-white/10"
                 >
-                  Profil
+                  Profile
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => navigate('/quiz')}

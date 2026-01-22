@@ -183,7 +183,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                             </p>
                         )}
                     </DialogHeader>
-                    <div className="mt-2 sm:mt-6 flex-1 overflow-y-auto">
+                    <div className="mt-2 sm:mt-6 flex-1 overflow-hidden">
                         <Carousel className="w-full">
                             <CarouselContent>
                                 {watchlist.movies.length === 0 ? (

@@ -112,7 +112,7 @@ const TinderStyleCarousel = ({ title, items, type = "movie" }: TinderStyleCarous
     if (!currentMovie || currentIndex >= items.length) {
         return (
             <section className="w-full px-4 py-6 mb-5 -mt-8 sm:mt-0">
-                <h2 className="text-sm font-bold text-white mb-4 tracking-wide sm:hidden">
+                <h2 className="text-sm font-bold text-white mb-4 tracking-wide sm:hidden" style={{ fontFamily: "'Metal Mania', serif !important" }}>
                     {title}
                 </h2>
                 <div className="w-full h-80 flex items-center justify-center rounded-lg sm:hidden">
@@ -124,7 +124,7 @@ const TinderStyleCarousel = ({ title, items, type = "movie" }: TinderStyleCarous
 
     return (
         <section className="w-full px-4 -mt-8 sm:mt-0 sm:translate-y-[-120px] overflow-hidden -mb-18">
-            <h2 className="text-sm font-bold text-white mb-3 tracking-wide sm:hidden">
+          <h2 className="text-sm sm:text-xl font-bold text-white mb-4 tracking-wide text-center" style={{ fontFamily: "'Metal Mania', serif" }}>
                 {title}
             </h2>
             <div className="sm:hidden w-full flex flex-col items-center relative overflow-hidden">
