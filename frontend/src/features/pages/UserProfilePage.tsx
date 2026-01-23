@@ -307,7 +307,8 @@ const UserProfile: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 space-y-8 max-w-6xl">
+    <div className="container mx-auto p-6 space-y-8 max-w-6xl xl:scale-83 xl:-translate-y-55"> 
+
       <ProfileInfoSection
         profileData={profileData}
         isEditing={isEditing}
@@ -334,13 +335,13 @@ const UserProfile: React.FC = () => {
 
       <Separator className="bg-white/20" />
 
-      <Top3Section
-        movies={profileData?.top3Movies || []}
-        tvShows={profileData?.top3TvShows || []}
-        onAddMovie={() => setShowMovieSearch(true)}
-        onAddTvShow={() => setShowTvShowSearch(true)}
-        onRemove={removeFromTop3}
-      />
+        <Top3Section
+          movies={profileData?.top3Movies || []}
+          tvShows={profileData?.top3TvShows || []}
+          onAddMovie={() => setShowMovieSearch(true)}
+          onAddTvShow={() => setShowTvShowSearch(true)}
+          onRemove={removeFromTop3}
+        />
 
       <SearchDialog
         open={showMovieSearch}
@@ -369,8 +370,8 @@ const UserProfile: React.FC = () => {
       />
 
       <Separator className="bg-white/20" />
-
-      <WatchlistSection
+      
+        <WatchlistSection
         movieWatchlist={profileData?.movieWatchlist || []}
         tvShowWatchlist={profileData?.tvShowWatchlist || []}
         savedHomemadeWatchlists={profileData?.savedHomemadeWatchlists || []}
@@ -378,6 +379,7 @@ const UserProfile: React.FC = () => {
         onAddTvShow={() => setShowTvShowWatchlistSearch(true)}
         onRemove={removeFromWatchlist}
       />
+    
 
       <SearchDialog
         open={showMovieWatchlistSearch}

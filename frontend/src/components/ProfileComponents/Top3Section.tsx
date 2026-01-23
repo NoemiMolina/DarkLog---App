@@ -33,7 +33,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
             🎬 Movies
-          </h2>
+          </h2> 
           {movies.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
               <button 

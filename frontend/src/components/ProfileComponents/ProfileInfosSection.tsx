@@ -62,30 +62,22 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
 
   return (
     <div className="flex gap-0 items-start">
-      <Button 
-        onClick={() => navigate(-1)} 
-        variant="ghost"
-        className="text-white hover:bg-white/10 p-2 mt-4 -ml-10"
-        title="Go back"
-      >
-        <IoReturnDownBack className="h-5 w-5" />
-      </Button>
       <Card className="bg-[#2A2A2A] border-white/20 text-white flex-1">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-xl">Profile Information</CardTitle>
         <div className="flex gap-2 sm:mt-0 mt-0 -mt-3 mr-2">
           {!isEditing ? (
-            <Button onClick={onEdit} className="bg-blue-600 hover:bg-blue-700 p-1 sm:p-2">
+            <Button onClick={onEdit} className="bg-[#331616] border-[#B39AAD] hover:bg-[#402929] p-1 sm:p-2">
               <Edit className="h-4 w-4" />
               <span className="hidden sm:inline ml-2">Edit</span>
             </Button>
           ) : (
             <>
-              <Button onClick={onSave} className="bg-green-600 hover:bg-green-700 p-1 sm:p-2">
+              <Button onClick={onSave} className="bg-[#1C3316] hover:bg-[#6F8869] p-1 sm:p-2">
                 <Save className="h-4 w-4" />
                 <span className="hidden sm:inline ml-2">Save</span>
               </Button>
-              <Button onClick={onCancel} variant="outline" className="bg-gray-600 hover:bg-gray-700 text-white border-gray-600 p-1 sm:p-2">
+              <Button onClick={onCancel} className="bg-[#32162C] hover:bg-[#B39AAD] text-white border-[#B39AAD] p-1 sm:p-2">
                 <X className="h-4 w-4" />
                 <span className="hidden sm:inline ml-2">Cancel</span>
               </Button>

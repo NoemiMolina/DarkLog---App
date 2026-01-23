@@ -29,7 +29,7 @@ const getPosterUrl = (path?: string) => {
 };
 
 const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; type: "movie" | "tvshow" }) => (
-    <section className="hidden sm:block xl:translate-y-0 xl:mb-20"  >
+    <section className="hidden sm:block xl:translate-y-0 xl:mb-20">
         <h2 className="text-xl font-bold text-white mb-6 tracking-wide xl:translate-y-10 xl:mb-2" style={{ fontFamily: "'Metal Mania', serif" }}>{title}</h2>
         <Carousel className="w-full max-w-[90%] mx-auto mt-8 xl:mx-auto xl:max-w-[1500px] xl:mt-2">
             <CarouselContent>
@@ -49,12 +49,12 @@ const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; 
                                         <img
                                             src={movie.poster_path ? getPosterUrl(movie.poster_path) : "https://via.placeholder.com/200x300?text=No+Image"}
                                             alt={movie.title}
-                                            className="rounded-lg shadow-md transition object-contain w-full h-auto xl:w-80 hover:opacity-15 cursor-pointer aspect-[2/3] "
+                                            className="rounded-lg shadow-md transition-all duration-300 object-contain w-full h-auto xl:w-80 hover:opacity-15 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:shadow-xl"
                                         />
                                     }
                                 />
                                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 group-focus:opacity-100">
-                                    <div className="text-white text-sm font-semibold px-3 py-1 rounded flex items-center gap-1">
+                                    <div className="text-white text-sm font-semibold px-3 py-1 rounded flex items-center gap-1 bg-black/70 backdrop-blur-sm">
                                         <IoSkull className="text-yellow-400" size={16} />
                                         {movie.vote_average != null
                                             ? (Number(movie.vote_average) / 2).toFixed(1)
