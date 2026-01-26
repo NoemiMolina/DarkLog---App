@@ -15,7 +15,9 @@ import quizRoutes from "./routes/quiz";
 import searchRoutes from "./routes/search";
 import homemadeWatchlistsRoutes from "./routes/homemadeWatchlists";
 import notificationRoutes from "./routes/notification";
+import newsRoutes from "./routes/news";
 import importRoutes from "./routes/import";
+
 
 console.log("✅ LETSGO !");
 
@@ -56,6 +58,7 @@ app.use("/search", searchRoutes);
 app.use("/homemade-watchlists", homemadeWatchlistsRoutes);
 app.use("/notifications", notificationRoutes);
 app.use("/import", importRoutes);
+app.use("/news", newsRoutes);
 // app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req, res) => {
