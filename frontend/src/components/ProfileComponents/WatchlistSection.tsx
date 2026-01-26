@@ -45,7 +45,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
               <button
                 onClick={onAddMovie}
-                className="bg-blue-600 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-blue-700 transition"
+                className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
                 ➕ Add a movie to your watchlist
               </button>
@@ -72,7 +72,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
               <button
                 onClick={onAddTvShow}
-                className="bg-purple-600 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg hover:bg-purple-700 transition"
+                className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
                 ➕ Add a TV show to your watchlist
               </button>

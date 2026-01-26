@@ -212,7 +212,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                                                                     : "https://via.placeholder.com/200x300?text=No+Image"
                                                             }
                                                             alt={movie.title}
-                                                            className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3]"
+                                                            className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl"
                                                         />
                                                     }
                                                 />
@@ -238,7 +238,8 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                     <div className="mt-8 space-y-4 pb-4">
                         <Button
                             onClick={handleAddToWatchlist}
-                            className="w-full bg-blue-600 hover:bg-blue-700"
+                            className="w-full bg-gray-800/50 border border-purple-500/20"
+                          
                         >
                             ➕ Add to my watchlists
                         </Button>
@@ -267,7 +268,8 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                         </div>
                         <Button
                             onClick={handleSave}
-                            className="w-full bg-green-600 hover:bg-green-700"
+                            className="w-full bg-gray-800/50 border border-purple-500/20"
+                            
                         >
                             Save rating & comment
                         </Button>

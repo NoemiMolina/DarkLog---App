@@ -257,7 +257,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   />
                   <Label
                     htmlFor="tv-shows-switch"
-                    className="text-white text-sm font-semibold z-50"
+                    className="text-white text-sm font-semibold z-5 -mb-20"
                   >
                     {isTVShowMode ? "Movies" : "TV Shows"}
                   </Label>
@@ -276,7 +276,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                           : `http://localhost:5000/${userProfilePicture}`
                       }
                       alt={`${username}'s profile`}
-                      className="w-12 h-12 rounded-full object-cover border border-white/40"
+                      className="w-12 h-12 rounded-full object-cover border border-white/40 -mb-5"
                     />
                   ) : (
                     <div className="w-12 h-12 rounded-full bg-gray-600 border border-white/40 flex items-center justify-center text-white text-sm">

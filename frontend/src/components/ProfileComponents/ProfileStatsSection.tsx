@@ -81,7 +81,7 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-blue-400">{numberOfWatchedMovies}</p>
+              <p className="text-2xl font-bold text-purple-400">{numberOfWatchedMovies}</p>
               <p className="text-sm text-white/60">Movies Watched</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
@@ -89,19 +89,19 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
               <p className="text-sm text-white/60">TV Shows Watched</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-green-400">{numberOfGivenReviews}</p>
+              <p className="text-2xl font-bold text-purple-400">{numberOfGivenReviews}</p>
               <p className="text-sm text-white/60">Reviews Given</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-yellow-400">{averageMovieRating.toFixed(1)}</p>
+              <p className="text-2xl font-bold text-purple-400">{averageMovieRating.toFixed(1)}</p>
               <p className="text-sm text-white/60">Avg Movie Rating</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-orange-400">{averageTvShowRating.toFixed(1)}</p>
+              <p className="text-2xl font-bold text-purple-400">{averageTvShowRating.toFixed(1)}</p>
               <p className="text-sm text-white/60">Avg TV Show Rating</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-cyan-400 flex items-center justify-center gap-2">
+              <p className="text-2xl font-bold text-purple-400 flex items-center justify-center gap-2">
                 <Clock size={32} />
                 {formatWatchTime(totalWatchTimeMinutes)}
               </p>
@@ -111,7 +111,7 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
               className="text-center p-4 bg-[#1A1A1A] rounded-lg cursor-pointer hover:bg-[#333333] transition-colors"
               onClick={handleFriendsClick}
             >
-              <p className="text-4xl font-bold text-pink-400">{numberOfFriends}</p>
+              <p className="text-4xl font-bold text-purple-400">{numberOfFriends}</p>
               <p className="text-sm text-white/60 flex items-center justify-center gap-1">
                 <Users size={16} /> Friends
               </p>

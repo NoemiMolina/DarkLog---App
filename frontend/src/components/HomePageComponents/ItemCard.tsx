@@ -301,14 +301,14 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
         <div className="flex gap-4 mt-4">
           <button
             onClick={handleSave}
-            className="px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 transition font-semibold text-white"
+            className="px-4 py-2 rounded-lg bg-gray-800/50 border border-purple-500/20 text-white transition font-semibold text-white"
           >
             Save
           </button>
 
           <button
             onClick={handleAddToWatchlist}
-            className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition font-semibold text-white"
+            className="px-4 py-2 rounded-lg bg-gray-800/50 border border-purple-500/20 transition font-semibold text-white"
           >
             + Add to watchlist
           </button>

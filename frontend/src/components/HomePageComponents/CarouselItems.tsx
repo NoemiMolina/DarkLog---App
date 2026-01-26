@@ -36,10 +36,10 @@ const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; 
                 {items.length === 0 ? (
                     <p className="text-gray-400 xl:translate-x-[20px]">Loading…</p>
                 ) : (
-                    items.map((movie) => (
+                    items.map((movie, idx) => (
                         <CarouselItem
                             key={movie._id}
-                            className="basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-2" 
+                            className={`basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-2 ${idx === 0 ? 'ml-4' : ''}`}
                         >
                             <div className="relative group" tabIndex={0}>
                                 <ItemDialog

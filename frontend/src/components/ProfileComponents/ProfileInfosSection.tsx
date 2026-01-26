@@ -67,17 +67,17 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
           <CardTitle className="text-xl">Profile Information</CardTitle>
         <div className="flex gap-2 sm:mt-0 mt-0 -mt-3 mr-2">
           {!isEditing ? (
-            <Button onClick={onEdit} className="bg-[#331616] border-[#B39AAD] hover:bg-[#402929] p-1 sm:p-2">
+            <Button onClick={onEdit} className="bg-gray-800/50 border border-purple-500/20 p-1 sm:p-2">
               <Edit className="h-4 w-4" />
               <span className="hidden sm:inline ml-2">Edit</span>
             </Button>
           ) : (
             <>
-              <Button onClick={onSave} className="bg-[#1C3316] hover:bg-[#6F8869] p-1 sm:p-2">
+              <Button onClick={onSave} className="bg-gray-800/50 border border-purple-500/20 text-white p-1 sm:p-2">
                 <Save className="h-4 w-4" />
                 <span className="hidden sm:inline ml-2">Save</span>
               </Button>
-              <Button onClick={onCancel} className="bg-[#32162C] hover:bg-[#B39AAD] text-white border-[#B39AAD] p-1 sm:p-2">
+              <Button onClick={onCancel} className="bg-gray-800/50 border border-purple-500/20 text-white p-1 sm:p-2">
                 <X className="h-4 w-4" />
                 <span className="hidden sm:inline ml-2">Cancel</span>
               </Button>
