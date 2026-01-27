@@ -17,6 +17,7 @@ import { LiaGhostSolid } from "react-icons/lia";
 import { RiUserCommunityLine } from "react-icons/ri";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
+import News from "../../components/NewsComponents/News";
 
 const WelcomePage: React.FC = () => {
     const backgroundsImages = [
@@ -84,7 +85,7 @@ const WelcomePage: React.FC = () => {
                         className="flex items-center justify-center gap-3 mb-10 sm:mb-90 mt-4 text-white xl:mt-5"
                         style={{ gap: "var(--join-gap, 0.5rem)" }}
                     >
-                    
+
                         <a
                             href="#"
                             aria-label="Instagram"
@@ -103,30 +104,34 @@ const WelcomePage: React.FC = () => {
                     </div>
                 </div>
                 <div className="grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 xl:-translate-y-95 xl:w-[50%] xl:mx-auto px-4 sm:px-0">
-                  <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-                    <IoSkullOutline className="text-2xl sm:text-4xl mb-2" />
-                    <p className="text-sm sm:hidden">Explore and rate horror movies</p>
-                    <p className="text-sm hidden sm:block">Discover and explore a vast collection of horror movies or series. Rate and comment the ones you've already seen, add to your wishlist the ones you did not watch yet.</p>
-                  </div>
+                    <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
+                        <IoSkullOutline className="text-2xl sm:text-4xl mb-2" />
+                        <p className="text-sm sm:hidden">Explore and rate horror movies</p>
+                        <p className="text-sm hidden sm:block">Discover and explore a vast collection of horror movies or series. Rate and comment the ones you've already seen, add to your wishlist the ones you did not watch yet.</p>
+                    </div>
 
-                  <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-                    <LiaGhostSolid className="text-2xl sm:text-4xl mb-2" />
-                    <p className="text-sm sm:hidden">See what your friends are watching</p>
-                    <p className="text-sm hidden sm:block">Connect with your friends, see what they are watching, and share your own horror movie or tv show experiences.</p>
-                  </div>
+                    <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
+                        <LiaGhostSolid className="text-2xl sm:text-4xl mb-2" />
+                        <p className="text-sm sm:hidden">See what your friends are watching</p>
+                        <p className="text-sm hidden sm:block">Connect with your friends, see what they are watching, and share your own horror movie or tv show experiences.</p>
+                    </div>
 
-                  <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-                    <RiUserCommunityLine className="text-2xl sm:text-4xl mb-2" />
-                    <p className="text-sm sm:hidden">Join the horror community</p>
-                    <p className="text-sm hidden sm:block">Join a community of horror enthusiasts, participate in discussions, and stay updated with the latest news and trends in the horror genre with our dedicated forum.</p>
-                  </div>
+                    <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
+                        <RiUserCommunityLine className="text-2xl sm:text-4xl mb-2" />
+                        <p className="text-sm sm:hidden">Join the horror community</p>
+                        <p className="text-sm hidden sm:block">Join a community of horror enthusiasts, participate in discussions, and stay updated with the latest news and trends in the horror genre with our dedicated forum.</p>
+                    </div>
 
-                  <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-                    <IoGameControllerOutline className="text-2xl sm:text-4xl mb-2" />
-                    <p className="text-sm sm:hidden">Challenge yourself</p>
-                    <p className="text-sm hidden sm:block">Challenge yourself with our home made horror-themed quizzes.</p>
-                  </div>
+                    <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
+                        <IoGameControllerOutline className="text-2xl sm:text-4xl mb-2" />
+                        <p className="text-sm sm:hidden">Challenge yourself</p>
+                        <p className="text-sm hidden sm:block">Challenge yourself with our home made horror-themed quizzes.</p>
+                    </div>
                 </div>
+                <div className="translate-y-10 xl:-mt-80 xl:translate-x-50">
+                    < News />
+                </div>
+
             </section>
         </main>
     );

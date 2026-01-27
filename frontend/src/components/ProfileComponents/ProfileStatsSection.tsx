@@ -121,11 +121,11 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
       </Card>
 
       <Dialog open={showFriendsModal} onOpenChange={setShowFriendsModal}>
-        <DialogContent className="bg-[#2A2A2A] border-white/20 text-white max-w-2xl">
+        <DialogContent className="max-w-2xl text-white border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl shadow-black/40 rounded-2xl" >
           <DialogHeader>
             <DialogTitle className="text-xl">Friends ({numberOfFriends})</DialogTitle>
             <DialogDescription className="text-gray-400">
-              View your friends list
+              View your friends list below.
             </DialogDescription>
           </DialogHeader>
           <div className="max-h-96 overflow-y-auto">

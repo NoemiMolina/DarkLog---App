@@ -99,14 +99,17 @@ const UserPublicProfile: React.FC = () => {
     const checkFriendship = async () => {
         if (!currentUserId) return;
         try {
-            const response = await fetch(`http://localhost:5000/users/${currentUserId}/friends`, {
-                headers: { 'Authorization': `Bearer ${token}` },
-            });
+            const response = await fetch(
+                `http://localhost:5000/users/${currentUserId}/friends`,
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
             const friends = await response.json();
-            const isAlreadyFriend = friends.some((friend: any) => friend._id === userId);
+            const isAlreadyFriend = friends.some((friend: any) =>
+                String(friend.friendId) === String(userId)
+            );
             setIsFriend(isAlreadyFriend);
         } catch (error) {
-            console.error('Error checking friendship:', error);
+            console.error("Error checking friendship:", error);
         }
     };
 
@@ -204,45 +207,46 @@ const UserPublicProfile: React.FC = () => {
 
 
     return (
-        <div className="container mx-auto p-6 space-y-8 max-w-6xl">
+        <div className="container mx-auto p-6 space-y-8 max-w-6xl xl:scale-83 xl:-translate-y-45">
             <Card className="bg-[#2A2A2A] border-white/20 text-white">
-                <CardHeader className="relative">
-                    <div className="flex items-center gap-6">
-                        {profileData.UserProfilePicture ? (
-                            <img
-                                src={
-                                    profileData.UserProfilePicture.startsWith('http')
-                                        ? profileData.UserProfilePicture
-                                        : `http://localhost:5000/${profileData.UserProfilePicture}`
-                                }
-                                alt="Profile"
-                                className="w-24 h-24 rounded-full object-cover border-2 border-white/40"
-                            />
-                        ) : (
-                            <div className="w-24 h-24 rounded-full bg-gray-600 border-2 border-white/40 flex items-center justify-center text-3xl">
-                                {profileData.UserPseudo.charAt(0).toUpperCase()}
-                            </div>
-                        )}
-                        <div>
-                            <CardTitle className="text-3xl">{profileData.UserPseudo}</CardTitle>
-                            <p className="text-gray-400">
+                <CardHeader className="relative p-5">
+                    <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                        <div className="relative flex-shrink-0">
+                            {profileData.UserProfilePicture ? (
+                                <img
+                                    src={
+                                        profileData.UserProfilePicture.startsWith('http')
+                                            ? profileData.UserProfilePicture
+                                            : `http://localhost:5000/${profileData.UserProfilePicture}`
+                                    }
+                                    alt="Profile"
+                                    className="w-20 h-20 rounded-full object-cover border-2 border-white/40"
+                                />
+                            ) : (
+                                <div className="w-20 h-20 rounded-full bg-gray-600 border-2 border-white/40 flex items-center justify-center text-2xl">
+                                    {profileData.UserPseudo.charAt(0).toUpperCase()}
+                                </div>
+                            )}
+                        </div>
+                        <div className="w-full sm:flex-1 flex flex-col gap-1">
+                            <CardTitle className="text-2xl leading-tight">{profileData.UserPseudo}</CardTitle>
+                            <p className="text-gray-400 text-base">
                                 {profileData.UserFirstName} {profileData.UserLastName}
                             </p>
                         </div>
-                    </div>
-                    {!isOwnProfile && (
-                        <div className="absolute top-3 right-6 flex gap-2">
+                        {!isOwnProfile && (
+                            <div className="sm:absolute sm:top-3 sm:right-6 flex gap-2 mt-4 sm:mt-0">
                                 {!isBlocked && (
                                     <>
                                         {isFriend ? (
-                                            <Button disabled className="bg-green-600/50 cursor-not-allowed h-9 px-3">
+                                            <Button disabled className="bg-gray-800/50 border border-purple-500/20 text-white p-1 sm:p-2">
                                                 <UserCheck className="mr-0 md:mr-2" size={18} />
                                                 <span className="hidden md:inline">Friends</span>
                                             </Button>
                                         ) : (
                                             <Button
                                                 onClick={handleAddFriend}
-                                                className="bg-blue-600 hover:bg-blue-700 h-9 px-3"
+                                                className="bg-gray-800/50 border border-purple-500/20 text-white p-1 sm:p-2"
                                             >
                                                 <UserPlus className="mr-0 md:mr-2" size={18} />
                                                 <span className="hidden md:inline">Add Friend</span>
@@ -261,8 +265,7 @@ const UserPublicProfile: React.FC = () => {
                                 ) : (
                                     <Button
                                         onClick={handleBlockUser}
-                                        variant="destructive"
-                                        className="bg-red-600 hover:bg-red-700 h-9 px-3"
+                                        className="bg-gray-800/50 border border-purple-500/20 text-white p-1 sm:p-2"
                                     >
                                         <Ban className="mr-0 md:mr-2" size={18} />
                                         <span className="hidden md:inline">Block User</span>
@@ -270,6 +273,7 @@ const UserPublicProfile: React.FC = () => {
                                 )}
                             </div>
                         )}
+                    </div>
                     {message && (
                         <div className="mt-4 p-3 bg-blue-500/20 border border-blue-500/50 rounded-lg text-center">
                             {message}
@@ -283,61 +287,64 @@ const UserPublicProfile: React.FC = () => {
                     <Separator className="bg-white/20" />
                     <Card className="bg-[#2A2A2A] border-white/20 text-white">
                         <CardHeader>
-                            <CardTitle className="text-2xl">🎬 Top 3 Favorite Movies</CardTitle>
+                            <CardTitle className="text-base sm:text-lg">Favorites</CardTitle>
                         </CardHeader>
-                        <CardContent>
-                            {profileData.top3Movies.length > 0 ? (
-                                <div className="grid grid-cols-3 gap-6">
-                                    {profileData.top3Movies.map((movie) => (
-                                        <div key={movie.id} className="relative group">
-                                            <img
-                                                src={movie.poster}
-                                                alt={movie.title}
-                                                className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
-                                            />
-                                            <p className="text-center mt-2 text-sm">{movie.title}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-center text-gray-400">No favorite movies yet</p>
-                            )}
+                        <CardContent className="space-y-4 sm:space-y-6">
+                            <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
+                                <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
+                                    🎬 Movies
+                                </h2>
+                                {profileData.top3Movies.length > 0 ? (
+                                    <div className="grid grid-cols-3 gap-6">
+                                        {profileData.top3Movies.map((movie) => (
+                                            <div key={movie.id} className="relative group">
+                                                <img
+                                                    src={movie.poster}
+                                                    alt={movie.title}
+                                                    className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-gray-400">No favorite movies yet</p>
+                                )}
+                            </div>
+                            <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
+                                <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
+                                    📺 TV Shows
+                                </h2>
+                                {profileData.top3TvShows.length > 0 ? (
+                                    <div className="grid grid-cols-3 gap-6">
+                                        {profileData.top3TvShows.map((show) => (
+                                            <div key={show.id} className="relative group">
+                                                <img
+                                                    src={show.poster}
+                                                    alt={show.title}
+                                                    className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+                                                />
+                                                <p className="text-center mt-2 text-sm">{show.title}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-center text-gray-400">No favorite TV shows yet</p>
+                                )}
+
+                            </div>
                         </CardContent>
                     </Card>
 
                     <Separator className="bg-white/20" />
                     <Card className="bg-[#2A2A2A] border-white/20 text-white">
                         <CardHeader>
-                            <CardTitle className="text-2xl">📺 Top 3 Favorite TV Shows</CardTitle>
+                            <CardTitle className="text-base sm:text-lg">Watchlist</CardTitle>
                         </CardHeader>
-                        <CardContent>
-                            {profileData.top3TvShows.length > 0 ? (
-                                <div className="grid grid-cols-3 gap-6">
-                                    {profileData.top3TvShows.map((show) => (
-                                        <div key={show.id} className="relative group">
-                                            <img
-                                                src={show.poster}
-                                                alt={show.title}
-                                                className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
-                                            />
-                                            <p className="text-center mt-2 text-sm">{show.title}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-center text-gray-400">No favorite TV shows yet</p>
-                            )}
-                        </CardContent>
-                    </Card>
-
-                    <Separator className="bg-white/20" />
-                    <Card className="bg-[#2A2A2A] border-white/20 text-white">
-                        <CardHeader>
-                            <CardTitle className="text-2xl">📋 Watchlist</CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-8">
-                            <div>
-                                <h3 className="text-xl font-semibold mb-4 text-blue-400">🎬 Movies</h3>
+                        <CardContent className="space-y-4 sm:space-y-6">
+                            <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
+                                <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
+                                    🎬 Movies
+                                </h2>
                                 {profileData.MovieWatchlist && profileData.MovieWatchlist.length > 0 ? (
                                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                                         {profileData.MovieWatchlist.map((movie) => (
@@ -355,11 +362,10 @@ const UserPublicProfile: React.FC = () => {
                                     <p className="text-center text-gray-400 py-8">No movies in watchlist</p>
                                 )}
                             </div>
-
-                            <Separator className="bg-white/10" />
-
-                            <div>
-                                <h3 className="text-xl font-semibold mb-4 text-purple-400">📺 TV Shows</h3>
+                            <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
+                                <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
+                                    📺 TV Shows
+                                </h2>
                                 {profileData.TvShowWatchlist && profileData.TvShowWatchlist.length > 0 ? (
                                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                                         {profileData.TvShowWatchlist.map((show) => (
@@ -379,43 +385,42 @@ const UserPublicProfile: React.FC = () => {
                             </div>
                         </CardContent>
                     </Card>
-
                     <Separator className="bg-white/20" />
 
                     <Card className="bg-[#2A2A2A] border-white/20 text-white">
                         <CardHeader>
-                            <CardTitle className="text-2xl">📊 Stats</CardTitle>
+                            <CardTitle className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">Stats</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="grid grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-blue-400">{profileData.numberOfWatchedMovies}</p>
+                                    <p className="text-2xl font-bold text-purple-400">{profileData.numberOfWatchedMovies}</p>
                                     <p className="text-sm text-white/60">Movies Watched</p>
                                 </div>
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-purple-400">{profileData.numberOfWatchedTvShows}</p>
+                                    <p className="text-2xl font-bold text-purple-400">{profileData.numberOfWatchedTvShows}</p>
                                     <p className="text-sm text-white/60">TV Shows Watched</p>
                                 </div>
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-cyan-400">
+                                    <p className="text-2xl font-bold text-purple-400">
                                         {formatWatchTime(totalWatchTimeMinutes)}
                                     </p>
                                     <p className="text-sm text-white/60">Watch Time</p>
                                 </div>
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-green-400">{profileData.numberOfGivenReviews}</p>
+                                    <p className="text-2xl font-bold text-purple-400">{profileData.numberOfGivenReviews}</p>
                                     <p className="text-sm text-white/60">Reviews Given</p>
                                 </div>
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-yellow-400">{profileData.averageMovieRating.toFixed(1)}</p>
+                                    <p className="text-2xl font-bold text-purple-400">{profileData.averageMovieRating.toFixed(1)}</p>
                                     <p className="text-sm text-white/60">Avg Movie Rating</p>
                                 </div>
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-orange-400">{profileData.averageTvShowRating.toFixed(1)}</p>
+                                    <p className="text-2xl font-bold text-purple-400">{profileData.averageTvShowRating.toFixed(1)}</p>
                                     <p className="text-sm text-white/60">Avg TV Show Rating</p>
                                 </div>
                                 <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-                                    <p className="text-4xl font-bold text-pink-400">{profileData.numberOfFriends}</p>
+                                    <p className="text-2xl font-bold text-purple-400">{profileData.numberOfFriends}</p>
                                     <p className="text-sm text-white/60">Friends</p>
                                 </div>
                             </div>

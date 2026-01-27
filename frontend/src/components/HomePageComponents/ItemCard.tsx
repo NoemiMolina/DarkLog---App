@@ -175,18 +175,18 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
         showMessage(`❌ ${errorData.message || 'Error adding to watchlist'}`);
         return;
       }
-
       const data = await res.json();
       console.log("🎉 Watchlist updated:", data);
       showMessage("🎬 Successfully added to watchlist!");
-      window.dispatchEvent(new Event('watchlistUpdated'));
-
+      setTimeout(() => {
+        window.dispatchEvent(new Event('watchlistUpdated'));
+        if (onClose) onClose();
+      }, 1000);
     } catch (err) {
       console.error("❌ Error adding to watchlist:", err);
       showMessage("❌ Error adding to watchlist.");
     }
   };
-
 
   return (
     <div className="flex flex-col md:flex-row gap-5 mt-2">
