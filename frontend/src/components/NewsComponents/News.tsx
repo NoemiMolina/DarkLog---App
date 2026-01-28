@@ -19,6 +19,7 @@ interface NewsArticle {
   excerpt: string;
   content: string;
   publishedAt: string;
+  isSatirical?: boolean;
 }
 
 const News = () => {
@@ -35,14 +36,14 @@ const News = () => {
   return (
     <section className="xl:translate-y-0 xl:mb-20">
       <h2
-        className="text-[1rem] text-center text-white"
+        className="text-sm mt-10 text-center text-white xl:text-xl xl:-translate-y-[30px] font-bold mb-4 tracking-wide"
         style={{ fontFamily: "'Metal Mania', serif" }}
       >
         Latest news
       </h2>
 
       <div className="mt-8">
-        <Carousel className="w-full mt-8 overflow-x-auto scroll-smooth">
+        <Carousel className="w-full -mt-5 overflow-x-auto scroll-smooth">
           <CarouselContent className="gap-6">
             {news.map((article, idx) => (
               <CarouselItem
@@ -54,10 +55,17 @@ const News = () => {
                   src={article.coverImage}
                   className="rounded-lg mb-4 aspect-video object-cover group-hover:opacity-80 transition"
                 />
-                <p className="text-xs text-gray-200 mb-1">
-                  Published on {new Date(article.publishedAt).toLocaleDateString()}
-                </p>
-                <h3 className="text-lg font-semibold mb-2">{article.title}</h3>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-xs text-gray-200">
+                    Published on {new Date(article.publishedAt).toLocaleDateString()}
+                  </span>
+                  {article.isSatirical && (
+                    <span className="text-[0.65rem] text-red-700 italic font-normal">(satirical)</span>
+                  )}
+                </div>
+                <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
+                  {article.title}
+                </h3>
                 <p className="text-sm text-gray-200 line-clamp-3">{article.excerpt}</p>
               </CarouselItem>
             ))}
@@ -71,10 +79,22 @@ const News = () => {
           <DialogContent className="max-w-3xl text-white bg-gray-500/40 rounded-lg p-6 sm:max-h-[80vh] sm:overflow-auto max-h-[80vh] overflow-y-auto">
             <div className="flex flex-col h-full">
               <DialogHeader>
-                <DialogTitle>{selected.title}</DialogTitle>
-                <p className="text-xs text-gray-200">
-                  Published on {new Date(selected.publishedAt).toLocaleDateString()}
-                </p>
+                <DialogTitle>
+                  <span className="flex items-center gap-2">
+                    {selected.title}
+                    {selected.isSatirical && (
+                      <span className="text-xs text-red-700 font-semibold">(satirical)</span>
+                    )}
+                  </span>
+                </DialogTitle>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-200">
+                    Published on {new Date(selected.publishedAt).toLocaleDateString()}
+                  </span>
+                  {selected.isSatirical && (
+                    <span className="text-[0.65rem] text-red-700 italic font-normal">(satirical)</span>
+                  )}
+                </div>
               </DialogHeader>
 
               <img

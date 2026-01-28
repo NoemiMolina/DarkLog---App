@@ -159,17 +159,16 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                 onClick={() => setOpen(true)}
                 className="relative group cursor-pointer rounded-lg shadow-xl overflow-hidden aspect-[2/3] h-80 w-65 translate-x- sm:w-44 sm:h-66 bg-red-800 flex flex-col items-center justify-end transition-all duration-200 hover:brightness-75"
             >
-                {watchlist.posterPath ? (
+                {watchlist.posterPath && (
                     <img
                         src={`http://localhost:5000${watchlist.posterPath}`}
                         alt={watchlist.title}
                         className="absolute inset-0 w-full h-full object-cover"
                     />
-                ) : (
-                    <div className="absolute inset-0 bg-red-800 flex items-center justify-center">
-                        <span className="text-white text-lg font-bold text-center px-2">{watchlist.title}</span>
-                    </div>
                 )}
+                <div className="absolute bottom-0 left-0 w-full bg-black/70 py-2 flex items-center justify-center sm:hidden">
+                    <span className="text-white text-base font-bold text-center px-2 drop-shadow-md" style={{ fontFamily: "'Metal Mania', serif" }}>{watchlist.title}</span>
+                </div>
             </div>
             <Dialog key={`dialog-${watchlist._id}`} open={open} onOpenChange={setOpen}>
                 <DialogContent className="w-screen h-screen rounded-none p-2 sm:w-auto sm:h-auto sm:max-w-4xl sm:rounded-lg sm:p-6 bg-gray-900 border-gray-700 flex flex-col">
@@ -183,7 +182,13 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                             </p>
                         )}
                     </DialogHeader>
-                    <div className="mt-2 sm:mt-6 flex-1 overflow-hidden">
+                    <div className="block sm:hidden mb-4">
+                        <h2 className="text-white text-lg font-bold">{watchlist.title}</h2>
+                        {watchlist.description && (
+                            <p className="text-gray-400 text-xs mt-1">{watchlist.description}</p>
+                        )}
+                    </div>
+                    <div className="mt-5 sm:mt-6 flex-1 overflow-hidden">
                         <Carousel className="w-full">
                             <CarouselContent>
                                 {watchlist.movies.length === 0 ? (

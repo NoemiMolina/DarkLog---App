@@ -9,7 +9,7 @@ export const Footer: React.FC<FooterProps> = ({ userEmail }) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto pt-400">
+    <footer className="mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4">
           <div className="text-center md:text-left order-1 md:order-1">

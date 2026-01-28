@@ -128,7 +128,7 @@ const WelcomePage: React.FC = () => {
                         <p className="text-sm hidden sm:block">Challenge yourself with our home made horror-themed quizzes.</p>
                     </div>
                 </div>
-                <div className="translate-y-10 xl:-mt-80 xl:translate-x-50">
+                <div className="xl:-mt-80 xl:translate-x-50">
                     < News />
                 </div>
 
