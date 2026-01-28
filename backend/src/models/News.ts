@@ -7,6 +7,7 @@ const NewsSchema = new mongoose.Schema({
     excerpt: { type: String, required: true },
     content: { type: String, required: true },
     publishedAt: { type: Date, default: Date.now },
+    isSatirical: { type: Boolean, default: false },
 });
 
 export default mongoose.model("News", NewsSchema);
