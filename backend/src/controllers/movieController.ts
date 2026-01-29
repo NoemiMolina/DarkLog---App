@@ -26,8 +26,6 @@ export const getMovieById = async (req: Request, res: Response) => {
     }
 };
 
-
-
 export const addRatingToMovie = async (req: Request, res: Response) => {
     try {
         const { movieId } = req.params;

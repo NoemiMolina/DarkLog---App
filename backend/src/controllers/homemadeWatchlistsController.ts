@@ -121,16 +121,29 @@ export const rateWatchlist = async (req: Request, res: Response) => {
                 totalRuntime += movie.runtime;
             }
         });
-        const watchedMoviesEntry = user.WatchedMoviesInWatchlists.find(
-            (w) => w.watchlistId.toString() === watchlistId
-        );
-        if (!watchedMoviesEntry && totalRuntime > 0) {
-            user.TotalWatchTimeFromWatchlists += totalRuntime;
-            user.NumberOfWatchedMovies += watchlist.movies.length;
-        }
-    
+        user.TotalWatchTimeFromWatchlists += totalRuntime;
+        user.NumberOfWatchedMovies += watchlist.movies.length;
         user.NumberOfGivenReviews += 1;
-
+        // Calculer la nouvelle moyenne
+        if (!user.AverageMovieRating || isNaN(user.AverageMovieRating)) user.AverageMovieRating = 0;
+        if (!user.RatedMovies) user.RatedMovies = [];
+        user.RatedMovies.push({
+            tmdbMovieId: 0,
+            movieTitle: watchlist.title,
+            rating,
+            createdAt: new Date(),
+            runtime: totalRuntime
+        });
+        const ratings = user.RatedMovies.map(r => r.rating).filter(r => typeof r === 'number');
+        if (ratings.length > 0) {
+            user.AverageMovieRating = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        }
+        // Retirer la watchlist des SavedHomemadeWatchlists si elle y est
+        if (user.SavedHomemadeWatchlists && user.SavedHomemadeWatchlists.length > 0) {
+            user.SavedHomemadeWatchlists = user.SavedHomemadeWatchlists.filter(
+                (id) => id.toString() !== watchlistId
+            );
+        }
         await user.save();
 
         res.status(200).json({
@@ -172,15 +185,14 @@ export const commentWatchlist = async (req: Request, res: Response) => {
                 totalRuntime += movie.runtime;
             }
         });
-        const watchedMoviesEntry = user.WatchedMoviesInWatchlists.find(
-            (w) => w.watchlistId.toString() === watchlistId
-        );
-        if (!watchedMoviesEntry && totalRuntime > 0) {
-            user.TotalWatchTimeFromWatchlists += totalRuntime;
-            user.NumberOfWatchedMovies += watchlist.movies.length;
-        }
+        user.TotalWatchTimeFromWatchlists += totalRuntime;
+        user.NumberOfWatchedMovies += watchlist.movies.length;
         user.NumberOfGivenReviews += 1;
-
+        if (user.SavedHomemadeWatchlists && user.SavedHomemadeWatchlists.length > 0) {
+            user.SavedHomemadeWatchlists = user.SavedHomemadeWatchlists.filter(
+                (id) => id.toString() !== watchlistId
+            );
+        }
         await user.save();
 
         res.status(200).json({

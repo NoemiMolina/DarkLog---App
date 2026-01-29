@@ -7,6 +7,7 @@ const TMDB_KEY = process.env.TMDB_API_KEY!;
 const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
 const KEYWORD_ID = 315058; // Mot-clé Horror pour les séries
 const MAX_PAGES = 5;
+const MANUAL_TMDB_IDS = [54671]; // cracra 
 
 interface Episode {
   episode_number: number;
@@ -273,7 +274,7 @@ const main = async () => {
             keywords,
             platforms,
             cast,
-            trailer_key : trailer_key,
+            trailer_key: trailer_key,
             episode_runtime,
             number_of_episodes,
             total_runtime,
@@ -285,14 +286,100 @@ const main = async () => {
       );
     }
 
-    await new Promise((r) => setTimeout(r, 300)); 
+    await new Promise((r) => setTimeout(r, 300));
   }
 
   console.log("🎉 Import TV shows terminé !");
   process.exit(0);
 };
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Importer les séries manuelles
+async function importManualTVShows() {
+  if (MANUAL_TMDB_IDS.length > 0) {
+    console.log(`\n➡️ Import de ${MANUAL_TMDB_IDS.length} série(s) manuelle(s)...`);
+
+    for (const tmdbId of MANUAL_TMDB_IDS) {
+      try {
+        const keywords = await fetchKeywords(tmdbId);
+        const platforms = await fetchPlatforms(tmdbId);
+        const cast = await fetchCast(tmdbId);
+        const trailer_key = await fetchTrailer(tmdbId);
+
+        const seasonsRaw = await fetchSeasons(tmdbId);
+        const { seasons: rawSeasons, episode_runtime, number_of_episodes } = seasonsRaw;
+
+        const seasons: Season[] = [];
+        const total_runtime = episode_runtime * number_of_episodes;
+
+        for (const season of rawSeasons) {
+          const epsRaw = await fetchEpisodes(tmdbId, season.season_number);
+
+          const episodes: Episode[] = epsRaw.map((ep: any) => ({
+            episode_number: ep.episode_number,
+            name: ep.name,
+            overview: ep.overview,
+            air_date: ep.air_date,
+            vote_average: ep.vote_average,
+            vote_count: ep.vote_count,
+            ratings: [],
+          }));
+
+          seasons.push({
+            season_number: season.season_number,
+            name: season.name,
+            overview: season.overview,
+            air_date: season.air_date,
+            episodes,
+          });
+        }
+
+        const detailsRes = await axios.get(
+          `https://api.themoviedb.org/3/tv/${tmdbId}`,
+          { params: { api_key: TMDB_KEY } }
+        );
+
+        const details = detailsRes.data;
+
+        await TVShow.updateOne(
+          { tmdb_id: tmdbId },
+          {
+            $set: {
+              tmdb_id: tmdbId,
+              name: details.name,
+              original_name: details.original_name,
+              overview: details.overview,
+              first_air_date: details.first_air_date,
+              popularity: details.popularity,
+              vote_average: details.vote_average,
+              vote_count: details.vote_count,
+              genre_ids: details.genre_ids || [],
+              poster_path: details.poster_path,
+              keywords,
+              platforms,
+              cast,
+              trailer_key,
+              episode_runtime,
+              number_of_episodes,
+              total_runtime,
+              seasons,
+              raw: details,
+            },
+          },
+          { upsert: true }
+        );
+
+        console.log(`✅ Série ${tmdbId} ajoutée / mise à jour`);
+      } catch (err) {
+        console.error(`❌ Erreur pour la série ${tmdbId}:`, err);
+      }
+    }
+  }
+}
+
+
+main()
+  .then(() => importManualTVShows())
+  .catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
