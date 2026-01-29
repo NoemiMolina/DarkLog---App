@@ -48,7 +48,7 @@ const WelcomePage: React.FC = () => {
     };
 
     return (
-        <main className="min-h-screen relative sm:max-h-screen">
+        <main className="min-h-screen relative">
             <Header onLogOut={handleLogout} />
             <section className="translate-y-0 sm:translate-y-0 xl:translate-y-[70px] -z-10">
                 <div className="relative crt-effect mb-20 sm:mb-90 w-screen mx-0 sm:w-[85%] sm:mx-auto sm:max-w-6xl md:w-[70%] lg:w-[100%] xl:-translate-y-[60px]">
@@ -74,7 +74,7 @@ const WelcomePage: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-60 xl:-translate-y-110">
+                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-50 xl:-translate-y-110">
                     <h1
                         className="font-bold tracking-wide text-[0.85rem] sm:text-[1rem] xl:text-[1.5rem] italic"
                         style={{ fontFamily: "'Workbench', monospace" }}
@@ -128,9 +128,10 @@ const WelcomePage: React.FC = () => {
                         <p className="text-sm hidden sm:block">Challenge yourself with our home made horror-themed quizzes.</p>
                     </div>
                 </div>
-                <div className="xl:-mt-80 xl:translate-x-50">
-                    < News />
+                <div className="xl:-mt-80">
+                    <News newsCarouselClassName="xl:pl-60" />
                 </div>
+
 
             </section>
         </main>

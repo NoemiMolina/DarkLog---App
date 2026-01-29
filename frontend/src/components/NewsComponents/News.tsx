@@ -7,9 +7,9 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
 } from "../../components/ui/carousel";
 
 interface NewsArticle {
@@ -22,7 +22,11 @@ interface NewsArticle {
   isSatirical?: boolean;
 }
 
-const News = () => {
+interface NewsProps {
+  newsCarouselClassName?: string;
+}
+
+const News = ({ newsCarouselClassName = "" }: NewsProps) => {
   const [news, setNews] = useState<NewsArticle[]>([]);
   const [selected, setSelected] = useState<NewsArticle | null>(null);
 
@@ -36,19 +40,22 @@ const News = () => {
   return (
     <section className="xl:translate-y-0 xl:mb-20">
       <h2
-        className="text-sm mt-10 text-center text-white xl:text-xl xl:-translate-y-[30px] font-bold mb-4 tracking-wide"
+        className="text-sm mt-10 text-center text-white xl:text-xl xl:-translate-y-[30px] font-bold mb-4 tracking-wide xl:text-center"
         style={{ fontFamily: "'Metal Mania', serif" }}
       >
         Latest news
       </h2>
 
       <div className="mt-8">
-        <Carousel className="w-full -mt-5 overflow-x-auto scroll-smooth">
+        <Carousel
+          className={`w-full -mt-5 overflow-x-auto scroll-smooth ${newsCarouselClassName}`}
+        >
+
           <CarouselContent className="gap-6">
             {news.map((article, idx) => (
               <CarouselItem
                 key={article._id}
-                className={`max-w-[300px] cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition xl:max-w-[350px] xl:max-h-[450px] ${idx === 0 ? 'ml-9 xl:ml-50' : ''}`}
+                className={`max-w-[300px] cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition xl:max-w-[350px] xl:max-h-[450px] ${idx === 0 ? 'ml-9 xl:ml-5' : ''}`}
                 onClick={() => setSelected(article)}
               >
                 <img

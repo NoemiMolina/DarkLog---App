@@ -6,7 +6,6 @@ import TinderStyleCarousel from "../../components/HomePageComponents/TinderStyle
 import PopularWFriendsSection from "../../components/HomePageComponents/PopularWFriendsSection";
 import HomemadeWatchlistsCarousel from "../../components/HomePageComponents/HomemadeWatchlistsCarousel";
 import TinderStyleWatchlistsCarousel from "../../components/HomePageComponents/TinderStyleWatchlistsCarousel";
-import { Separator } from "../../components/ui/separator";
 import News from "../../components/NewsComponents/News";
 
 
@@ -158,7 +157,7 @@ const HomePage = () => {
           </div>
 
           <div className="-mt-10">
-            <News />
+            <News newsCarouselClassName="xl:translate-x-45"/>
           </div>
         </div>
 
