@@ -33,7 +33,7 @@ const watchlistsData = [
     {
         title: 'John Carpenter Classics',
         description: 'A selection of classic horror movies directed or produced by John Carpenter.',
-        tmdbIds: [616820, 610253, 351286, 948, 7569, 17711, 8134, 37837, 7929, 790, 15017, 10539, 11604],
+        tmdbIds: [616820, 610253, 424139, 1091, 790, 11442, 10987, 11361, 11281, 948],
         posterPath: "/HomemadeWatchlistsFigmaCards/johncarpenterclassics.png",
     },
     {
