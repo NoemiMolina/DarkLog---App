@@ -38,9 +38,9 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
   }, []);
 
   return (
-    <section className="xl:translate-y-0 xl:mb-20">
+    <section className="2xl:translate-y-0 2xl:mb-20">
       <h2
-        className="text-sm mt-10 text-center text-white xl:text-xl xl:-translate-y-[30px] font-bold mb-4 tracking-wide xl:text-center"
+        className="text-sm mt-10 text-center text-white 2xl:text-xl 2xl:-translate-y-[30px] font-bold mb-4 tracking-wide 2xl:text-center"
         style={{ fontFamily: "'Metal Mania', serif" }}
       >
         Latest news
@@ -51,11 +51,11 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
           className={`w-full -mt-5 overflow-x-auto scroll-smooth ${newsCarouselClassName}`}
         >
 
-          <CarouselContent className="gap-6">
+          <CarouselContent className="gap-6 lg:-translate-x-[20px]">
             {news.map((article, idx) => (
               <CarouselItem
                 key={article._id}
-                className={`max-w-[300px] cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition xl:max-w-[350px] xl:max-h-[450px] ${idx === 0 ? 'ml-9 xl:ml-5' : ''}`}
+                className={`max-w-[300px] cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition 2xl:max-w-[350px] 2xl:max-h-[450px] ${idx === 0 ? 'ml-9 lg:ml-13' : ''}`}
                 onClick={() => setSelected(article)}
               >
                 <img
@@ -98,9 +98,6 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
                   <span className="text-xs text-gray-200">
                     Published on {new Date(selected.publishedAt).toLocaleDateString()}
                   </span>
-                  {selected.isSatirical && (
-                    <span className="text-[0.65rem] text-red-700 italic font-normal">(satirical)</span>
-                  )}
                 </div>
               </DialogHeader>
 

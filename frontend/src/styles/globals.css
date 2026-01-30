@@ -13,7 +13,7 @@
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 4px);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -87,8 +87,8 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
-  --type-xxl: clamp(0.5rem, 3.2vw, 2.2rem);
-  --type-xl: clamp(1.25rem, 2.6vw, 1.8rem);
+  --type-x2xl: clamp(0.5rem, 3.2vw, 2.2rem);
+  --type-2xl: clamp(1.25rem, 2.6vw, 1.8rem);
   --type-small: clamp(1rem, 2.2vw, 1rem);
 }
 

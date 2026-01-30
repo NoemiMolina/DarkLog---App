@@ -27,7 +27,11 @@ const PopularWFriendsSection: React.FC = () => {
             const token = localStorage.getItem('token');
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             const userId = user._id;
-
+            if (!userId) {
+                console.warn('⛔ fetchFriendReviews: userId is undefined, skipping API call.');
+                setLoading(false);
+                return;
+            }
             const response = await fetch(`http://localhost:5000/users/${userId}/friends-reviews`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -48,7 +52,7 @@ const PopularWFriendsSection: React.FC = () => {
     }
 
     return (
-        <section className="w-full px-4 py-6 mb-5 -mt-12 sm:mt-0 xl:translate-y-[-50px] xl:translate-x-[168px] xl:max-w-[1550px]">
+        <section className="w-full px-4 py-6 mb-5 -mt-12 sm:mt-0 2xl:translate-y-[-50px] 2xl:translate-x-[168px] 2xl:max-w-[1550px]">
             <h2 className="text-sm sm:text-xl font-bold text-white text-center mb-4" style={{ fontFamily: "'Metal Mania', serif" }}>Popular with friends</h2>
             <Separator className="bg-white/20 mb-4" />
 

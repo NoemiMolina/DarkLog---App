@@ -38,7 +38,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             <div className="text-center py-6 sm:py-12">
               <button 
                 onClick={onAddMovie} 
-                className="bg-purple-600 px-4 sm:px-6 py-2 sm:py-3 rounded-lg hover:bg-purple-700 transition"
+                 className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
                 ➕ Add Your Top 3 Movies
               </button>
@@ -63,7 +63,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {movies.length < 3 && (
                 <button 
                   onClick={onAddMovie} 
-                  className="w-full h-20 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-75"
+                  className="w-full h-20 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition 2xl:h-117 2xl:w-75"
                 >
                   <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
                   <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add Movie</span>
@@ -82,9 +82,9 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             <div className="text-center py-6 sm:py-12">
               <button 
                 onClick={onAddTvShow} 
-                className="bg-purple-600 px-2 sm:px-3 py-1 sm:py-2 rounded-lg hover:bg-purple-700 transition"
+                 className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
-                ➕ Add Your Top 3 TV Shows
+                ➕ Add your Top 3 TV Shows
               </button>
             </div>
           ) : (
@@ -107,7 +107,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {tvShows.length < 3 && (
                 <button 
                   onClick={onAddTvShow} 
-                  className="w-full h-20 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-75 "
+                  className="w-full h-20 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition 2xl:h-117 2xl:w-75 "
                 >
                   <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
                   <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add TV Show</span>

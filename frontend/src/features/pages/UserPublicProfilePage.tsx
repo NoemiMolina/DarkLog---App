@@ -207,7 +207,7 @@ const UserPublicProfile: React.FC = () => {
 
 
     return (
-        <div className="container mx-auto p-6 space-y-8 max-w-6xl xl:scale-83 xl:-translate-y-45">
+        <div className="container mx-auto p-6 space-y-8 max-w-6xl 2xl:scale-83 2xl:-translate-y-45">
             <Card className="bg-[#2A2A2A] border-white/20 text-white">
                 <CardHeader className="relative p-5">
                     <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">

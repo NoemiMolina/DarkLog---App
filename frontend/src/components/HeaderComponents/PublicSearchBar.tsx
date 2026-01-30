@@ -231,7 +231,7 @@ const PublicSearchBar: React.FC = () => {
           {results.length > 0 && (
             <div
               className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
-                  shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto xl:max-h-[25rem]"
+                  shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto 2xl:max-h-[25rem]"
             >
               {renderDropdownContent()}
             </div>
@@ -247,7 +247,7 @@ const PublicSearchBar: React.FC = () => {
 
   return (
     <>
-      <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mt-[2rem] ml-4">
+      <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg 2xl:max-w-xl mt-[2rem] ml-4">
         <div className="relative z-[10000]">
           <InputGroup className="w-70">
             <InputGroupInput

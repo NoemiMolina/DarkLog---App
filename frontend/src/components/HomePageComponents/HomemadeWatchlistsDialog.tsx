@@ -171,7 +171,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                 </div>
             </div>
             <Dialog key={`dialog-${watchlist._id}`} open={open} onOpenChange={setOpen}>
-                <DialogContent className="w-screen h-screen rounded-none p-2 sm:w-auto sm:h-auto sm:max-w-4xl sm:rounded-lg sm:p-6 bg-gray-900 border-gray-700 flex flex-col">
+                <DialogContent className="w-screen h-screen rounded-none p-2 sm:w-auto sm:h-auto sm:max-w-4xl sm:rounded-lg sm:p-6 bg-black/40 backdrop-blur-md flex flex-col">
                     <DialogHeader className="sm:block hidden">
                         <DialogTitle className="text-white text-2xl">
                             {watchlist.title}

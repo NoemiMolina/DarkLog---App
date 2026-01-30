@@ -24,7 +24,7 @@ interface UserProfileData {
   top3TvShows: Array<{ id: number; title: string; poster: string }>;
   movieWatchlist: Array<{ _id: string; id: number; title: string; poster: string }>;
   tvShowWatchlist: Array<{ _id: string; id: number; title: string; poster: string }>;
-  savedHomemadeWatchlists: Array<{ _id: string; id: string; title: string; poster: string }>;
+  savedHomemadeWatchlists: Array<{ _id: string; id: string; title: string; poster: string; posterPath: string }>; // Ajout posterPath
   numberOfWatchedMovies: number;
   numberOfWatchedTvShows: number;
   numberOfGivenReviews: number;
@@ -98,6 +98,12 @@ const UserProfile: React.FC = () => {
 
       const data = await response.json();
       console.log("✅ Profile data received:", data);
+      if (data.savedHomemadeWatchlists) {
+        data.savedHomemadeWatchlists = data.savedHomemadeWatchlists.map((wl: any) => ({
+          ...wl,
+          posterPath: wl.posterPath || wl.poster || ""
+        }));
+      }
       setProfileData(data);
     } catch (error) {
       console.error('❌ Error fetching profile:', error);
@@ -188,6 +194,27 @@ const UserProfile: React.FC = () => {
     };
     reader.readAsDataURL(file);
   };
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    const timeout = setTimeout(async () => {
+      try {
+        let type: 'movie' | 'tv' = 'movie';
+        if (showTvShowSearch || showTvShowWatchlistSearch) type = 'tv';
+        const response = await fetch(
+          `https://api.themoviedb.org/3/search/${type}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${searchQuery}`
+        );
+        const data = await response.json();
+        setSearchResults(data.results.slice(0, 10));
+      } catch (error) {
+        console.error('Error searching:', error);
+      }
+    }, 400); 
+    return () => clearTimeout(timeout);
+  }, [searchQuery, showMovieSearch, showTvShowSearch, showMovieWatchlistSearch, showTvShowWatchlistSearch]);
 
   const handleSearch = async (type: 'movie' | 'tv') => {
     if (!searchQuery.trim()) return;
@@ -307,7 +334,7 @@ const UserProfile: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 space-y-8 max-w-6xl xl:scale-83 xl:-translate-y-55"> 
+    <div className="container mx-auto p-6 space-y-8 max-w-6xl 2xl:scale-83 2xl:-translate-y-55"> 
 
       <ProfileInfoSection
         profileData={profileData}

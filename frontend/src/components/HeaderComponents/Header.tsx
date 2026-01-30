@@ -53,80 +53,97 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
 
   return (
     <>
-      <header className="text-center translate-y-0 sm:-translate-y-[20px] flex flex-col items-center justify-center gap-2 sm:gap-4 p-3 sm:p-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6 sm:p-6 xl:flex-row xl:items-center xl:justify-center xl:gap-6 xl:space-x-4 xl:p-8 xl:mt-4 xl:translate-y-5 ">
-        {/* MENU DESKTOP (seulement quand connecté) */}
-        {username !== "Guest" && (
-          <div className="hidden xl:block xl:order-1">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="relative cursor-pointer">
-                  <IoIosMenu className="text-8xl w-24 h-5" />
-                  <NotificationBadge count={unreadCount} className="top-1 right-0" />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
-                <DropdownMenuItem
-                  onClick={() => navigate('/quiz')}
-                  className="cursor-pointer hover:bg-white/10"
-                >
-                  Quizzes
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
-                  onClick={() => navigate('/forum')}
-                >
-                  <div className="flex items-center gap-2">
-                    Forum
-                    {forumNotificationsCount > 0 && (
-                      <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        {forumNotificationsCount > 99 ? '99+' : forumNotificationsCount}
-                      </span>
-                    )}
+      <header className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 p-3 sm:p-4 lg:px-8 lg:py-4 lg:flex-row lg:items-center lg:gap-8 lg:mt-2">
+        {/* MENU + LOGO (left for connected, center for guest on lg) */}
+        {username !== "Guest" ? (
+          <div className="flex flex-row items-center gap-2 lg:gap-6 flex-shrink-0">
+            <div className="hidden lg:block">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="relative cursor-pointer">
+                    <IoIosMenu className="text-4xl w-10 h-10 lg:w-5 2xl:translate-x-40" />
+                    <NotificationBadge count={unreadCount} className="top-1 right-0" />
                   </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    setAddFriendOpen(true);
-                    if (friendRequestsCount > 0) {
-                      setTimeout(() => setFriendRequestOpen(true), 100);
-                    }
-                  }}
-                  className="cursor-pointer hover:bg-white/10"
-                >
-                  <div className="flex items-center gap-2">
-                    Add Friend
-                    {friendRequestsCount > 0 && (
-                      <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                        {friendRequestsCount > 99 ? '99+' : friendRequestsCount}
-                      </span>
-                    )}
-                  </div>
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => setImportModalOpen(true)}
-                  className="cursor-pointer hover:bg-white/10"
-                >
-                  Import from
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
+                  <DropdownMenuItem
+                    onClick={() => navigate('/quiz')}
+                    className="cursor-pointer hover:bg-white/10"
+                  >
+                    Quizzes
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
+                    onClick={() => navigate('/forum')}
+                  >
+                    <div className="flex items-center gap-2">
+                      Forum
+                      {forumNotificationsCount > 0 && (
+                        <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                          {forumNotificationsCount > 99 ? '99+' : forumNotificationsCount}
+                        </span>
+                      )}
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setAddFriendOpen(true);
+                      if (friendRequestsCount > 0) {
+                        setTimeout(() => setFriendRequestOpen(true), 100);
+                      }
+                    }}
+                    className="cursor-pointer hover:bg-white/10"
+                  >
+                    <div className="flex items-center gap-2">
+                      Add Friend
+                      {friendRequestsCount > 0 && (
+                        <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                          {friendRequestsCount > 99 ? '99+' : friendRequestsCount}
+                        </span>
+                      )}
+                    </div>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => setImportModalOpen(true)}
+                    className="cursor-pointer hover:bg-white/10"
+                  >
+                    Import from
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <img
+              src={appLogo}
+              alt="App Logo"
+              onClick={() => navigate('/home')}
+              className="hidden sm:block h-auto w-20 sm:w-32 md:w-40 lg:w-56 2xl:translate-x-45 cursor-pointer hover:opacity-80 transition-opacity"
+            />
           </div>
+        ) : (
+          <>
+            {/* On lg, center the logo for guest */}
+            <div className="hidden lg:flex w-full justify-center items-center">
+              <img
+                src={appLogo}
+                alt="App Logo"
+                onClick={() => navigate('/home')}
+                className="h-auto w-56 cursor-pointer hover:opacity-80 transition-opacity xl:w-80 xl:-translate-x-15 2xl:w-72 2xl:-translate-x-20 2xl:w-70"
+              />
+            </div>
+            {/* On <lg, keep previous layout */}
+            <img
+              src={appLogo}
+              alt="App Logo"
+              onClick={() => navigate('/home')}
+              className="sm:block lg:hidden h-auto w-20 sm:w-32 md:w-40 cursor-pointer hover:opacity-80 transition-opacity"
+            />
+          </>
         )}
 
-        {/* LOGO - CENTRE */}
-        <img
-          src={appLogo}
-          alt="App Logo"
-          onClick={() => navigate('/home')}
-          className="hidden sm:block h-auto w-20 order-2 sm:w-32 md:w-40 xl:w-75 xl:translate-y-0 cursor-pointer hover:opacity-80 transition-opacity xl:order-2"
-        />
-
-        {/* ESPACE VIDE POUR ALIGNEMENT (seulement desktop connecté) */}
-        {username !== "Guest" && (
-          <div className="hidden xl:block xl:w-[500px] xl:order-3"></div>
-        )}
+        {/* FLEX SPACER (center) */}
+        <div className="hidden lg:block flex-grow"></div>
 
         {/* SECTION DROITE (search + switch + profile) */}
-        <div className="flex flex-row items-center translate-y-0 sm:-translate-y-[65px] order-1 sm:order-2 gap-2 sm:gap-4 sm:mb-50 sm:flex-row xl:mb-10 xl:translate-y-[-0px] xl:gap-4 xl:ml-2 xl:flex-row w-full sm:w-auto justify-between sm:justify-start xl:order-4">
+        <div className="flex flex-row items-center gap-2 sm:gap-4 flex-shrink-0">
           {username === "Guest" ? (
             // HEADER GUEST (non connecté)
             <>
@@ -157,66 +174,64 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   <IoSearchSharp className="text-2xl w-6 h-6" />
                 </Button>
               </div>
-              <div className="hidden sm:flex sm:gap-4">
+              <div className="hidden sm:flex sm:gap-4 lg:-translate-x-10 xl:-translate-x-25 2xl:-translate-x-85">
                 <LogInForm />
                 <SignUpForm />
               </div>
-              <div className="hidden sm:block">
+              <div className="hidden sm:block xl:-translate-x-25 2xl:-translate-x-85">
                 <GetLuckyDialog />
               </div>
-              <div className="hidden sm:block">
+              <div className="hidden sm:block xl:-translate-x-25 2xl:-translate-x-85">
                 <PublicSearchBar />
               </div>
             </>
           ) : (
-            // HEADER UTILISATEUR CONNECTÉ
+            // HEADER UTILISATEUR CONNECTÉ (desktop/tablette)
             <>
-              {/* MENU MOBILE (seulement mobile) - Rien changé ici */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="sm:hidden text-white hover:bg-[#4C4C4C] px-2 z-50 order-1"
-                  >
-                    <IoIosMenu className="text-2xl w-6 h-6" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
-                  <DropdownMenuItem
-                    onClick={() => navigate('/profile')}
-                    className="cursor-pointer hover:bg-white/10"
-                  >
-                    Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => navigate('/quiz')}
-                    className="cursor-pointer hover:bg-white/10"
-                  >
-                    Quizzes
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
-                    onClick={() => navigate('/forum')}
-                  >
-                    Forum
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => setAddFriendOpen(true)}
-                    className="cursor-pointer hover:bg-white/10"
-                  >
-                    Add Friend
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              <img
-                src={appLogo}
-                alt="App Logo"
-                className="sm:hidden h-auto w-40 order-2"
-              />
-              
-              <div className="sm:hidden order-3 flex gap-2 items-center">
-                <div className="sm:hidden flex flex-col items-center gap-1 -mt-2">
+              {/* MOBILE ONLY: menu, logo, switch, search */}
+              <div className="lg:hidden flex flex-row items-center gap-2">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="text-white hover:bg-[#4C4C4C] px-2 z-50"
+                    >
+                      <IoIosMenu className="text-2xl w-6 h-6" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
+                    <DropdownMenuItem
+                      onClick={() => navigate('/profile')}
+                      className="cursor-pointer hover:bg-white/10"
+                    >
+                      Profile
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => navigate('/quiz')}
+                      className="cursor-pointer hover:bg-white/10"
+                    >
+                      Quizzes
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
+                      onClick={() => navigate('/forum')}
+                    >
+                      Forum
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => setAddFriendOpen(true)}
+                      className="cursor-pointer hover:bg-white/10"
+                    >
+                      Add Friend
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <img
+                  src={appLogo}
+                  alt="App Logo"
+                  className="h-auto w-32"
+                />
+                <div className="flex flex-col items-center gap-1 -mt-2">
                   <Switch
                     id="tv-shows-switch-mobile"
                     className="scale-75"
@@ -225,12 +240,11 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   />
                   <Label
                     htmlFor="tv-shows-switch-mobile"
-                    className="text-white text-[0.65rem] font-semibold z-50 hidden sm:block"
+                    className="text-white text-[0.65rem] font-semibold z-50"
                   >
                     {isTVShowMode ? "Movies" : "TV Shows"}
                   </Label>
                 </div>
-
                 <Button
                   variant="ghost"
                   size="sm"
@@ -241,15 +255,14 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 </Button>
               </div>
 
-              {/* SECTION DROITE DESKTOP (search + switch + profile) */}
-              <div className="hidden xl:flex xl:items-center xl:gap-6 xl:order-1">
+              {/* DESKTOP/TABLETTE: search, switch, profile (right) */}
+              <div className="hidden lg:flex flex-row items-center gap-6 lg:gap-8">
                 {/* SEARCH BAR */}
-                <div className="xl:w-80">
+                <div className="w-64 2xl:w-80 lg:-translate-y-5">
                   <PublicSearchBar />
                 </div>
-
                 {/* SWITCH */}
-                <div className="xl:flex xl:flex-col xl:items-center xl:gap-1">
+                <div className="flex flex-col items-center gap-1">
                   <Switch
                     id="tv-shows-switch"
                     checked={isTVShowMode}
@@ -257,12 +270,11 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   />
                   <Label
                     htmlFor="tv-shows-switch"
-                    className="text-white text-sm font-semibold z-5 -mb-20"
+                    className="text-white text-sm font-semibold z-5"
                   >
                     {isTVShowMode ? "Movies" : "TV Shows"}
                   </Label>
                 </div>
-
                 {/* PROFILE PICTURE */}
                 <div 
                   className="cursor-pointer"
@@ -276,52 +288,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                           : `http://localhost:5000/${userProfilePicture}`
                       }
                       alt={`${username}'s profile`}
-                      className="w-12 h-12 rounded-full object-cover border border-white/40 -mb-5"
-                    />
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-gray-600 border border-white/40 flex items-center justify-center text-white text-sm">
-                      {username.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* VERSION TABLETTE (sm à xl) */}
-              <div className="hidden sm:flex sm:items-center sm:gap-4 sm:mt-9 sm:mr-3 xl:hidden">
-                {/* SEARCH BAR TABLETTE */}
-                <div className="sm:w-64">
-                  <PublicSearchBar />
-                </div>
-
-                {/* SWITCH TABLETTE */}
-                <div className="sm:flex sm:flex-col sm:items-center sm:gap-1">
-                  <Switch
-                    id="tv-shows-switch-tablet"
-                    checked={isTVShowMode}
-                    onCheckedChange={handleToggle}
-                  />
-                  <Label
-                    htmlFor="tv-shows-switch-tablet"
-                    className="text-white text-sm font-semibold z-50"
-                  >
-                    {isTVShowMode ? "Movies" : "TV Shows"}
-                  </Label>
-                </div>
-
-                {/* PROFILE PICTURE TABLETTE */}
-                <div 
-                  className="cursor-pointer"
-                  onClick={() => navigate('/profile')}
-                >
-                  {userProfilePicture ? (
-                    <img
-                      src={
-                        userProfilePicture?.startsWith("http")
-                          ? userProfilePicture
-                          : `http://localhost:5000/${userProfilePicture}`
-                      }
-                      alt={`${username}'s profile`}
-                      className="w-12 h-12 rounded-full object-cover border border-white/40"
+                      className="w-12 h-12 rounded-full object-cover border border-white/40 lg:-translate-y-2"
                     />
                   ) : (
                     <div className="w-12 h-12 rounded-full bg-gray-600 border border-white/40 flex items-center justify-center text-white text-sm">

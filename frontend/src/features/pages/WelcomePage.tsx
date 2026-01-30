@@ -50,8 +50,8 @@ const WelcomePage: React.FC = () => {
     return (
         <main className="min-h-screen relative">
             <Header onLogOut={handleLogout} />
-            <section className="translate-y-0 sm:translate-y-0 xl:translate-y-[70px] -z-10">
-                <div className="relative crt-effect mb-20 sm:mb-90 w-screen mx-0 sm:w-[85%] sm:mx-auto sm:max-w-6xl md:w-[70%] lg:w-[100%] xl:-translate-y-[60px]">
+            <section className="translate-y-0 sm:translate-y-0 2xl:translate-y-[70px] -z-10">
+                <div className="relative crt-effect mb-20 sm:mb-90 w-screen mx-0 sm:w-[85%] sm:mx-auto sm:max-w-6xl md:w-[70%] lg:w-[100%] 2xl:-translate-y-[60px]">
                     <img
                         src={randomImageSelection}
                         alt="MainPic"
@@ -74,15 +74,15 @@ const WelcomePage: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:mt-50 xl:-translate-y-110">
+                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:-translate-y-120 xl:mt-40 2xl:mt-50 2xl:-translate-y-110">
                     <h1
-                        className="font-bold tracking-wide text-[0.85rem] sm:text-[1rem] xl:text-[1.5rem] italic"
+                        className="font-bold tracking-wide text-[0.85rem] sm:text-[1rem] xl:text-[1.5rem] 2xl:text-[1.5rem] italic"
                         style={{ fontFamily: "'Workbench', monospace" }}
                     >
                         A logbook for the dark side of cinema.
                     </h1>
                     <div
-                        className="flex items-center justify-center gap-3 mb-10 sm:mb-90 mt-4 text-white xl:mt-5"
+                        className="flex items-center justify-center gap-3 mb-10 sm:mb-90 mt-4 text-white xl:mt-5 2xl:mt-5"
                         style={{ gap: "var(--join-gap, 0.5rem)" }}
                     >
 
@@ -91,20 +91,20 @@ const WelcomePage: React.FC = () => {
                             aria-label="Instagram"
                             className="text-white hover:opacity-90 inline-flex items-center"
                         >
-                            <FaInstagram color="#fff" className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 xl:w-5" />
+                            <FaInstagram color="#fff" className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 2xl:w-5" />
                         </a>
                         <a
                             href="#"
                             aria-label="TikTok"
                             className="text-white hover:opacity-90 inline-flex items-center"
                         >
-                            <FaTiktok color="#fff" className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 xl:w-5" />
+                            <FaTiktok color="#fff" className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 2xl:w-5" />
                         </a>
 
                     </div>
                 </div>
-                <div className="grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 xl:-translate-y-95 xl:w-[50%] xl:mx-auto px-4 sm:px-0">
-                    <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
+                <div className="grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 lg:-w-[90%] 2xl:-translate-y-95 2xl:w-[60%] 2xl:mx-auto px-4 sm:px-0">
+                        <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
                         <IoSkullOutline className="text-2xl sm:text-4xl mb-2" />
                         <p className="text-sm sm:hidden">Explore and rate horror movies</p>
                         <p className="text-sm hidden sm:block">Discover and explore a vast collection of horror movies or series. Rate and comment the ones you've already seen, add to your wishlist the ones you did not watch yet.</p>
@@ -128,8 +128,8 @@ const WelcomePage: React.FC = () => {
                         <p className="text-sm hidden sm:block">Challenge yourself with our home made horror-themed quizzes.</p>
                     </div>
                 </div>
-                <div className="xl:-mt-80">
-                    <News newsCarouselClassName="xl:pl-60" />
+                <div className="2xl:-mt-80">
+                   <News newsCarouselClassName="lg:ml-[-250px] 2xl:pl-150" />
                 </div>
 
 

@@ -143,7 +143,7 @@ const HomePage = () => {
       <Header username={username} userProfilePicture={profilePic} isTVShowMode={isTVShowMode} onToggleTVShowMode={setIsTVShowMode} />
 
       <section className="mt-8 px-4">
-        <div className="mb-12">
+        <div className="mb-12 lg:-translate-x-40 2xl:translate-x-0">
           <PopularWFriendsSection />
         </div>
 
@@ -157,7 +157,7 @@ const HomePage = () => {
           </div>
 
           <div className="-mt-10">
-            <News newsCarouselClassName="xl:translate-x-45"/>
+            <News newsCarouselClassName="lg:-translate-x-[10px] 2xl:translate-x-45"/>
           </div>
         </div>
 

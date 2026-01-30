@@ -34,6 +34,10 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   const [totalWatchTimeMinutes, setTotalWatchTimeMinutes] = useState(0);
 
   const fetchFriends = async () => {
+    if (!userId) {
+      console.warn('⛔ fetchFriends: userId is undefined, skipping API call.');
+      return;
+    }
     setLoadingFriends(true);
     try {
       const token = localStorage.getItem('token');

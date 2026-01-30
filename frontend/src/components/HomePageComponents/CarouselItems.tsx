@@ -29,17 +29,17 @@ const getPosterUrl = (path?: string) => {
 };
 
 const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; type: "movie" | "tvshow" }) => (
-    <section className="hidden sm:block xl:translate-y-0 xl:mb-20">
-        <h2 className="text-xl font-bold text-white mb-6 tracking-wide xl:translate-y-10 xl:mb-2" style={{ fontFamily: "'Metal Mania', serif" }}>{title}</h2>
-        <Carousel className="w-full max-w-[90%] mx-auto mt-8 xl:mx-auto xl:max-w-[1500px] xl:mt-2">
+    <section className="hidden sm:block 2xl:translate-y-0 2xl:mb-20">
+        <h2 className="text-xl font-bold text-white mb-6 tracking-wide 2xl:translate-y-10 2xl:mb-2" style={{ fontFamily: "'Metal Mania', serif" }}>{title}</h2>
+        <Carousel className="w-full max-w-[90%] mx-auto mt-8 2xl:mx-auto 2xl:max-w-[1500px] 2xl:mt-2">
             <CarouselContent>
                 {items.length === 0 ? (
-                    <p className="text-gray-400 xl:translate-x-[20px]">Loading…</p>
+                    <p className="text-gray-400 2xl:translate-x-[20px]">Loading…</p>
                 ) : (
                     items.map((movie, idx) => (
                         <CarouselItem
                             key={movie._id}
-                            className={`basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/8 xl:mt-15 px-2 ${idx === 0 ? 'ml-4' : ''}`}
+                            className={`basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 2xl:basis-1/8 2xl:mt-15 px-2 ${idx === 0 ? 'ml-4' : ''}`}
                         >
                             <div className="relative group" tabIndex={0}>
                                 <ItemDialog
@@ -49,7 +49,7 @@ const CarouselItems = ({ title, items, type }: { title: string; items: Movie[]; 
                                         <img
                                             src={movie.poster_path ? getPosterUrl(movie.poster_path) : "https://via.placeholder.com/200x300?text=No+Image"}
                                             alt={movie.title}
-                                            className="rounded-lg shadow-md transition-all duration-300 object-contain w-full h-auto xl:w-80 hover:opacity-15 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:shadow-xl"
+                                            className="rounded-lg shadow-md transition-all duration-300 object-contain w-full h-auto 2xl:w-80 hover:opacity-15 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:shadow-xl"
                                         />
                                     }
                                 />

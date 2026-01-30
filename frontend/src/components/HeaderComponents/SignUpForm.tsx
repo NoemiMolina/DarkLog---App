@@ -170,12 +170,20 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         top3Movies: [...top3Movies],
         top3TvShow: [...top3TvShow],
       };
+      localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(newUser));
       localStorage.setItem("userId", data.user._id);
       localStorage.setItem("firstConnection", "true");
 
       const pendingItem = pendingWatchlistService.getPendingItem();
-      if (pendingItem && data.user && data.token) {
+      if (
+        pendingItem &&
+        data.user &&
+        data.token &&
+        typeof pendingItem.id === "number" &&
+        !isNaN(pendingItem.id) &&
+        data.user._id
+      ) {
         try {
           const route = pendingItem.type === "movie"
             ? `http://localhost:5000/users/${data.user._id}/watchlist/movie/${pendingItem.id}`
@@ -191,6 +199,8 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         } catch (err) {
           console.error("❌ Failed to add pending item:", err);
         }
+      } else if (pendingItem) {
+        console.warn("⛔ Pending item or user ID is undefined, skipping watchlist addition.", { pendingItem, userId: data.user?._id });
       }
 
       setTimeout(() => {

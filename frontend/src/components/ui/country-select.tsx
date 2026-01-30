@@ -36,10 +36,10 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={placeholder}
-          className="w-full"
+          className={`w-full ${selectedCountry && !search ? 'pl-10' : ''}`}
         />
         {selectedCountry && !search && (
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xl">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xl pointer-events-none">
             {selectedCountry.flag}
           </span>
         )}
