@@ -103,7 +103,7 @@ const WelcomePage: React.FC = () => {
 
                     </div>
                 </div>
-                <div className="grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 lg:-w-[90%] 2xl:-translate-y-95 2xl:w-[60%] 2xl:mx-auto px-4 sm:px-0">
+                <div className="grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 lg:-w-[90%] xl:max-w-[80%] xl:translate-x-35 xl:-translate-y-80 2xl:-translate-y-95 2xl:translate-x-0 2xl:w-[60%] 2xl:mx-auto px-4 sm:px-0">
                         <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
                         <IoSkullOutline className="text-2xl sm:text-4xl mb-2" />
                         <p className="text-sm sm:hidden">Explore and rate horror movies</p>
@@ -128,8 +128,8 @@ const WelcomePage: React.FC = () => {
                         <p className="text-sm hidden sm:block">Challenge yourself with our home made horror-themed quizzes.</p>
                     </div>
                 </div>
-                <div className="2xl:-mt-80">
-                   <News newsCarouselClassName="lg:ml-[-250px] 2xl:pl-150" />
+                <div className="xl:-mt-70 2xl:-mt-80">
+                   <News newsCarouselClassName="lg:ml-[-250px] xl:pl-90 xl:w-[1540px] 2xl:pl-150 2xl:w-[1770px]" />
                 </div>
 
 

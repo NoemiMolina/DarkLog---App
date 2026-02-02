@@ -175,7 +175,7 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-[#1A1A1A] to-[#0A0A0A] text-white flex flex-col items-center justify-center p-8">
+        <div className="min-h-screen dark:bg-gray-700 text-white flex flex-col items-center justify-center p-8">
             <GiRaiseZombie className="text-9xl mb-4 text-red-600 animate-pulse" />
             <p className="text-sm text-gray-400 mb-2">Welcome to our</p>
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-red-600 tracking-wider text-center animate-pulse">HORROR QUIZZ</h1>

@@ -142,8 +142,8 @@ const HomePage = () => {
     <main className="min-h-screen relative">
       <Header username={username} userProfilePicture={profilePic} isTVShowMode={isTVShowMode} onToggleTVShowMode={setIsTVShowMode} />
 
-      <section className="mt-8 px-4">
-        <div className="mb-12 lg:-translate-x-40 2xl:translate-x-0">
+      <section className="mt-8 px-4 xl:-translate-y-[15px]">
+        <div className="mb-12 lg:-translate-x-40 xl:translate-x-0 2xl:translate-x-0">
           <PopularWFriendsSection />
         </div>
 
@@ -156,8 +156,8 @@ const HomePage = () => {
             <HomemadeWatchlistsCarousel />
           </div>
 
-          <div className="-mt-10">
-            <News newsCarouselClassName="lg:-translate-x-[10px] 2xl:translate-x-45"/>
+          <div className="-mt-10 xl:-mt-40 2xl:-mt-50">
+            <News newsCarouselClassName="lg:-translate-x-[10px] xl:translate-y-5 xl:max-w-[91%] xl:translate-x-15 2xl:translate-x-45 2xl:max-w-[80%]"/>
           </div>
         </div>
 
@@ -165,7 +165,7 @@ const HomePage = () => {
 
           {!isTVShowMode ? (
             <>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Popular slashers" items={slasherMovies} type="movie" />
                 </div>
@@ -173,7 +173,7 @@ const HomePage = () => {
                   <CarouselItems title="Popular slashers" items={slasherMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalMovies} type="movie" />
                 </div>
@@ -181,7 +181,7 @@ const HomePage = () => {
                   <CarouselItems title="Ghost and possession stories" items={supernaturalMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Zombies universe" items={zombieMovies} type="movie" />
                 </div>
@@ -189,7 +189,7 @@ const HomePage = () => {
                   <CarouselItems title="Zombies universe" items={zombieMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Monster core" items={monsterMovies} type="movie" />
                 </div>
@@ -197,7 +197,7 @@ const HomePage = () => {
                   <CarouselItems title="Monster core" items={monsterMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Aliens" items={aliensMovies} type="movie" />
                 </div>
@@ -205,7 +205,7 @@ const HomePage = () => {
                   <CarouselItems title="Aliens" items={aliensMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Vampire" items={vampireMovies} type="movie" />
                 </div>
@@ -213,7 +213,7 @@ const HomePage = () => {
                   <CarouselItems title="Vampire" items={vampireMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Revenge" items={revengeStyleMovies} type="movie" />
                 </div>
@@ -221,7 +221,7 @@ const HomePage = () => {
                   <CarouselItems title="Revenge" items={revengeStyleMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Body horror" items={bodyHorrorMovies} type="movie" />
                 </div>
@@ -229,7 +229,7 @@ const HomePage = () => {
                   <CarouselItems title="Body horror" items={bodyHorrorMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Survival" items={survivalMovies} type="movie" />
                 </div>
@@ -237,7 +237,7 @@ const HomePage = () => {
                   <CarouselItems title="Survival" items={survivalMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksMovies} type="movie" />
                 </div>
@@ -245,7 +245,7 @@ const HomePage = () => {
                   <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryMovies} type="movie" />
                 </div>
@@ -253,7 +253,7 @@ const HomePage = () => {
                   <CarouselItems title="Based on true story" items={basedOnTrueStoryMovies} type="movie" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Satire" items={satireMovies} type="movie" />
                 </div>
@@ -264,7 +264,7 @@ const HomePage = () => {
             </>
           ) : (
             <>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Anime" items={animeTVShows} type="tvshow" />
                 </div>
@@ -272,7 +272,7 @@ const HomePage = () => {
                   <CarouselItems title="Anime" items={animeTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Popular slashers" items={slasherTVShows} type="tvshow" />
                 </div>
@@ -280,7 +280,7 @@ const HomePage = () => {
                   <CarouselItems title="Popular slashers" items={slasherTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalTVShows} type="tvshow" />
                 </div>
@@ -288,7 +288,7 @@ const HomePage = () => {
                   <CarouselItems title="Ghost and possession stories" items={supernaturalTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Zombies universe" items={zombieTVShows} type="tvshow" />
                 </div>
@@ -296,7 +296,7 @@ const HomePage = () => {
                   <CarouselItems title="Zombies universe" items={zombieTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Monster core" items={monsterTVShows} type="tvshow" />
                 </div>
@@ -304,7 +304,7 @@ const HomePage = () => {
                   <CarouselItems title="Monster core" items={monsterTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Aliens" items={aliensTVShows} type="tvshow" />
                 </div>
@@ -312,7 +312,7 @@ const HomePage = () => {
                   <CarouselItems title="Aliens" items={aliensTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Vampire" items={vampireTVShows} type="tvshow" />
                 </div>
@@ -320,7 +320,7 @@ const HomePage = () => {
                   <CarouselItems title="Vampire" items={vampireTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Revenge" items={revengeStyleTVShows} type="tvshow" />
                 </div>
@@ -328,7 +328,7 @@ const HomePage = () => {
                   <CarouselItems title="Revenge" items={revengeStyleTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Body horror" items={bodyHorrorTVShows} type="tvshow" />
                 </div>
@@ -336,7 +336,7 @@ const HomePage = () => {
                   <CarouselItems title="Body horror" items={bodyHorrorTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Survival" items={survivalTVShows} type="tvshow" />
                 </div>
@@ -344,7 +344,7 @@ const HomePage = () => {
                   <CarouselItems title="Survival" items={survivalTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksTVShows} type="tvshow" />
                 </div>
@@ -352,7 +352,7 @@ const HomePage = () => {
                   <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksTVShows} type="tvshow" />
                 </div>
               </div>
-              <div className="mb-32 sm:mb-0">
+              <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
                   <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryTVShows} type="tvshow" />
                 </div>

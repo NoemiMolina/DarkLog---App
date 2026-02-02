@@ -189,13 +189,13 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row gap-5 mt-2 ">
+    <div className="flex flex-col md:flex-row gap-5 mt-2  ">
       <div className="w-full md:w-1/3 flex justify-center">
         {poster ? (
           <img
             src={poster}
             alt={item.title || item.name}
-            className="2xl:rounded-lg 2xl:w-70 2xl:h-100 2xl:mt-11"
+            className="xl:w-70 xl:h-100 xl:mt-25 xl:rounded-lg 2xl:w-70 2xl:h-100 2xl:mt-11 2xl:rounded-lg"
           />
         ) : (
           <div className="w-64 h-96 bg-gray-700 rounded-lg" />

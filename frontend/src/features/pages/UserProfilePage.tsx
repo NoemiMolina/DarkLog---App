@@ -195,45 +195,63 @@ const UserProfile: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
+ const handleSearch = async (type: 'movie' | 'tv', query: string) => {
+  if (!query.trim()) {
+    setSearchResults([]);
+    return;
+  }
+
+  try {
+    const encoded = encodeURIComponent(query);
+
+    const response = await fetch(
+      `http://localhost:5000/search?query=${encoded}&type=${type}`
+    );
+
+    if (!response.ok) {
+      setSearchResults([]);
+      return;
+    }
+
+    const data = await response.json();
+    setSearchResults(data.slice(0, 10));
+  } catch (error) {
+    console.error('Error searching:', error);
+    setSearchResults([]);
+  }
+};
+
+
   useEffect(() => {
     if (!searchQuery.trim()) {
       setSearchResults([]);
       return;
     }
-    const timeout = setTimeout(async () => {
-      try {
-        let type: 'movie' | 'tv' = 'movie';
-        if (showTvShowSearch || showTvShowWatchlistSearch) type = 'tv';
-        const response = await fetch(
-          `https://api.themoviedb.org/3/search/${type}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${searchQuery}`
-        );
-        const data = await response.json();
-        setSearchResults(data.results.slice(0, 10));
-      } catch (error) {
-        console.error('Error searching:', error);
-      }
-    }, 400); 
-    return () => clearTimeout(timeout);
-  }, [searchQuery, showMovieSearch, showTvShowSearch, showMovieWatchlistSearch, showTvShowWatchlistSearch]);
 
-  const handleSearch = async (type: 'movie' | 'tv') => {
-    if (!searchQuery.trim()) return;
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/${type}?api_key=${import.meta.env.VITE_TMDB_API_KEY}&query=${searchQuery}`
-      );
-      const data = await response.json();
-      setSearchResults(data.results.slice(0, 10));
-    } catch (error) {
-      console.error('Error searching:', error);
+    let type: 'movie' | 'tv' = 'movie';
+
+    if (showTvShowSearch || showTvShowWatchlistSearch) {
+      type = 'tv';
     }
-  };
+
+    const debounce = setTimeout(() => {
+      handleSearch(type, searchQuery);
+    }, 400);
+
+    return () => clearTimeout(debounce);
+  }, [
+    searchQuery,
+    showMovieSearch,
+    showTvShowSearch,
+    showMovieWatchlistSearch,
+    showTvShowWatchlistSearch
+  ]);
 
   const handleAddToTop3 = async (item: any, type: 'movie' | 'tv') => {
     if (!userId) return;
     try {
-      const tmdbId = item.id;
-      
+      const tmdbId = item.tmdb_id;
+
       console.log('Adding to Top3 with TMDB ID:', tmdbId);
       const addResponse = await fetch(
         `http://localhost:5000/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${tmdbId}`,
@@ -248,11 +266,11 @@ const UserProfile: React.FC = () => {
       }
 
       if (addResponse.ok) {
-        alert(`${item.title || item.name} added to Top 3!`);
         setShowMovieSearch(false);
         setShowTvShowSearch(false);
         setSearchQuery('');
         setSearchResults([]);
+        alert(`${item.title || item.name} added to Top 3!`);
         fetchProfileData();
       }
     } catch (error) {
@@ -279,7 +297,7 @@ const UserProfile: React.FC = () => {
   const handleAddToWatchlist = async (item: any, type: 'movie' | 'tv') => {
     if (!userId) return;
     try {
-      const tmdbId = item.id;
+      const tmdbId = item.tmdb_id;
 
       const endpoint = type === 'movie'
         ? `http://localhost:5000/users/${userId}/watchlist/movie/${tmdbId}`
@@ -296,11 +314,11 @@ const UserProfile: React.FC = () => {
         return;
       }
 
-      alert(`${item.title || item.name} added to watchlist!`);
       setShowMovieWatchlistSearch(false);
       setShowTvShowWatchlistSearch(false);
       setSearchQuery('');
       setSearchResults([]);
+      alert(`${item.title || item.name} added to watchlist!`);
       fetchProfileData();
     } catch (error) {
       console.error('Error adding to watchlist:', error);
@@ -310,7 +328,7 @@ const UserProfile: React.FC = () => {
   const removeFromWatchlist = async (id: string, type: 'movie' | 'tv' | 'homemadewatchlist') => {
     try {
       let endpoint: string;
-      
+
       if (type === 'movie') {
         endpoint = `http://localhost:5000/users/${userId}/watchlist/movie/${id}`;
       } else if (type === 'tv') {
@@ -334,7 +352,7 @@ const UserProfile: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-6 space-y-8 max-w-6xl 2xl:scale-83 2xl:-translate-y-55"> 
+    <div className="container mx-auto p-6 space-y-8 max-w-6xl 2xl:scale-83 2xl:-translate-y-55">
 
       <ProfileInfoSection
         profileData={profileData}
@@ -362,13 +380,13 @@ const UserProfile: React.FC = () => {
 
       <Separator className="bg-white/20" />
 
-        <Top3Section
-          movies={profileData?.top3Movies || []}
-          tvShows={profileData?.top3TvShows || []}
-          onAddMovie={() => setShowMovieSearch(true)}
-          onAddTvShow={() => setShowTvShowSearch(true)}
-          onRemove={removeFromTop3}
-        />
+      <Top3Section
+        movies={profileData?.top3Movies || []}
+        tvShows={profileData?.top3TvShows || []}
+        onAddMovie={() => setShowMovieSearch(true)}
+        onAddTvShow={() => setShowTvShowSearch(true)}
+        onRemove={removeFromTop3}
+      />
 
       <SearchDialog
         open={showMovieSearch}
@@ -377,7 +395,6 @@ const UserProfile: React.FC = () => {
         description="Search for a movie to add to your Top 3 favorites"
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
-        onSearch={() => handleSearch('movie')}
         results={searchResults}
         onSelect={(item) => handleAddToTop3(item, 'movie')}
         type="movie"
@@ -390,15 +407,14 @@ const UserProfile: React.FC = () => {
         description="Search for a TV show to add to your Top 3 favorites"
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
-        onSearch={() => handleSearch('tv')}
         results={searchResults}
         onSelect={(item) => handleAddToTop3(item, 'tv')}
         type="tv"
       />
 
       <Separator className="bg-white/20" />
-      
-        <WatchlistSection
+
+      <WatchlistSection
         movieWatchlist={profileData?.movieWatchlist || []}
         tvShowWatchlist={profileData?.tvShowWatchlist || []}
         savedHomemadeWatchlists={profileData?.savedHomemadeWatchlists || []}
@@ -406,7 +422,7 @@ const UserProfile: React.FC = () => {
         onAddTvShow={() => setShowTvShowWatchlistSearch(true)}
         onRemove={removeFromWatchlist}
       />
-    
+
 
       <SearchDialog
         open={showMovieWatchlistSearch}
@@ -415,7 +431,6 @@ const UserProfile: React.FC = () => {
         description="Search for a movie to add to your watchlist"
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
-        onSearch={() => handleSearch('movie')}
         results={searchResults}
         onSelect={(item) => handleAddToWatchlist(item, 'movie')}
         type="movie"
@@ -428,7 +443,6 @@ const UserProfile: React.FC = () => {
         description="Search for a TV show to add to your watchlist"
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
-        onSearch={() => handleSearch('tv')}
         results={searchResults}
         onSelect={(item) => handleAddToWatchlist(item, 'tv')}
         type="tv"

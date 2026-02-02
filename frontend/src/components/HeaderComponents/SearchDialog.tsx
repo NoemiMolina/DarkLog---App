@@ -1,8 +1,6 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../../components/ui/dialog';
 import { Input } from '../../components/ui/input';
-import { Button } from '../../components/ui/button';
-import { IoSearch } from "react-icons/io5";
 
 interface SearchDialogProps {
   open: boolean;
@@ -11,7 +9,7 @@ interface SearchDialogProps {
   description: string;
   searchQuery: string;
   onSearchQueryChange: (query: string) => void;
-  onSearch: () => void;
+  onSearch?: () => void;
   results: any[];
   onSelect: (item: any) => void;
   type: 'movie' | 'tv';
@@ -42,13 +40,10 @@ const SearchDialog: React.FC<SearchDialogProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && onSearch()}
+            onKeyPress={(e) => e.key === 'Enter' && onSearch?.()}
             placeholder={`Search for a ${type}...`}
             className="flex-1"
           />
-          <Button onClick={onSearch}>
-            <IoSearch />
-          </Button>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

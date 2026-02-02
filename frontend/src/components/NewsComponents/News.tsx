@@ -40,7 +40,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
   return (
     <section className="2xl:translate-y-0 2xl:mb-20">
       <h2
-        className="text-sm mt-10 text-center text-white 2xl:text-xl 2xl:-translate-y-[30px] font-bold mb-4 tracking-wide 2xl:text-center"
+        className="text-xl mt-10 text-center text-white 2xl:text-xl 2xl:-translate-y-[30px] font-bold mb-4 tracking-wide 2xl:text-center"
         style={{ fontFamily: "'Metal Mania', serif" }}
       >
         Latest news
@@ -103,7 +103,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
 
               <img
                 src={selected.coverImage}
-                className="rounded-lg my-4"
+                className="rounded-lg my-4 object-cover max-h-[100%] w-full"
               />
 
               <div className="flex-1 overflow-y-auto">

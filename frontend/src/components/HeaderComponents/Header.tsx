@@ -115,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               src={appLogo}
               alt="App Logo"
               onClick={() => navigate('/home')}
-              className="hidden sm:block h-auto w-20 sm:w-32 md:w-40 lg:w-56 2xl:translate-x-45 cursor-pointer hover:opacity-80 transition-opacity"
+              className="hidden sm:block h-auto w-20 sm:w-32 md:w-40 lg:w-56 xl:w-80 2xl:translate-x-45 cursor-pointer hover:opacity-80 transition-opacity"
             />
           </div>
         ) : (
@@ -134,7 +134,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               src={appLogo}
               alt="App Logo"
               onClick={() => navigate('/home')}
-              className="sm:block lg:hidden h-auto w-20 sm:w-32 md:w-40 cursor-pointer hover:opacity-80 transition-opacity"
+              className="hidden sm:block lg:hidden h-auto w-20 sm:w-32 md:w-40 cursor-pointer hover:opacity-80 transition-opacity"
             />
           </>
         )}
@@ -256,13 +256,13 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               </div>
 
               {/* DESKTOP/TABLETTE: search, switch, profile (right) */}
-              <div className="hidden lg:flex flex-row items-center gap-6 lg:gap-8">
+              <div className="hidden lg:flex flex-row items-center gap-6 lg:gap-8 xl:gap-10 2xl:-translate-x-35">
                 {/* SEARCH BAR */}
                 <div className="w-64 2xl:w-80 lg:-translate-y-5">
                   <PublicSearchBar />
                 </div>
                 {/* SWITCH */}
-                <div className="flex flex-col items-center gap-1">
+                <div className="flex flex-col items-center gap-1 xl:pl-5">
                   <Switch
                     id="tv-shows-switch"
                     checked={isTVShowMode}

@@ -172,6 +172,20 @@ const TinderStyleCarousel = ({ title, items, type = "movie" }: TinderStyleCarous
                                     alt={currentMovie.title}
                                     className="w-full h-full object-contain rounded-lg"
                                 />
+                                {swipeDelta > 30 && (
+                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                        <div className="font-bold text-xl px-4 py-2 rounded-lg text-white" style={{ backgroundColor: 'rgba(0, 100, 0, 0.8)', fontFamily: "'Metal Mania', serif" }}>
+                                            ✓ Add to watchlist
+                                        </div>
+                                    </div>
+                                )}
+                                {swipeDelta < -30 && (
+                                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                        <div className="font-bold text-xl px-4 py-2 rounded-lg text-white" style={{ backgroundColor: 'rgba(139, 0, 0, 0.8)', fontFamily: "'Metal Mania', serif" }}>
+                                            ✗ Ignore
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         }
                         item={currentMovie}

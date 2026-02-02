@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Separator } from '../ui/separator';
-import { Star } from 'lucide-react';
+import RatingSkulls from './RatingSkulls';
 
 interface FriendReview {
     friendId: string;
@@ -87,9 +87,8 @@ const PopularWFriendsSection: React.FC = () => {
                             <p className="text-[0.65rem] text-white font-semibold text-center line-clamp-2 mb-1">
                               '{review.movieTitle}'
                             </p>
-                            <div className="flex items-center gap-0.5 mb-1">
-                              <Star className="w-2.5 h-2.5 fill-yellow-400" />
-                              <span className="text-[0.6rem] font-bold text-white">{review.rating}</span>
+                            <div className="flex items-center justify-center gap-0.5 mb-1 scale-50">
+                              <RatingSkulls value={review.rating} onChange={() => {}} />
                             </div>
                             <p className="text-[0.6rem] text-gray-300 text-center line-clamp-2">
                               {review.review}
@@ -129,8 +128,10 @@ const PopularWFriendsSection: React.FC = () => {
                                     <span className="text-gray-400 text-sm">reviewed</span>
                                     <span className="font-medium text-white">'{review.movieTitle}'</span>
                                     <span className="text-gray-400 text-sm"> on {new Date(review.createdAt).toLocaleDateString()}</span>
-                                     (<Star className="w-4 h-4 fill-yellow-400" />
-                                    <span className="font-bold">{review.rating} ) :</span>
+                                    <div className="scale-75 origin-left">
+                                      <RatingSkulls value={review.rating} onChange={() => {}} />
+                                    </div>
+                                    <span className="text-gray-400 text-sm">:</span>
                                 </div>
 
                                 <div className="flex items-start gap-4">
