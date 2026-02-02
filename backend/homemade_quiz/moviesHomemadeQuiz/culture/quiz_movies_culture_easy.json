@@ -267,7 +267,7 @@
             "Zombie movies",
             "Vampire movies"
         ],
-        "correctIndex": 0,
+        "correctIndex": 2,
         "category": "culture",
         "difficulty": "easy",
         "type": "movie"
@@ -293,7 +293,7 @@
             "The Black Codex",
             "The Necronomicon"
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "category": "culture",
         "difficulty": "easy",
         "type": "movie"

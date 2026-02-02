@@ -189,7 +189,7 @@
             "Seven",
             "Nine"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "category": "culture",
         "difficulty": "medium",
         "type": "movie"
@@ -345,7 +345,7 @@
             "Santería",
             "Wicca"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "category": "culture",
         "difficulty": "medium",
         "type": "movie"

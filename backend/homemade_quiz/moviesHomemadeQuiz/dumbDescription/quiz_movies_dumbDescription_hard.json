@@ -69,10 +69,10 @@
         "options": [
             "House of 1000 Corpses",
             "Natural Born Killers",
-            "The Devil’s Rejects",
+            "Hereditary",
             "Texas Chainsaw Massacre 2"
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "hard",
         "type": "movie"
@@ -85,7 +85,7 @@
             "The Invitation",
             "Vivarium"
         ],
-        "correctIndex": 3,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "hard",
         "type": "movie"
@@ -182,7 +182,7 @@
         "type": "movie"
     },
     {
-        "question": "It's hard to say which is worse: the vampire or rabies.",
+        "question": "It's hard to say which is the main killer here: the vampire or rabies.",
         "options": [
             "Dracula",
             "Shadow of the Vampire",

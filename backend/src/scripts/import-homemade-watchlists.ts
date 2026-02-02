@@ -53,6 +53,18 @@ const watchlistsData = [
         description: 'A selection of cult classic horror movies.',
         tmdbIds: [948, 11281, 4488, 377, 16938, 30497, 3987, 4232, 694, 348, 9599, 578, 2662],
         posterPath: "/HomemadeWatchlistsFigmaCards/oldbutgold.png",
+    },
+    {
+        title: 'A Nightmare on Elm Street Collection',
+        description: 'Here you can find all the movies from the "A Nightmare on Elm Street" saga.',
+        tmdbIds: [377, 10014, 10072, 10131, 10160, 11284, 11596, 6466, 23437],
+        posterPath: "/HomemadeWatchlistsFigmaCards/nightmareonelmstreet.png",   
+    },
+    {
+        title: 'THE dude with the hockey mask',
+        description: 'All movies from the "Friday the 13th" saga.',
+        tmdbIds: [4488, 13207, 9725, 9728, 9730, 9731, 10225, 10281, 10283, 10285, 11470, 6466],
+        posterPath: "/HomemadeWatchlistsFigmaCards/fridaythe13th.png",
     }
 ];
 

@@ -124,7 +124,7 @@
             "Chilling Adventures of Sabrina",
             "Wednesday"
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "easy",
         "type": "TVShow"
@@ -280,7 +280,7 @@
             "Hill House",
             "The Midnight Club"
         ],
-        "correctIndex": 0,
+        "correctIndex": 1,
         "category": "dumb_description",
         "difficulty": "easy",
         "type": "TVShow"

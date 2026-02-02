@@ -15,10 +15,10 @@
     {
         "question": "The cliché of the family that buys a haunted house.",
         "options": [
-            "Insidious",
-            "Sinister",
+            "I know what you did last summer",
+            "Scary Movie",
             "Amityville",
-            "The Conjuring"
+            "Jaws"
         ],
         "correctIndex": 2,
         "category": "dumb_description",
@@ -33,7 +33,7 @@
             "Psycho",
             "Friday the 13th"
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "easy",
         "type": "movie"
@@ -182,12 +182,12 @@
         "type": "movie"
     },
     {
-        "question": "A guy changes his face to survive.",
+        "question": "A guy wears a hockey mask to hide his face.",
         "options": [
             "The Crazies",
             "Wrong Turn",
             "The Hills Have Eyes",
-            "Texas Chainsaw Massacre"
+            "Friday the 13th"
         ],
         "correctIndex": 3,
         "category": "dumb_description",

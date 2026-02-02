@@ -85,7 +85,7 @@
             "Jordskott",
             "Taboo"
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "hard",
         "type": "TVShow"
@@ -306,7 +306,7 @@
             "The Servant",
             "The Resort"
         ],
-        "correctIndex": 1,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "hard",
         "type": "TVShow"

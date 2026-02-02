@@ -49,12 +49,28 @@ const importQuestions = async () => {
             const data = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
             if (!Array.isArray(data)) {
-                console.warn(`Le fichier ${file} n’est pas un tableau JSON`);
+                console.warn(`the file ${file} does not contain an array of questions. Skipping.`);
                 continue;
             }
 
-            await Quiz.insertMany(data);
-            console.log(`Importé ${data.length} questions depuis ${file}`);
+            let created = 0;
+            let updated = 0;
+
+            for (const question of data) {
+                const result = await Quiz.updateOne(
+                    { question: question.question },
+                    question,
+                    { upsert: true }
+                );
+
+                if (result.upsertedId) {
+                    created++;
+                } else if (result.modifiedCount > 0) {
+                    updated++;
+                }
+            }
+
+            console.log(`${file}: ${created} créée(s), ${updated} mise(s) à jour`);
         }
 
         console.log("Import terminé !");

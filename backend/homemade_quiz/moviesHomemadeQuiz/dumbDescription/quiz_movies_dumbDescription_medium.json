@@ -85,7 +85,7 @@
             "Hellraiser",
             "The Lament Configuration"
         ],
-        "correctIndex": 2,
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "medium",
         "type": "movie"
@@ -98,7 +98,7 @@
             "Smile",
             "The Ring"
         ],
-        "correctIndex": 0,
+        "correctIndex": 3,
         "category": "dumb_description",
         "difficulty": "medium",
         "type": "movie"
@@ -319,7 +319,7 @@
             "Pulse",
             "Videodrome"
         ],
-        "correctIndex": 3,
+        "correctIndex": 2,
         "category": "dumb_description",
         "difficulty": "medium",
         "type": "movie"
@@ -332,7 +332,7 @@
             "The Lodge",
             "Together"
         ],
-        "correctIndex": 3,
+        "correctIndex": 1,
         "category": "dumb_description",
         "difficulty": "medium",
         "type": "movie"
@@ -372,6 +372,19 @@
             "Creep"
         ],
         "correctIndex": 3,
+        "category": "dumb_description",
+        "difficulty": "medium",
+        "type": "movie"
+    },
+    {
+        "question": "A very beautiful woman's feet were so iconic, people remember them more than the actual vampires.",
+        "options": [
+            "From Dusk Till Dawn",
+            "Dance of the Dead",
+            "Lap Dance",
+            "Dead Girls"
+        ],
+        "correctIndex": 0,
         "category": "dumb_description",
         "difficulty": "medium",
         "type": "movie"
