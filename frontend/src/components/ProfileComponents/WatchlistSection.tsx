@@ -104,7 +104,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               {savedHomemadeWatchlists.map((watchlist) => (
                 <div key={watchlist._id} className="relative group h-64 sm:h-80">
                   <img
-                    src={watchlist.posterPath ? `http://localhost:5000${watchlist.posterPath}` : '/placeholder.jpg'}
+                    src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
                     alt={watchlist.title}
                     className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover"
                   />

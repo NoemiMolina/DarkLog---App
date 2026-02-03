@@ -89,7 +89,7 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
               <img
                 src={profileData.userProfilePicture.startsWith('http')
                   ? profileData.userProfilePicture
-                  : `http://localhost:5000/${profileData.userProfilePicture}`}
+                  : `${API_URL}/${profileData.userProfilePicture}`}
                 alt="Profile"
                 className={`w-24 h-24 rounded-full object-cover border-2 border-white/40 ${isEditing ? 'cursor-pointer hover:opacity-70 transition-opacity' : ''}`}
                 onClick={handleProfilePictureClick}

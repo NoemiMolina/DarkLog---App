@@ -57,7 +57,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, currentUserId, onDelet
         if (!newComment.trim()) return;
 
         try {
-            const res = await fetch(`http://localhost:5000/forum/posts/${post._id}/comments`, {
+            const res = await fetch(`${API_URL}/forum/posts/${post._id}/comments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,8 +78,8 @@ export const PostCard: React.FC<PostCardProps> = ({ post, currentUserId, onDelet
     const handleLikeComment = async (commentId: string, replyId?: string) => {
         try {
             const url = replyId
-                ? `http://localhost:5000/forum/posts/${post._id}/comments/${commentId}/replies/${replyId}/reactions`
-                : `http://localhost:5000/forum/posts/${post._id}/comments/${commentId}/reactions`;
+                ? `${API_URL}/forum/posts/${post._id}/comments/${commentId}/replies/${replyId}/reactions`
+                : `${API_URL}/forum/posts/${post._id}/comments/${commentId}/reactions`;
 
             const res = await fetch(url, {
                 method: 'POST',
@@ -113,7 +113,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post, currentUserId, onDelet
                                     src={
                                         post.author.UserProfilePicture?.startsWith("http")
                                             ? post.author.UserProfilePicture
-                                            : `http://localhost:5000/${post.author.UserProfilePicture}`
+                                            : `${API_URL}/${post.author.UserProfilePicture}`
                                     }
                                     alt={post.author?.UserPseudo}
                                     className="w-10 h-10 rounded-full object-cover"

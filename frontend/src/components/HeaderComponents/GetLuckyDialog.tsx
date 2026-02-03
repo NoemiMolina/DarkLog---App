@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config/api";
 import { Button } from "../ui/button";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
@@ -30,8 +31,8 @@ const GetLuckyDialog: React.FC = () => {
     try {
       const isMovie = Math.random() < 0.5;
       const endpoint = isMovie
-        ? "http://localhost:5000/movies/random"
-        : "http://localhost:5000/tvshows/random";
+        ? `${API_URL}/movies/random`
+        : `${API_URL}/tvshows/random`;
 
       const res = await fetch(endpoint);
       if (!res.ok) throw new Error(`Erreur HTTP ${res.status}`);
@@ -71,8 +72,8 @@ const GetLuckyDialog: React.FC = () => {
       }
 
       const route = movieOrTVShow.type === "movie"
-        ? `http://localhost:5000/users/${userId}/watchlist/movie/${movieOrTVShow.id}`
-        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${movieOrTVShow.id}`;
+        ? `${API_URL}/users/${userId}/watchlist/movie/${movieOrTVShow.id}`
+        : `${API_URL}/users/${userId}/watchlist/tvshow/${movieOrTVShow.id}`;
 
       const res = await fetch(route, {
         method: "POST",
@@ -125,7 +126,7 @@ const GetLuckyDialog: React.FC = () => {
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     if (path.startsWith("/")) return `https://image.tmdb.org/t/p/w500${path}`;
     if (path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png")) {
-      return `http://localhost:5000/uploads/${path}`;
+      return `${API_URL}/uploads/${path}`;
     }
     return path;
   };

@@ -79,7 +79,7 @@ export const ForumNotificationBell: React.FC = () => {
                         src={
                           notif.senderProfilePicture?.startsWith("http")
                             ? notif.senderProfilePicture
-                            : `http://localhost:5000/${notif.senderProfilePicture}`
+                            : `${API_URL}/${notif.senderProfilePicture}`
                         }
                         alt={notif.senderPseudo}
                         className="w-8 h-8 rounded-full flex-shrink-0"

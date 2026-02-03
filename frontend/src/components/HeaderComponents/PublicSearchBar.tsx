@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useLocation } from "react-router-dom";
+import { API_URL } from "../../config/api";
 import {
   InputGroup,
   InputGroupAddon,
@@ -49,13 +50,13 @@ const PublicSearchBar: React.FC = () => {
         const encoded = encodeURIComponent(query);
 
         if (isForumPage) {
-          const response = await fetch(`http://localhost:5000/forum/posts/search?q=${encoded}`);
+          const response = await fetch(`${API_URL}/forum/posts/search?q=${encoded}`);
           const data = response.ok ? await response.json() : { posts: [] };
           setResults(data.posts || []);
         } else {
           const [moviesRes, tvRes] = await Promise.all([
-            fetch(`http://localhost:5000/search?query=${encoded}&type=movie`),
-            fetch(`http://localhost:5000/search?query=${encoded}&type=tv`),
+            fetch(`${API_URL}/search?query=${encoded}&type=movie`),
+            fetch(`${API_URL}/search?query=${encoded}&type=tv`),
           ]);
 
           const movies = moviesRes.ok ? await moviesRes.json() : [];
@@ -163,7 +164,7 @@ const PublicSearchBar: React.FC = () => {
                 <img
                   src={authorPic.startsWith("http")
                     ? authorPic
-                    : `http://localhost:5000/${authorPic}`}
+                    : `${API_URL}/${authorPic}`}
                   alt={authorName}
                   className="w-6 h-6 rounded-full object-cover"
                 />

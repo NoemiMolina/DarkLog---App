@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { API_URL } from "../../config/api";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
@@ -67,7 +68,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
     if (!qMovies.trim()) { setResMovies([]); return; }
     const t = setTimeout(async () => {
       try {
-        const r = await fetch(`http://localhost:5000/search?query=${encodeURIComponent(qMovies)}`);
+        const r = await fetch(`${API_URL}/search?query=${encodeURIComponent(qMovies)}`);
         const data: SearchItem[] = await r.json();
         setResMovies((data || []).filter(i => (i.type === "movie")));
       } catch { setResMovies([]); }
@@ -79,7 +80,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
     if (!qShows.trim()) { setResShows([]); return; }
     const t = setTimeout(async () => {
       try {
-        const r = await fetch(`http://localhost:5000/search?query=${encodeURIComponent(qShows)}`);
+        const r = await fetch(`${API_URL}/search?query=${encodeURIComponent(qShows)}`);
         const data: SearchItem[] = await r.json();
         setResShows((data || []).filter(i => (i.type === "tvshow")));
       } catch { setResShows([]); }
@@ -147,7 +148,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         formData.append("UserProfilePicture", profilePic);
       }
 
-      const res = await fetch("http://localhost:5000/users/signup", {
+      const res = await fetch("${API_URL}/users/signup", {
         method: "POST",
         body: formData,
       });
@@ -186,8 +187,8 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
       ) {
         try {
           const route = pendingItem.type === "movie"
-            ? `http://localhost:5000/users/${data.user._id}/watchlist/movie/${pendingItem.id}`
-            : `http://localhost:5000/users/${data.user._id}/watchlist/tvshow/${pendingItem.id}`;
+            ? `${API_URL}/users/${data.user._id}/watchlist/movie/${pendingItem.id}`
+            : `${API_URL}/users/${data.user._id}/watchlist/tvshow/${pendingItem.id}`;
 
           await fetch(route, {
             method: "POST",

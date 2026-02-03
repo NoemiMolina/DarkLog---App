@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { API_URL } from "../../config/api";
 import {
   Dialog,
   DialogContent,
@@ -43,7 +44,7 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
     setSuccessMsg(null);
 
     try {
-      const res = await fetch("http://localhost:5000/users/login", {
+      const res = await fetch(`${API_URL}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -75,8 +76,8 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
           const itemId = pendingItem.id;
           const route =
             pendingItem.type === "movie"
-              ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
-              : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
+              ? `${API_URL}/users/${userId}/watchlist/movie/${itemId}`
+              : `${API_URL}/users/${userId}/watchlist/tvshow/${itemId}`;
 
           const watchlistRes = await fetch(route, {
             method: "POST",

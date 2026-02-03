@@ -32,7 +32,7 @@ const PopularWFriendsSection: React.FC = () => {
                 setLoading(false);
                 return;
             }
-            const response = await fetch(`http://localhost:5000/users/${userId}/friends-reviews`, {
+            const response = await fetch(`${API_URL}/users/${userId}/friends-reviews`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -72,7 +72,7 @@ const PopularWFriendsSection: React.FC = () => {
                                     src={
                                         review.friendProfilePicture.startsWith('http')
                                             ? review.friendProfilePicture
-                                            : `http://localhost:5000/${review.friendProfilePicture}`
+                                            : `${API_URL}/${review.friendProfilePicture}`
                                     }
                                     alt={review.friendName}
                                     className="w-8 h-8 rounded-full object-cover mb-1"
@@ -109,7 +109,7 @@ const PopularWFriendsSection: React.FC = () => {
                                     src={
                                         review.friendProfilePicture.startsWith('http')
                                             ? review.friendProfilePicture
-                                            : `http://localhost:5000/${review.friendProfilePicture}`
+                                            : `${API_URL}/${review.friendProfilePicture}`
                                     }
                                     alt={review.friendName}
                                     className="w-12 h-12 rounded-full object-cover flex-shrink-0"

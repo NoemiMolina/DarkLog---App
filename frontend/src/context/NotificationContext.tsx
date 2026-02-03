@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import io, { Socket } from 'socket.io-client';
+import { API_URL } from '../config/api';
 
 export interface Notification {
   _id: string;
@@ -53,7 +54,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     if (!userId || !token) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${userId}/counts`, {
+      const response = await fetch(`${API_URL}/notifications/${userId}/counts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -72,7 +73,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     if (!userId || !token) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${userId}`, {
+      const response = await fetch(`${API_URL}/notifications/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
@@ -88,7 +89,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     if (!token) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${notificationId}/read`, {
+      const response = await fetch(`${API_URL}/notifications/${notificationId}/read`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -108,7 +109,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     if (!userId || !token) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${userId}/read-all`, {
+      const response = await fetch(`${API_URL}/notifications/${userId}/read-all`, {
         method: 'PATCH',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ type }),
@@ -134,7 +135,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     if (!token) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${notificationId}`, {
+      const response = await fetch(`${API_URL}/notifications/${notificationId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -152,7 +153,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     if (!userId || !token) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/notifications/${userId}/delete-all`, {
+      const response = await fetch(`${API_URL}/notifications/${userId}/delete-all`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ type }),
@@ -177,7 +178,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const userId = getUserId();
     if (!userId) return;
 
-    const newSocket = io('http://localhost:5000', {
+    const newSocket = io(API_URL, {
       auth: { userId },
     });
 

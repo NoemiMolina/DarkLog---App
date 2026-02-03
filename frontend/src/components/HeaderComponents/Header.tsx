@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_URL } from '../../config/api';
 import appLogo from "@/assets/logo/appLogo.png";
 import PublicSearchBar from './PublicSearchBar';
 import SignUpForm from './SignUpForm';
@@ -306,7 +307,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                       src={
                         userProfilePicture?.startsWith("http")
                           ? userProfilePicture
-                          : `http://localhost:5000/${userProfilePicture}`
+                          : `${API_URL}/${userProfilePicture}`
                       }
                       alt={`${username}'s profile`}
                       className="w-12 h-12 rounded-full object-cover border border-white/40 lg:-translate-y-2"

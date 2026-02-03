@@ -42,7 +42,7 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, 
 
     try {
       const response = await fetch(
-        `http://localhost:5000/users/${user._id}/friends/${currentRequest.senderId}`,
+        `${API_URL}/users/${user._id}/friends/${currentRequest.senderId}`,
         {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` },
@@ -98,7 +98,7 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, 
               src={
                 currentRequest.senderProfilePicture?.startsWith("http")
                   ? currentRequest.senderProfilePicture
-                  : `http://localhost:5000/${currentRequest.senderProfilePicture}`
+                  : `${API_URL}/${currentRequest.senderProfilePicture}`
               }
               alt={currentRequest.senderPseudo}
               className="w-16 h-16 rounded-full border border-white/20"

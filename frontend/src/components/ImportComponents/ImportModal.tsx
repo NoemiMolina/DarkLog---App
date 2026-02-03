@@ -89,7 +89,7 @@ export default function ImportModal({
                 runtime: film.runtime
             }));
 
-            const response = await fetch("http://localhost:5000/import/letterboxd/confirm", {
+            const response = await fetch("${API_URL}/import/letterboxd/confirm", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

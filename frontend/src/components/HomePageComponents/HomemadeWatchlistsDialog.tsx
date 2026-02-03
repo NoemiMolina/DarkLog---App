@@ -64,7 +64,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
         try {
             if (rating > 0) {
                 const rateRes = await fetch(
-                    "http://localhost:5000/homemade-watchlists/rate",
+                    "${API_URL}/homemade-watchlists/rate",
                     {
                         method: "POST",
                         headers: {
@@ -86,7 +86,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
 
             if (comment.trim()) {
                 const commentRes = await fetch(
-                    "http://localhost:5000/homemade-watchlists/comment",
+                    "${API_URL}/homemade-watchlists/comment",
                     {
                         method: "POST",
                         headers: {
@@ -123,7 +123,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
 
         try {
             const res = await fetch(
-                "http://localhost:5000/homemade-watchlists/add",
+                "${API_URL}/homemade-watchlists/add",
                 {
                     method: "POST",
                     headers: {
@@ -158,7 +158,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
             >
                 {watchlist.posterPath && (
                     <img
-                        src={`http://localhost:5000${watchlist.posterPath}`}
+                        src={`${API_URL}${watchlist.posterPath}`}
                         alt={watchlist.title}
                         className="absolute inset-0 w-full h-full object-cover"
                     />

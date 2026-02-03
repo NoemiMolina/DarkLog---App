@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { API_URL } from '../../config/api';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Separator } from '../../components/ui/separator';
 import { Button } from '../../components/ui/button';
@@ -77,7 +78,7 @@ const UserPublicProfile: React.FC = () => {
 
     const fetchPublicProfile = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/users/${userId}/public-profile`, {
+            const response = await fetch(`${API_URL}/users/${userId}/public-profile`, {
                 headers: { 'Authorization': `Bearer ${token}` },
             });
             if (!response.ok) {
@@ -100,7 +101,7 @@ const UserPublicProfile: React.FC = () => {
         if (!currentUserId) return;
         try {
             const response = await fetch(
-                `http://localhost:5000/users/${currentUserId}/friends`,
+                `${API_URL}/users/${currentUserId}/friends`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             const friends = await response.json();
@@ -117,7 +118,7 @@ const UserPublicProfile: React.FC = () => {
         if (!currentUserId) return;
         try {
             const response = await fetch(
-                `http://localhost:5000/users/${currentUserId}/friends/${userId}`,
+                `${API_URL}/users/${currentUserId}/friends/${userId}`,
                 {
                     method: 'POST',
                     headers: {
@@ -145,7 +146,7 @@ const UserPublicProfile: React.FC = () => {
         if (!currentUserId) return;
         try {
             const response = await fetch(
-                `http://localhost:5000/users/${currentUserId}/block/${userId}`,
+                `${API_URL}/users/${currentUserId}/block/${userId}`,
                 {
                     method: 'POST',
                     headers: {
@@ -175,7 +176,7 @@ const UserPublicProfile: React.FC = () => {
 
         try {
             const response = await fetch(
-                `http://localhost:5000/users/${currentUserId}/unblock/${userId}`,
+                `${API_URL}/users/${currentUserId}/unblock/${userId}`,
                 {
                     method: 'DELETE',
                     headers: {
@@ -217,7 +218,7 @@ const UserPublicProfile: React.FC = () => {
                                     src={
                                         profileData.UserProfilePicture.startsWith('http')
                                             ? profileData.UserProfilePicture
-                                            : `http://localhost:5000/${profileData.UserProfilePicture}`
+                                            : `${API_URL}/${profileData.UserProfilePicture}`
                                     }
                                     alt="Profile"
                                     className="w-20 h-20 rounded-full object-cover border-2 border-white/40"

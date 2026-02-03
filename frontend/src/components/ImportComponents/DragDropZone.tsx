@@ -78,7 +78,7 @@ export default function DragDropZone({
                                 console.log(`   ... and ${csvData.length - 10} more films`);
                             }
                             const response = await fetch(
-                                "http://localhost:5000/import/letterboxd/preview",
+                                "${API_URL}/import/letterboxd/preview",
                                 {
                                     method: "POST",
                                     headers: {

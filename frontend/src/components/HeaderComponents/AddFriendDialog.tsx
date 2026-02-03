@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { API_URL } from '../../config/api';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { FaUserPlus } from "react-icons/fa";
@@ -52,7 +53,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
       try {
         const token = localStorage.getItem('token');
         const response = await fetch(
-          `http://localhost:5000/users/search?query=${encodeURIComponent(searchQuery)}`,
+          `${API_URL}/users/search?query=${encodeURIComponent(searchQuery)}`,
           {
             method: 'GET',
             headers: {
@@ -92,7 +93,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
     try {
       const token = localStorage.getItem('token');
       const response = await fetch(
-        `http://localhost:5000/users/${currentUserId}/friends/${selectedUser._id}`,
+        `${API_URL}/users/${currentUserId}/friends/${selectedUser._id}`,
         {
           method: 'POST',
           headers: {

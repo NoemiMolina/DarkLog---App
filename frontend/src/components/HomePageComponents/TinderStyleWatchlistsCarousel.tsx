@@ -36,7 +36,7 @@ const TinderStyleWatchlistsCarousel = () => {
             return;
         }
         try {
-            await fetch("http://localhost:5000/homemade-watchlists/add", {
+            await fetch("${API_URL}/homemade-watchlists/add", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

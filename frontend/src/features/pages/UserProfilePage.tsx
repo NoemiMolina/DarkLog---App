@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Separator } from '../../components/ui/separator';
 import { jwtDecode } from 'jwt-decode';
+import { API_URL } from '../../config/api';
 import ProfileInfoSection from '../../components/ProfileComponents/ProfileInfosSection';
 import Top3Section from '../../components/ProfileComponents/Top3Section';
 import WatchlistSection from '../../components/ProfileComponents/WatchlistSection';
@@ -80,7 +81,7 @@ const UserProfile: React.FC = () => {
   const fetchProfileData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/users/${userId}/profile`, {
+      const response = await fetch(`${API_URL}/users/${userId}/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -121,7 +122,7 @@ const UserProfile: React.FC = () => {
       if (profilePictureFile) {
         const formData = new FormData();
         formData.append('UserProfilePicture', profilePictureFile);
-        const pictureResponse = await fetch(`http://localhost:5000/users/${userId}/profile-picture`, {
+        const pictureResponse = await fetch(`${API_URL}/users/${userId}/profile-picture`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -135,7 +136,7 @@ const UserProfile: React.FC = () => {
           throw new Error('Failed to update profile picture');
         }
       }
-      const profileResponse = await fetch(`http://localhost:5000/users/${userId}/profile`, {
+      const profileResponse = await fetch(`${API_URL}/users/${userId}/profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -151,7 +152,7 @@ const UserProfile: React.FC = () => {
 
       if (!profileResponse.ok) throw new Error('Failed to update profile');
       if (newPassword && oldPassword) {
-        const passwordResponse = await fetch(`http://localhost:5000/users/${userId}/password`, {
+        const passwordResponse = await fetch(`${API_URL}/users/${userId}/password`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -196,7 +197,7 @@ const UserProfile: React.FC = () => {
       const encoded = encodeURIComponent(query);
 
       const response = await fetch(
-        `http://localhost:5000/search?query=${encoded}&type=${type}`
+        `${API_URL}/search?query=${encoded}&type=${type}`
       );
 
       if (!response.ok) {
@@ -243,7 +244,7 @@ const UserProfile: React.FC = () => {
     try {
       const tmdbId = item.tmdb_id;
       const addResponse = await fetch(
-        `http://localhost:5000/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${tmdbId}`,
+        `${API_URL}/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${tmdbId}`,
         { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } }
       );
 
@@ -270,8 +271,8 @@ const UserProfile: React.FC = () => {
   const removeFromTop3 = async (itemId: number, type: 'movie' | 'tv') => {
     try {
       const endpoint = type === 'movie'
-        ? `http://localhost:5000/users/${userId}/top3favorites/movie/${itemId}`
-        : `http://localhost:5000/users/${userId}/top3favorites/tvshow/${itemId}`;
+        ? `${API_URL}/users/${userId}/top3favorites/movie/${itemId}`
+        : `${API_URL}/users/${userId}/top3favorites/tvshow/${itemId}`;
 
       await fetch(endpoint, {
         method: 'DELETE',
@@ -289,8 +290,8 @@ const UserProfile: React.FC = () => {
       const tmdbId = item.tmdb_id;
 
       const endpoint = type === 'movie'
-        ? `http://localhost:5000/users/${userId}/watchlist/movie/${tmdbId}`
-        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${tmdbId}`;
+        ? `${API_URL}/users/${userId}/watchlist/movie/${tmdbId}`
+        : `${API_URL}/users/${userId}/watchlist/tvshow/${tmdbId}`;
 
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -319,11 +320,11 @@ const UserProfile: React.FC = () => {
       let endpoint: string;
 
       if (type === 'movie') {
-        endpoint = `http://localhost:5000/users/${userId}/watchlist/movie/${id}`;
+        endpoint = `${API_URL}/users/${userId}/watchlist/movie/${id}`;
       } else if (type === 'tv') {
-        endpoint = `http://localhost:5000/users/${userId}/watchlist/tvshow/${id}`;
+        endpoint = `${API_URL}/users/${userId}/watchlist/tvshow/${id}`;
       } else if (type === 'homemadewatchlist') {
-        endpoint = `http://localhost:5000/users/${userId}/saved-homemade-watchlists/${id}`;
+        endpoint = `${API_URL}/users/${userId}/saved-homemade-watchlists/${id}`;
       }
 
       await fetch(endpoint!, {

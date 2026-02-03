@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { API_URL } from '../../config/api';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -31,7 +32,7 @@ const FriendSearchDialog: React.FC = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:5000/users/search?query=${encodeURIComponent(searchQuery)}`,
+        `${API_URL}/users/search?query=${encodeURIComponent(searchQuery)}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -63,7 +64,7 @@ const FriendSearchDialog: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/users/${userId}/friends/${friendId}`,
+        `${API_URL}/users/${userId}/friends/${friendId}`,
         {
           method: 'POST',
           headers: {
@@ -142,7 +143,7 @@ const FriendSearchDialog: React.FC = () => {
                       src={
                         user.UserProfilePicture.startsWith('http')
                           ? user.UserProfilePicture
-                          : `http://localhost:5000/${user.UserProfilePicture}`
+                          : `${API_URL}/${user.UserProfilePicture}`
                       }
                       alt={user.UserPseudo}
                       className="w-12 h-12 rounded-full object-cover border border-white/40"

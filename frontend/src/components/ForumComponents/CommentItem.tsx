@@ -49,7 +49,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
         if (!replyContent.trim()) return;
 
         try {
-            const res = await fetch(`http://localhost:5000/forum/posts/${postId}/comments/${commentIdToUse}/replies`, {
+            const res = await fetch(`${API_URL}/forum/posts/${postId}/comments/${commentIdToUse}/replies`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
                                     src={
                                         comment.author.UserProfilePicture?.startsWith("http")
                                             ? comment.author.UserProfilePicture
-                                            : `http://localhost:5000/${comment.author.UserProfilePicture}`
+                                            : `${API_URL}/${comment.author.UserProfilePicture}`
                                     }
                                     alt={comment.author?.UserPseudo}
                                     className="w-8 h-8 rounded-full object-cover"

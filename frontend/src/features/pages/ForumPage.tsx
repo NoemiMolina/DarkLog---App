@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { API_URL } from "../../config/api";
 import Header from "../../components/HeaderComponents/Header";
 import { ForumNotificationBell } from "../../components/NotificationsComponents/ForumNotificationBell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card";
@@ -33,7 +34,7 @@ export const ForumPage: React.FC = () => {
                 if (parsed.UserProfilePicture) {
                     const fullPath = parsed.UserProfilePicture.startsWith("http")
                         ? parsed.UserProfilePicture
-                        : `http://localhost:5000/${parsed.UserProfilePicture}`;
+                        : `${API_URL}/${parsed.UserProfilePicture}`;
                     setProfilePic(fullPath);
                 }
             } catch {
@@ -78,7 +79,7 @@ export const ForumPage: React.FC = () => {
         const fetchPostsByTag = async () => {
             setIsLoadingTag(true); 
             try {
-                const response = await fetch(`http://localhost:5000/forum/posts/tags/${encodeURIComponent(selectedTag)}`);
+                const response = await fetch(`${API_URL}/forum/posts/tags/${encodeURIComponent(selectedTag)}`);
                 if (response.ok) {
                     const data = await response.json();
                     setFilteredPosts(data.posts || []);

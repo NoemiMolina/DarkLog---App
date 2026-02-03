@@ -29,7 +29,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/users/${userId}/items/${itemId}?type=${type}`,
+          `${API_URL}/users/${userId}/items/${itemId}?type=${type}`,
           {
             headers: {
               "Authorization": `Bearer ${token}`
@@ -80,7 +80,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/users/${userId}/items/${itemId}/rating-review`,
+        `${API_URL}/users/${userId}/items/${itemId}/rating-review`,
         {
           method: "POST",
           headers: {
@@ -134,8 +134,8 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
     }
     const route =
       type === "movie"
-        ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
-        : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
+        ? `${API_URL}/users/${userId}/watchlist/movie/${itemId}`
+        : `${API_URL}/users/${userId}/watchlist/tvshow/${itemId}`;
 
     try {
       const res = await fetch(route, {

@@ -23,7 +23,7 @@ const getPosterUrl = (path?: string) => {
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     if (path.startsWith("/")) return `https://image.tmdb.org/t/p/w500${path}`;
     if (path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png")) {
-        return `http://localhost:5000/uploads/${path}`;
+        return `${API_URL}/uploads/${path}`;
     }
     return path;
 };

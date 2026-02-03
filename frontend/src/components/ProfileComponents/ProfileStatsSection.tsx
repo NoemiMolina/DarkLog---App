@@ -41,7 +41,7 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
     setLoadingFriends(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/users/${userId}/friends`, {
+      const response = await fetch(`${API_URL}/users/${userId}/friends`, {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       const data = await response.json();
@@ -154,7 +154,7 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
                         <img
                           src={friendPicture.startsWith('http')
                             ? friendPicture
-                            : `http://localhost:5000/${friendPicture}`}
+                            : `${API_URL}/${friendPicture}`}
                           alt={friendName}
                           className="w-12 h-12 rounded-full object-cover"
                         />
