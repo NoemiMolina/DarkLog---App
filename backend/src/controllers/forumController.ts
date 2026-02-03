@@ -475,7 +475,7 @@ export const getNotificationsForUser = async (req: Request, res: Response) => {
         const userId = getUserId(req);
         if (!userId) return res.status(401).json({ message: "Unauthorized" });
         const posts = await Forum.find({ author: userId });
-        const notifications = [];
+        const notifications: any[] = [];
         for (const post of posts) {
             for (const comment of post.comments) {
                 if (String(comment.author) !== String(userId)) {
