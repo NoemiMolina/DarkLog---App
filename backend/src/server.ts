@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
@@ -68,7 +68,7 @@ app.use("/import", importRoutes);
 app.use("/news", newsRoutes);
 // app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.send("Backend's app is online, gg");
 });
 

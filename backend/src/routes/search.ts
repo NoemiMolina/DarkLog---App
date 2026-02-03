@@ -1,10 +1,10 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import Movie from "../models/Movie";
 import TvShow from "../models/TVShow";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", async (req: Request, res: Response) => {
     try {
         const query = req.query.query || "";
 
