@@ -25,14 +25,26 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 
 // 🔌 Socket.IO setup
+const allowedOrigins = process.env.NODE_ENV === 'production' 
+  ? [
+      "https://fearlogapp.vercel.app",
+      "https://fearlogapp.com",
+      "https://www.fearlogapp.com"
+    ]
+  : ["http://localhost:5173", "http://localhost:3000"];
+
 export const io = new SocketIOServer(server, {
   cors: {
-    origin: "http://localhost:5173", // Adjust to your frontend URL
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 
-app.use(cors());
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 app.use(express.json());
 
 connectDB();
