@@ -74,7 +74,7 @@ const WelcomePage: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:-translate-y-90 xl:mt-40 2xl:mt-50 2xl:-translate-y-110">
+                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:-translate-y-95 xl:mt-40 2xl:mt-50 2xl:-translate-y-110">
                     <h1
                         className="font-bold tracking-wide text-[0.85rem] sm:text-[1rem] xl:text-[1.5rem] 2xl:text-[1.5rem] italic"
                         style={{ fontFamily: "'Workbench', monospace" }}
