@@ -20,8 +20,6 @@ export const CreatePostCard: React.FC<CreatePostCardProps> = ({ username, profil
     const [tags, setTags] = useState<string[]>([]);
 
     const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        console.log('🔑 Key pressed:', e.key, 'Input value:', tagInput);
-        
         if (e.key === 'Enter' && tagInput.trim()) {
             e.preventDefault();
             const newTag = tagInput.trim().toLowerCase();
@@ -41,10 +39,7 @@ export const CreatePostCard: React.FC<CreatePostCardProps> = ({ username, profil
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newPostTitle.trim() || !newPostContent.trim()) return;
-        console.log('📝 Creating post with tags:', tags);
         const success = await onCreatePost(newPostTitle, newPostContent, tags);
-        console.log('✅ Post created successfully:', success);
-
         if (success) {
             setNewPostTitle('');
             setNewPostContent('');

@@ -38,31 +38,21 @@ const TinderStyleCarousel = ({ title, items, type = "movie" }: TinderStyleCarous
     
     const token = localStorage.getItem('token');
     const userId = token ? (jwtDecode<any>(token)).id : null;
-    console.log('UserId extrait du token:', userId);
-    
     const currentMovie = items[currentIndex];
-    console.log('🎬 Current movie:', currentMovie);
     const addToWatchlist = async (movie: Movie) => {
         try {
             const token = localStorage.getItem('token');
-            console.log('Token:', token ? 'Existe ✅' : 'N\'existe pas ❌');
-            
             if (!token) {
                 alert('Please log in to add to watchlist');
                 return;
             }
-
-            console.log('Ajout du film à la watchlist:', movie.title);
             const url = `${API_URL}/users/${userId}/watchlist/movie/${movie._id}`;
-            console.log('URL de la requête:', url);
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-
-            console.log('Réponse du serveur:', response.status);
             if (response.ok) {
                 console.log('✅ Movie added to watchlist successfully:', movie.title);
             } else {
@@ -75,7 +65,6 @@ const TinderStyleCarousel = ({ title, items, type = "movie" }: TinderStyleCarous
 
     const handlers = useSwipeable({
         onSwipedLeft: () => {
-            console.log('✅ Left swipe successful', currentMovie.title);
             addToWatchlist(currentMovie);
             setExitDirection('left');
             setTimeout(() => {
@@ -86,7 +75,6 @@ const TinderStyleCarousel = ({ title, items, type = "movie" }: TinderStyleCarous
             }, 300);
         },
         onSwipedRight: () => {
-            console.log('✅ Right swipe successful', currentMovie.title);
             setExitDirection('right');
             setTimeout(() => {
                 setCurrentIndex((prev) => prev + 1);

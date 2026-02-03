@@ -57,7 +57,6 @@ const GetLuckyDialog: React.FC = () => {
       const token = localStorage.getItem("token");
 
       if (!userId || !token) {
-        console.log("⚠️ User not logged in, saving item and redirecting...");
         const item = {
           _id: movieOrTVShow.id,
           title: movieOrTVShow.title || movieOrTVShow.name,

@@ -116,7 +116,6 @@ const PublicSearchBar: React.FC = () => {
   }, [dialogData]);
 
   const handleResultClick = (item: any) => {
-    console.log("Clicked item:", item);
     if (isForumPage) {
       window.location.hash = `post-${item._id}`;
       setTimeout(() => {

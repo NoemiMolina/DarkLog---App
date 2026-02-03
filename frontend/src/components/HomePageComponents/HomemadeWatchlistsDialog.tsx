@@ -40,9 +40,6 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
     const [rating, setRating] = useState<number>(0);
     const [comment, setComment] = useState<string>("");
     const [message, setMessage] = useState<string | null>(null);
-
-    console.log('🎪 HomemadeWatchlistsDialog received:', { _id: watchlist._id, title: watchlist.title, posterPath: watchlist.posterPath });
-
     const storedUser = localStorage.getItem("user");
     const user = storedUser ? JSON.parse(storedUser) : null;
     const userId = user?._id;
@@ -254,7 +251,6 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
                                 key={rating}
                                 value={rating}
                                 onChange={(r) => {
-                                    console.log("Rating set:", r);
                                     setRating(r);
                                 }}
                             />

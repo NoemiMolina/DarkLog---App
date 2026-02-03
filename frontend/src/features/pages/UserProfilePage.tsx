@@ -80,15 +80,11 @@ const UserProfile: React.FC = () => {
   const fetchProfileData = async () => {
     try {
       const token = localStorage.getItem("token");
-      console.log("🔑 Token from localStorage:", token ? "EXISTS" : "MISSING");
-
       const response = await fetch(`http://localhost:5000/users/${userId}/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
       });
-
-      console.log("📡 Response status:", response.status);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -97,7 +93,6 @@ const UserProfile: React.FC = () => {
       }
 
       const data = await response.json();
-      console.log("✅ Profile data received:", data);
       if (data.savedHomemadeWatchlists) {
         data.savedHomemadeWatchlists = data.savedHomemadeWatchlists.map((wl: any) => ({
           ...wl,
@@ -126,8 +121,6 @@ const UserProfile: React.FC = () => {
       if (profilePictureFile) {
         const formData = new FormData();
         formData.append('UserProfilePicture', profilePictureFile);
-
-        console.log('📤 Uploading new profile picture...');
         const pictureResponse = await fetch(`http://localhost:5000/users/${userId}/profile-picture`, {
           method: 'PUT',
           headers: {
@@ -141,8 +134,6 @@ const UserProfile: React.FC = () => {
           console.error('❌ Failed to update profile picture:', errorData);
           throw new Error('Failed to update profile picture');
         }
-
-        console.log('✅ Profile picture updated successfully');
       }
       const profileResponse = await fetch(`http://localhost:5000/users/${userId}/profile`, {
         method: 'PUT',
@@ -195,31 +186,31 @@ const UserProfile: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
- const handleSearch = async (type: 'movie' | 'tv', query: string) => {
-  if (!query.trim()) {
-    setSearchResults([]);
-    return;
-  }
-
-  try {
-    const encoded = encodeURIComponent(query);
-
-    const response = await fetch(
-      `http://localhost:5000/search?query=${encoded}&type=${type}`
-    );
-
-    if (!response.ok) {
+  const handleSearch = async (type: 'movie' | 'tv', query: string) => {
+    if (!query.trim()) {
       setSearchResults([]);
       return;
     }
 
-    const data = await response.json();
-    setSearchResults(data.slice(0, 10));
-  } catch (error) {
-    console.error('Error searching:', error);
-    setSearchResults([]);
-  }
-};
+    try {
+      const encoded = encodeURIComponent(query);
+
+      const response = await fetch(
+        `http://localhost:5000/search?query=${encoded}&type=${type}`
+      );
+
+      if (!response.ok) {
+        setSearchResults([]);
+        return;
+      }
+
+      const data = await response.json();
+      setSearchResults(data.slice(0, 10));
+    } catch (error) {
+      console.error('Error searching:', error);
+      setSearchResults([]);
+    }
+  };
 
 
   useEffect(() => {
@@ -251,8 +242,6 @@ const UserProfile: React.FC = () => {
     if (!userId) return;
     try {
       const tmdbId = item.tmdb_id;
-
-      console.log('Adding to Top3 with TMDB ID:', tmdbId);
       const addResponse = await fetch(
         `http://localhost:5000/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${tmdbId}`,
         { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } }

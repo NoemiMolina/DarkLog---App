@@ -60,7 +60,6 @@ export default function ImportModal({
     const [successMessage, setSuccessMessage] = useState<string>("");
     const [defaultRating, setDefaultRating] = useState<number>(3);
     const handlePreviewReady = (preview: PreviewResponse) => {
-        console.log("✅ Preview reçu:", preview);
         setPreviewData(preview);
         setStep("preview");
         setError(null);
@@ -107,8 +106,6 @@ export default function ImportModal({
             }
 
             const result = await response.json();
-
-            console.log("✅ Import confirmed:", result);
             setSuccessMessage(
                 `${result.imported} new films imported, ${result.updated} updates made`
             );

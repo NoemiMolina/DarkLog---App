@@ -81,7 +81,6 @@ export const ForumPage: React.FC = () => {
                 const response = await fetch(`http://localhost:5000/forum/posts/tags/${encodeURIComponent(selectedTag)}`);
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('📌 Posts by tag:', data.posts);
                     setFilteredPosts(data.posts || []);
                 } else {
                     setFilteredPosts([]);

@@ -45,7 +45,6 @@ export default function DragDropZone({
             }
 
             setIsLoading(true);
-            console.log(`📂 Parsing file: ${file.name}`);
             return new Promise<void>((resolve, reject) => {
                 Papa.parse<CSVRow>(file, {
                     header: true, 
@@ -53,7 +52,6 @@ export default function DragDropZone({
                     dynamicTyping: false, 
                     complete: async (results) => {
                         try {
-                            console.log(`✅ CSV parsed: ${results.data.length} rows`);
                             const csvData = results.data
                                 .filter((row) => row && row.Name && row.Year) 
                                 .map((row) => ({
@@ -71,7 +69,6 @@ export default function DragDropZone({
                                 resolve();
                                 return;
                             }
-
                             console.log(`📊 ${csvData.length} films extracted from CSV`);
                             console.log("🎬 Films to process:");
                             csvData.slice(0, 10).forEach((film, idx) => {
@@ -80,7 +77,6 @@ export default function DragDropZone({
                             if (csvData.length > 10) {
                                 console.log(`   ... and ${csvData.length - 10} more films`);
                             }
-                            console.log("📡 Calling backend /preview...");
                             const response = await fetch(
                                 "http://localhost:5000/import/letterboxd/preview",
                                 {
@@ -103,7 +99,6 @@ export default function DragDropZone({
                             }
 
                             const preview: PreviewResponse = await response.json();
-                            console.log("✅ Preview received from backend:", preview);
                             onPreviewReady(preview);
                             setIsLoading(false);
                             resolve();

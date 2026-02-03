@@ -41,7 +41,6 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
           const data = await res.json();
           setRating(data.myRating || 0);
           setReview(data.myReview || "");
-          console.log("✅ User data loaded:", data);
         } else if (res.status === 403 || res.status === 401) {
           console.warn("⚠ Unauthorized access when loading user data");
           localStorage.removeItem("token");
@@ -78,15 +77,6 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
       setTimeout(() => navigate("/login"), 1500);
       return;
     }
-    console.log('💾 Attempting to save:', {
-      url: `http://localhost:5000/users/${userId}/items/${itemId}/rating-review`,
-      body: {
-        type,
-        rating,
-        reviewText: review,
-        itemTitle,
-      }
-    });
 
     try {
       const res = await fetch(
@@ -138,7 +128,6 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
     const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
     const token = localStorage.getItem("token");
     if (!userId || !token) {
-      console.log("⚠️ User not logged in, saving item and redirecting...");
       pendingWatchlistService.setPendingItem(item, type);
       navigate("/login");
       return;

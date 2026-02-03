@@ -53,10 +53,6 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
       });
 
       const data = await res.json();
-
-      console.log("📡 Login response status:", res.status);
-      console.log("📡 Login response data:", data);
-
       if (!res.ok) {
         throw new Error(data?.message || "Login failed");
       }
@@ -73,21 +69,14 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
 
       setSuccessMsg("✅ Successfully connected!");
       const pendingItem = pendingWatchlistService.getPendingItem();
-      console.log("🔍 Pending item:", pendingItem);
-
       if (pendingItem && data.user && data.token) {
         try {
           const userId = data.user._id;
           const itemId = pendingItem.id;
-
-          console.log("🎬 Trying to add pending item:", { userId, itemId, type: pendingItem.type });
-
           const route =
             pendingItem.type === "movie"
               ? `http://localhost:5000/users/${userId}/watchlist/movie/${itemId}`
               : `http://localhost:5000/users/${userId}/watchlist/tvshow/${itemId}`;
-
-          console.log("📡 POST request to:", route);
 
           const watchlistRes = await fetch(route, {
             method: "POST",
@@ -95,13 +84,9 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
               Authorization: `Bearer ${data.token}`
             }
           });
-
-          console.log("📥 Response status:", watchlistRes.status);
           const responseData = await watchlistRes.json();
           console.log("📥 Response data:", responseData);
-
           if (watchlistRes.ok) {
-            console.log(`🎬 "${pendingItem.title}" automatically added to watchlist!`);
             setSuccessMsg(`✅ Connected! "${pendingItem.title}" added to your watchlist!`);
           }
 

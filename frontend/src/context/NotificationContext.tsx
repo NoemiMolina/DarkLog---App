@@ -182,12 +182,10 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     });
 
     newSocket.on('connect', () => {
-      console.log('✅ WebSocket connected');
       newSocket.emit('joinRoom', userId);
     });
 
     newSocket.on('newNotification', (notif: Notification) => {
-      console.log('🔔 New notification received:', notif);
       setNotifications((prev) => [notif, ...prev]);
       setUnreadCount((prev) => prev + 1);
       

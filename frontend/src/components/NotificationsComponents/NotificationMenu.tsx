@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-import { useNotifications } from '../context/NotificationContext';
-import { NotificationBadge } from './NotificationsComponents/NotificationBadge';
+import { useNotifications } from '../../context/NotificationContext';
+import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './ui/dialog';
-import { Button } from './ui/button';
+} from '../ui/dialog';
+import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
-import { ScrollArea } from './ui/scroll-area';
+import { ScrollArea } from '../ui/scroll-area';
 
 export const NotificationMenu: React.FC = () => {
   const { notifications, forumNotificationsCount, markAsRead, markAllAsRead, deleteNotification } = useNotifications();

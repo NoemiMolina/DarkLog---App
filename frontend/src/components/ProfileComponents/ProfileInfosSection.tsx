@@ -4,7 +4,6 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Eye, EyeOff, Save, Edit, X, Camera } from 'lucide-react';
-import { IoReturnDownBack } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 
 interface ProfileInfoSectionProps {
@@ -45,7 +44,6 @@ const ProfileInfoSection: React.FC<ProfileInfoSectionProps> = ({
   onProfilePictureChange
 }) => {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
   
   const handleProfilePictureClick = () => {
     if (isEditing && fileInputRef.current) {

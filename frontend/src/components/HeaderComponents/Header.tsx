@@ -43,7 +43,6 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const { unreadCount, friendRequestsCount, forumNotificationsCount } = useNotifications();
-  console.log("🧩 userProfilePicture =", userProfilePicture);
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId') || '';
   const handleToggle = (value: boolean) => {

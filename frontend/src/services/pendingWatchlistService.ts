@@ -19,7 +19,6 @@ export const pendingWatchlistService = {
             timestamp: Date.now()
         };
         localStorage.setItem(STORAGE_KEY, JSON.stringify(pendingItem));
-        console.log("💾 Saved pending item:", pendingItem);
     },
 
     getPendingItem: (): PendingWatchlistItem | null => {
