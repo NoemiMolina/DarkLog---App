@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Header from "../../components/HeaderComponents/Header";
 import appLogo from "@/assets/logo/appLogo.png";
 import backgroundOption1 from "@/assets/images/WelcomePageBackgroundImgs/evilDeadRiseMainHomePic.jpg";
@@ -35,16 +35,8 @@ const WelcomePage: React.FC = () => {
     const randomImageSelection =
         backgroundsImages[Math.floor(Math.random() * backgroundsImages.length)];
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem("userToken");
-        setIsLoggedIn(!!token);
-    }, []);
-
     const handleLogout = () => {
         localStorage.removeItem("userToken");
-        setIsLoggedIn(false);
     };
 
     return (
