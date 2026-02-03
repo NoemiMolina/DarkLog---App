@@ -148,7 +148,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
         formData.append("UserProfilePicture", profilePic);
       }
 
-      const res = await fetch("${API_URL}/users/signup", {
+      const res = await fetch(`${API_URL}/users/signup`, {
         method: "POST",
         body: formData,
       });
