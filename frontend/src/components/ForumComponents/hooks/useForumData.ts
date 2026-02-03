@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../../../config/api';
 
 interface Post {
     _id: string;
@@ -17,7 +18,7 @@ export const useForumData = () => {
 
     const loadPosts = async () => {
         try {
-            const res = await fetch('http://localhost:5000/forum/posts/published', {
+            const res = await fetch(`${API_URL}/forum/posts/published`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {
@@ -33,7 +34,7 @@ export const useForumData = () => {
 
     const createPost = async (title: string, content: string, tags: string[] = []) => {
         try {
-            const res = await fetch('http://localhost:5000/forum/posts', {
+            const res = await fetch(`${API_URL}/forum/posts`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,7 +54,7 @@ export const useForumData = () => {
 
     const deletePost = async (postId: string) => {
         try {
-            const res = await fetch(`http://localhost:5000/forum/posts/${postId}`, {
+            const res = await fetch(`${API_URL}/forum/posts/${postId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -67,7 +68,7 @@ export const useForumData = () => {
 
     const likePost = async (postId: string) => {
         try {
-            const res = await fetch(`http://localhost:5000/forum/posts/${postId}/reaction`, {
+            const res = await fetch(`${API_URL}/forum/posts/${postId}/reaction`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

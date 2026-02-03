@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config/api';
 
 interface Watchlist {
     _id: string;
@@ -37,7 +38,7 @@ export const useWatchlists = () => {
 
         const fetch_watchlists = async () => {
             try {
-                const response = await fetch('http://localhost:5000/homemade-watchlists');
+                const response = await fetch(`${API_URL}/homemade-watchlists`);
                 if (!response.ok) throw new Error('Erreur lors du chargement');
                 const data: Watchlist[] = await response.json();
                 cachedWatchlists = data;
