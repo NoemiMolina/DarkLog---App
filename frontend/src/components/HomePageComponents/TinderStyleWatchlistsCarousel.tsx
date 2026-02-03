@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import HomemadeWatchlistsDialog from './HomemadeWatchlistsDialog';
+import { API_URL } from '../../config/api';
 
 interface Movie {
     _id: string;
