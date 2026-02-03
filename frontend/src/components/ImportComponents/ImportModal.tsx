@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { X } from "lucide-react";
+import { API_URL } from '../../config/api';
 import DragDropZone from "./DragDropZone";
 import PreviewResults from "./PreviewResults";
 import ConfirmationStep from "./ConfirmationStep";

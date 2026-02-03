@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import Papa from "papaparse";
 import { Upload, AlertCircle } from "lucide-react";
 import type { PreviewResponse } from "./ImportModal";
+import { API_URL } from '../../config/api';
 
 interface DragDropZoneProps {
     userId: string;
