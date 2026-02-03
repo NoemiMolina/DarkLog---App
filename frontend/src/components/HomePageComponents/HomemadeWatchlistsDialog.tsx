@@ -65,7 +65,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
         try {
             if (rating > 0) {
                 const rateRes = await fetch(
-                    "${API_URL}/homemade-watchlists/rate",
+                    `${API_URL}/homemade-watchlists/rate`,
                     {
                         method: "POST",
                         headers: {
@@ -87,7 +87,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
 
             if (comment.trim()) {
                 const commentRes = await fetch(
-                    "${API_URL}/homemade-watchlists/comment",
+                    `${API_URL}/homemade-watchlists/comment`,
                     {
                         method: "POST",
                         headers: {
@@ -124,7 +124,7 @@ const HomemadeWatchlistsDialog = ({ watchlist, isOpen, onOpenChange }: { watchli
 
         try {
             const res = await fetch(
-                "${API_URL}/homemade-watchlists/add",
+                `${API_URL}/homemade-watchlists/add`,
                 {
                     method: "POST",
                     headers: {
