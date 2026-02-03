@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Trash2 } from 'lucide-react';
+import { API_URL } from '../../config/api';
 
 interface WatchlistItem {
   _id: string;

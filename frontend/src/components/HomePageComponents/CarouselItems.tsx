@@ -7,6 +7,7 @@ import {
 } from "../../components/ui/carousel";
 import ItemDialog from "./ItemDialog";
 import { IoSkull } from "react-icons/io5";
+import { API_URL } from '../../config/api';
 
 interface Movie {
     _id: string;

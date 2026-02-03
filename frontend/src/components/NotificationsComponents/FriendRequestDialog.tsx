@@ -8,6 +8,7 @@ import {
   DialogDescription,
 } from '../ui/dialog';
 import { Button } from '../ui/button';
+import { API_URL } from '../../config/api';
 
 interface FriendRequestDialogProps {
   open: boolean;

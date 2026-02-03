@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
+import { API_URL } from '../../config/api';
 import RatingSkulls from "./RatingSkulls";
 
 interface ItemCardProps {

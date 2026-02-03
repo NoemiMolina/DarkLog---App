@@ -7,6 +7,7 @@ import { Separator } from '../../components/ui/separator';
 import { Badge } from '../../components/ui/badge';
 import { Heart, MessageCircle, Send, Trash2 } from 'lucide-react';
 import { CommentItem } from './CommentItem';
+import { API_URL } from '../../config/api';
 
 interface Post {
     _id: string;

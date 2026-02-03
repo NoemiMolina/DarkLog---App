@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
 import { Clock, Users } from 'lucide-react';
+import { API_URL } from '../../config/api';
 
 interface ProfileStatsSection {
   numberOfWatchedMovies: number;

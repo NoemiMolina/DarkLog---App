@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Separator } from '../ui/separator';
 import RatingSkulls from './RatingSkulls';
+import { API_URL } from '../../config/api';
 
 interface FriendReview {
     friendId: string;

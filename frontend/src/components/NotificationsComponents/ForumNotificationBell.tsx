@@ -10,6 +10,7 @@ import {
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
 import { ScrollArea } from '../ui/scroll-area';
+import { API_URL } from '../../config/api';
 
 export const ForumNotificationBell: React.FC = () => {
   const { notifications, forumNotificationsCount, markAsRead, deleteNotification, markAllAsRead } = useNotifications();

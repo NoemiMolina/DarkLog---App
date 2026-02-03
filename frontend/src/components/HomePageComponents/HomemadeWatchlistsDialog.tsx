@@ -17,6 +17,7 @@ import { Textarea } from "../../components/ui/textarea";
 import { IoSkull } from "react-icons/io5";
 import ItemDialog from "./ItemDialog";
 import RatingSkulls from "./RatingSkulls";
+import { API_URL } from '../../config/api';
 
 interface Movie {
     _id: string;

@@ -4,6 +4,7 @@ import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Eye, EyeOff, Save, Edit, X, Camera } from 'lucide-react';
+import { API_URL } from '../../config/api';
 
 interface ProfileInfoSectionProps {
   profileData: {
