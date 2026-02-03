@@ -10,8 +10,8 @@ interface LetterboxdMovieData {
   name: string;
   year: number;
   rating: number;
-  review: string; 
-  watchedDate?: string; 
+  review: string;
+  watchedDate?: string;
 }
 
 interface PreviewResult {
@@ -21,9 +21,9 @@ interface PreviewResult {
     tmdbId: number;
     rating: number;
     review: string;
-    runtime: number; 
-    status: "new" | "update"; 
-    oldRating?: number; 
+    runtime: number;
+    status: "new" | "update";
+    oldRating?: number;
   }[];
   notFound: {
     name: string;
@@ -52,8 +52,6 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    console.log(`\n🎬 === PREVIEW IMPORT LETTERBOXD === 🎬`);
-    console.log(`📊 ${csvData.length} films to process for ${user.UserPseudo}`);
     const previewResult: PreviewResult = {
       found: [],
       notFound: [],
@@ -65,11 +63,8 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
     };
     for (const filmData of csvData) {
       const { name, year, rating, review } = filmData as LetterboxdMovieData;
-
-      console.log(`\n📽️ Processing: "${name}" (${year})`);
       const matchResult = await matchMovieByNameAndYear(name, year);
       if (!matchResult.found) {
-        console.log(`   → Not found: ${matchResult.error}`);
         previewResult.notFound.push({
           name,
           year,
@@ -79,7 +74,6 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
         continue;
       }
       if (!isHorrorGenre(matchResult.movie)) {
-        console.log(`   → Rejeté: pas du genre horreur`);
         previewResult.notFound.push({
           name,
           year,
@@ -92,9 +86,6 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
 
       const status = alreadyRated ? "update" : "new";
       const oldRating = alreadyRated ? alreadyRated.rating : undefined;
-
-      console.log(`   ✅ Found! Genre_ids: ${matchResult.movie.genre_ids?.join(", ") || 'N/A'}, Status: ${status}, TMDB_ID: ${matchResult.movie.tmdb_id}, Runtime: ${matchResult.movie.runtime || 0}min`);
-
       previewResult.found.push({
         name: matchResult.movie.title,
         year: matchResult.movie.year,
@@ -107,10 +98,6 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
       });
       previewResult.summary.found++;
     }
-    console.log(`\n📊 === RÉSUMÉ === `);
-    console.log(`   ✅ Trouvés: ${previewResult.summary.found}`);
-    console.log(`   ❌ Non trouvés: ${previewResult.summary.notFound}`);
-
     res.status(200).json(previewResult);
 
   } catch (err) {
@@ -136,8 +123,8 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log(`\n🎬 === CONFIRM LETTERBOXD IMPORT === 🎬`);
-    console.log(`📥 Importing ${filmsToImport.length} films for ${user.UserPseudo}`);
+    (`\n🎬 === CONFIRM LETTERBOXD IMPORT === 🎬`);
+    (`📥 Importing ${filmsToImport.length} films for ${user.UserPseudo}`);
 
     let importedCount = 0;
     let updatedCount = 0;
@@ -146,20 +133,20 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     }
     for (const film of filmsToImport) {
       const { tmdbId, title, rating, review, runtime } = film;
-      console.log(`\n📽️ Import: "${title}" (ID: ${tmdbId}), Note: ${rating}/5`);
+      (`\n📽️ Import: "${title}" (ID: ${tmdbId}), Note: ${rating}/5`);
       const existingIndex = user.RatedMovies.findIndex(
         (r: any) => r.tmdbMovieId === tmdbId
       );
 
       if (existingIndex !== -1) {
-        console.log(`   → Updating old rating: ${user.RatedMovies[existingIndex].rating} → ${rating}`);
+        (`   → Updating old rating: ${user.RatedMovies[existingIndex].rating} → ${rating}`);
         user.RatedMovies[existingIndex].rating = rating;
         user.RatedMovies[existingIndex].review = review || "";
         user.RatedMovies[existingIndex].runtime = runtime || 0;
         user.RatedMovies[existingIndex].createdAt = new Date();
         updatedCount++;
       } else {
-        console.log(`   → Nouveau film ajouté`);
+        (`   → Nouveau film ajouté`);
         user.RatedMovies.push({
           tmdbMovieId: tmdbId,
           movieTitle: title,
@@ -178,15 +165,15 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
       : 0;
     const totalWatchTime = ratedMovies.reduce((sum: number, movie: any) => sum + (movie.runtime || 0), 0);
 
-    console.log(`\n📊 === UPDATING STATS === `);
-    console.log(`   📽️ Watched movies: ${numberOfWatchedMovies}`);
-    console.log(`   ⭐ Average rating: ${averageMovieRating.toFixed(2)}/5`);
-    console.log(`   ⏱️ Total watchtime: ${totalWatchTime} min (${(totalWatchTime / 60).toFixed(1)}h)`);
+    (`\n📊 === UPDATING STATS === `);
+    (`   📽️ Watched movies: ${numberOfWatchedMovies}`);
+    (`   ⭐ Average rating: ${averageMovieRating.toFixed(2)}/5`);
+    (`   ⏱️ Total watchtime: ${totalWatchTime} min (${(totalWatchTime / 60).toFixed(1)}h)`);
     user.NumberOfWatchedMovies = numberOfWatchedMovies;
     user.AverageMovieRating = averageMovieRating;
     await user.save();
 
-    console.log(`\n✅ Import finished! ${importedCount} new films, ${updatedCount} updates`);
+    (`\n✅ Import finished! ${importedCount} new films, ${updatedCount} updates`);
 
     res.status(200).json({
       message: "Import successful",

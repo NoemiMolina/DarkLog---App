@@ -94,8 +94,6 @@ export const getPublishedPosts = async (req: Request, res: Response) => {
             .populate('comments.author', 'username UserPseudo UserFirstName UserProfilePicture')
             .populate('comments.replies.author', 'username UserPseudo UserFirstName UserProfilePicture')
             .lean();
-
-        console.log('📊 Posts found:', posts.length);
         res.status(200).json({ posts });
     } catch (error) {
         console.error('❌ Error fetching posts:', error);
@@ -147,7 +145,7 @@ export const addCommentToPost = async (req: Request, res: Response) => {
                 req.params.id
             );
         }
-        
+
         res.status(201).json({ message: "Comment added successfully", post })
     } catch (error) {
         res.status(500).json({ message: "Error adding comment", error })
@@ -214,7 +212,7 @@ export const replyToComment = async (req: Request, res: Response) => {
                 commentIdStr
             );
         }
-        
+
         return res.status(201).json({ message: "Reply added successfully", post });
     } catch (error) {
         res.status(500).json({ message: "Error adding reply", error });
@@ -351,7 +349,7 @@ export const addReactionToReply = async (req: Request, res: Response) => {
         if (!reply.dislikes) reply.dislikes = [];
         reply.likes = reply.likes.filter((uid: any) => String(uid) !== String(userId));
         reply.dislikes = reply.dislikes.filter((uid: any) => String(uid) !== String(userId));
-        
+
         if (type === "like") {
             reply.likes.push(userId);
             if (reply.author.toString() !== String(userId)) {
@@ -466,8 +464,6 @@ export const searchPosts = async (req: Request, res: Response) => {
             .limit(50)
             .populate('author', 'username', 'UserPseudo', 'UserProfilePicture')
             .lean();
-        console.log('search results:', posts)
-
         res.status(200).json({ posts });
     } catch (error) {
         res.status(500).json({ message: "Error searching posts", error });

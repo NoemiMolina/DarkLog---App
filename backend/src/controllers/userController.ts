@@ -155,9 +155,6 @@ export const updateProfilePicture = async (req: Request, res: Response) => {
 export const getUserProfile = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
-
-        console.log("🔍 Fetching profile for userId:", userId);
-
         const user = await User.findById(userId)
             .populate('SavedHomemadeWatchlists')
             .populate('Friends');
@@ -165,10 +162,6 @@ export const getUserProfile = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
-
-        console.log("✅ User found:", user.UserPseudo);
-        console.log("📊 RatedMovies:", user.RatedMovies);
-
         const top3MovieIds = (user.Top3Movies || []) as number[];
         const movieWatchlistIds = (user.MovieWatchlist || []) as number[];
         const tvShowWatchlistIds = (user.TvShowWatchlist || []) as number[];
@@ -198,18 +191,12 @@ export const getUserProfile = async (req: Request, res: Response) => {
             ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) / user.RatedTvShows.length
             : 0;
         const watchedMoviesWithDetails = user.RatedMovies.map((ratedMovie: any) => {
-            console.log("🎬 Movie:", ratedMovie.movieTitle, "Runtime:", ratedMovie.runtime);
             return { runtime: ratedMovie.runtime || 0 };
         });
 
         const watchedTvShowsWithDetails = user.RatedTvShows.map((ratedShow: any) => {
-            console.log("📺 TV Show:", ratedShow.tvShowTitle, "Total Runtime:", ratedShow.total_runtime);
             return { total_runtime: ratedShow.total_runtime || 0 };
         });
-
-        console.log("⏱️ Watched movies with details:", watchedMoviesWithDetails);
-        console.log("⏱️ Watched TV shows with details:", watchedTvShowsWithDetails);
-
         const profileData = {
             userProfilePicture: user.UserProfilePicture || null,
             userFirstName: user.UserFirstName || '',

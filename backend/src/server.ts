@@ -18,9 +18,6 @@ import notificationRoutes from "./routes/notification";
 import newsRoutes from "./routes/news";
 import importRoutes from "./routes/import";
 
-
-console.log("✅ LETSGO !");
-
 dotenv.config();
 
 const app = express();
@@ -41,11 +38,9 @@ app.use(express.json());
 connectDB();
 
 const uploadsPath = path.resolve("uploads");
-console.log("🗂️ Static folder served from:", uploadsPath);
 app.use("/uploads", express.static(uploadsPath));
 
 const publicPath = path.resolve("public");
-console.log("🗂️ Public folder served from:", publicPath);
 app.use("/", express.static(publicPath));
 
 app.use("/users", userRoutes);
@@ -66,14 +61,11 @@ app.get("/", (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log(`✅ User connected: ${socket.id}`);
   socket.on("joinRoom", (userId: string) => {
     socket.join(userId);
-    console.log(`📌 User ${userId} joined room`);
   });
   socket.on("disconnect", () => {
-    console.log(`❌ User disconnected: ${socket.id}`);
-  });
+    console.log("🔌 A user disconnected from Socket.IO");});
 });
 
 server.listen(PORT, () => {
