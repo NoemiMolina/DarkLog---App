@@ -213,17 +213,10 @@ const fetchTrailer = async (tvId: number) => {
 
 const main = async () => {
   await mongoose.connect(MONGO_URI);
-  console.log("Connecté à MongoDB pour TV shows");
-
   const first = await fetchTVShows(1);
   const totalPages = Math.min(first.total_pages, MAX_PAGES);
-
-  console.log(`Importing ${totalPages} pages...`);
-
   for (let p = 1; p <= totalPages; p++) {
-    console.log(`➡️ Fetch page ${p}`);
     const pageData = await fetchTVShows(p);
-
     for (const item of pageData.results) {
       const keywords = await fetchKeywords(item.id);
       const platforms = await fetchPlatforms(item.id);
@@ -288,16 +281,12 @@ const main = async () => {
 
     await new Promise((r) => setTimeout(r, 300));
   }
-
-  console.log("🎉 Import TV shows terminé !");
   process.exit(0);
 };
 
 // Importer les séries manuelles
 async function importManualTVShows() {
   if (MANUAL_TMDB_IDS.length > 0) {
-    console.log(`\n➡️ Import de ${MANUAL_TMDB_IDS.length} série(s) manuelle(s)...`);
-
     for (const tmdbId of MANUAL_TMDB_IDS) {
       try {
         const keywords = await fetchKeywords(tmdbId);
@@ -367,8 +356,6 @@ async function importManualTVShows() {
           },
           { upsert: true }
         );
-
-        console.log(`✅ Série ${tmdbId} ajoutée / mise à jour`);
       } catch (err) {
         console.error(`❌ Erreur pour la série ${tmdbId}:`, err);
       }

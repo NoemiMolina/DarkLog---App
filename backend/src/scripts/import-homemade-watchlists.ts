@@ -70,11 +70,7 @@ const watchlistsData = [
 
 const seedWatchlists = async () => {
     try {
-        console.log("🌱 Démarrage du seed des watchlists...");
-
         await mongoose.connect(MONGO_URI);
-        console.log("✅ Connecté à MongoDB");
-
         const db = mongoose.connection.db;
         if (!db) {
             throw new Error("Base de données non disponible");
@@ -87,14 +83,9 @@ const seedWatchlists = async () => {
         let updatedCount = 0;
 
         for (const watchlist of watchlistsData) {
-            console.log(`\n📺 Traitement de "${watchlist.title}"...`);
-
             const movies = await moviesCollection
                 .find({ tmdb_id: { $in: watchlist.tmdbIds } })
                 .toArray();
-
-            console.log(`   Trouvé ${movies.length}/${watchlist.tmdbIds.length} films`);
-
             if (movies.length === 0) {
                 console.warn(
                     `   ⚠️  Aucun film trouvé pour "${watchlist.title}". Vérifiez les TMDB IDs.`
@@ -122,29 +113,16 @@ const seedWatchlists = async () => {
 
             if (result.upsertedId) {
                 createdCount++;
-                console.log(`   ✨ Watchlist créée avec ${movieIds.length} films`);
             } else {
                 updatedCount++;
-                console.log(`   🔄 Watchlist mise à jour avec ${movieIds.length} films`);
             }
         }
-
-        console.log("\n" + "=".repeat(50));
-        console.log("📊 Résumé du seed :");
-        console.log(`   ✨ Créées : ${createdCount}`);
-        console.log(`   🔄 Mises à jour : ${updatedCount}`);
-        console.log(`   📺 Total traité : ${createdCount + updatedCount}`);
-        console.log("=".repeat(50));
-
         const finalCount = await watchlistsCollection.countDocuments();
-        console.log(`\n✅ Total de watchlists en base : ${finalCount}`);
-
     } catch (error) {
         console.error("❌ Erreur lors du seed :", error);
         process.exit(1);
     } finally {
         await mongoose.disconnect();
-        console.log("\n✅ Déconnecté de MongoDB");
         process.exit(0);
     }
 };

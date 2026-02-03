@@ -142,16 +142,10 @@ const fetchTrailer = async (movieId: number) => {
 
 const main = async () => {
   await mongoose.connect(MONGO_URI);
-  console.log("Connecté à MongoDB");
-
   const first = await fetchPage(1);
   const totalPages = Math.min(first.total_pages, MAX_PAGES);
-  console.log(`Importing ${totalPages} pages...`);
-
   for (let page = 1; page <= totalPages; page++) {
-    console.log(`➡️ Fetch page ${page}`);
     const { results } = await fetchPage(page);
-
     for (const item of results) {
       const keywords = await fetchKeywords(item.id);
       const platforms = await fetchPlatforms(item.id);
@@ -187,12 +181,8 @@ const main = async () => {
 
     await new Promise((res) => setTimeout(res, 500));
   }
-
-  console.log("🎉 Import terminé !");
-
   // Importer les films manuels
   if (MANUAL_TMDB_IDS.length > 0) {
-    console.log(`\n➡️ Import de ${MANUAL_TMDB_IDS.length} film(s) manuel(s)...`);
     for (const tmdbId of MANUAL_TMDB_IDS) {
       try {
         const keywords = await fetchKeywords(tmdbId);
@@ -225,14 +215,11 @@ const main = async () => {
           },
           { upsert: true }
         );
-        console.log(`✅ Film ${tmdbId} ajouté/mis à jour`);
       } catch (err) {
         console.error(`❌ Erreur pour le film ${tmdbId}:`, err);
       }
     }
   }
-
-  console.log("🎉 Import complètement terminé !");
   process.exit(0);
 };
 

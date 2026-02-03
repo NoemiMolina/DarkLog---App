@@ -3,12 +3,8 @@ import path from "path";
 import fs from "fs";
 
 const uploadDir = path.join(process.cwd(), "uploads");
-
-console.log("✅ uploadMiddleware  :", uploadDir);
-
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
-  console.log("📁 uploads file created if it did not exists :", uploadDir);
 }
 
 const storage = multer.diskStorage({

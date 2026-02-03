@@ -69,11 +69,8 @@ const importQuestions = async () => {
                     updated++;
                 }
             }
-
-            console.log(`${file}: ${created} créée(s), ${updated} mise(s) à jour`);
         }
 
-        console.log("Import terminé !");
         await mongoose.disconnect();
     } catch (err) {
         console.error("Erreur d’import :", err);

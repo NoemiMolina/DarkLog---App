@@ -252,9 +252,6 @@ export const getUserProfile = async (req: Request, res: Response) => {
             totalWatchTimeFromWatchlists: user.TotalWatchTimeFromWatchlists || 0,
             lastWatchedMovie: null
         };
-
-        console.log("📤 Sending watchedMovies:", profileData.watchedMovies);
-
         res.status(200).json(profileData);
     } catch (err) {
         console.error("❌ Error in getUserProfile:", err);
@@ -288,34 +285,23 @@ export const getPublicProfile = async (req: Request, res: Response) => {
     try {
         const { userId } = req.params;
         const currentUserId = (req as any).userId;
-
-        console.log('📋 getPublicProfile - viewing userId:', userId, 'by currentUserId:', currentUserId);
-
         const user = await User.findById(userId);
 
         if (!user) {
-            console.log('❌ User not found:', userId);
             return res.status(404).json({ message: "User not found" });
         }
-
-        console.log('✅ User found:', user.UserPseudo);
         let isBlocked = false;
         try {
             isBlocked = user.BlockedUsers && Array.isArray(user.BlockedUsers) && user.BlockedUsers.some(
                 (blockedId: any) => blockedId.toString() === currentUserId
             );
         } catch (blockErr) {
-            console.log('⚠️ Error checking blocked status:', blockErr);
             isBlocked = false;
         }
-        console.log('🚫 isBlocked:', isBlocked);
         const top3MovieIds = Array.isArray(user.Top3Movies) ? user.Top3Movies.filter(id => typeof id === 'number') : [];
         const movieWatchlistIds = Array.isArray(user.MovieWatchlist) ? user.MovieWatchlist.filter(id => typeof id === 'number') : [];
         const tvShowWatchlistIds = Array.isArray(user.TvShowWatchlist) ? user.TvShowWatchlist.filter(id => typeof id === 'number') : [];
         const top3TvShowIds = Array.isArray(user.Top3TvShow) ? user.Top3TvShow.filter(id => typeof id === 'number') : [];
-
-        console.log('🎬 Fetching movies:', { top3MovieIds: top3MovieIds.length, movieWatchlistIds: movieWatchlistIds.length });
-
         let top3Movies: any[] = [];
         let movieWatchlist: any[] = [];
         let top3TvShows: any[] = [];
@@ -352,9 +338,6 @@ export const getPublicProfile = async (req: Request, res: Response) => {
                 console.log('⚠️ Error fetching TV show watchlist:', err);
             }
         }
-
-        console.log('📺 TV shows fetched:', { top3TvShows: top3TvShows.length, tvShowWatchlist: tvShowWatchlist.length });
-
         const averageMovieRating = user.RatedMovies && Array.isArray(user.RatedMovies) && user.RatedMovies.length > 0
             ? user.RatedMovies.reduce((sum, item) => sum + (item.rating || 0), 0) / user.RatedMovies.length
             : 0;
@@ -414,8 +397,6 @@ export const getPublicProfile = async (req: Request, res: Response) => {
             watchedMovies: watchedMoviesWithDetails,
             watchedTvShows: watchedTvShowsWithDetails,
         };
-
-        console.log('✅ Sending profile data for:', user.UserPseudo);
         res.status(200).json(responseData);
     } catch (err) {
         console.error('💥 Error in getPublicProfile:', err);
@@ -446,34 +427,22 @@ export const getFriends = async (req: Request, res: Response) => {
 export const addAFriend = async (req: Request, res: Response) => {
     try {
         const { userId, friendId } = req.params;
-        console.log('🔍 Adding friend - userId:', userId);
-        console.log('🔍 Adding friend - friendId:', friendId);
         const user = await User.findById(userId);
         const friend = await User.findById(friendId);
-        console.log('👤 User found:', user ? 'Yes' : 'No');
-        console.log('👤 Friend found:', friend ? 'Yes' : 'No');
         if (!user || !friend) {
             return res.status(404).json({ message: "User request not found" });
         }
-        console.log('👥 User.Friends BEFORE cleanup:', user.Friends);
         if (!Array.isArray(user.Friends)) {
-            console.log('⚠️ Friends is not an array, initializing...');
             user.Friends = [];
         }
 
         user.Friends = user.Friends.filter(f =>
             f.friendId && f.friendPseudo
         );
-        console.log('👥 User.Friends AFTER cleanup:', user.Friends);
-
         const isAlreadyFriend = user.Friends.some(f =>
             f.friendId && f.friendId.toString() === friendId
         );
-        console.log('🤝 Already friends?', isAlreadyFriend);
         if (!isAlreadyFriend) {
-            console.log('➕ Adding friend relationship...');
-            console.log('   Friend pseudo:', friend.UserPseudo);
-            console.log('   Friend ID:', friend._id);
             user.Friends.push({
                 friendId: friend._id as Types.ObjectId,
                 friendSince: new Date(),
@@ -493,9 +462,7 @@ export const addAFriend = async (req: Request, res: Response) => {
                 friendProfilePicture: user.UserProfilePicture || ""
             });
             await User.updateOne({ _id: userId }, { Friends: user.Friends });
-            console.log('✅ User saved');
             await User.updateOne({ _id: friendId }, { Friends: friend.Friends });
-            console.log('✅ Friend saved');
             await createNotification(
                 friendId,
                 userId,
@@ -627,13 +594,8 @@ export const getFriendsReviews = async (req: Request, res: Response) => {
 export const addAMovieToWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
-        console.log("🎬 Adding movie to watchlist:", { userId, movieId });
-
         const user = await User.findById(userId);
         const movie = await Movie.findOne({ tmdb_id: Number(movieId) });
-
-        console.log("User:", !!user, "Movie:", !!movie);
-
         if (!user || !movie) {
             return res.status(404).json({ message: "User or movie not found" });
         }
@@ -649,7 +611,6 @@ export const addAMovieToWatchlist = async (req: Request, res: Response) => {
         if (!user.MovieWatchlist.includes(movieTmdbId)) {
             user.MovieWatchlist.push(movieTmdbId);
             await user.save();
-            console.log("✅ Movie added to watchlist");
         } else {
             console.log("⚠️ Movie already in watchlist");
         }
@@ -668,13 +629,8 @@ export const addAMovieToWatchlist = async (req: Request, res: Response) => {
 export const addATvShowToWatchlist = async (req: Request, res: Response) => {
     try {
         const { userId, tvShowId } = req.params;
-        console.log("📺 Adding TV show to watchlist:", { userId, tvShowId });
-
         const user = await User.findById(userId);
         const tvShow = await TVShow.findOne({ tmdb_id: Number(tvShowId) });
-
-        console.log("User:", !!user, "TV Show:", !!tvShow);
-
         if (!user || !tvShow) {
             return res.status(404).json({ message: "User or TV Show not found" });
         }
@@ -690,7 +646,6 @@ export const addATvShowToWatchlist = async (req: Request, res: Response) => {
         if (!user.TvShowWatchlist.includes(tvShowTmdbId)) {
             user.TvShowWatchlist.push(tvShowTmdbId);
             await user.save();
-            console.log("✅ TV show added to watchlist");
         } else {
             console.log("⚠️ TV show already in watchlist");
         }
@@ -759,8 +714,6 @@ export const deleteAHomemadeWatchlistFromSavedWatchlists = async (req: Request, 
 export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
-        console.log('🎬 Adding movie to top3:', { userId, movieId });
-
         const user = await User.findById(userId);
         const movie = await Movie.findOne({ tmdb_id: Number(movieId) });
 
@@ -777,7 +730,6 @@ export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
         if (!currentTop3.includes(movieTmdbId)) {
             currentTop3.push(movieTmdbId);
             await User.updateOne({ _id: userId }, { Top3Movies: currentTop3 });
-            console.log('✅ Movie added to top3');
         } else {
             console.log('⚠️ Movie already in top3');
         }
@@ -793,8 +745,6 @@ export const addAMovieToTop3Favorites = async (req: Request, res: Response) => {
 export const addATvShowToTop3Favorites = async (req: Request, res: Response) => {
     try {
         const { userId, tvShowId } = req.params;
-        console.log('📺 Adding TV show to top3:', { userId, tvShowId });
-
         const user = await User.findById(userId);
         const tvShow = await TVShow.findOne({ tmdb_id: Number(tvShowId) });
 
@@ -811,7 +761,6 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
         if (!currentTop3.includes(tvShowTmdbId)) {
             currentTop3.push(tvShowTmdbId);
             await User.updateOne({ _id: userId }, { Top3TvShow: currentTop3 });
-            console.log('✅ TV show added to top3');
         } else {
             console.log('⚠️ TV show already in top3');
         }
@@ -827,8 +776,6 @@ export const addATvShowToTop3Favorites = async (req: Request, res: Response) => 
 export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response) => {
     try {
         const { userId, movieId } = req.params;
-        console.log('🗑️ Deleting movie from top3:', { userId, movieId });
-
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -836,8 +783,6 @@ export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response)
         const currentTop3 = Array.isArray(user.Top3Movies) ? user.Top3Movies : [];
         const updatedTop3 = currentTop3.filter((id: any) => Number(id) !== movieTmdbId);
         await User.updateOne({ _id: userId }, { Top3Movies: updatedTop3 });
-        console.log('✅ Movie deleted from top3');
-
         res.status(200).json({ message: "Movie deleted from your Top 3 favorites" });
     } catch (err) {
         console.error("❌ Error deleting movie from Top3:", err);
@@ -850,8 +795,6 @@ export const deleteAMovieFromTop3Favorites = async (req: Request, res: Response)
 export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response) => {
     try {
         const { userId, tvShowId } = req.params;
-        console.log('🗑️ Deleting TV show from top3:', { userId, tvShowId });
-
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
 
@@ -870,31 +813,19 @@ export const deleteATvShowFromTop3Favorites = async (req: Request, res: Response
 // ------------- SAVE RATING AND REVIEW
 export const saveRatingAndReview = async (req: Request, res: Response) => {
     try {
-        console.log('🚀 saveRatingAndReview called!');
         const { userId, itemId } = req.params;
         const { type, rating, reviewText, itemTitle } = req.body;
-
-        console.log('📥 Request params:', { userId, itemId });
-        console.log('📥 Request body:', { type, rating, reviewText, itemTitle });
-
         if (!itemId) {
-            console.log('❌ No itemId provided');
             return res.status(400).json({ message: "itemId is required" });
         }
 
         if (!["movie", "tvshow"].includes(type)) {
-            console.log('❌ Invalid type:', type);
             return res.status(400).json({ message: "Invalid type" });
         }
-
-        console.log('🔍 Finding user:', userId);
         const user = await User.findById(userId);
         if (!user) {
-            console.log('❌ User not found');
             return res.status(404).json({ message: "User not found" });
         }
-        console.log('✅ User found:', user.UserPseudo);
-
         let runtime = 0;
         if (type === "movie") {
             try {
@@ -903,7 +834,6 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 );
                 const tmdbData = await tmdbResponse.json();
                 runtime = tmdbData.runtime || 0;
-                console.log(`⏱️ Fetched movie runtime: ${runtime} minutes`);
             } catch (err) {
                 console.error("❌ Error fetching movie runtime:", err);
             }
@@ -921,20 +851,17 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             : [];
 
         if (type === "movie") {
-            console.log('🎬 Processing movie rating...');
             const existingIndex = ratedMovies.findIndex(
                 (r: any) => r.tmdbMovieId === Number(itemId)
             );
 
             if (existingIndex !== -1) {
-                console.log('📝 Updating existing movie rating');
                 ratedMovies[existingIndex].rating = rating;
                 ratedMovies[existingIndex].review = reviewText || "";
                 ratedMovies[existingIndex].movieTitle = itemTitle || ratedMovies[existingIndex].movieTitle;
                 ratedMovies[existingIndex].runtime = runtime;
                 ratedMovies[existingIndex].createdAt = new Date();
             } else {
-                console.log('➕ Adding new movie rating');
                 ratedMovies.push({
                     tmdbMovieId: Number(itemId),
                     movieTitle: itemTitle || 'Unknown Movie',
@@ -964,8 +891,6 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 }
             );
         } else if (type === "tvshow") {
-            console.log('📺 Processing TV show rating...');
-
             // Fetch TV show runtime from database
             let total_runtime = 0;
             try {
@@ -973,7 +898,6 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 const tvShow = await TVShowModel.findOne({ tmdb_id: Number(itemId) });
                 if (tvShow) {
                     total_runtime = tvShow.total_runtime || 0;
-                    console.log(`⏱️ Fetched TV show total_runtime: ${total_runtime} minutes`);
                 }
             } catch (err) {
                 console.error("❌ Error fetching TV show runtime:", err);
@@ -984,14 +908,12 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             );
 
             if (existingIndex !== -1) {
-                console.log('📝 Updating existing TV show rating');
                 ratedTvShows[existingIndex].rating = rating;
                 ratedTvShows[existingIndex].review = reviewText || "";
                 ratedTvShows[existingIndex].tvShowTitle = itemTitle || ratedTvShows[existingIndex].tvShowTitle;
                 ratedTvShows[existingIndex].total_runtime = total_runtime;
                 ratedTvShows[existingIndex].createdAt = new Date();
             } else {
-                console.log('➕ Adding new TV show rating');
                 ratedTvShows.push({
                     tmdbTvShowId: Number(itemId),
                     tvShowTitle: itemTitle || 'Unknown TV Show',
@@ -1022,16 +944,13 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             );
         }
         if (reviewText && reviewText.trim().length > 0) {
-            console.log('💾 Saving review in Reviews array...');
             const existingReviewIndex = reviews.findIndex(
                 r => r.itemId === String(itemId) && r.type === type
             );
             if (existingReviewIndex !== -1) {
-                console.log('📝 Updating existing review');
                 reviews[existingReviewIndex].text = reviewText;
                 reviews[existingReviewIndex].date = new Date();
             } else {
-                console.log('➕ Adding new review');
                 reviews.push({
                     itemId: String(itemId),
                     type,
@@ -1041,7 +960,6 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
             }
 
             const numberOfGivenReviews = reviews.length;
-            console.log('📊 Total reviews after update:', numberOfGivenReviews);
             await User.updateOne(
                 { _id: userId },
                 {
@@ -1050,9 +968,6 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
                 }
             );
         }
-
-        console.log('✅ All updates completed successfully!');
-
         res.status(200).json({
             message: "Saved successfully",
             runtime: runtime
@@ -1068,9 +983,6 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
     try {
         const { userId, itemId } = req.params;
         const { type } = req.query;
-
-        console.log('🔍 Getting item with user data:', { userId, itemId, type });
-
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -1096,9 +1008,6 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
                 userReview = ratedShow.review || "";
             }
         }
-
-        console.log('✅ Found user data:', { userRating, userReview });
-
         res.status(200).json({
             myRating: userRating,
             myReview: userReview
