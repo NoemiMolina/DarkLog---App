@@ -41,7 +41,7 @@ const HomemadeWatchlistsCarousel = () => {
                             >
                                 <div className="relative group transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:opacity-15 w-full">
                                     <HomemadeWatchlistsDialog watchlist={watchlist} />
-                                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 px-2 py-1 rounded text-white text-sm text-center truncate max-w-[120px] xl:-translate-x-2/3 xl:max-w-[140px]">
+                                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 px-2 py-1 rounded text-white text-sm text-center truncate max-w-[120px] xl:-translate-x-2/3 xl:max-w-[140px] 2xl:-translate-x-1/2">
                                         {watchlist.title}
                                     </div>
                                 </div>

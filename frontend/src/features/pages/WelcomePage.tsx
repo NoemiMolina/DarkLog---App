@@ -74,7 +74,7 @@ const WelcomePage: React.FC = () => {
                     </div>
                 </div>
 
-                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:-translate-y-120 xl:mt-40 2xl:mt-50 2xl:-translate-y-110">
+                <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:-translate-y-90 xl:mt-40 2xl:mt-50 2xl:-translate-y-110">
                     <h1
                         className="font-bold tracking-wide text-[0.85rem] sm:text-[1rem] xl:text-[1.5rem] 2xl:text-[1.5rem] italic"
                         style={{ fontFamily: "'Workbench', monospace" }}
@@ -87,14 +87,18 @@ const WelcomePage: React.FC = () => {
                     >
 
                         <a
-                            href="#"
+                            href="https://www.instagram.com/fearlogapp/"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             aria-label="Instagram"
                             className="text-white hover:opacity-90 inline-flex items-center"
                         >
                             <FaInstagram color="#fff" className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 2xl:w-5" />
                         </a>
                         <a
-                            href="#"
+                            href="https://www.tiktok.com/@fearlogapp"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             aria-label="TikTok"
                             className="text-white hover:opacity-90 inline-flex items-center"
                         >

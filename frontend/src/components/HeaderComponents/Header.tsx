@@ -64,7 +64,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                     <NotificationBadge count={unreadCount} className="top-1 right-0" />
                   </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
+                <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2 2xl:translate-x-[120px] 2xl:translate-y-0">
                   <DropdownMenuItem
                     onClick={() => navigate('/quiz')}
                     className="cursor-pointer hover:bg-white/10"
@@ -106,6 +106,17 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                     className="cursor-pointer hover:bg-white/10"
                   >
                     Import from
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("user");
+                      localStorage.removeItem("userId");
+                      navigate('/');
+                    }}
+                    className="cursor-pointer hover:bg-red-500/20 text-red-400"
+                  >
+                    Log Out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -222,6 +233,17 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                       className="cursor-pointer hover:bg-white/10"
                     >
                       Add Friend
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("user");
+                        localStorage.removeItem("userId");
+                        navigate('/');
+                      }}
+                      className="cursor-pointer hover:bg-red-500/20 text-red-400"
+                    >
+                      Log Out
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
