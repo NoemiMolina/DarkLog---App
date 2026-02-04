@@ -53,7 +53,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movieWatchlist.map((movie) => (
-                <div key={movie._id} className="relative group h-40 sm:h-64 md:h-80">
+                <div key={movie._id} className="relative group h-56 sm:h-64 md:h-80">
                   <img src={movie.poster} alt={movie.title} className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" />
                   <button
                     onClick={() => onRemove(movie._id, 'movie')}
@@ -80,7 +80,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
               {tvShowWatchlist.map((show) => (
-                <div key={show._id} className="relative group h-40 sm:h-64 md:h-80">
+                <div key={show._id} className="relative group h-56 sm:h-64 md:h-80">
                   <img src={show.poster} alt={show.title} className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover" />
                   <button
                     onClick={() => onRemove(show._id, 'tv')}
