@@ -154,17 +154,17 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
 
     if (showResult) {
         return (
-            <div className="min-h-screen bg-gradient-to-b from-[#1A1A1A] to-[#0A0A0A] text-white flex items-center justify-center p-8">
+            <div className="min-h-screen bg-gradient-to-b from-[#1A1A1A] to-[#0A0A0A] text-white flex items-center justify-center p-4 sm:p-8">
                 <Card className="bg-[#2A2A2A] border-red-900/50 border-2 max-w-2xl w-full">
-                    <CardContent className="p-12 text-center">
-                        <GiRaiseZombie className="text-9xl mx-auto mb-6 text-red-600" />
-                        <h2 className="text-4xl font-bold mb-4">Quiz Completed!</h2>
-                        <p className="text-6xl font-bold text-green-400 mb-8">
+                    <CardContent className="p-6 sm:p-12 text-center">
+                        <GiRaiseZombie className="text-6xl sm:text-9xl mx-auto mb-4 sm:mb-6 text-red-600" />
+                        <h2 className="text-2xl sm:text-4xl font-bold mb-3 sm:mb-4">Quiz Completed!</h2>
+                        <p className="text-4xl sm:text-6xl font-bold text-green-400 mb-6 sm:mb-8">
                             {score} / {questions.length * 10}
                         </p>
                         <Button
                             onClick={resetQuiz}
-                            className="bg-red-600 hover:bg-red-700 text-xl px-8 py-6"
+                            className="bg-red-600 hover:bg-red-700 text-base sm:text-xl px-4 sm:px-8 py-3 sm:py-6"
                         >
                             Try Another Quiz
                         </Button>
@@ -175,21 +175,21 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
     }
 
     return (
-        <div className="min-h-screen dark:bg-gray-700 text-white flex flex-col items-center justify-center p-8">
-            <GiRaiseZombie className="text-9xl mb-4 text-red-600 animate-pulse" />
-            <p className="text-sm text-gray-400 mb-2">Welcome to our</p>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 text-red-600 tracking-wider text-center animate-pulse">HORROR QUIZZ</h1>
-            <p className="text-lg font-bold text-gray-300 mb-12 text-center max-w-2xl">
+        <div className="min-h-screen dark:bg-gray-700 text-white flex flex-col items-center justify-center p-4 sm:p-8">
+            <GiRaiseZombie className="text-5xl sm:text-9xl mb-4 text-red-600 animate-pulse" />
+            <p className="text-xs sm:text-sm text-gray-400 mb-2">Welcome to our</p>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 text-red-600 tracking-wider text-center animate-pulse">HORROR QUIZZ</h1>
+            <p className="text-sm sm:text-lg font-bold text-gray-300 mb-8 sm:mb-12 text-center max-w-2xl">
                 Challenge your horrific knowledge with our home made quizz
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 max-w-4xl w-full">
                 <Card
                     className="bg-[#2A2A2A] border-red-900/50 border-2 cursor-pointer hover:scale-105 transition-transform duration-300 hover:border-red-600 text-red-600 animate-pulse"
                     onClick={() => handleCategoryClick('culture')}
                 >
-                    <CardContent className="p-8 text-center">
-                        <h3 className="text-3xl font-bold mb-4">General Culture</h3>
+                    <CardContent className="p-4 sm:p-8 text-center">
+                        <h3 className="text-lg sm:text-3xl font-bold mb-2 sm:mb-4">General Culture</h3>
                         <p className="text-white font-semibold">
                             Test your knowledge about {mediaType === 'movies' ? 'horror movies' : 'horror TV shows'}.
                         </p>
@@ -200,9 +200,9 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
                     className="bg-[#2A2A2A] border-red-900/50 border-2 cursor-pointer hover:scale-105 transition-transform duration-300 hover:border-red-600 text-red-600 animate-pulse"
                     onClick={() => handleCategoryClick('dumbDescription')}
                 >
-                    <CardContent className="p-8 text-center">
-                        <h3 className="text-3xl font-bold mb-4">Dumb Description</h3>
-                        <p className="text-white font-semibold">
+                    <CardContent className="p-4 sm:p-8 text-center">
+                        <h3 className="text-lg sm:text-3xl font-bold mb-2 sm:mb-4">Dumb Description</h3>
+                        <p className="text-white text-sm sm:text-base font-semibold">
                             Guess the {mediaType === 'movies' ? 'movie' : 'show'} from the worst descriptions.
                         </p>
                     </CardContent>

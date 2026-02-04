@@ -46,7 +46,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           ) : (
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movies.map((movie) => (
-                <div key={movie.id} className="relative group">
+                <div key={movie.id} className="relative group h-32 sm:h-40 md:h-48">
                   <img 
                     src={movie.poster} 
                     alt={movie.title} 
@@ -90,7 +90,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           ) : (
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {tvShows.map((show) => (
-                <div key={show.id} className="relative group">
+                <div key={show.id} className="relative group h-32 sm:h-40 md:h-48">
                   <img 
                     src={show.poster} 
                     alt={show.title} 
