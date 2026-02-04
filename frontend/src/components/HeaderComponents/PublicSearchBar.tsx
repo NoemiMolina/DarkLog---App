@@ -10,6 +10,7 @@ import {
 import { Search } from "lucide-react";
 import ItemDialog from "../HomePageComponents/ItemDialog";
 import AuthRequiredDialog from "./AuthRequiredDialog";
+import { IoSkull } from "react-icons/io5";
 
 const PublicSearchBar: React.FC = () => {
   const location = useLocation();
@@ -208,7 +209,7 @@ const PublicSearchBar: React.FC = () => {
                 {type === "movie" ? "🎬 Movie" : "📺 TV Show"}
               </p>
               <p className="text-sm text-gray-300 line-clamp-4">{item.overview}</p>
-              <p className="text-yellow-400 mt-1">⭐ {ratingStr}/5</p>
+              <p className="text-yellow-400 mt-1"><IoSkull /> {ratingStr}/5</p>
             </div>
           </div>
         );

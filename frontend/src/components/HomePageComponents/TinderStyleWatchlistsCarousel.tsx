@@ -112,7 +112,7 @@ const TinderStyleWatchlistsCarousel = () => {
     }
 
     return (
-        <section className="w-full px-15 py-9 mb-5 -mt-8 sm:hidden">
+        <section className="w-full px-4 py-9 mb-5 -mt-8 sm:hidden">
             <div className="-mt-3 mb-6 text-center text-xs text-gray-400" style={{ fontFamily: "'Metal Mania', serif" }}>
                     <p>← Swipe LEFT to ignore, swipe RIGHT to add to your watchlist →</p>
                     <p>CLICK to rate and comment</p>
@@ -127,7 +127,7 @@ const TinderStyleWatchlistsCarousel = () => {
                         transform: swiping ? `translateX(${swipeDelta}px)` : 'translateX(0)',
                         transition: swiping ? 'none' : 'transform 0.3s ease-out',
                     }}
-                    className={`relative w-full max-w-sm h-80 bg-[#2A2A2A] rounded-xl shadow-xl overflow-hidden cursor-grab active:cursor-grabbing transition-all duration-300 ${
+                    className={`relative w-full h-80 bg-[#2A2A2A] rounded-xl shadow-xl overflow-hidden cursor-grab active:cursor-grabbing transition-all duration-300 ${
                         exitDirection === 'left' ? 'translate-x-full opacity-0' : ''
                     } ${
                         exitDirection === 'right' ? '-translate-x-full opacity-0' : ''

@@ -55,7 +55,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
             {news.map((article, idx) => (
               <CarouselItem
                 key={article._id}
-                className={`max-w-[300px] cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition 2xl:max-w-[350px] 2xl:max-h-[450px] ${idx === 0 ? 'ml-9 lg:ml-13' : ''}`}
+                className={`min-w-[280px] max-w-[280px] sm:max-w-[300px] sm:ml-9 cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition 2xl:max-w-[350px] 2xl:max-h-[450px] ${idx === 0 ? 'lg:ml-13' : ''}`}
                 onClick={() => setSelected(article)}
               >
                 <img
