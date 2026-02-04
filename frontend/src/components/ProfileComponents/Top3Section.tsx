@@ -148,7 +148,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                         <img
                           src={show.poster}
                           alt={show.title}
-                          className="w-full h-[320px] object-contain rounded-lg shadow-lg"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                         />
                         <button
                           onClick={() => onRemove(show.id, 'tv')}
@@ -196,11 +196,11 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 {/* Bouton Add pour desktop si moins de 3 séries */}
                 {tvShows.length < 3 && (
                   <button
-                    onClick={onAddTvShow}
+                    onClick={onAddMovie}
                     className="w-full h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
                   >
                     <span className="text-6xl mb-2">➕</span>
-                    <span className="text-sm text-gray-400">Add TV Show</span>
+                    <span className="text-sm text-gray-400">Add Movie</span>
                   </button>
                 )}
               </div>
