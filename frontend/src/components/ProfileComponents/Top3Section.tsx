@@ -46,12 +46,12 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           ) : (
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movies.map((movie) => (
-                <div key={movie.id} className="relative group sm:h-48">
-                  <div className="aspect-[2/3] w-full">
+                <div key={movie.id} className="relative group min-h-[280px] sm:h-48">
+                  <div className="w-full h-full flex items-center justify-center">
                     <img
                       src={movie.poster}
                       alt={movie.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                      className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                     />
                   </div>
                   <button
