@@ -115,26 +115,25 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-              {tvShowWatchlist.map((show) => (
-                <div key={show._id} className="relative group h-56 sm:h-64 md:h-80">
-                  <div className="aspect-[2/3] w-full">
+            <Carousel className="w-full block sm:hidden xl:block">
+              <CarouselContent className="-ml-2">
+                {tvShowWatchlist.map((show) => (
+                  <CarouselItem key={show._id} className="pl-2 basis-2/3">
                     <img
                       src={show.poster}
                       alt={show.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                     />
-                  </div>
-
-                  <button
-                    onClick={() => onRemove(show._id, 'tv')}
-                    className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
-            </div>
+                    <button
+                      onClick={() => onRemove(show._id, 'tv')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           )}
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">
