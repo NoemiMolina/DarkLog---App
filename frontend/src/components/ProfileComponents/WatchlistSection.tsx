@@ -57,16 +57,16 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             </div>
           ) : (
             <>
-              {/* VERSION MOBILE - CAROUSEL */}
-              <div className="block sm:hidden">
+              {/* CAROUSEL - Mobile, XL et 2XL */}
+              <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-2">
                     {movieWatchlist.map((movie) => (
-                      <CarouselItem key={movie._id} className="pl-2 basis-2/3">
+                      <CarouselItem key={movie._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px]">
                         <img
                           src={movie.poster}
                           alt={movie.title}
-                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                          className="w-full h-full object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
                         />
                         <button
                           onClick={() => onRemove(movie._id, 'movie')}
@@ -78,27 +78,6 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
                     ))}
                   </CarouselContent>
                 </Carousel>
-              </div>
-
-              {/* VERSION DESKTOP - GRID */}
-              <div className="hidden sm:grid grid-cols-3 gap-3 sm:gap-6">
-                {movieWatchlist.map((movie) => (
-                  <div key={movie._id} className="relative group h-56 sm:h-64 md:h-80">
-                    <div className="aspect-[2/3] w-full">
-                      <img
-                        src={movie.poster}
-                        alt={movie.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                      />
-                    </div>
-                    <button
-                      onClick={() => onRemove(movie._id, 'movie')}
-                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                ))}
               </div>
             </>
           )}
@@ -115,25 +94,27 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               </button>
             </div>
           ) : (
-            <Carousel className="w-full block sm:hidden xl:block">
-              <CarouselContent className="-ml-2">
-                {tvShowWatchlist.map((show) => (
-                  <CarouselItem key={show._id} className="pl-2 basis-2/3">
-                    <img
-                      src={show.poster}
-                      alt={show.title}
-                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                    />
-                    <button
-                      onClick={() => onRemove(show._id, 'tv')}
-                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
+            <div className="block sm:hidden xl:block">
+              <Carousel className="w-full">
+                <CarouselContent className="-ml-2">
+                  {tvShowWatchlist.map((show) => (
+                    <CarouselItem key={show._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px]">
+                      <img
+                        src={show.poster}
+                        alt={show.title}
+                        className="w-full h-full object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <button
+                        onClick={() => onRemove(show._id, 'tv')}
+                        className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
           )}
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">
@@ -143,25 +124,29 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               <p className="text-gray-400">No homemade watchlists added yet</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-              {savedHomemadeWatchlists.map((watchlist) => (
-                <div key={watchlist._id} className="relative group h-32 sm:h-64 md:h-80">
-                  <img
-                    src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
-                    alt={watchlist.title}
-                    className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover"
-                  />
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 px-3 py-1 rounded text-white text-sm opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%]">
-                    {watchlist.title}
-                  </div>
-                  <button
-                    onClick={() => onRemove(watchlist._id, 'homemadewatchlist')}
-                    className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
+            <div className="block sm:hidden xl:block">
+              <Carousel className="w-full">
+                <CarouselContent className="-ml-2">
+                  {savedHomemadeWatchlists.map((watchlist) => (
+                    <CarouselItem key={watchlist._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px]">
+                      <img
+                        src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
+                        alt={watchlist.title}
+                        className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-contain"
+                      />
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 px-3 py-1 rounded text-white text-sm opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap overflow-hidden text-ellipsis max-w-[90%]">
+                        {watchlist.title}
+                      </div>
+                      <button
+                        onClick={() => onRemove(watchlist._id, 'homemadewatchlist')}
+                        className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
             </div>
           )}
         </div>
