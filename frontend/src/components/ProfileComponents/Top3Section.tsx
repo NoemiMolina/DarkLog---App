@@ -1,10 +1,5 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "../../components/ui/carousel";
 import { Trash2 } from 'lucide-react';
 
 interface Top3Item {
@@ -38,110 +33,87 @@ const Top3Section: React.FC<Top3SectionProps> = ({
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
             🎬 Movies
-          </h2>
-
+          </h2> 
           {movies.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
-              <button
-                onClick={onAddMovie}
-                className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
+              <button 
+                onClick={onAddMovie} 
+                 className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
                 ➕ Add Your Top 3 Movies
               </button>
             </div>
           ) : (
-            <>
-              {/* CAROUSEL - Mobile et XL+ */}
-              <div className="block sm:hidden xl:block">
-                <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
-                    {movies.map((movie) => (
-                      <CarouselItem key={movie.id} className="basis-2/3 relative group px-2 xl:px-0">
-                        <img
-                          src={movie.poster}
-                          alt={movie.title}
-                          className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl"
-                        />
-                        <button
-                          onClick={() => onRemove(movie.id, 'movie')}
-                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </CarouselItem>
-                    ))}
-
-                    {movies.length < 3 && (
-                      <CarouselItem className="basis-2/3 relative group px-2 xl:px-0">
-                        <button
-                          onClick={onAddMovie}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
-                        >
-                          <span className="text-4xl mb-2">➕</span>
-                          <span className="text-sm text-gray-400">Add Movie</span>
-                        </button>
-                      </CarouselItem>
-                    )}
-                  </CarouselContent>
-                </Carousel>
-              </div>
-            </>
+            <div className="grid grid-cols-3 gap-2 sm:gap-6">
+              {movies.map((movie) => (
+                <div key={movie.id} className="relative group">
+                  <img 
+                    src={movie.poster} 
+                    alt={movie.title} 
+                    className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
+                  />
+                  <button 
+                    onClick={() => onRemove(movie.id, 'movie')} 
+                    className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              ))}
+              {movies.length < 3 && (
+                <button 
+                  onClick={onAddMovie} 
+                  className="w-full h-20 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75"
+                >
+                  <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
+                  <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add Movie</span>
+                </button>
+              )}
+            </div>
           )}
         </div>
 
-        {/* TV Shows Section - Même structure */}
-        {/* TV Shows Section - Version simplifiée comme Movies */}
+        {/* TV Shows Section */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
             📺 TV Shows
           </h2>
-
           {tvShows.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
-              <button
-                onClick={onAddTvShow}
-                className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
+              <button 
+                onClick={onAddTvShow} 
+                 className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
                 ➕ Add your Top 3 TV Shows
               </button>
             </div>
           ) : (
-            <>
-              {/* CAROUSEL - Mobile et XL+ */}
-              <div className="block sm:hidden xl:block">
-                <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
-                    {tvShows.map((show) => (
-                      <CarouselItem key={show.id} className="basis-2/3 relative group px-2 xl:px-0">
-                        <img
-                          src={show.poster}
-                          alt={show.title}
-                          className="w-full h-auto object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300 aspect-[2/3]"
-                        />
-                        <button
-                          onClick={() => onRemove(show.id, 'tv')}
-                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                        >
-                          <Trash2 size={16} />
-                        </button>
-                      </CarouselItem>
-                    ))}
-
-                    {tvShows.length < 3 && (
-                      <CarouselItem className="basis-2/3 relative group px-2 xl:px-0">
-                        <button
-                          onClick={onAddTvShow}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
-                        >
-                          <span className="text-4xl mb-2">➕</span>
-                          <span className="text-sm text-gray-400">Add TV Show</span>
-                        </button>
-                      </CarouselItem>
-                    )}
-                  </CarouselContent>
-                </Carousel>
-              </div>
-            </>
+            <div className="grid grid-cols-3 gap-2 sm:gap-6">
+              {tvShows.map((show) => (
+                <div key={show.id} className="relative group">
+                  <img 
+                    src={show.poster} 
+                    alt={show.title} 
+                    className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
+                  />
+                  <button 
+                    onClick={() => onRemove(show.id, 'tv')} 
+                    className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              ))}
+              {tvShows.length < 3 && (
+                <button 
+                  onClick={onAddTvShow} 
+                  className="w-full h-20 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75 "
+                >
+                  <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
+                  <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add TV Show</span>
+                </button>
+              )}
+            </div>
           )}
         </div>
       </CardContent>
