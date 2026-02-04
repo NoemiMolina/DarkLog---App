@@ -52,7 +52,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           ) : (
             <>
               {/* CAROUSEL - Mobile et XL+ */}
-              <div className="block sm:hidden xl:block">
+              <div className="relative group">
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
                     {movies.map((movie) => (
@@ -60,7 +60,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                         <img
                           src={movie.poster}
                           alt={movie.title}
-                          className="w-full h-auto object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300 aspect-[2/3] max-w-xs xl:max-w-xs 2xl:max-w-sm mx-auto"
+                          className="absolute inset-0 w-full h-full object-cover"
                         />
                         <button
                           onClick={() => onRemove(movie.id, 'movie')}
