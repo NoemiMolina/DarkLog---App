@@ -1,5 +1,12 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../../components/ui/carousel";
 import { Trash2 } from 'lucide-react';
 
 interface Top3Item {
@@ -44,35 +51,61 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-3 sm:gap-6">
-              {movies.map((movie) => (
-                <div key={movie.id} className="relative group min-h-[280px] sm:h-48">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <img
-                      src={movie.poster}
-                      alt={movie.title}
-                      className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                    />
-                  </div>
-                  <button
-                    onClick={() => onRemove(movie.id, 'movie')}
-                    className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
-              {movies.length < 3 && (
-                <button
-                  onClick={onAddMovie}
-                  className="w-full h-24 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75"
-                >
-                  <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
-                  <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add Movie</span>
-                </button>
-              )}
+            <div className="sm:hidden"> {/* Carousel uniquement sur mobile */}
+              <Carousel className="w-full">
+                <CarouselContent className="-ml-2">
+                  {movies.map((movie) => (
+                    <CarouselItem key={movie.id} className="pl-2 basis-2/3">
+                      <div className="relative group h-[300px]">
+                        <img
+                          src={movie.poster}
+                          alt={movie.title}
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                        />
+                        <button
+                          onClick={() => onRemove(movie.id, 'movie')}
+                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-0" />
+                <CarouselNext className="right-0" />
+              </Carousel>
             </div>
           )}
+          <div className="grid grid-cols-3 gap-3 sm:gap-6">
+            {movies.map((movie) => (
+              <div key={movie.id} className="relative group min-h-[280px] sm:h-48">
+                <div className="w-full h-full flex items-center justify-center">
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                    className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                  />
+                </div>
+                <button
+                  onClick={() => onRemove(movie.id, 'movie')}
+                  className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            ))}
+            {movies.length < 3 && (
+              <button
+                onClick={onAddMovie}
+                className="w-full h-24 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75"
+              >
+                <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
+                <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add Movie</span>
+              </button>
+            )}
+          </div>
+          
         </div>
 
         {/* TV Shows Section */}
