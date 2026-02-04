@@ -54,9 +54,9 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent>
+                  <CarouselContent className="-ml-4">
                     {movies.map((movie) => (
-                      <CarouselItem key={movie.id} className="basis-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
+                      <CarouselItem key={movie.id} className="basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -72,7 +72,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {movies.length < 3 && (
-                      <CarouselItem className="basis-full max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px]">
+                      <CarouselItem className="basis-2/3 max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px]">
                         <button
                           onClick={onAddMovie}
                           className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
@@ -110,9 +110,9 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent>
+                  <CarouselContent className="-ml-4">
                     {tvShows.map((show) => (
-                      <CarouselItem key={show.id} className="basis-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
+                      <CarouselItem key={show.id} className="basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                         <img
                           src={show.poster}
                           alt={show.title}
@@ -128,7 +128,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {tvShows.length < 3 && (
-                      <CarouselItem className="basis-full max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px]">
+                      <CarouselItem className="basis-2/3 max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px]">
                         <button
                           onClick={onAddTvShow}
                           className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
