@@ -56,7 +56,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-4">
                     {movies.map((movie) => (
-                      <CarouselItem key={movie.id} className="basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
+                      <CarouselItem key={movie.id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden p-0">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -72,7 +72,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {movies.length < 3 && (
-                      <CarouselItem className="basis-2/3 max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px]">
+                      <CarouselItem className="basis-2/3 h-full max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] p-0">
                         <button
                           onClick={onAddMovie}
                           className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
@@ -112,7 +112,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-4">
                     {tvShows.map((show) => (
-                      <CarouselItem key={show.id} className="basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
+                      <CarouselItem key={show.id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden p-0">
                         <img
                           src={show.poster}
                           alt={show.title}
@@ -128,7 +128,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {tvShows.length < 3 && (
-                      <CarouselItem className="basis-2/3 max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px]">
+                      <CarouselItem className="basis-2/3 h-full max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] p-0">
                         <button
                           onClick={onAddTvShow}
                           className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
