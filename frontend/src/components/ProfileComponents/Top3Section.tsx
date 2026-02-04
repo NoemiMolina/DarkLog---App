@@ -4,8 +4,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "../../components/ui/carousel";
 import { Trash2 } from 'lucide-react';
 
@@ -41,6 +39,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
             🎬 Movies
           </h2>
+
           {movies.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
               <button
@@ -51,68 +50,84 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               </button>
             </div>
           ) : (
-            <div className="sm:hidden"> {/* Carousel uniquement sur mobile */}
-              <Carousel className="w-full">
-                <CarouselContent className="-ml-2">
-                  {movies.map((movie) => (
-                    <CarouselItem key={movie.id} className="pl-2 basis-2/3">
-                      <div className="relative group h-[300px]">
-                        <img
-                          src={movie.poster}
-                          alt={movie.title}
-                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                        />
+            <>
+              {/* VERSION MOBILE - CAROUSEL (seulement sur mobile) */}
+              <div className="block sm:hidden">
+                <Carousel className="w-full">
+                  <CarouselContent className="-ml-2">
+                    {movies.map((movie) => (
+                      <CarouselItem key={movie.id} className="pl-2 basis-2/3">
+                        <div className="relative group h-[320px]">
+                          <img
+                            src={movie.poster}
+                            alt={movie.title}
+                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                          />
+                          <button
+                            onClick={() => onRemove(movie.id, 'movie')}
+                            className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </CarouselItem>
+                    ))}
+
+                    {/* Bouton Add pour mobile si moins de 3 films */}
+                    {movies.length < 3 && (
+                      <CarouselItem className="pl-2 basis-2/3">
                         <button
-                          onClick={() => onRemove(movie.id, 'movie')}
-                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={onAddMovie}
+                          className="w-full h-[320px] border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
                         >
-                          <Trash2 size={16} />
+                          <span className="text-4xl mb-2">➕</span>
+                          <span className="text-sm text-gray-400">Add Movie</span>
                         </button>
-                      </div>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-0" />
-                <CarouselNext className="right-0" />
-              </Carousel>
-            </div>
-          )}
-          <div className="grid grid-cols-3 gap-3 sm:gap-6">
-            {movies.map((movie) => (
-              <div key={movie.id} className="relative group min-h-[280px] sm:h-48">
-                <div className="w-full h-full flex items-center justify-center">
-                  <img
-                    src={movie.poster}
-                    alt={movie.title}
-                    className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                  />
-                </div>
-                <button
-                  onClick={() => onRemove(movie.id, 'movie')}
-                  className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <Trash2 size={16} />
-                </button>
+                      </CarouselItem>
+                    )}
+                  </CarouselContent>
+                </Carousel>
               </div>
-            ))}
-            {movies.length < 3 && (
-              <button
-                onClick={onAddMovie}
-                className="w-full h-24 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75"
-              >
-                <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
-                <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add Movie</span>
-              </button>
-            )}
-          </div>
-          
+
+              {/* VERSION DESKTOP - GRID (seulement sur desktop) */}
+              <div className="hidden sm:grid grid-cols-3 gap-6">
+                {movies.map((movie) => (
+                  <div key={movie.id} className="relative group h-48">
+                    <img
+                      src={movie.poster}
+                      alt={movie.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                    />
+                    <button
+                      onClick={() => onRemove(movie.id, 'movie')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                ))}
+
+                {/* Bouton Add pour desktop si moins de 3 films */}
+                {movies.length < 3 && (
+                  <button
+                    onClick={onAddMovie}
+                    className="w-full h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                  >
+                    <span className="text-6xl mb-2">➕</span>
+                    <span className="text-sm text-gray-400">Add Movie</span>
+                  </button>
+                )}
+              </div>
+            </>
+          )}
         </div>
 
-        {/* TV Shows Section */}
+        {/* TV Shows Section - Même structure */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
             📺 TV Shows
           </h2>
+
           {tvShows.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
               <button
@@ -123,41 +138,80 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-3 sm:gap-6">
-              {tvShows.map((show) => (
-                <div key={show.id} className="relative group sm:h-48">
-                  <div className="aspect-[2/3] w-full">
+            <>
+              {/* VERSION MOBILE - CAROUSEL */}
+              <div className="block sm:hidden">
+                <Carousel className="w-full">
+                  <CarouselContent className="-ml-2">
+                    {tvShows.map((show) => (
+                      <CarouselItem key={show.id} className="pl-2 basis-2/3">
+                        <div className="relative group h-[320px]">
+                          <img
+                            src={show.poster}
+                            alt={show.title}
+                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                          />
+                          <button
+                            onClick={() => onRemove(show.id, 'tv')}
+                            className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
+                      </CarouselItem>
+                    ))}
+
+                    {/* Bouton Add pour mobile si moins de 3 séries */}
+                    {tvShows.length < 3 && (
+                      <CarouselItem className="pl-2 basis-2/3">
+                        <button
+                          onClick={onAddTvShow}
+                          className="w-full h-[320px] border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                        >
+                          <span className="text-4xl mb-2">➕</span>
+                          <span className="text-sm text-gray-400">Add TV Show</span>
+                        </button>
+                      </CarouselItem>
+                    )}
+                  </CarouselContent>
+                </Carousel>
+              </div>
+
+              {/* VERSION DESKTOP - GRID */}
+              <div className="hidden sm:grid grid-cols-3 gap-6">
+                {tvShows.map((show) => (
+                  <div key={show.id} className="relative group h-48">
                     <img
                       src={show.poster}
                       alt={show.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                     />
+                    <button
+                      onClick={() => onRemove(show.id, 'tv')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
+                ))}
+
+                {/* Bouton Add pour desktop si moins de 3 séries */}
+                {tvShows.length < 3 && (
                   <button
-                    onClick={() => onRemove(show.id, 'tv')}
-                    className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={onAddTvShow}
+                    className="w-full h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
                   >
-                    <Trash2 size={16} />
+                    <span className="text-6xl mb-2">➕</span>
+                    <span className="text-sm text-gray-400">Add TV Show</span>
                   </button>
-                </div>
-              ))}
-              {tvShows.length < 3 && (
-                <button
-                  onClick={onAddTvShow}
-                  className="w-full h-24 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75 "
-                >
-                  <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
-                  <span className="hidden sm:inline text-xs sm:text-sm text-gray-400">Add TV Show</span>
-                </button>
-              )}
-            </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       </CardContent>
     </Card>
   );
 };
-
-
 
 export default Top3Section;
