@@ -50,7 +50,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                   <img 
                     src={movie.poster} 
                     alt={movie.title} 
-                    className="w-full h-full sm:h-55 sm:w-60 group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg object-cover" 
+                    className="h-72 sm:h-55 group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
                   />
                   <button 
                     onClick={() => onRemove(movie.id, 'movie')} 
@@ -94,7 +94,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                   <img 
                     src={show.poster} 
                     alt={show.title} 
-                    className="w-full h-full sm:h-55 sm:w-60 group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg object-cover" 
+                    className="h-72 sm:h-55 group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
                   />
                   <button 
                     onClick={() => onRemove(show.id, 'tv')} 
