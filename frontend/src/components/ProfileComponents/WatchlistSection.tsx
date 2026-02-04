@@ -60,9 +60,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               {/* CAROUSEL - Mobile, XL et 2XL */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-2">
+                  <CarouselContent>
                     {movieWatchlist.map((movie) => (
-                      <CarouselItem key={movie._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
+                      <CarouselItem key={movie._id} className="basis-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -96,9 +96,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-2">
+                <CarouselContent>
                   {tvShowWatchlist.map((show) => (
-                    <CarouselItem key={show._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
+                    <CarouselItem key={show._id} className="basis-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                       <img
                         src={show.poster}
                         alt={show.title}
@@ -126,9 +126,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-2">
+                <CarouselContent>
                   {savedHomemadeWatchlists.map((watchlist) => (
-                    <CarouselItem key={watchlist._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
+                    <CarouselItem key={watchlist._id} className="basis-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                       <img
                         src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
                         alt={watchlist.title}
