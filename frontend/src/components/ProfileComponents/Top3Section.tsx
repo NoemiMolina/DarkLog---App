@@ -57,17 +57,17 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                   <CarouselContent className="-ml-2">
                     {movies.map((movie) => (
                       <CarouselItem key={movie.id} className="pl-2 basis-2/3">
-                          <img
-                            src={movie.poster}
-                            alt={movie.title}
-                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                          />
-                          <button
-                            onClick={() => onRemove(movie.id, 'movie')}
-                            className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                          >
-                            <Trash2 size={16} />
-                          </button>
+                        <img
+                          src={movie.poster}
+                          alt={movie.title}
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                        />
+                        <button
+                          onClick={() => onRemove(movie.id, 'movie')}
+                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <Trash2 size={16} />
+                        </button>
                       </CarouselItem>
                     ))}
 
@@ -121,6 +121,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
         </div>
 
         {/* TV Shows Section - Même structure */}
+        {/* TV Shows Section - Version simplifiée comme Movies */}
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
             📺 TV Shows
@@ -137,23 +138,24 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             </div>
           ) : (
             <>
-              {/* VERSION MOBILE - CAROUSEL */}
+              {/* VERSION MOBILE - CAROUSEL (même structure que Movies) */}
               <div className="block sm:hidden">
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-2">
                     {tvShows.map((show) => (
                       <CarouselItem key={show.id} className="pl-2 basis-2/3">
-                          <img
-                            src={show.poster}
-                            alt={show.title}
-                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                          />
-                          <button
-                            onClick={() => onRemove(show.id, 'tv')}
-                            className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                          >
-                            <Trash2 size={16} />
-                          </button>
+                        {/* MÊME STRUCTURE QUE MOVIES : pas de div, juste l'image */}
+                        <img
+                          src={show.poster}
+                          alt={show.title}
+                          className="w-full h-[320px] object-contain rounded-lg shadow-lg"
+                        />
+                        <button
+                          onClick={() => onRemove(show.id, 'tv')}
+                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 hover:opacity-100 transition-opacity"
+                        >
+                          <Trash2 size={16} />
+                        </button>
                       </CarouselItem>
                     ))}
 
