@@ -62,7 +62,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-2">
                     {movieWatchlist.map((movie) => (
-                      <CarouselItem key={movie._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px] overflow-hidden bg-transparent p-0">
+                      <CarouselItem key={movie._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -98,7 +98,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               <Carousel className="w-full">
                 <CarouselContent className="-ml-2">
                   {tvShowWatchlist.map((show) => (
-                    <CarouselItem key={show._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px] overflow-hidden bg-transparent p-0">
+                    <CarouselItem key={show._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                       <img
                         src={show.poster}
                         alt={show.title}
@@ -128,7 +128,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               <Carousel className="w-full">
                 <CarouselContent className="-ml-2">
                   {savedHomemadeWatchlists.map((watchlist) => (
-                    <CarouselItem key={watchlist._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px] overflow-hidden bg-transparent p-0">
+                    <CarouselItem key={watchlist._id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden">
                       <img
                         src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
                         alt={watchlist.title}
