@@ -60,9 +60,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               {/* CAROUSEL - Mobile, XL et 2XL */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4">
+                  <CarouselContent className="-ml-4 xl:gap-4 2xl:gap-6">
                     {movieWatchlist.map((movie) => (
-                      <CarouselItem key={movie._id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden p-0">
+                      <CarouselItem key={movie._id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[280px] 2xl:max-h-[330px] overflow-hidden p-0">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -96,9 +96,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-4">
+                <CarouselContent className="-ml-4 xl:gap-4 2xl:gap-6">
                   {tvShowWatchlist.map((show) => (
-                    <CarouselItem key={show._id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden p-0">
+                    <CarouselItem key={show._id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[280px] 2xl:max-h-[330px] overflow-hidden p-0">
                       <img
                         src={show.poster}
                         alt={show.title}
@@ -126,9 +126,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-4">
+                <CarouselContent className="-ml-4 xl:gap-4 2xl:gap-6">
                   {savedHomemadeWatchlists.map((watchlist) => (
-                    <CarouselItem key={watchlist._id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden p-0">
+                    <CarouselItem key={watchlist._id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[280px] 2xl:max-h-[330px] overflow-hidden p-0">
                       <img
                         src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
                         alt={watchlist.title}
