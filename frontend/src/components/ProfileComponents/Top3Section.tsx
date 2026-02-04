@@ -56,11 +56,11 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-4 xl:gap-4 2xl:gap-6">
                     {movies.map((movie) => (
-                      <CarouselItem key={movie.id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[280px] 2xl:max-h-[330px] overflow-hidden p-0">
+                      <CarouselItem key={movie.id} className="basis-2/3 relative group px-2">
                         <img
                           src={movie.poster}
                           alt={movie.title}
-                          className="w-full h-full object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-auto object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300 aspect-[2/3]"
                         />
                         <button
                           onClick={() => onRemove(movie.id, 'movie')}
@@ -72,10 +72,10 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {movies.length < 3 && (
-                      <CarouselItem className="basis-2/3 h-full max-h-[400px] xl:max-h-[280px] 2xl:max-h-[330px] p-0">
+                      <CarouselItem className="basis-2/3 px-2">
                         <button
                           onClick={onAddMovie}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
                         >
                           <span className="text-4xl mb-2">➕</span>
                           <span className="text-sm text-gray-400">Add Movie</span>
@@ -110,13 +110,13 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4">
+                  <CarouselContent className="-ml-4 xl:gap-4 2xl:gap-6">
                     {tvShows.map((show) => (
-                      <CarouselItem key={show.id} className="basis-2/3 h-full relative group max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] overflow-hidden p-0">
+                      <CarouselItem key={show.id} className="basis-2/3 relative group px-2">
                         <img
                           src={show.poster}
                           alt={show.title}
-                          className="w-full h-full object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
+                          className="w-full h-auto object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300 aspect-[2/3]"
                         />
                         <button
                           onClick={() => onRemove(show.id, 'tv')}
@@ -128,10 +128,10 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {tvShows.length < 3 && (
-                      <CarouselItem className="basis-2/3 h-full max-h-[400px] xl:max-h-[320px] 2xl:max-h-[380px] p-0">
+                      <CarouselItem className="basis-2/3 px-2">
                         <button
                           onClick={onAddTvShow}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition"
+                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
                         >
                           <span className="text-4xl mb-2">➕</span>
                           <span className="text-sm text-gray-400">Add TV Show</span>
