@@ -125,7 +125,7 @@ const WelcomePage: React.FC = () => {
                     </div>
                 </div>
                 <div className="xl:-mt-70 2xl:-mt-80">
-                   <News newsCarouselClassName="lg:ml-[-250px] xl:pl-90 xl:w-[1540px] 2xl:pl-150 2xl:w-[1770px]" />
+                   <News newsCarouselClassName="pl-4 sm:pl-0 lg:ml-[-250px] xl:pl-90 xl:w-[1540px] 2xl:pl-150 2xl:w-[1770px]" />
                 </div>
 
 

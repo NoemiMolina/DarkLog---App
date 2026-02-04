@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { ContactForm } from "./ContactForm";
 
 interface FooterProps {
@@ -21,18 +22,18 @@ export const Footer: React.FC<FooterProps> = ({ userEmail }) => {
             <ContactForm userEmail={userEmail} />
           </div>
           <div className="flex gap-4 order-2 md:order-3">
-            <a
-              href="#"
+            <Link
+              to="/privacy"
               className="text-sm text-gray-400 hover:text-white transition"
             >
               Privacy
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/terms"
               className="text-sm text-gray-400 hover:text-white transition"
             >
               Terms
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -7,6 +7,8 @@ import QuizzPage from "./features/pages/QuizzPage";
 import  ForumPage  from "./features/pages/ForumPage";
 import LoginPage from "./features/pages/LoginPage";
 import SignUpPage from "./features/pages/SignUpPage";
+import PrivacyPage from "./features/pages/PrivacyPage";
+import TermsPage from "./features/pages/TermsPage";
 import { Footer } from "./components/FooterComponents/Footer";
 import { NotificationProvider } from "./context/NotificationContext";
 import { useEffect, useState } from "react";
@@ -48,6 +50,8 @@ export default function App() {
               <Route path="/user/:userId" element={<UserPublicProfile />} />
               <Route path="/quiz" element={<QuizzPage isTVShowMode={isTVShowMode} />} />
               <Route path="/forum" element={<ForumPage />} />
+              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/terms" element={<TermsPage />} />
             </Routes>
           </div>
           <Footer />

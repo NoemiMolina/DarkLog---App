@@ -48,14 +48,14 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
 
       <div className="mt-8">
         <Carousel
-          className={`w-full -mt-5 overflow-x-auto scroll-smooth ${newsCarouselClassName}`}
+          className={`w-full -mt-5 overflow-x-auto scroll-smooth px-4 sm:px-0 ${newsCarouselClassName}`}
         >
 
           <CarouselContent className="gap-6 lg:-translate-x-[20px]">
             {news.map((article, idx) => (
               <CarouselItem
                 key={article._id}
-                className={`min-w-[280px] max-w-[280px] sm:max-w-[300px] sm:ml-9 cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition 2xl:max-w-[350px] 2xl:max-h-[450px] ${idx === 0 ? 'lg:ml-13' : ''}`}
+                className={`min-w-[270px] max-w-[270px] sm:max-w-[300px] sm:min-w-[300px] sm:ml-9 cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition 2xl:max-w-[350px] 2xl:max-h-[450px]`}
                 onClick={() => setSelected(article)}
               >
                 <img
