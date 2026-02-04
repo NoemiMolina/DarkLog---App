@@ -33,12 +33,12 @@ const Top3Section: React.FC<Top3SectionProps> = ({
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h2 className="text-sm sm:text-lg font-bold mb-3 sm:mb-6 flex items-center gap-1 sm:gap-2">
             🎬 Movies
-          </h2> 
+          </h2>
           {movies.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
-              <button 
-                onClick={onAddMovie} 
-                 className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
+              <button
+                onClick={onAddMovie}
+                className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
                 ➕ Add Your Top 3 Movies
               </button>
@@ -47,13 +47,13 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movies.map((movie) => (
                 <div key={movie.id} className="relative group h-72 sm:h-48">
-                  <img 
-                    src={movie.poster} 
-                    alt={movie.title} 
-                    className="w-50 h-80 sm:h-55 group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                   />
-                  <button 
-                    onClick={() => onRemove(movie.id, 'movie')} 
+                  <button
+                    onClick={() => onRemove(movie.id, 'movie')}
                     className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={16} />
@@ -61,8 +61,8 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 </div>
               ))}
               {movies.length < 3 && (
-                <button 
-                  onClick={onAddMovie} 
+                <button
+                  onClick={onAddMovie}
                   className="w-full h-24 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75"
                 >
                   <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
@@ -80,9 +80,9 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           </h2>
           {tvShows.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
-              <button 
-                onClick={onAddTvShow} 
-                 className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
+              <button
+                onClick={onAddTvShow}
+                className="bg-gray-800/50 border border-purple-500/20 px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base rounded-lg transition"
               >
                 ➕ Add your Top 3 TV Shows
               </button>
@@ -91,13 +91,13 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {tvShows.map((show) => (
                 <div key={show.id} className="relative group sm:h-48">
-                  <img 
-                    src={show.poster} 
-                    alt={show.title} 
-                    className="w-50 h-80 xl:w-70 xl:h-100 xl:mt-25 xl:rounded-lg 2xl:w-70 2xl:h-100 2xl:mt-11 2xl:rounded-lg sm:h-55 group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
+                  <img
+                    src={show.poster}
+                    alt={show.title}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                   />
-                  <button 
-                    onClick={() => onRemove(show.id, 'tv')} 
+                  <button
+                    onClick={() => onRemove(show.id, 'tv')}
                     className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={16} />
@@ -105,8 +105,8 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 </div>
               ))}
               {tvShows.length < 3 && (
-                <button 
-                  onClick={onAddTvShow} 
+                <button
+                  onClick={onAddTvShow}
                   className="w-full h-24 sm:h-32 border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition xl:h-117 xl:w-70 2xl:h-117 2xl:w-75 "
                 >
                   <span className="text-2xl sm:text-6xl mb-1 sm:mb-2">➕</span>
