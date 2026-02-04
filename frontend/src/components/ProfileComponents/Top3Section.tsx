@@ -56,7 +56,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-2">
                     {movies.map((movie) => (
-                      <CarouselItem key={movie.id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px] overflow-hidden">
+                      <CarouselItem key={movie.id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px] overflow-hidden bg-transparent p-0">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -112,7 +112,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-2">
                     {tvShows.map((show) => (
-                      <CarouselItem key={show.id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px] overflow-hidden">
+                      <CarouselItem key={show.id} className="pl-2 basis-2/3 relative group max-h-[400px] xl:max-h-[300px] 2xl:max-h-[350px] overflow-hidden bg-transparent p-0">
                         <img
                           src={show.poster}
                           alt={show.title}
