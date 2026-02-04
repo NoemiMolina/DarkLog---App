@@ -46,12 +46,14 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           ) : (
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movies.map((movie) => (
-                <div key={movie.id} className="relative group h-72 sm:h-48">
-                  <img
-                    src={movie.poster}
-                    alt={movie.title}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                  />
+                <div key={movie.id} className="relative group sm:h-48">
+                  <div className="aspect-[2/3] w-full">
+                    <img
+                      src={movie.poster}
+                      alt={movie.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                    />
+                  </div>
                   <button
                     onClick={() => onRemove(movie.id, 'movie')}
                     className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
@@ -91,11 +93,13 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {tvShows.map((show) => (
                 <div key={show.id} className="relative group sm:h-48">
-                  <img
-                    src={show.poster}
-                    alt={show.title}
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                  />
+                  <div className="aspect-[2/3] w-full">
+                    <img
+                      src={show.poster}
+                      alt={show.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                    />
+                  </div>
                   <button
                     onClick={() => onRemove(show.id, 'tv')}
                     className="absolute top-1 sm:top-2 right-1 sm:right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
