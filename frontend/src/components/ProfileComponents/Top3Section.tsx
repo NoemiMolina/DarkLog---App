@@ -60,7 +60,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                         <img
                           src={movie.poster}
                           alt={movie.title}
-                          className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl max-w-xs xl:max-w-[16rem] 2xl:max-w-[17rem] mx-auto"
+                          className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl xl:scale-[0.9] 2xl:scale-[0.92]"
                         />
                         <button
                           onClick={() => onRemove(movie.id, 'movie')}
