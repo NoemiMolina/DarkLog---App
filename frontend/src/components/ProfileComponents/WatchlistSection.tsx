@@ -60,9 +60,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               {/* CAROUSEL - Mobile, XL et 2XL */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
+                  <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
                     {movieWatchlist.map((movie) => (
-                      <CarouselItem key={movie._id} className="basis-2/3 relative group px-2">
+                      <CarouselItem key={movie._id} className="basis-2/3 relative group px-2 xl:px-0 2xl:px-0">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -96,9 +96,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
+                <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
                   {tvShowWatchlist.map((show) => (
-                    <CarouselItem key={show._id} className="basis-2/3 relative group px-2">
+                    <CarouselItem key={show._id} className="basis-2/3 relative group px-2 xl:px-0">
                       <img
                         src={show.poster}
                         alt={show.title}
@@ -126,9 +126,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
+                <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
                   {savedHomemadeWatchlists.map((watchlist) => (
-                    <CarouselItem key={watchlist._id} className="basis-2/3 relative group px-2">
+                    <CarouselItem key={watchlist._id} className="basis-2/3 relative group px-2 xl:px-0">
                       <img
                         src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
                         alt={watchlist.title}

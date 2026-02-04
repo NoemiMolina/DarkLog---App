@@ -54,9 +54,9 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
+                  <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
                     {movies.map((movie) => (
-                      <CarouselItem key={movie.id} className="basis-2/3 relative group px-2">
+                      <CarouselItem key={movie.id} className="basis-2/3 relative group px-2 xl:px-0">
                         <img
                           src={movie.poster}
                           alt={movie.title}
@@ -72,7 +72,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {movies.length < 3 && (
-                      <CarouselItem className="basis-2/3 px-2">
+                      <CarouselItem className="basis-2/3 relative group px-2 xl:px-0">
                         <button
                           onClick={onAddMovie}
                           className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3] max-w-xs xl:max-w-xs 2xl:max-w-sm mx-auto"
@@ -110,9 +110,9 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
+                  <CarouselContent className="-ml-4 xl:gap-0 2xl:gap-1">
                     {tvShows.map((show) => (
-                      <CarouselItem key={show.id} className="basis-2/3 relative group px-2">
+                      <CarouselItem key={show.id} className="basis-2/3 relative group px-2 xl:px-0">
                         <img
                           src={show.poster}
                           alt={show.title}
@@ -128,7 +128,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                     ))}
 
                     {tvShows.length < 3 && (
-                      <CarouselItem className="basis-2/3 px-2">
+                      <CarouselItem className="basis-2/3 relative group px-2 xl:px-0">
                         <button
                           onClick={onAddTvShow}
                           className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3] max-w-xs xl:max-w-xs 2xl:max-w-sm mx-auto"
