@@ -54,7 +54,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-3 2xl:gap-4">
+                  <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
                     {movies.map((movie) => (
                       <CarouselItem key={movie.id} className="basis-2/3 relative group px-2">
                         <img
@@ -75,7 +75,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                       <CarouselItem className="basis-2/3 px-2">
                         <button
                           onClick={onAddMovie}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
+                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3] max-w-xs xl:max-w-xs 2xl:max-w-sm mx-auto"
                         >
                           <span className="text-4xl mb-2">➕</span>
                           <span className="text-sm text-gray-400">Add Movie</span>
@@ -110,7 +110,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-3 2xl:gap-4">
+                  <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
                     {tvShows.map((show) => (
                       <CarouselItem key={show.id} className="basis-2/3 relative group px-2">
                         <img
@@ -131,7 +131,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                       <CarouselItem className="basis-2/3 px-2">
                         <button
                           onClick={onAddTvShow}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
+                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3] max-w-xs xl:max-w-xs 2xl:max-w-sm mx-auto"
                         >
                           <span className="text-4xl mb-2">➕</span>
                           <span className="text-sm text-gray-400">Add TV Show</span>

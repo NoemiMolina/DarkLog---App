@@ -60,7 +60,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               {/* CAROUSEL - Mobile, XL et 2XL */}
               <div className="block sm:hidden xl:block">
                 <Carousel className="w-full">
-                  <CarouselContent className="-ml-4 xl:gap-3 2xl:gap-4">
+                  <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
                     {movieWatchlist.map((movie) => (
                       <CarouselItem key={movie._id} className="basis-2/3 relative group px-2">
                         <img
@@ -96,7 +96,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-4 xl:gap-3 2xl:gap-4">
+                <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
                   {tvShowWatchlist.map((show) => (
                     <CarouselItem key={show._id} className="basis-2/3 relative group px-2">
                       <img
@@ -126,7 +126,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="block sm:hidden xl:block">
               <Carousel className="w-full">
-                <CarouselContent className="-ml-4 xl:gap-3 2xl:gap-4">
+                <CarouselContent className="-ml-4 xl:gap-1 2xl:gap-2">
                   {savedHomemadeWatchlists.map((watchlist) => (
                     <CarouselItem key={watchlist._id} className="basis-2/3 relative group px-2">
                       <img
