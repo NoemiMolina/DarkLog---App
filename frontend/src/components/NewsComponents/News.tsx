@@ -52,7 +52,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
         >
 
           <CarouselContent className="gap-6 lg:-translate-x-[20px]">
-            {news.map((article, idx) => (
+            {news.map((article) => (
               <CarouselItem
                 key={article._id}
                 className={`min-w-[270px] max-w-[270px] sm:max-w-[300px] sm:min-w-[300px] sm:ml-9 cursor-pointer group bg-gray-500/20 p-3 rounded-lg hover:bg-gray-600 transition 2xl:max-w-[350px] 2xl:max-h-[450px]`}
