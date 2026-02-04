@@ -46,11 +46,11 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           ) : (
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movies.map((movie) => (
-                <div key={movie.id} className="relative group h-48 sm:h-48">
+                <div key={movie.id} className="relative group h-72 sm:h-48">
                   <img 
                     src={movie.poster} 
                     alt={movie.title} 
-                    className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
+                    className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg h-72" 
                   />
                   <button 
                     onClick={() => onRemove(movie.id, 'movie')} 
@@ -90,11 +90,11 @@ const Top3Section: React.FC<Top3SectionProps> = ({
           ) : (
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {tvShows.map((show) => (
-                <div key={show.id} className="relative group h-48 sm:h-48">
+                <div key={show.id} className="relative group h-72 sm:h-48">
                   <img 
                     src={show.poster} 
                     alt={show.title} 
-                    className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" 
+                    className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg h-72" 
                   />
                   <button 
                     onClick={() => onRemove(show.id, 'tv')} 
