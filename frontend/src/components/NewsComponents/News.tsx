@@ -51,7 +51,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
           className={`w-full -mt-5 overflow-x-auto scroll-smooth ${newsCarouselClassName}`}
         >
 
-          <CarouselContent className="gap-6 lg:-translate-x-[20px]">
+          <CarouselContent className="gap-6 pl-4 sm:pl-0 lg:-translate-x-[20px]">
             {news.map((article) => (
               <CarouselItem
                 key={article._id}

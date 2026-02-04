@@ -37,11 +37,11 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
   return (
     <Card className="bg-[#2A2A2A] border-white/20 text-white">
       <CardHeader>
-        <CardTitle className="text-lg">Watchlists</CardTitle>
+        <CardTitle className="text-base sm:text-lg">Watchlists</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">
-          <h3 className="text-xl mb-4"> 🎬 Movies ({movieWatchlist.length})</h3>
+          <h3 className="text-sm mb-4"> 🎬 Movies ({movieWatchlist.length})</h3>
           {movieWatchlist.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
               <button
@@ -51,9 +51,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-2 sm:gap-6">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movieWatchlist.map((movie) => (
-                <div key={movie._id} className="relative group h-64 sm:h-80">
+                <div key={movie._id} className="relative group h-32 sm:h-64 md:h-80">
                   <img src={movie.poster} alt={movie.title} className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg" />
                   <button
                     onClick={() => onRemove(movie._id, 'movie')}
@@ -67,7 +67,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           )}
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">
-          <h3 className="text-xl mb-4">TV Shows Watchlist ({tvShowWatchlist.length})</h3>
+          <h3 className="text-sm mb-4">TV Shows Watchlist ({tvShowWatchlist.length})</h3>
           {tvShowWatchlist.length === 0 ? (
             <div className="text-center py-6 sm:py-12">
               <button
@@ -78,9 +78,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
               {tvShowWatchlist.map((show) => (
-                <div key={show._id} className="relative group h-64 sm:h-80">
+                <div key={show._id} className="relative group h-32 sm:h-64 md:h-80">
                   <img src={show.poster} alt={show.title} className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover" />
                   <button
                     onClick={() => onRemove(show._id, 'tv')}
@@ -94,15 +94,15 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           )}
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">
-          <h3 className="text-xl mb-4">Homemade Watchlists ({savedHomemadeWatchlists.length})</h3>
+          <h3 className="text-sm mb-4">Homemade Watchlists ({savedHomemadeWatchlists.length})</h3>
           {savedHomemadeWatchlists.length === 0 ? (
             <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
               <p className="text-gray-400">No homemade watchlists added yet</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
               {savedHomemadeWatchlists.map((watchlist) => (
-                <div key={watchlist._id} className="relative group h-64 sm:h-80">
+                <div key={watchlist._id} className="relative group h-32 sm:h-64 md:h-80">
                   <img
                     src={watchlist.posterPath ? `${API_URL}${watchlist.posterPath}` : '/placeholder.jpg'}
                     alt={watchlist.title}
