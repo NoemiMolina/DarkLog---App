@@ -60,7 +60,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                         <img
                           src={movie.poster}
                           alt={movie.title}
-                          className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl max-w-xs xl:w-72 2xl:w-80 mx-auto"
+                          className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl"
                         />
                         <button
                           onClick={() => onRemove(movie.id, 'movie')}
@@ -75,7 +75,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                       <CarouselItem className="basis-2/3 relative group px-2 xl:px-0">
                         <button
                           onClick={onAddMovie}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3] max-w-xs xl:w-72 2xl:w-80 mx-auto"
+                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
                         >
                           <span className="text-4xl mb-2">➕</span>
                           <span className="text-sm text-gray-400">Add Movie</span>
@@ -116,7 +116,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                         <img
                           src={show.poster}
                           alt={show.title}
-                          className="w-full h-auto object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300 aspect-[2/3] max-w-xs xl:w-72 2xl:w-80 mx-auto"
+                          className="w-full h-auto object-contain rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300 aspect-[2/3]"
                         />
                         <button
                           onClick={() => onRemove(show.id, 'tv')}
@@ -131,7 +131,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                       <CarouselItem className="basis-2/3 relative group px-2 xl:px-0">
                         <button
                           onClick={onAddTvShow}
-                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3] max-w-xs xl:w-72 2xl:w-80 mx-auto"
+                          className="w-full h-full border-2 border-dashed border-purple-500 rounded-lg flex flex-col items-center justify-center hover:bg-purple-900/20 transition aspect-[2/3]"
                         >
                           <span className="text-4xl mb-2">➕</span>
                           <span className="text-sm text-gray-400">Add TV Show</span>
