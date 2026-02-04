@@ -57,7 +57,6 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                   <CarouselContent className="-ml-2">
                     {movies.map((movie) => (
                       <CarouselItem key={movie.id} className="pl-2 basis-2/3">
-                        <div className="relative group h-[320px]">
                           <img
                             src={movie.poster}
                             alt={movie.title}
@@ -69,7 +68,6 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                           >
                             <Trash2 size={16} />
                           </button>
-                        </div>
                       </CarouselItem>
                     ))}
 
@@ -145,7 +143,6 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                   <CarouselContent className="-ml-2">
                     {tvShows.map((show) => (
                       <CarouselItem key={show.id} className="pl-2 basis-2/3">
-                        <div className="relative group h-[320px]">
                           <img
                             src={show.poster}
                             alt={show.title}
@@ -157,7 +154,6 @@ const Top3Section: React.FC<Top3SectionProps> = ({
                           >
                             <Trash2 size={16} />
                           </button>
-                        </div>
                       </CarouselItem>
                     ))}
 
