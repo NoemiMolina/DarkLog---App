@@ -53,7 +53,7 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             <>
               {/* CAROUSEL - Mobile et XL+ */}
               <div className="block sm:hidden xl:block">
-                <Carousel className="w-full">
+                <Carousel className="w-full xl:max-w-[900px] 2xl:max-w-[1100px] mx-auto">
                   <CarouselContent className="gap-4 xl:gap-6 2xl:gap-8">
                     {movies.map((movie) => (
                       <CarouselItem key={movie.id} className="className=relative group shrink-0
