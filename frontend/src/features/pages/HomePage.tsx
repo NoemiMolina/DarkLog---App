@@ -157,7 +157,7 @@ const HomePage = () => {
           </div>
 
           <div className="-mt-10 xl:-mt-40 2xl:-mt-50">
-            <News newsCarouselClassName="lg:-translate-x-[10px] xl:translate-y-5 xl:max-w-[91%] xl:translate-x-15 2xl:translate-x-45 2xl:max-w-[80%]"/>
+            <News newsCarouselClassName="pl-3 sm:pl-0 lg:-translate-x-[10px] xl:translate-y-5 xl:max-w-[91%] xl:translate-x-15 2xl:translate-x-45 2xl:max-w-[80%]"/>
           </div>
         </div>
 
