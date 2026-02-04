@@ -1,5 +1,10 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "../../components/ui/carousel";
 import { Trash2 } from 'lucide-react';
 import { API_URL } from '../../config/api';
 
@@ -51,25 +56,51 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-3 sm:gap-6">
-              {movieWatchlist.map((movie) => (
-                <div key={movie._id} className="relative group h-56 sm:h-64 md:h-80">
-                  <div className="aspect-[2/3] w-full">
-                    <img
-                      src={movie.poster}
-                      alt={movie.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
-                    />
+            <>
+              {/* VERSION MOBILE - CAROUSEL */}
+              <div className="block sm:hidden">
+                <Carousel className="w-full">
+                  <CarouselContent className="-ml-2">
+                    {movieWatchlist.map((movie) => (
+                      <CarouselItem key={movie._id} className="pl-2 basis-2/3">
+                        <img
+                          src={movie.poster}
+                          alt={movie.title}
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                        />
+                        <button
+                          onClick={() => onRemove(movie._id, 'movie')}
+                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+              </div>
+
+              {/* VERSION DESKTOP - GRID */}
+              <div className="hidden sm:grid grid-cols-3 gap-3 sm:gap-6">
+                {movieWatchlist.map((movie) => (
+                  <div key={movie._id} className="relative group h-56 sm:h-64 md:h-80">
+                    <div className="aspect-[2/3] w-full">
+                      <img
+                        src={movie.poster}
+                        alt={movie.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                      />
+                    </div>
+                    <button
+                      onClick={() => onRemove(movie._id, 'movie')}
+                      className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <Trash2 size={16} />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => onRemove(movie._id, 'movie')}
-                    className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">

@@ -138,21 +138,20 @@ const Top3Section: React.FC<Top3SectionProps> = ({
             </div>
           ) : (
             <>
-              {/* VERSION MOBILE - CAROUSEL (même structure que Movies) */}
+              {/* VERSION MOBILE - CAROUSEL (seulement sur mobile) */}
               <div className="block sm:hidden">
                 <Carousel className="w-full">
                   <CarouselContent className="-ml-2">
                     {tvShows.map((show) => (
                       <CarouselItem key={show.id} className="pl-2 basis-2/3">
-                        {/* MÊME STRUCTURE QUE MOVIES : pas de div, juste l'image */}
                         <img
                           src={show.poster}
                           alt={show.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                         />
                         <button
                           onClick={() => onRemove(show.id, 'tv')}
-                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 hover:opacity-100 transition-opacity"
+                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           <Trash2 size={16} />
                         </button>
