@@ -54,7 +54,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {movieWatchlist.map((movie) => (
                 <div key={movie._id} className="relative group h-56 sm:h-64 md:h-80">
-                  <img src={movie.poster} alt={movie.title} className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg h-72" />
+                  <img src={movie.poster} alt={movie.title} className="w-full group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg h-55 w-60" />
                   <button
                     onClick={() => onRemove(movie._id, 'movie')}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
@@ -81,7 +81,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
               {tvShowWatchlist.map((show) => (
                 <div key={show._id} className="relative group h-56 sm:h-64 md:h-80">
-                  <img src={show.poster} alt={show.title} className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover h-72" />
+                  <img src={show.poster} alt={show.title} className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover h-55 w-60" />
                   <button
                     onClick={() => onRemove(show._id, 'tv')}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
