@@ -1,4 +1,4 @@
-# 🌑 DarkLog — Horror Social Platform 👻
+# 🌑 FearLog — Horror Social Platform 👻
 
 ![React](https://img.shields.io/badge/React-18-blue?style=for-the-badge&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-blue?style=for-the-badge&logo=typescript)
@@ -11,7 +11,7 @@
 
 ## 🌍 Overview
 
-**DarkLog** is a social platform dedicated to horror movie fans.  
+**FearLog** is a social platform dedicated to horror movie fans.  
 It combines movie tracking, social interaction, quizzes, and editorial content in one immersive experience.
 
 Users can log their horror movies, interact with friends, participate in quizzes, and stay updated with horror news written directly for the platform.
@@ -117,7 +117,7 @@ Personal project centered around horror cinema.
 
 ## 🌍 Aperçu
 
-**DarkLog** est une plateforme sociale dédiée aux passionnés de films d’horreur.  
+**FearLog** est une plateforme sociale dédiée aux passionnés de films d’horreur.  
 Elle regroupe le suivi de films, les interactions sociales, des quiz et du contenu éditorial dans une expérience immersive.
 
 Les utilisateurs peuvent noter leurs films, interagir avec leurs amis, participer à des quiz et consulter des news horrifiques rédigées pour le site.
