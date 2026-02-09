@@ -9,6 +9,7 @@ interface AuthContextType {
   isLoading: boolean;
   logout: () => void;
   refreshAuth: () => Promise<void>;
+  updateAuthState: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -152,7 +153,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ username, userId, userProfilePicture, isAuthenticated, isLoading, logout, refreshAuth }}>
+    <AuthContext.Provider value={{ username, userId, userProfilePicture, isAuthenticated, isLoading, logout, refreshAuth, updateAuthState }}>
       {children}
     </AuthContext.Provider>
   );

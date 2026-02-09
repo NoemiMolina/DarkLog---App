@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import { API_URL } from "../../config/api";
 import {
   Dialog,
@@ -26,6 +27,7 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
 
   const navigate = useNavigate();
   const locationDialog = useLocation();
+  const { updateAuthState } = useAuth();
 
   const emailValid = /\S+@\S+\.\S+/.test(email);
   const canSubmit = emailValid && password.trim().length > 0;
@@ -69,6 +71,9 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
         localStorage.setItem("username", data.user.UserPseudo || "Guest");
       }
       localStorage.setItem("firstConnection", "false");
+
+      // Notify AuthContext of the login
+      updateAuthState();
 
       setSuccessMsg("✅ Successfully connected!");
       const pendingItem = pendingWatchlistService.getPendingItem();
