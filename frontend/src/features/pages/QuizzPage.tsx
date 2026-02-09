@@ -47,21 +47,24 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
     const startQuiz = async (difficulty: 'easy' | 'medium' | 'hard') => {
         try {
             const token = localStorage.getItem('token');
+            const quizUrl = `${API_URL}/quiz/${mediaType}/${selectedCategory}/${difficulty}`;
             console.log('🎯 Starting quiz with:', {
                 mediaType,
                 selectedCategory,
                 difficulty,
-                url: `${API_URL}/quiz/${mediaType}/${selectedCategory}/${difficulty}`
+                url: quizUrl,
+                token: token ? 'present' : 'missing'
             });
-            const response = await fetch(
-                `${API_URL}/quiz/${mediaType}/${selectedCategory}/${difficulty}`,
-                {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                }
-            );
+            const response = await fetch(quizUrl, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
 
+            console.log('📊 Response status:', response.status);
+            
             if (!response.ok) {
-                throw new Error('Failed to fetch questions');
+                const errorText = await response.text();
+                console.error('❌ API Error:', response.status, errorText);
+                throw new Error(`Failed to fetch questions: ${response.status}`);
             }
 
             const data = await response.json();
