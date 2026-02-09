@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Separator } from '../../components/ui/separator';
 import { jwtDecode } from 'jwt-decode';
 import { API_URL } from '../../config/api';
+import { useNavigate } from 'react-router-dom';
 import ProfileInfoSection from '../../components/ProfileComponents/ProfileInfosSection';
 import Top3Section from '../../components/ProfileComponents/Top3Section';
 import WatchlistSection from '../../components/ProfileComponents/WatchlistSection';
@@ -39,6 +40,7 @@ interface UserProfileData {
 }
 
 const UserProfile: React.FC = () => {
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState<UserProfileData | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -343,6 +345,13 @@ const UserProfile: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-8 max-w-6xl 2xl:scale-83 2xl:-translate-y-55">
+      <button
+        onClick={() => navigate(-1)}
+        className="text-white text-2xl hover:opacity-70 transition-opacity mb-4"
+        aria-label="Go back"
+      >
+        &lt;
+      </button>
 
       <ProfileInfoSection
         profileData={profileData}

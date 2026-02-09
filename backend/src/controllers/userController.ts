@@ -65,7 +65,7 @@ export const registerUser = async (req: Request, res: Response) => {
         const token = jwt.sign(
             { id: newUser._id },
             process.env.JWT_SECRET || "secretKey",
-            { expiresIn: "2h" }
+            { expiresIn: "7d" }
         );
 
         res.status(201).json({
@@ -89,11 +89,37 @@ export const loginUser = async (req: Request, res: Response) => {
         const isMatch = await bcrypt.compare(UserPassword, user.UserPassword);
         if (!isMatch) return res.status(401).json({ message: "Oops, wrong password" });
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "secretKey", { expiresIn: "2h" });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "secretKey", { expiresIn: "7d" });
 
         res.status(200).json({ message: "User successfully connected", token, user });
     } catch (err) {
         res.status(500).json({ message: "Error while connecting", error: err });
+    }
+};
+
+// ------------- VERIFY TOKEN & GET USER
+export const verifyToken = async (req: Request, res: Response) => {
+    try {
+        const token = req.headers.authorization?.split(" ")[1];
+        
+        if (!token) {
+            return res.status(401).json({ message: "No token provided" });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || "secretKey") as { id: string };
+        const user = await User.findById(decoded.id);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({ 
+            message: "Token is valid", 
+            token,
+            user 
+        });
+    } catch (err) {
+        res.status(401).json({ message: "Invalid or expired token", error: err });
     }
 };
 
@@ -268,10 +294,7 @@ export const searchUsers = async (req: Request, res: Response) => {
         }
 
         const users = await User.find({
-            $or: [
-                { UserPseudo: { $regex: query, $options: 'i' } },
-                { UserMail: { $regex: query, $options: 'i' } }
-            ]
+            UserPseudo: { $regex: query, $options: 'i' }
         }).select('_id UserPseudo UserMail UserProfilePicture UserFirstName UserLastName').limit(10);
 
         res.status(200).json(users);

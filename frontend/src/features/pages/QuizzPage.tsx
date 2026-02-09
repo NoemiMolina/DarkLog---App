@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { API_URL } from "../../config/api";
+import { useNavigate } from "react-router-dom";
 import { GiRaiseZombie } from "react-icons/gi";
+import { IoClose } from "react-icons/io5";
 import { Card, CardContent } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../../components/ui/dialog";
@@ -19,6 +21,7 @@ interface QuizzPageProps {
 }
 
 const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
+    const navigate = useNavigate();
     const [mediaType, setMediaType] = useState<'movies' | 'tvshows'>('movies');
     const [showDifficultyModal, setShowDifficultyModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState<'culture' | 'dumbDescription' | null>(null);
@@ -109,6 +112,13 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
 
         return (
             <div className="min-h-screen bg-gradient-to-b from-[#1A1A1A] to-[#0A0A0A] text-white p-8">
+                <button
+                    onClick={() => navigate('/home')}
+                    className="absolute top-4 right-4 text-white text-3xl hover:opacity-70 transition-opacity"
+                    aria-label="Close quiz"
+                >
+                    <IoClose />
+                </button>
                 <div className="max-w-3xl mx-auto">
                     <div className="mb-8 text-center">
                         <p className="text-xl text-gray-400">
@@ -162,12 +172,20 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
                         <p className="text-4xl sm:text-6xl font-bold text-green-400 mb-6 sm:mb-8">
                             {score} / {questions.length * 10}
                         </p>
-                        <Button
-                            onClick={resetQuiz}
-                            className="bg-red-600 hover:bg-red-700 text-base sm:text-xl px-4 sm:px-8 py-3 sm:py-6"
-                        >
-                            Try Another Quiz
-                        </Button>
+                        <div className="flex gap-4 justify-center">
+                            <Button
+                                onClick={resetQuiz}
+                                className="bg-red-600 hover:bg-red-700 text-base sm:text-xl px-4 sm:px-8 py-3 sm:py-6"
+                            >
+                                Try Another Quiz
+                            </Button>
+                            <Button
+                                onClick={() => navigate('/home')}
+                                className="bg-gray-600 hover:bg-gray-700 text-base sm:text-xl px-4 sm:px-8 py-3 sm:py-6"
+                            >
+                                Home
+                            </Button>
+                        </div>
                     </CardContent>
                 </Card>
             </div>
@@ -176,6 +194,13 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
 
     return (
         <div className="min-h-screen dark:bg-gray-700 text-white flex flex-col items-center justify-center p-4 sm:p-8">
+            <button
+                onClick={() => navigate(-1)}
+                className="absolute top-4 left-4 text-white text-2xl hover:opacity-70 transition-opacity"
+                aria-label="Go back"
+            >
+                &lt;
+            </button>
             <GiRaiseZombie className="text-5xl sm:text-9xl mb-4 text-red-600 animate-pulse" />
             <p className="text-xs sm:text-sm text-gray-400 mb-2">Welcome to our</p>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-4 text-red-600 tracking-wider text-center animate-pulse">HORROR QUIZZ</h1>

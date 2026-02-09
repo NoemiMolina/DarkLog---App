@@ -99,7 +99,7 @@ const WelcomePage: React.FC = () => {
 
                     </div>
                 </div>
-                <div className="grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 lg:-w-[90%] xl:max-w-[80%] xl:translate-x-35 xl:-translate-y-80 2xl:-translate-y-95 2xl:translate-x-0 2xl:w-[60%] 2xl:mx-auto px-4 sm:px-0">
+                <div className="hidden sm:grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 lg:-w-[90%] xl:max-w-[80%] xl:translate-x-35 xl:-translate-y-80 2xl:-translate-y-95 2xl:translate-x-0 2xl:w-[60%] 2xl:mx-auto px-4 sm:px-0">
                         <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
                         <IoSkullOutline className="text-2xl sm:text-4xl mb-2" />
                         <p className="text-sm sm:hidden">Explore and rate horror movies</p>

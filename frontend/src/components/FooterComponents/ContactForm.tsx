@@ -124,15 +124,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
               <SelectTrigger id="subject" className="bg-black/20 border-white/20 text-white">
                 <SelectValue placeholder="Select..." />
               </SelectTrigger>
-              <SelectContent className="bg-black/40 border-white/20 text-white">
+              <SelectContent className="bg-black border-white/20 text-white">
                 <SelectItem value="Could not find a movie">Could not find a movie</SelectItem>
                 <SelectItem value="Could not find a tvshow">Could not find a TV show</SelectItem>
+                 <SelectItem value="Report a bug">Report a bug</SelectItem>
               </SelectContent>
             </Select>
           </div>
           <div className="space-y-2">
             <Label htmlFor="itemName">
-              {subjectType === "Could not find a movie" ? "Movie name" : "TV show name"} *
+              {subjectType === "Could not find a movie" ? "Movie name" : subjectType === "Could not find a tvshow" ? "TV show name" : "Bug description"} *
             </Label>
             <Input
               id="itemName"
@@ -140,7 +141,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
               placeholder={
-                subjectType === "Could not find a movie" ? "e.g., Inception" : "e.g., Breaking Bad"
+                subjectType === "Could not find a movie" ? "e.g., Inception" : subjectType === "Could not find a tvshow" ? "e.g., Breaking Bad" : "Tell The Dev what's wrong..."
               }
               required
             />

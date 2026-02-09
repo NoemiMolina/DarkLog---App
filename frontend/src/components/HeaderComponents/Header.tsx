@@ -10,6 +10,7 @@ import { ImportModal } from '../ImportComponents';
 import { FriendRequestDialog } from '../NotificationsComponents/FriendRequestDialog';
 import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
 import { useNotifications } from '../../context/NotificationContext';
+import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Label } from "../../components/ui/label";
 import { Switch } from "../../components/ui/switch";
@@ -37,7 +38,8 @@ interface HeaderProps {
   isTVShowMode?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onToggleTVShowMode, isTVShowMode }) => {
+const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => {
+  const { username, userProfilePicture, isAuthenticated, logout, userId } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [addFriendOpen, setAddFriendOpen] = useState(false);
@@ -45,7 +47,6 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   const [importModalOpen, setImportModalOpen] = useState(false);
   const { unreadCount, friendRequestsCount, forumNotificationsCount } = useNotifications();
   const navigate = useNavigate();
-  const userId = localStorage.getItem('userId') || '';
   const handleToggle = (value: boolean) => {
     localStorage.setItem('mediaType', value ? 'tvshows' : 'movies');
     onToggleTVShowMode?.(value);
@@ -55,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
     <>
       <header className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 p-3 sm:p-4 lg:px-8 lg:py-4 lg:flex-row lg:items-center lg:gap-8 lg:mt-2">
         {/* MENU + LOGO (left for connected, center for guest on lg) */}
-        {username !== "Guest" ? (
+        {isAuthenticated ? (
           <div className="flex flex-row items-center gap-2 lg:gap-6 flex-shrink-0">
             <div className="hidden lg:block">
               <DropdownMenu>
@@ -110,9 +111,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => {
-                      localStorage.removeItem("token");
-                      localStorage.removeItem("user");
-                      localStorage.removeItem("userId");
+                      logout();
                       navigate('/');
                     }}
                     className="cursor-pointer hover:bg-red-500/20 text-red-400"
@@ -155,7 +154,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
 
         {/* SECTION DROITE (search + switch + profile) */}
         <div className="flex flex-row items-center gap-2 sm:gap-4 flex-shrink-0">
-          {username === "Guest" ? (
+          {!isAuthenticated ? (
             // HEADER GUEST (non connecté)
             <>
               <div className="sm:hidden flex gap-2 flex-1 justify-center">
@@ -237,9 +236,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => {
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("user");
-                        localStorage.removeItem("userId");
+                        logout();
                         navigate('/');
                       }}
                       className="cursor-pointer hover:bg-red-500/20 text-red-400"
@@ -324,7 +321,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
         </div>
       </header>
       <AddFriendDialog
-        currentUserId={userId}
+        currentUserId={userId || ''}
         open={addFriendOpen}
         onOpenChange={setAddFriendOpen}
       />
@@ -339,17 +336,18 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
       <ImportModal
         isOpen={importModalOpen}
         onClose={() => setImportModalOpen(false)}
-        userId={userId}
+        userId={userId || ''}
         onSuccess={(stats) => {
           console.log("✅ Import réussi avec stats:", stats);
         }}
       />
 
-      {searchBarOpen && (
-        <div className="sm:hidden w-full -mt-12">
-          <PublicSearchBar />
-        </div>
-      )}
+      <div className="sm:hidden w-full">
+        <PublicSearchBar 
+          isVisibleMobile={searchBarOpen}
+          onResultSelected={() => setSearchBarOpen(false)} 
+        />
+      </div>
     </>
   );
 };

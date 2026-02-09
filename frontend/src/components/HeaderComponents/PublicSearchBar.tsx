@@ -12,7 +12,12 @@ import ItemDialog from "../HomePageComponents/ItemDialog";
 import AuthRequiredDialog from "./AuthRequiredDialog";
 import { IoSkull } from "react-icons/io5";
 
-const PublicSearchBar: React.FC = () => {
+interface PublicSearchBarProps {
+  onResultSelected?: () => void;
+  isVisibleMobile?: boolean;
+}
+
+const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isVisibleMobile = true }) => {
   const location = useLocation();
   const isForumPage = location.pathname === "/forum";
 
@@ -68,7 +73,8 @@ const PublicSearchBar: React.FC = () => {
             if (id != null && !mergedMap.has(id)) mergedMap.set(id, item);
           });
 
-          setResults(Array.from(mergedMap.values()));
+          const limitedResults = Array.from(mergedMap.values()).slice(0, 10);
+          setResults(limitedResults);
         }
 
         setIsVisible(true);
@@ -88,7 +94,7 @@ const PublicSearchBar: React.FC = () => {
       }
     };
 
-    const debounce = setTimeout(fetchData, 400);
+    const debounce = setTimeout(fetchData, 600);
     return () => clearTimeout(debounce);
   }, [query]);
 
@@ -144,6 +150,9 @@ const PublicSearchBar: React.FC = () => {
     setIsVisible(false);
     setQuery("");
     setResults([]);
+    setTimeout(() => {
+      onResultSelected?.();
+    }, 100);
   };
 
   const renderDropdownContent = () => {
@@ -248,7 +257,7 @@ const PublicSearchBar: React.FC = () => {
 
   return (
     <>
-      <div className="relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg 2xl:max-w-xl mt-[2rem] ml-4">
+      <div className={`relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg 2xl:max-w-xl mt-[2rem] ml-4 ${isVisibleMobile ? '' : 'sm:block hidden'}`}>
         <div className="relative z-[10000]">
           <InputGroup className="w-70">
             <InputGroupInput

@@ -55,7 +55,9 @@ const DialogLoginForm: React.FC<{ onClose?: () => void; isMobileModal?: boolean 
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data?.message || "Login failed");
+        setErrorMsg("Mail or password incorrect, not telling you which one it is, try again");
+        setLoading(false);
+        return;
       }
 
       if (data.token) {
