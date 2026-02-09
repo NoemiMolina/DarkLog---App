@@ -26,14 +26,9 @@ export default function App() {
       setIsTVShowMode(storedType === 'tvshows');
     };
     window.addEventListener('storage', handleStorageChange);
-    const interval = setInterval(() => {
-      const storedType = localStorage.getItem('mediaType');
-      setIsTVShowMode(storedType === 'tvshows');
-    }, 100);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
-      clearInterval(interval);
     };
   }, []);
 
