@@ -39,11 +39,31 @@ export const getRandomQuizQuestions = async (req: Request, res: Response) => {
 
     const folderName = type === 'movies' ? 'moviesHomemadeQuiz' : 'tvShowsHomemadeQuiz';
     const fileName = `quiz_${type}_${category}_${difficulty}.json`;
-    const filePath = path.join(process.cwd(), 'homemade_quiz', folderName, category, fileName);
+    
+    // Try multiple paths to find the quiz file
+    const possiblePaths = [
+      // Production build path
+      path.join(__dirname, '../../homemade_quiz', folderName, category, fileName),
+      // Development path
+      path.join(process.cwd(), 'homemade_quiz', folderName, category, fileName),
+      // Alternative production path
+      path.join(process.cwd(), 'backend', 'homemade_quiz', folderName, category, fileName),
+    ];
 
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).json({ message: "Quiz file not found" });
+    let filePath = '';
+    for (const p of possiblePaths) {
+      if (fs.existsSync(p)) {
+        filePath = p;
+        break;
+      }
     }
+
+    if (!filePath) {
+      console.error(`❌ Quiz file not found. Tried paths:`, possiblePaths);
+      return res.status(404).json({ message: "Quiz file not found", paths: possiblePaths });
+    }
+
+    console.log(`📂 Loaded quiz file from: ${filePath}`);
 
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const allQuestions = JSON.parse(fileContent);
