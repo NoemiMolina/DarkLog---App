@@ -4,6 +4,7 @@ import { uploadMiddleware } from "../middleware/uploadMiddleware";
 import {
   registerUser,
   loginUser,
+  verifyToken,
   getUserProfile,
   updateProfileInfos,
   updatePassword,
@@ -35,6 +36,7 @@ const router = express.Router();
 router.get("/search", authMiddleware, searchUsers);
 router.post("/signup", uploadMiddleware.single("UserProfilePicture"), registerUser);
 router.post("/login", loginUser);
+router.post("/verify-token", verifyToken);
 router.get("/:userId/profile", authMiddleware, getUserProfile);
 router.put("/:userId/profile", authMiddleware, uploadMiddleware.single("UserProfilePicture"), updateProfileInfos);
 router.put("/:userId/password", authMiddleware, updatePassword);

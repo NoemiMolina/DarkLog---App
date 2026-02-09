@@ -25,12 +25,12 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 
 // 🔌 Socket.IO setup
-const allowedOrigins = process.env.NODE_ENV === 'production' 
+const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [
-      "https://fearlogapp.vercel.app",
-      "https://fearlogapp.com",
-      "https://www.fearlogapp.com"
-    ]
+    "https://fearlogapp.vercel.app",
+    "https://fearlogapp.com",
+    "https://www.fearlogapp.com"
+  ]
   : ["http://localhost:5173", "http://localhost:3000"];
 
 export const io = new SocketIOServer(server, {
@@ -77,7 +77,8 @@ io.on("connection", (socket) => {
     socket.join(userId);
   });
   socket.on("disconnect", () => {
-    console.log("🔌 A user disconnected from Socket.IO");});
+    console.log("🔌 A user disconnected from Socket.IO");
+  });
 });
 
 server.listen(PORT, () => {

@@ -3,7 +3,21 @@ import News from "../models/News";
 
 export const getAllNews = async (req: Request, res: Response) => {
     try {
-        const news = await News.find().sort({ publishedAt: -1 });
+        const news = await News.aggregate([
+            {
+                $addFields: {
+                    sortPriority: {
+                        $cond: [{ $eq: ["$publishedAt", null] }, 0, 1]
+                    }
+                }
+            },
+            {
+                $sort: {
+                    sortPriority: 1,
+                    publishedAt: -1
+                }
+            }
+        ]);
         res.status(200).json(news);
     } catch (error) {
         res.status(500).json({ message: "Failed to fetch news" });

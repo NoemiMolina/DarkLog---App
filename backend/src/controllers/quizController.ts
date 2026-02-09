@@ -39,7 +39,7 @@ export const getRandomQuizQuestions = async (req: Request, res: Response) => {
 
     const folderName = type === 'movies' ? 'moviesHomemadeQuiz' : 'tvShowsHomemadeQuiz';
     const fileName = `quiz_${type}_${category}_${difficulty}.json`;
-    const filePath = path.join(__dirname, '../../homemade_quiz', folderName, category, fileName);
+    const filePath = path.join(process.cwd(), 'homemade_quiz', folderName, category, fileName);
 
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({ message: "Quiz file not found" });

@@ -85,6 +85,9 @@ export const CreatePostCard: React.FC<CreatePostCardProps> = ({ username, profil
                         className="min-h-[120px] bg-white/5 border-white/20 text-white placeholder:text-white/50 resize-none"
                         maxLength={1000}
                     />
+                    <div className="text-xs text-white/40 text-right">
+                        {newPostContent.length}/1000 characters
+                    </div>
                     <div className="space-y-2">
                         <Input
                             placeholder="Add tags (press Enter)..."
