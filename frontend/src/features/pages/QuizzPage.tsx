@@ -33,7 +33,6 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
     const [quizStarted, setQuizStarted] = useState(false);
 
     useEffect(() => {
-        // Only update mediaType if quiz hasn't started yet
         if (!quizStarted) {
             setMediaType(isTVShowMode ? 'tvshows' : 'movies');
         }
