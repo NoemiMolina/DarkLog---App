@@ -168,7 +168,7 @@ export const updateProfilePicture = async (req: Request, res: Response) => {
         const { userId } = req.params;
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
-        const profilePicUrl = req.file ? `uploads/${req.file.filename}` : null;
+        const profilePicUrl = req.file ? req.file.path : null;
         user.UserProfilePicture = profilePicUrl || user.UserProfilePicture;
         await user.save();
         res.status(200).json({ message: "Profile picture updated successfully", user });
