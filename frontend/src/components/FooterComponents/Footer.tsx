@@ -2,10 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface FooterProps {
-  userEmail?: string;
 }
 
-export const Footer: React.FC<FooterProps> = ({ userEmail }) => {
+export const Footer: React.FC<FooterProps> = () => {
   const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
 
