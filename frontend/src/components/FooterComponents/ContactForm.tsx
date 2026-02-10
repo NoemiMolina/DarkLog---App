@@ -19,14 +19,18 @@ import {
   SelectValue,
 } from "../ui/select";
 
-emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY); //never tried this before, let's hope it works
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 interface ContactFormProps {
   userEmail?: string;
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
-  const [open, setOpen] = useState(false);
+interface ContactFormContentProps {
+  userEmail?: string;
+  onClose?: () => void;
+}
+
+export const ContactFormContent: React.FC<ContactFormContentProps> = ({ userEmail = "", onClose }) => {
   const [email, setEmail] = useState(userEmail);
   const [subjectType, setSubjectType] = useState("");
   const [itemName, setItemName] = useState("");
@@ -77,7 +81,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
       setItemName("");
 
       setTimeout(() => {
-        setOpen(false);
+        onClose?.();
         setMessage(null);
       }, 2000);
     } catch (error) {
@@ -89,6 +93,72 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
   };
 
   const canSubmit = email && subjectType && itemName && !loading;
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="email">Your Email *</Label>
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="your@email.com"
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="subject">What are you looking for? *</Label>
+        <Select value={subjectType} onValueChange={setSubjectType}>
+          <SelectTrigger id="subject" className="bg-black/20 border-white/20 text-white">
+            <SelectValue placeholder="Select..." />
+          </SelectTrigger>
+          <SelectContent className="bg-black border-white/20 text-white">
+            <SelectItem value="Could not find a movie">Could not find a movie</SelectItem>
+            <SelectItem value="Could not find a tvshow">Could not find a TV show</SelectItem>
+            <SelectItem value="Report a bug">Report a bug</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="itemName">
+          {subjectType === "Could not find a movie" ? "Movie name" : subjectType === "Could not find a tvshow" ? "TV show name" : "Bug description"} *
+        </Label>
+        <Input
+          id="itemName"
+          type="text"
+          value={itemName}
+          onChange={(e) => setItemName(e.target.value)}
+          placeholder={
+            subjectType === "Could not find a movie" ? "e.g., Inception" : subjectType === "Could not find a tvshow" ? "e.g., Breaking Bad" : "Tell The Dev what's wrong..."
+          }
+          required
+        />
+      </div>
+      {message && (
+        <div
+          className={`p-3 rounded-md text-sm ${
+            message.type === "success"
+              ? "bg-green-500/20 text-green-400 border border-green-500/50"
+              : "bg-red-500/20 text-red-400 border border-red-500/50"
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
+      <Button
+        type="submit"
+        disabled={!canSubmit}
+        className="w-full bg-white/10 hover:bg-white/20 text-white disabled:opacity-50"
+      >
+        {loading ? "Sending..." : "Send"}
+      </Button>
+    </form>
+  );
+};
+
+export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
+  const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -106,65 +176,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Your Email *</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="your@email.com"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="subject">What are you looking for? *</Label>
-            <Select value={subjectType} onValueChange={setSubjectType}>
-              <SelectTrigger id="subject" className="bg-black/20 border-white/20 text-white">
-                <SelectValue placeholder="Select..." />
-              </SelectTrigger>
-              <SelectContent className="bg-black border-white/20 text-white">
-                <SelectItem value="Could not find a movie">Could not find a movie</SelectItem>
-                <SelectItem value="Could not find a tvshow">Could not find a TV show</SelectItem>
-                 <SelectItem value="Report a bug">Report a bug</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="itemName">
-              {subjectType === "Could not find a movie" ? "Movie name" : subjectType === "Could not find a tvshow" ? "TV show name" : "Bug description"} *
-            </Label>
-            <Input
-              id="itemName"
-              type="text"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
-              placeholder={
-                subjectType === "Could not find a movie" ? "e.g., Inception" : subjectType === "Could not find a tvshow" ? "e.g., Breaking Bad" : "Tell The Dev what's wrong..."
-              }
-              required
-            />
-          </div>
-          {message && (
-            <div
-              className={`p-3 rounded-md text-sm ${
-                message.type === "success"
-                  ? "bg-green-500/20 text-green-400 border border-green-500/50"
-                  : "bg-red-500/20 text-red-400 border border-red-500/50"
-              }`}
-            >
-              {message.text}
-            </div>
-          )}
-          <Button
-            type="submit"
-            disabled={!canSubmit}
-            className="w-full bg-white/10 hover:bg-white/20 text-white disabled:opacity-50"
-          >
-            {loading ? "Sending..." : "Send"}
-          </Button>
-        </form>
+        <ContactFormContent userEmail={userEmail} onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

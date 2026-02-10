@@ -40,13 +40,9 @@ export const getRandomQuizQuestions = async (req: Request, res: Response) => {
     const folderName = type === 'movies' ? 'moviesHomemadeQuiz' : 'tvShowsHomemadeQuiz';
     const fileName = `quiz_${type}_${category}_${difficulty}.json`;
     
-    // Try multiple paths to find the quiz file
     const possiblePaths = [
-      // Production build path
       path.join(__dirname, '../../homemade_quiz', folderName, category, fileName),
-      // Development path
       path.join(process.cwd(), 'homemade_quiz', folderName, category, fileName),
-      // Alternative production path
       path.join(process.cwd(), 'backend', 'homemade_quiz', folderName, category, fileName),
     ];
 
