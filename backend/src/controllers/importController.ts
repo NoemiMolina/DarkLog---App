@@ -39,6 +39,7 @@ interface PreviewResult {
 }
 
 export const previewLetterboxdImport = async (req: Request, res: Response) => {
+  const startTime = Date.now();
   try {
     const { userId, csvData } = req.body;
     if (!userId) {
@@ -50,9 +51,13 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
     }
 
     // Initialize cache once for all film matching
-    console.log("⏳ Initializing movie cache for preview...");
+    console.log("⏳ [1/3] Initializing movie cache...");
+    const cacheStart = Date.now();
     await initializeMovieCache();
+    const cacheTime = Date.now() - cacheStart;
+    console.log(`✅ Cache initialized in ${cacheTime}ms`);
 
+    console.log(`⏳ [2/3] Loading user data...`);
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -69,13 +74,16 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
     };
 
     // Match all movies in parallel for speed
-    console.log(`🎬 Matching ${csvData.length} films...`);
+    console.log(`⏳ [3/3] Matching ${csvData.length} films in parallel...`);
+    const matchStart = Date.now();
     const matchPromises = csvData.map(async (filmData) => {
       const { name, year, rating, review } = filmData as LetterboxdMovieData;
       const matchResult = await matchMovieByNameAndYear(name, year);
       return { filmData, matchResult };
     });
     const matches = await Promise.all(matchPromises);
+    const matchTime = Date.now() - matchStart;
+    console.log(`✅ Matched ${csvData.length} films in ${matchTime}ms (${(matchTime / csvData.length).toFixed(1)}ms per film)`);
 
     for (const { filmData, matchResult } of matches) {
       const { name, year, rating, review } = filmData;
@@ -113,10 +121,16 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
       });
       previewResult.summary.found++;
     }
+    const totalTime = Date.now() - startTime;
+    console.log(`\n✅ Preview completed in ${totalTime}ms:`);
+    console.log(`   - Cache init: ${cacheTime}ms`);
+    console.log(`   - Matching: ${matchTime}ms`);
+    console.log(`   - Results: ${previewResult.summary.found} found, ${previewResult.summary.notFound} not found\n`);
     res.status(200).json(previewResult);
 
   } catch (err) {
-    console.error("❌ Erreur dans previewLetterboxdImport:", err);
+    const totalTime = Date.now() - startTime;
+    console.error(`\n❌ Preview failed after ${totalTime}ms:`, err);
     res.status(500).json({
       message: "Erreur lors du préview de l'import",
       error: err instanceof Error ? err.message : "Unknown error"
