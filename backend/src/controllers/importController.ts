@@ -4,7 +4,8 @@ import {
   matchMovieByNameAndYear,
   isHorrorGenre,
   findAlreadyRatedMovie,
-  initializeMovieCache
+  initializeMovieCache,
+  type MovieMatchResult
 } from "../services/movieMatcher";
 
 interface LetterboxdMovieData {
@@ -50,7 +51,6 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "csvData must be a non-empty array" });
     }
 
-    // Initialize cache once for all film matching
     console.log("⏳ [1/3] Initializing movie cache...");
     const cacheStart = Date.now();
     await initializeMovieCache();
@@ -73,19 +73,27 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
       }
     };
 
-    // Match all movies in parallel for speed
-    console.log(`⏳ [3/3] Matching ${csvData.length} films in parallel...`);
+    console.log(`⏳ [3/3] Matching ${csvData.length} films (pool of 10)...`);
     const matchStart = Date.now();
-    const matchPromises = csvData.map(async (filmData) => {
-      const { name, year, rating, review } = filmData as LetterboxdMovieData;
-      const matchResult = await matchMovieByNameAndYear(name, year);
-      return { filmData, matchResult };
-    });
-    const matches = await Promise.all(matchPromises);
+    const poolSize = 10;
+    const results: Array<{ filmData: LetterboxdMovieData; matchResult: MovieMatchResult }> = [];
+
+    for (let i = 0; i < csvData.length; i += poolSize) {
+      const batch = csvData.slice(i, i + poolSize);
+      const batchMatches = await Promise.all(
+        batch.map(async (filmData) => {
+          const { name, year } = filmData as LetterboxdMovieData;
+          const matchResult = await matchMovieByNameAndYear(name, year);
+          return { filmData, matchResult };
+        })
+      );
+      results.push(...batchMatches);
+      console.log(`   ✅ Batch ${Math.floor(i / poolSize) + 1}/${Math.ceil(csvData.length / poolSize)} done`);
+    }
     const matchTime = Date.now() - matchStart;
     console.log(`✅ Matched ${csvData.length} films in ${matchTime}ms (${(matchTime / csvData.length).toFixed(1)}ms per film)`);
 
-    for (const { filmData, matchResult } of matches) {
+    for (const { filmData, matchResult } of results) {
       const { name, year, rating, review } = filmData;
       if (!matchResult.found) {
         previewResult.notFound.push({
@@ -150,7 +158,6 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "filmsToImport must be a non-empty array" });
     }
 
-    // Initialize cache once for all operations
     console.log("⏳ Initializing movie cache for confirmation...");
     await initializeMovieCache();
 
@@ -206,10 +213,10 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     console.log(`   ⏱️ Total watchtime: ${totalWatchTime} min (${(totalWatchTime / 60).toFixed(1)}h)`);
     user.NumberOfWatchedMovies = numberOfWatchedMovies;
     user.AverageMovieRating = averageMovieRating;
-    
+
     console.log(`⏳ Saving user to database...`);
     await user.save();
-    
+
     const elapsedTime = Date.now() - startTime;
     console.log(`\n✅ Import finished! ${importedCount} new films, ${updatedCount} updates (took ${elapsedTime}ms)`);
 
