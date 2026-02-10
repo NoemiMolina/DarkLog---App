@@ -11,8 +11,27 @@ export interface MovieMatchResult {
   error?: string;
 }
 
+let cachedMovies: any[] | null = null;
+let cachedFuseIndex: Fuse<any> | null = null;
+
 /**
- * Cherche un film dans la DB par nom et année avec fuzzy matching
+ * Initialize movie cache for faster batch processing
+ */
+export const initializeMovieCache = async () => {
+  console.log('⏳ Loading movies into cache...');
+  const startTime = Date.now();
+  cachedMovies = await Movie.find({}).lean();
+  cachedFuseIndex = new Fuse(cachedMovies, {
+    keys: ['title', 'original_title'],
+    threshold: 0.3,
+    includeScore: true
+  });
+  const elapsed = Date.now() - startTime;
+  console.log(`✅ Cached ${cachedMovies.length} movies in ${elapsed}ms`);
+};
+
+/**
+ * Cherche un film dans le cache par nom et année avec fuzzy matching
  * 
  * @param name - Titre du film (ex: "Scream")
  * @param year - Année du film (ex: 1996)
@@ -25,13 +44,18 @@ export const matchMovieByNameAndYear = async (
   minScore: number = 0.92
 ): Promise<MovieMatchResult> => {
   try {
-    const cleanName = name.replace(/\s*\(\d{4}\)\s*$/g, '').trim();
-    if (cleanName !== name) {
+    // Initialize cache on first call
+    if (!cachedMovies || !cachedFuseIndex) {
+      await initializeMovieCache();
     }
-    let exactMatch = await Movie.findOne({
-      title: cleanName,
-      year: year
-    });
+
+    const cleanName = name.replace(/\s*\(\d{4}\)\s*$/g, '').trim();
+    
+    // Look for exact match first
+    const exactMatch = cachedMovies!.find(m => 
+      (m.title === cleanName || m.original_title === cleanName) && 
+      m.year === year
+    );
 
     if (exactMatch) {
       return {
@@ -41,12 +65,16 @@ export const matchMovieByNameAndYear = async (
       };
     }
     
-    const allMovies = await Movie.find({
-      $or: [
-        { year: { $gte: year - 3, $lte: year + 3 } },
-        { release_date: { $regex: `^${year-3}|^${year-2}|^${year-1}|^${year}|^${year+1}|^${year+2}|^${year+3}` } }
-      ]
-    }).limit(2000);
+    // Filter movies by year range
+    const yearRange = cachedMovies!.filter(m => 
+      Math.abs((m.year || parseInt(m.release_date?.substring(0, 4) || '0')) - year) <= 3
+    );
+
+    // Fuzzy search within year range
+    const fuseResults = cachedFuseIndex!.search(cleanName, { limit: 5 });
+    const allMovies = fuseResults
+      .map(r => r.item)
+      .filter(m => yearRange.includes(m));
 
     if (allMovies.length === 0) {
       return {

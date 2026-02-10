@@ -3,7 +3,8 @@ import User from "../models/User";
 import {
   matchMovieByNameAndYear,
   isHorrorGenre,
-  findAlreadyRatedMovie
+  findAlreadyRatedMovie,
+  initializeMovieCache
 } from "../services/movieMatcher";
 
 interface LetterboxdMovieData {
@@ -47,6 +48,11 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
     if (!Array.isArray(csvData) || csvData.length === 0) {
       return res.status(400).json({ message: "csvData must be a non-empty array" });
     }
+
+    // Initialize cache once for all film matching
+    console.log("⏳ Initializing movie cache for preview...");
+    await initializeMovieCache();
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -120,6 +126,11 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     if (!Array.isArray(filmsToImport) || filmsToImport.length === 0) {
       return res.status(400).json({ message: "filmsToImport must be a non-empty array" });
     }
+
+    // Initialize cache once for all operations
+    console.log("⏳ Initializing movie cache for confirmation...");
+    await initializeMovieCache();
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
