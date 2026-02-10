@@ -8,6 +8,7 @@ import  ForumPage  from "./features/pages/ForumPage";
 import LoginPage from "./features/pages/LoginPage";
 import SignUpPage from "./features/pages/SignUpPage";
 import ContactFormPage from "./features/pages/ContactFormPage";
+import ItemPage from "./features/pages/ItemPage";
 import PrivacyPage from "./features/pages/PrivacyPage";
 import TermsPage from "./features/pages/TermsPage";
 import { Footer } from "./components/FooterComponents/Footer";
@@ -59,6 +60,7 @@ function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/contactform" element={<ContactFormPage />} />
+          <Route path="/item/:itemId/:type" element={<ItemPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/user/:userId" element={<UserPublicProfile />} />

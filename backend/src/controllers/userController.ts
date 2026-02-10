@@ -168,14 +168,6 @@ export const updateProfilePicture = async (req: Request, res: Response) => {
         const { userId } = req.params;
         const user = await User.findById(userId);
         if (!user) return res.status(404).json({ message: "User not found" });
-        
-        console.log("📸 Upload file info:", {
-            path: req.file?.path,
-            filename: req.file?.filename,
-            size: req.file?.size,
-            all: req.file
-        });
-        
         const profilePicUrl = req.file ? req.file.path : null;
         user.UserProfilePicture = profilePicUrl || user.UserProfilePicture;
         await user.save();
