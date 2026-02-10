@@ -39,7 +39,6 @@ interface PreviewResult {
 }
 
 export const previewLetterboxdImport = async (req: Request, res: Response) => {
-  const startTime = Date.now();
   try {
     const { userId, csvData } = req.body;
     if (!userId) {
@@ -70,10 +69,8 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
     };
     for (const filmData of csvData) {
       const { name, year, rating, review } = filmData as LetterboxdMovieData;
-      console.log(`🔍 Matching: "${name}" (${year})`);
       const matchResult = await matchMovieByNameAndYear(name, year);
       if (!matchResult.found) {
-        console.log(`   ❌ Not found: ${matchResult.error}`);
         previewResult.notFound.push({
           name,
           year,
@@ -82,9 +79,7 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
         previewResult.summary.notFound++;
         continue;
       }
-      console.log(`   ✅ Found: "${matchResult.movie.title}" (score: ${(matchResult.score! * 100).toFixed(1)}%)`);
       if (!isHorrorGenre(matchResult.movie)) {
-        console.log(`   ⚠️ Not a horror movie`);
         previewResult.notFound.push({
           name,
           year,
@@ -109,14 +104,10 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
       });
       previewResult.summary.found++;
     }
-    const elapsed = Date.now() - startTime;
-    console.log(`✅ Preview completed in ${elapsed}ms: ${previewResult.summary.found} found, ${previewResult.summary.notFound} not found`);
     res.status(200).json(previewResult);
 
   } catch (err) {
     console.error("❌ Erreur dans previewLetterboxdImport:", err);
-    const elapsed = Date.now() - startTime;
-    console.error(`   (failed after ${elapsed}ms)`);
     res.status(500).json({
       message: "Erreur lors du préview de l'import",
       error: err instanceof Error ? err.message : "Unknown error"
