@@ -13,21 +13,48 @@ export interface MovieMatchResult {
 
 let cachedMovies: any[] | null = null;
 let cachedFuseIndex: Fuse<any> | null = null;
+let cacheInitializing = false;
 
 /**
  * Initialize movie cache for faster batch processing
  */
 export const initializeMovieCache = async () => {
-  console.log('⏳ Loading movies into cache...');
-  const startTime = Date.now();
-  cachedMovies = await Movie.find({}).lean();
-  cachedFuseIndex = new Fuse(cachedMovies, {
-    keys: ['title', 'original_title'],
-    threshold: 0.3,
-    includeScore: true
-  });
-  const elapsed = Date.now() - startTime;
-  console.log(`✅ Cached ${cachedMovies.length} movies in ${elapsed}ms`);
+  // Prevent multiple concurrent cache initializations
+  if (cacheInitializing) {
+    console.log('⏳ Cache already initializing, waiting...');
+    let attempts = 0;
+    while (!cachedMovies && attempts < 60) {
+      await new Promise(r => setTimeout(r, 100));
+      attempts++;
+    }
+    return;
+  }
+
+  if (cachedMovies) {
+    console.log(`✅ Using cached ${cachedMovies.length} movies`);
+    return;
+  }
+
+  cacheInitializing = true;
+  try {
+    console.log('⏳ Loading movies into cache...');
+    const startTime = Date.now();
+    cachedMovies = await Movie.find({}, 'title original_title year release_date genre_ids genres tmdb_id runtime').lean();
+    cachedFuseIndex = new Fuse(cachedMovies, {
+      keys: ['title', 'original_title'],
+      threshold: 0.3,
+      includeScore: true
+    });
+    const elapsed = Date.now() - startTime;
+    console.log(`✅ Cached ${cachedMovies.length} movies in ${elapsed}ms`);
+  } catch (err) {
+    console.error('❌ Error initializing cache:', err);
+    cachedMovies = null;
+    cachedFuseIndex = null;
+    throw err;
+  } finally {
+    cacheInitializing = false;
+  }
 };
 
 /**
@@ -49,10 +76,17 @@ export const matchMovieByNameAndYear = async (
       await initializeMovieCache();
     }
 
+    if (!cachedMovies || !cachedFuseIndex) {
+      return {
+        found: false,
+        error: 'Failed to load movie cache'
+      };
+    }
+
     const cleanName = name.replace(/\s*\(\d{4}\)\s*$/g, '').trim();
     
     // Look for exact match first
-    const exactMatch = cachedMovies!.find(m => 
+    const exactMatch = cachedMovies.find(m => 
       (m.title === cleanName || m.original_title === cleanName) && 
       m.year === year
     );
@@ -65,51 +99,31 @@ export const matchMovieByNameAndYear = async (
       };
     }
     
-    // Filter movies by year range
-    const yearRange = cachedMovies!.filter(m => 
-      Math.abs((m.year || parseInt(m.release_date?.substring(0, 4) || '0')) - year) <= 3
-    );
+    // Fuzzy search
+    const fuseResults = cachedFuseIndex.search(cleanName, { limit: 10 });
 
-    // Fuzzy search within year range
-    const fuseResults = cachedFuseIndex!.search(cleanName, { limit: 5 });
-    const allMovies = fuseResults
-      .map(r => r.item)
-      .filter(m => yearRange.includes(m));
-
-    if (allMovies.length === 0) {
-      return {
-        found: false,
-        error: `No movies found in year range ${year-3}-${year+3}`
-      };
-    }
-    const fuse = new Fuse(allMovies, {
-      keys: ['title'],
-      threshold: 0.1, 
-      distance: 100,
-      includeScore: true
-    });
-
-    const fuzzyResults = fuse.search(cleanName);
-
-    if (fuzzyResults.length === 0) {
+    if (fuseResults.length === 0) {
       return {
         found: false,
         error: `No matching movies found for "${cleanName}"`
       };
     }
-    fuzzyResults.slice(0, 3).forEach((result, idx) => {
-      const score = 1 - (result.score || 0);
+
+    // Filter by year range from results
+    const yearFilteredResults = fuseResults.filter(r => {
+      const movieYear = r.item.year || parseInt(r.item.release_date?.substring(0, 4) || '0');
+      return Math.abs(movieYear - year) <= 3;
     });
-    const bestMatch = fuzzyResults[0];
-    const score = 1 - (bestMatch.score || 0);
-    const titleLengthDiff = Math.abs(cleanName.length - bestMatch.item.title.length);
-    const titleLengthRatio = Math.min(cleanName.length, bestMatch.item.title.length) / Math.max(cleanName.length, bestMatch.item.title.length);
-    if (titleLengthRatio < 0.5) {
+
+    if (yearFilteredResults.length === 0) {
       return {
         found: false,
-        error: `Title length mismatch: "${cleanName}" vs "${bestMatch.item.title}"`
+        error: `No movies found in year range ${year-3}-${year+3}`
       };
     }
+
+    const bestMatch = yearFilteredResults[0];
+    const score = 1 - (bestMatch.score || 0);
     
     if (score < minScore) {
       return {
