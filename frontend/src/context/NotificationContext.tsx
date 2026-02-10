@@ -178,35 +178,40 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     const userId = getUserId();
     if (!userId) return;
 
-    const newSocket = io(API_URL, {
-      auth: { userId },
-    });
+    const timer = setTimeout(() => {
+      const newSocket = io(API_URL, {
+        auth: { userId },
+      });
 
-    newSocket.on('connect', () => {
-      newSocket.emit('joinRoom', userId);
-    });
+      newSocket.on('connect', () => {
+        newSocket.emit('joinRoom', userId);
+      });
 
-    newSocket.on('newNotification', (notif: Notification) => {
-      setNotifications((prev) => [notif, ...prev]);
-      setUnreadCount((prev) => prev + 1);
-      
-      if (['forum_like', 'forum_comment', 'comment_reply', 'comment_like'].includes(notif.type)) {
-        setForumNotificationsCount((prev) => prev + 1);
-      } else if (notif.type === 'friend_request') {
-        setFriendRequestsCount((prev) => prev + 1);
-      }
-    });
+      newSocket.on('newNotification', (notif: Notification) => {
+        setNotifications((prev) => [notif, ...prev]);
+        setUnreadCount((prev) => prev + 1);
+        
+        if (['forum_like', 'forum_comment', 'comment_reply', 'comment_like'].includes(notif.type)) {
+          setForumNotificationsCount((prev) => prev + 1);
+        } else if (notif.type === 'friend_request') {
+          setFriendRequestsCount((prev) => prev + 1);
+        }
+      });
 
-    newSocket.on('disconnect', () => {
-      console.log('❌ WebSocket disconnected');
-    });
+      newSocket.on('disconnect', () => {
+        console.log('❌ WebSocket disconnected');
+      });
 
-    setSocket(newSocket);
-    fetchNotificationCounts();
+      setSocket(newSocket);
+      fetchNotificationCounts();
+      fetchNotifications();
 
-    return () => {
-      newSocket.disconnect();
-    };
+      return () => {
+        newSocket.disconnect();
+      };
+    }, 500); // Délai de 500ms après le chargement initial
+
+    return () => clearTimeout(timer);
   }, [fetchNotifications, fetchNotificationCounts]);
 
   const value: NotificationContextType = {

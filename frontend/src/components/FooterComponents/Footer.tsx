@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { ContactForm } from "./ContactForm";
+import { Link, useNavigate } from "react-router-dom";
 
 interface FooterProps {
   userEmail?: string;
 }
 
 export const Footer: React.FC<FooterProps> = ({ userEmail }) => {
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -19,7 +19,12 @@ export const Footer: React.FC<FooterProps> = ({ userEmail }) => {
             </p>
           </div>
           <div className="order-0 md:order-2">
-            <ContactForm userEmail={userEmail} />
+            <button 
+              onClick={() => navigate('/contactform')}
+              className="text-gray-400 hover:text-white transition cursor-pointer bg-none border-none p-0 font-normal"
+            >
+              Contact
+            </button>
           </div>
           <div className="flex gap-4 order-2 md:order-3">
             <Link

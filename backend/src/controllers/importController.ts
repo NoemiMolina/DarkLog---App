@@ -111,6 +111,7 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
 
 export const confirmLetterboxdImport = async (req: Request, res: Response) => {
   try {
+    const startTime = Date.now();
     const { userId, filmsToImport } = req.body;
     if (!userId) {
       return res.status(400).json({ message: "userId is required" });
@@ -123,8 +124,8 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    (`\n🎬 === CONFIRM LETTERBOXD IMPORT === 🎬`);
-    (`📥 Importing ${filmsToImport.length} films for ${user.UserPseudo}`);
+    console.log(`\n🎬 === CONFIRM LETTERBOXD IMPORT === 🎬`);
+    console.log(`📥 Importing ${filmsToImport.length} films for ${user.UserPseudo}`);
 
     let importedCount = 0;
     let updatedCount = 0;
@@ -133,20 +134,20 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     }
     for (const film of filmsToImport) {
       const { tmdbId, title, rating, review, runtime } = film;
-      (`\n📽️ Import: "${title}" (ID: ${tmdbId}), Note: ${rating}/5`);
+      console.log(`\n📽️ Import: "${title}" (ID: ${tmdbId}), Note: ${rating}/5`);
       const existingIndex = user.RatedMovies.findIndex(
         (r: any) => r.tmdbMovieId === tmdbId
       );
 
       if (existingIndex !== -1) {
-        (`   → Updating old rating: ${user.RatedMovies[existingIndex].rating} → ${rating}`);
+        console.log(`   → Updating old rating: ${user.RatedMovies[existingIndex].rating} → ${rating}`);
         user.RatedMovies[existingIndex].rating = rating;
         user.RatedMovies[existingIndex].review = review || "";
         user.RatedMovies[existingIndex].runtime = runtime || 0;
         user.RatedMovies[existingIndex].createdAt = new Date();
         updatedCount++;
       } else {
-        (`   → Nouveau film ajouté`);
+        console.log(`   → Nouveau film ajouté`);
         user.RatedMovies.push({
           tmdbMovieId: tmdbId,
           movieTitle: title,
@@ -165,15 +166,18 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
       : 0;
     const totalWatchTime = ratedMovies.reduce((sum: number, movie: any) => sum + (movie.runtime || 0), 0);
 
-    (`\n📊 === UPDATING STATS === `);
-    (`   📽️ Watched movies: ${numberOfWatchedMovies}`);
-    (`   ⭐ Average rating: ${averageMovieRating.toFixed(2)}/5`);
-    (`   ⏱️ Total watchtime: ${totalWatchTime} min (${(totalWatchTime / 60).toFixed(1)}h)`);
+    console.log(`\n📊 === UPDATING STATS === `);
+    console.log(`   📽️ Watched movies: ${numberOfWatchedMovies}`);
+    console.log(`   ⭐ Average rating: ${averageMovieRating.toFixed(2)}/5`);
+    console.log(`   ⏱️ Total watchtime: ${totalWatchTime} min (${(totalWatchTime / 60).toFixed(1)}h)`);
     user.NumberOfWatchedMovies = numberOfWatchedMovies;
     user.AverageMovieRating = averageMovieRating;
+    
+    console.log(`⏳ Saving user to database...`);
     await user.save();
-
-    (`\n✅ Import finished! ${importedCount} new films, ${updatedCount} updates`);
+    
+    const elapsedTime = Date.now() - startTime;
+    console.log(`\n✅ Import finished! ${importedCount} new films, ${updatedCount} updates (took ${elapsedTime}ms)`);
 
     res.status(200).json({
       message: "Import successful",

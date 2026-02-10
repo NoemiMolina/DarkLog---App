@@ -10,7 +10,6 @@ import { ImportModal } from '../ImportComponents';
 import { FriendRequestDialog } from '../NotificationsComponents/FriendRequestDialog';
 import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
 import { useNotifications } from '../../context/NotificationContext';
-import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Label } from "../../components/ui/label";
 import { Switch } from "../../components/ui/switch";
@@ -18,11 +17,6 @@ import { IoIosMenu } from "react-icons/io";
 import { GiShamblingZombie } from "react-icons/gi";
 import { IoSearchSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "../../components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,15 +32,14 @@ interface HeaderProps {
   isTVShowMode?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => {
-  const { username, userProfilePicture, isAuthenticated, logout, userId } = useAuth();
-  const [authModalOpen, setAuthModalOpen] = useState(false);
+const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onToggleTVShowMode, isTVShowMode }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [addFriendOpen, setAddFriendOpen] = useState(false);
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const { unreadCount, friendRequestsCount, forumNotificationsCount } = useNotifications();
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId') || '';
   const handleToggle = (value: boolean) => {
     localStorage.setItem('mediaType', value ? 'tvshows' : 'movies');
     onToggleTVShowMode?.(value);
@@ -56,14 +49,14 @@ const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => 
     <>
       <header className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 p-3 sm:p-4 lg:px-8 lg:py-4 lg:flex-row lg:items-center lg:gap-8 lg:mt-2">
         {/* MENU + LOGO (left for connected, center for guest on lg) */}
-        {isAuthenticated ? (
+        {username !== "Guest" ? (
           <div className="flex flex-row items-center gap-2 lg:gap-6 flex-shrink-0">
             <div className="hidden lg:block">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <div className="relative cursor-pointer">
                     <IoIosMenu className="text-4xl w-10 h-10 lg:w-5 2xl:translate-x-40" />
-                    <NotificationBadge count={unreadCount} className="top-1 right-0" />
+                    <NotificationBadge count={unreadCount} className="-top-1 -right-1" />
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2 2xl:translate-x-[120px] 2xl:translate-y-0">
@@ -111,7 +104,9 @@ const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => 
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => {
-                      logout();
+                      localStorage.removeItem("token");
+                      localStorage.removeItem("user");
+                      localStorage.removeItem("userId");
                       navigate('/');
                     }}
                     className="cursor-pointer hover:bg-red-500/20 text-red-400"
@@ -154,24 +149,18 @@ const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => 
 
         {/* SECTION DROITE (search + switch + profile) */}
         <div className="flex flex-row items-center gap-2 sm:gap-4 flex-shrink-0">
-          {!isAuthenticated ? (
+          {username === "Guest" ? (
             // HEADER GUEST (non connecté)
             <>
               <div className="sm:hidden flex gap-2 flex-1 justify-center">
-                <Dialog open={authModalOpen} onOpenChange={setAuthModalOpen}>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-white hover:bg-[#4C4C4C] p-2"
-                    >
-                      <GiShamblingZombie className="text-2xl w-6 h-6" />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="bg-black/40 backdrop-blur-md border-white/20 text-white">
-                    <LogInForm onClose={() => setAuthModalOpen(false)} isMobileModal={true} />
-                  </DialogContent>
-                </Dialog>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:bg-[#4C4C4C] p-2"
+                  onClick={() => navigate("/login")}
+                >
+                  <GiShamblingZombie className="text-2xl w-6 h-6" />
+                </Button>
                 <div className="sm:hidden">
                   <GetLuckyDialog />
                 </div>
@@ -202,13 +191,16 @@ const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => 
               <div className="lg:hidden flex flex-row items-center gap-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="text-white hover:bg-[#4C4C4C] px-2 z-50"
-                    >
-                      <IoIosMenu className="text-2xl w-6 h-6" />
-                    </Button>
+                    <div className="relative">
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="text-white hover:bg-[#4C4C4C] px-2 z-50"
+                      >
+                        <IoIosMenu className="text-2xl w-6 h-6" />
+                      </Button>
+                      <NotificationBadge count={unreadCount} className="top-0 right-0" />
+                    </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
                     <DropdownMenuItem
@@ -236,7 +228,9 @@ const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => 
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => {
-                        logout();
+                        localStorage.removeItem("token");
+                        localStorage.removeItem("user");
+                        localStorage.removeItem("userId");
                         navigate('/');
                       }}
                       className="cursor-pointer hover:bg-red-500/20 text-red-400"
@@ -321,7 +315,7 @@ const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => 
         </div>
       </header>
       <AddFriendDialog
-        currentUserId={userId || ''}
+        currentUserId={userId}
         open={addFriendOpen}
         onOpenChange={setAddFriendOpen}
       />
@@ -336,18 +330,17 @@ const Header: React.FC<HeaderProps> = ({ onToggleTVShowMode, isTVShowMode }) => 
       <ImportModal
         isOpen={importModalOpen}
         onClose={() => setImportModalOpen(false)}
-        userId={userId || ''}
+        userId={userId}
         onSuccess={(stats) => {
           console.log("✅ Import réussi avec stats:", stats);
         }}
       />
 
-      <div className="sm:hidden w-full">
-        <PublicSearchBar 
-          isVisibleMobile={searchBarOpen}
-          onResultSelected={() => setSearchBarOpen(false)} 
-        />
-      </div>
+      {searchBarOpen && (
+        <div className="sm:hidden w-full -mt-12">
+          <PublicSearchBar />
+        </div>
+      )}
     </>
   );
 };

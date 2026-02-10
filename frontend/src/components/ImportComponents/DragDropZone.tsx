@@ -214,7 +214,7 @@ export default function DragDropZone({
                 <div className="text-sm text-blue-700 dark:text-blue-300">
                     <p className="font-semibold mb-1">📋 Expected format:</p>
                     <p className="text-xs">
-                        Download your "Watched" list from Letterboxd and ensure the CSV contains the columns: <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">Name</code>,{" "}
+                        Download your "Diary" list from Letterboxd and ensure the CSV contains the columns: <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">Name</code>,{" "}
                         <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">Year</code>,{" "}
                         <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">Rating</code>
                     </p>

@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -12,7 +11,7 @@ import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
 import { CountrySelect } from "../ui/country-select";
 import { format } from "date-fns";
 import { enUS, fr } from "date-fns/locale";
-import { X } from "lucide-react";
+import { X, Eye, EyeOff } from "lucide-react";
 
 type SearchItem = {
   _id: string;
@@ -34,13 +33,16 @@ const calcAgeFromDate = (date: Date | null) => {
   return Math.max(age, 0);
 };
 
-const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
-  const [open, setOpen] = useState(false);
+export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
+  const navigate = useNavigate();
   const [userPseudo, setUserPseudo] = useState("");
   const [userFirstName, setUserFirstName] = useState("");
   const [userLastName, setUserLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [birthDate, setBirthDate] = useState<Date | null>(null);
   const [location, setLocation] = useState("");
   const [profilePic, setProfilePic] = useState<File | null>(null);
@@ -54,15 +56,6 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const [qShows, setQShows] = useState("");
   const [resShows, setResShows] = useState<SearchItem[]>([]);
   const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]);
-  
-  const navigate = useNavigate();
-  const locationDialog = useLocation();
-
-  useEffect(() => {
-    if (locationDialog.pathname === "/signup") {
-      setOpen(true);
-    }
-  }, [locationDialog.pathname]);
 
   useEffect(() => {
     if (!qMovies.trim()) { setResMovies([]); return; }
@@ -108,6 +101,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
 
   const emailValid = /\S+@\S+\.\S+/.test(email);
   const passwordValid = passwordRegex.test(password);
+  const passwordsMatch = password === confirmPassword && password.length > 0;
   const canSubmit =
     userFirstName.trim().length > 0 &&
     userLastName.trim().length > 0 &&
@@ -116,6 +110,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
     userLastName.trim().length > 0 &&
     emailValid &&
     passwordValid &&
+    passwordsMatch &&
     age > 0 &&
     location.trim().length > 0 &&
     top3Movies.length === 3;
@@ -205,7 +200,6 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
       }
 
       setTimeout(() => {
-        setOpen(false);
         onClose?.();
         navigate("/home");
       }, 800);
@@ -218,30 +212,7 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={(v) => { 
-      setOpen(v); 
-      if (!v) { 
-        setSubmitError(null); 
-        setSubmitSuccess(null);
-        if (locationDialog.pathname === "/signup") {
-          navigate("/");
-        }
-      } 
-    }}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50">Sign Up</Button>
-      </DialogTrigger>
-
-      <DialogContent className="sm:max-w-[720px] bg-black/40 backdrop-blur-md text-white border border-white/20">
-        <DialogHeader>
-          <DialogTitle className="text-xl">Create an account</DialogTitle>
-          <DialogDescription className="text-gray-400">
-            Please fill in your information to sign up. Fields marked * are required.
-          </DialogDescription>
-        </DialogHeader>
-
-
-        <ScrollArea className="max-h-[70vh] pr-2">
+    <div className="w-full">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4 lg:mr-50">
             <Label htmlFor="profilePic">Profile picture (optional)</Label>
 
@@ -318,17 +289,50 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
 
           <div className="space-y-2">
             <Label htmlFor="password">Password *</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Min. 8, 1 maj, 1 number, 1 special"
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Min. 8, 1 maj, 1 number, 1 special"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
             {!passwordValid && password.length > 0 && (
               <p className="text-xs text-red-400">
                 Must contain 1 uppercase letter, 1 number, 1 special character, and at least 8 characters.
               </p>
+            )}
+
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">Confirm Password *</Label>
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm your password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              >
+                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+            {confirmPassword.length > 0 && !passwordsMatch && (
+              <p className="text-xs text-red-400">Passwords don't match</p>
             )}
 
           </div>
@@ -452,16 +456,29 @@ const DialogSignUpForm: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
           {submitSuccess && <p className="mt-4 text-sm text-green-400">{submitSuccess}</p>}
 
           <div className="mt-6 flex justify-end gap-3">
-            <Button variant="outline" onClick={() => setOpen(false)} className="text-white hover:bg-white/10">
+            <Button variant="outline" onClick={() => onClose?.()} className="text-white hover:bg-white/10">
               Cancel
             </Button>
             <Button onClick={handleSubmit} disabled={!canSubmit || submitting} className="text-white">
               {submitting ? "Saving..." : "Save"}
             </Button>
           </div>
-        </ScrollArea>
-      </DialogContent>
-    </Dialog >
+    </div>
+  );
+};
+
+const DialogSignUpForm: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <Button
+      variant="outline"
+      size="sm"
+      className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50"
+      onClick={() => navigate("/signup")}
+    >
+      Sign Up
+    </Button>
   );
 };
 

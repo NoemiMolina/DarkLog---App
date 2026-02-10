@@ -7,6 +7,7 @@ import QuizzPage from "./features/pages/QuizzPage";
 import  ForumPage  from "./features/pages/ForumPage";
 import LoginPage from "./features/pages/LoginPage";
 import SignUpPage from "./features/pages/SignUpPage";
+import ContactFormPage from "./features/pages/ContactFormPage";
 import PrivacyPage from "./features/pages/PrivacyPage";
 import TermsPage from "./features/pages/TermsPage";
 import { Footer } from "./components/FooterComponents/Footer";
@@ -57,6 +58,7 @@ function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
           <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <WelcomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/contactform" element={<ContactFormPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/user/:userId" element={<UserPublicProfile />} />
