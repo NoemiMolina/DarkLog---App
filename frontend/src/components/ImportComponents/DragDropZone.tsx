@@ -224,6 +224,7 @@ export default function DragDropZone({
                 <p className="text-sm text-amber-800 dark:text-amber-200">
                     <span className="font-semibold">💡 Info:</span> Only movies of the{" "}
                     <span className="font-semibold">horror</span> genre will be imported.
+                       <span className="font-semibold">Some horror movies have not been imported ?</span> use the contact form.
                 </p>
             </div>
         </div>

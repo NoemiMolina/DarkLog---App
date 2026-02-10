@@ -9,7 +9,6 @@ import connectDB from "./config/database";
 import userRoutes from "./routes/users";
 import movieRoutes from "./routes/movies";
 import tvShowsRoutes from "./routes/tvShows";
-import reaiperRoutes from "./routes/reaiper";
 import forumRoutes from "./routes/forum";
 import quizRoutes from "./routes/quiz";
 import searchRoutes from "./routes/search";
@@ -61,7 +60,6 @@ app.use("/homemade_quiz", express.static(quizPath));
 app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);
 app.use("/tvShows", tvShowsRoutes);
-app.use("/reaiper", reaiperRoutes);
 app.use("/forum", forumRoutes);
 app.use("/quiz", quizRoutes);
 app.use("/search", searchRoutes);
@@ -69,7 +67,6 @@ app.use("/homemade-watchlists", homemadeWatchlistsRoutes);
 app.use("/notifications", notificationRoutes);
 app.use("/import", importRoutes);
 app.use("/news", newsRoutes);
-// app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Backend's app is online, gg");
