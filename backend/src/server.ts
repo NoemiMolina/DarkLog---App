@@ -6,14 +6,6 @@ import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 import connectDB from "./config/database";
 
-dotenv.config();
-
-// Check Cloudinary config immediately
-console.log("🔍 Cloudinary Config Check at Startup:");
-console.log("CLOUDINARY_CLOUD_NAME:", process.env.CLOUDINARY_CLOUD_NAME);
-console.log("CLOUDINARY_API_KEY:", process.env.CLOUDINARY_API_KEY ? "✅ Present" : "❌ Missing");
-console.log("CLOUDINARY_API_SECRET:", process.env.CLOUDINARY_API_SECRET ? "✅ Present" : "❌ Missing");
-
 import userRoutes from "./routes/users";
 import movieRoutes from "./routes/movies";
 import tvShowsRoutes from "./routes/tvShows";
@@ -25,6 +17,8 @@ import homemadeWatchlistsRoutes from "./routes/homemadeWatchlists";
 import notificationRoutes from "./routes/notification";
 import newsRoutes from "./routes/news";
 import importRoutes from "./routes/import";
+
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
