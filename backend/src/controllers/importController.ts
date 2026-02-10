@@ -67,9 +67,18 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
         notFound: 0
       }
     };
-    for (const filmData of csvData) {
+
+    // Match all movies in parallel for speed
+    console.log(`🎬 Matching ${csvData.length} films...`);
+    const matchPromises = csvData.map(async (filmData) => {
       const { name, year, rating, review } = filmData as LetterboxdMovieData;
       const matchResult = await matchMovieByNameAndYear(name, year);
+      return { filmData, matchResult };
+    });
+    const matches = await Promise.all(matchPromises);
+
+    for (const { filmData, matchResult } of matches) {
+      const { name, year, rating, review } = filmData;
       if (!matchResult.found) {
         previewResult.notFound.push({
           name,
