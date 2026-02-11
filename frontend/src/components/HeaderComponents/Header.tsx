@@ -10,6 +10,7 @@ import { ImportModal } from '../ImportComponents';
 import { FriendRequestDialog } from '../NotificationsComponents/FriendRequestDialog';
 import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
 import { useNotifications } from '../../context/NotificationContext';
+import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/button';
 import { Label } from "../../components/ui/label";
 import { Switch } from "../../components/ui/switch";
@@ -38,6 +39,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
   const [importModalOpen, setImportModalOpen] = useState(false);
   const { unreadCount, friendRequestsCount, forumNotificationsCount } = useNotifications();
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const userId = localStorage.getItem('userId') || '';
   const handleToggle = (value: boolean) => {
@@ -104,9 +106,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => {
-                      localStorage.removeItem("token");
-                      localStorage.removeItem("user");
-                      localStorage.removeItem("userId");
+                      logout();
                       navigate('/');
                     }}
                     className="cursor-pointer hover:bg-red-500/20 text-red-400"

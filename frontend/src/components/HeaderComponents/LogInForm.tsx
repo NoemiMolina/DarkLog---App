@@ -181,6 +181,7 @@ const DialogLoginForm: React.FC = () => {
       variant="outline"
       size="sm"
       className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50"
+      style={{ fontFamily: "'Metal Mania', serif" }}
       onClick={() => navigate("/login")}
     >
       Login

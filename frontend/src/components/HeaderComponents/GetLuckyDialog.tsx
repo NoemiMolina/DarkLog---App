@@ -147,6 +147,7 @@ const GetLuckyDialog: React.FC = () => {
             variant="outline"
             size="sm"
             className="hidden sm:inline-flex button-text sm:mt-3 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold z-50"
+            style={{ fontFamily: "'Metal Mania', serif" }}
           >
             {loading ? "Loading..." : "Get Lucky"}
           </Button>
