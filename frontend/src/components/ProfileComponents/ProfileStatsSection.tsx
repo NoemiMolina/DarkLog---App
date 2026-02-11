@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../ui/dialog';
-import { Clock, Users } from 'lucide-react';
-import { API_URL } from '../../config/api';
+import React, { useEffect, useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "../ui/dialog";
+import { Clock, Users } from "lucide-react";
+import { API_URL } from "../../config/api";
 
 interface ProfileStatsSection {
   numberOfWatchedMovies: number;
@@ -36,20 +47,20 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
 
   const fetchFriends = async () => {
     if (!userId) {
-      console.warn('⛔ fetchFriends: userId is undefined, skipping API call.');
+      console.warn("⛔ fetchFriends: userId is undefined, skipping API call.");
       return;
     }
     setLoadingFriends(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await fetch(`${API_URL}/users/${userId}/friends`, {
-        headers: { 'Authorization': `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
-      console.log('📥 Friends data received:', data);
+      console.log("📥 Friends data received:", data);
       setFriends(data);
     } catch (error) {
-      console.error('Error fetching friends:', error);
+      console.error("Error fetching friends:", error);
     } finally {
       setLoadingFriends(false);
     }
@@ -63,9 +74,17 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   useEffect(() => {
     console.log("📊 watchedMovies received:", watchedMovies);
     console.log("📺 watchedTvShows received:", watchedTvShows);
-    const movieMinutes = watchedMovies.reduce((sum, movie) => sum + (movie.runtime || 0), 0);
-    const tvShowMinutes = watchedTvShows.reduce((sum, show) => sum + (show.total_runtime || 0), 0);
-    setTotalWatchTimeMinutes(movieMinutes + tvShowMinutes + totalWatchTimeFromWatchlists);
+    const movieMinutes = watchedMovies.reduce(
+      (sum, movie) => sum + (movie.runtime || 0),
+      0,
+    );
+    const tvShowMinutes = watchedTvShows.reduce(
+      (sum, show) => sum + (show.total_runtime || 0),
+      0,
+    );
+    setTotalWatchTimeMinutes(
+      movieMinutes + tvShowMinutes + totalWatchTimeFromWatchlists,
+    );
   }, [watchedMovies, watchedTvShows, totalWatchTimeFromWatchlists]);
 
   const formatWatchTime = (minutes: number) => {
@@ -86,23 +105,33 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-purple-400">{numberOfWatchedMovies}</p>
+              <p className="text-2xl font-bold text-purple-400">
+                {numberOfWatchedMovies}
+              </p>
               <p className="text-sm text-white/60">Movies Watched</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-purple-400">{numberOfWatchedTvShows}</p>
+              <p className="text-2xl font-bold text-purple-400">
+                {numberOfWatchedTvShows}
+              </p>
               <p className="text-sm text-white/60">TV Shows Watched</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-purple-400">{numberOfGivenReviews}</p>
+              <p className="text-2xl font-bold text-purple-400">
+                {numberOfGivenReviews}
+              </p>
               <p className="text-sm text-white/60">Reviews Given</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-purple-400">{averageMovieRating.toFixed(1)}</p>
+              <p className="text-2xl font-bold text-purple-400">
+                {averageMovieRating.toFixed(1)}
+              </p>
               <p className="text-sm text-white/60">Avg Movie Rating</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
-              <p className="text-2xl font-bold text-purple-400">{averageTvShowRating.toFixed(1)}</p>
+              <p className="text-2xl font-bold text-purple-400">
+                {averageTvShowRating.toFixed(1)}
+              </p>
               <p className="text-sm text-white/60">Avg TV Show Rating</p>
             </div>
             <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
@@ -116,7 +145,9 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
               className="text-center p-4 bg-[#1A1A1A] rounded-lg cursor-pointer hover:bg-[#333333] transition-colors"
               onClick={handleFriendsClick}
             >
-              <p className="text-4xl font-bold text-purple-400">{numberOfFriends}</p>
+              <p className="text-4xl font-bold text-purple-400">
+                {numberOfFriends}
+              </p>
               <p className="text-sm text-white/60 flex items-center justify-center gap-1">
                 <Users size={16} /> Friends
               </p>
@@ -126,9 +157,11 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
       </Card>
 
       <Dialog open={showFriendsModal} onOpenChange={setShowFriendsModal}>
-        <DialogContent className="max-w-2xl text-white border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl shadow-black/40 rounded-2xl" >
+        <DialogContent className="max-w-2xl text-white border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl shadow-black/40 rounded-2xl">
           <DialogHeader>
-            <DialogTitle className="text-xl">Friends ({numberOfFriends})</DialogTitle>
+            <DialogTitle className="text-xl">
+              Friends ({numberOfFriends})
+            </DialogTitle>
             <DialogDescription className="text-gray-400">
               View your friends list below.
             </DialogDescription>
@@ -141,21 +174,27 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
             ) : (
               <div className="space-y-3">
                 {friends.map((friend: any) => {
-                  const friendName = friend.friendPseudo || friend.UserPseudo || 'Unknown';
-                  const friendPicture = friend.friendProfilePicture || friend.UserProfilePicture;
+                  const friendName =
+                    friend.friendPseudo || friend.UserPseudo || "Unknown";
+                  const friendPicture =
+                    friend.friendProfilePicture || friend.UserProfilePicture;
                   const friendId = friend.friendId || friend._id;
 
                   return (
                     <div
                       key={friendId}
                       className="flex items-center gap-4 p-3 bg-[#1A1A1A] rounded-lg hover:bg-[#333333] transition-colors cursor-pointer"
-                      onClick={() => window.location.href = `/user/${friendId}`}
+                      onClick={() =>
+                        (window.location.href = `/user/${friendId}`)
+                      }
                     >
                       {friendPicture ? (
                         <img
-                          src={friendPicture.startsWith('http')
-                            ? friendPicture
-                            : `${API_URL}/${friendPicture}`}
+                          src={
+                            friendPicture.startsWith("http")
+                              ? friendPicture
+                              : `${API_URL}/${friendPicture}`
+                          }
                           alt={friendName}
                           className="w-12 h-12 rounded-full object-cover"
                         />

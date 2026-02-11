@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { API_URL } from '../../config/api';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
+import React, { useState, useEffect } from "react";
+import { API_URL } from "../../config/api";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
 import { FaUserPlus } from "react-icons/fa";
 import {
   Dialog,
@@ -35,12 +35,14 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
   const open = controlledOpen !== undefined ? controlledOpen : internalOpen;
   const setOpen = onControlledOpenChange || setInternalOpen;
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<User[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState<'success' | 'error'>('success');
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState<"success" | "error">(
+    "success",
+  );
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -51,23 +53,23 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
     const debounceTimer = setTimeout(async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
         const response = await fetch(
           `${API_URL}/users/search?query=${encodeURIComponent(searchQuery)}`,
           {
-            method: 'GET',
+            method: "GET",
             headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
-          }
+          },
         );
         if (response.ok) {
           const data = await response.json();
           setSearchResults(data);
         }
       } catch (error) {
-        console.error('Error searching users:', error);
+        console.error("Error searching users:", error);
       } finally {
         setLoading(false);
       }
@@ -84,29 +86,29 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
 
   const handleAddFriend = async () => {
     if (!selectedUser) {
-      setMessage('Please select a friend');
-      setMessageType('error');
+      setMessage("Please select a friend");
+      setMessageType("error");
       return;
     }
 
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       const response = await fetch(
         `${API_URL}/users/${currentUserId}/friends/${selectedUser._id}`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (response.ok) {
-        setMessage('Friend added successfully!');
-        setMessageType('success');
-        setSearchQuery('');
+        setMessage("Friend added successfully!");
+        setMessageType("success");
+        setSearchQuery("");
         setSelectedUser(null);
         setTimeout(() => {
           setOpen(false);
@@ -114,13 +116,13 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
         }, 1500);
       } else {
         const data = await response.json();
-        setMessage(data.message || 'Failed to add friend');
-        setMessageType('error');
+        setMessage(data.message || "Failed to add friend");
+        setMessageType("error");
       }
     } catch (error) {
-      console.error('Error adding friend:', error);
-      setMessage('Error adding friend');
-      setMessageType('error');
+      console.error("Error adding friend:", error);
+      setMessage("Error adding friend");
+      setMessageType("error");
     } finally {
       setLoading(false);
     }
@@ -141,7 +143,12 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
       </DialogTrigger>
       <DialogContent className="bg-black/40 backdrop-blur-md border-white/20 text-white max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl" style={{ fontFamily: "'Metal Mania', serif" }}>Add Friend</DialogTitle>
+          <DialogTitle
+            className="text-center text-2xl"
+            style={{ fontFamily: "'Metal Mania', serif" }}
+          >
+            Add Friend
+          </DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
@@ -160,12 +167,13 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
                 <button
                   key={user._id}
                   onClick={() => handleSelectUser(user)}
-                  className={`w-full text-left px-4 py-3 hover:bg-white/10 transition border-b border-white/5 last:border-b-0 ${selectedUser?._id === user._id ? 'bg-white/20' : ''
-                    }`}
+                  className={`w-full text-left px-4 py-3 hover:bg-white/10 transition border-b border-white/5 last:border-b-0 ${
+                    selectedUser?._id === user._id ? "bg-white/20" : ""
+                  }`}
                 >
                   <div className="font-semibold">{user.UserPseudo}</div>
                   <div className="text-sm text-white/60">
-                    {user.UserFirstName || 'No name'}
+                    {user.UserFirstName || "No name"}
                   </div>
                 </button>
               ))}
@@ -173,10 +181,11 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
           )}
           {message && (
             <div
-              className={`p-2 rounded text-sm text-center ${messageType === 'success'
-                  ? 'bg-green-500/20 text-green-200'
-                  : 'bg-red-500/20 text-red-200'
-                }`}
+              className={`p-2 rounded text-sm text-center ${
+                messageType === "success"
+                  ? "bg-green-500/20 text-green-200"
+                  : "bg-red-500/20 text-red-200"
+              }`}
             >
               {message}
             </div>
@@ -187,7 +196,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
             disabled={loading || !selectedUser}
             className="w-full bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Adding...' : 'Add Friend'}
+            {loading ? "Adding..." : "Add Friend"}
           </Button>
         </div>
       </DialogContent>

@@ -24,13 +24,14 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 
 // 🔌 Socket.IO setup
-const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? [
-    "https://fearlogapp.vercel.app",
-    "https://fearlogapp.com",
-    "https://www.fearlogapp.com"
-  ]
-  : ["http://localhost:5173", "http://localhost:3000"];
+const allowedOrigins =
+  process.env.NODE_ENV === "production"
+    ? [
+        "https://fearlogapp.vercel.app",
+        "https://fearlogapp.com",
+        "https://www.fearlogapp.com",
+      ]
+    : ["http://localhost:5173", "http://localhost:3000"];
 
 export const io = new SocketIOServer(server, {
   cors: {
@@ -40,10 +41,12 @@ export const io = new SocketIOServer(server, {
   },
 });
 
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 connectDB();
@@ -55,15 +58,18 @@ const publicPath = path.resolve("public");
 app.use("/", express.static(publicPath));
 
 const quizPath = path.resolve("homemade_quiz");
-app.use("/homemade_quiz", express.static(quizPath, {
-  maxAge: 0,
-  etag: false,
-  setHeaders: (res) => {
-    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.set('Pragma', 'no-cache');
-    res.set('Expires', '0');
-  }
-}));
+app.use(
+  "/homemade_quiz",
+  express.static(quizPath, {
+    maxAge: 0,
+    etag: false,
+    setHeaders: (res) => {
+      res.set("Cache-Control", "no-cache, no-store, must-revalidate");
+      res.set("Pragma", "no-cache");
+      res.set("Expires", "0");
+    },
+  }),
+);
 
 app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);

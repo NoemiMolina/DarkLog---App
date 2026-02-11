@@ -1,392 +1,327 @@
 [
-    {
-        "question": "Teen girl with telekinesis ruins bullies’ lives every Wednesday.",
-        "options": [
-            "Chilling Adventures of Sabrina",
-            "Wednesday",
-            "Buffy the Vampire Slayer",
-            "The Winchesters"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Small town kids fight a wall socket that leads to hell.",
-        "options": [
-            "The Mist",
-            "Locke & Key",
-            "Stranger Things",
-            "The Midnight Club"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Guy just wanted his wife back but got zombies instead.",
-        "options": [
-            "Fear the Walking Dead",
-            "The Walking Dead",
-            "Kingdom",
-            "Z Nation"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A babysitter job goes horribly wrong when the house is full of ghosts.",
-        "options": [
-            "Archive 81",
-            "The Haunting of Bly Manor",
-            "Marianne",
-            "The Watcher"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Two brothers road-trip through America to fight literal nightmares.",
-        "options": [
-            "Supernatural",
-            "The X-Files",
-            "The Winchesters",
-            "Evil"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Vampires exist, but they’re terrible at adulting.",
-        "options": [
-            "True Blood",
-            "Being Human",
-            "What We Do in the Shadows",
-            "V Wars"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "House full of dead people just wants a little attention.",
-        "options": [
-            "Locke & Key",
-            "The Others",
-            "The Haunting of Hill House",
-            "AHS: Murder House"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Vampire diaries, but with more abs and less blood.",
-        "options": [
-            "The Originals",
-            "Teen Wolf",
-            "The Vampire Diaries",
-            "Charmed"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Blonde girl slays monsters after school, no big deal.",
-        "options": [
-            "Buffy the Vampire Slayer",
-            "Teen Wolf",
-            "Supernatural",
-            "Sabrina the Teenage Witch"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A high school cheerleader accidentally joins a cult of witches.",
-        "options": [
-            "AHS: Coven",
-            "The Order",
-            "Chilling Adventures of Sabrina",
-            "Wednesday"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Sexy Louisiana vampires learn the power of soap opera drama.",
-        "options": [
-            "Interview with the Vampire",
-            "True Blood",
-            "The Originals",
-            "Dracula"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Every season, new people suffer. Same title. Lots of screaming.",
-        "options": [
-            "Slasher",
-            "Scream Queens",
-            "The Purge",
-            "American Horror Story"
-        ],
-        "correctIndex": 3,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Teen wolf boy tries to play lacrosse but keeps turning furry.",
-        "options": [
-            "Teen Wolf",
-            "The Order",
-            "The Originals",
-            "Bitten"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Ghost stories for kids who didn’t sleep anyway.",
-        "options": [
-            "Goosebumps",
-            "Tales from the Cryptkeeper",
-            "Are You Afraid of the Dark?",
-            "Creeped Out"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Pretty people die in the woods because horror logic.",
-        "options": [
-            "Scream Queens",
-            "Slasher",
-            "Harper’s Island",
-            "The Purge"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Zombie virus, but make it Korean and cooler.",
-        "options": [
-            "Sweet Home",
-            "Kingdom",
-            "Hellbound",
-            "All of Us Are Dead"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A nurse with no chill gets promoted to head witch of manipulation.",
-        "options": [
-            "Servant",
-            "Bates Motel",
-            "Marianne",
-            "Ratched"
-        ],
-        "correctIndex": 3,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A haunted orphanage but make it emotional.",
-        "options": [
-            "Hill House",
-            "Midnight Mass",
-            "Bly Manor",
-            "The Orphanage"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "People read creepy books and then regret literacy.",
-        "options": [
-            "Guillermo del Toro’s Cabinet of Curiosities",
-            "Creepshow",
-            "Channel Zero",
-            "Tales from the Crypt"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A talking hand and a cello girl become besties.",
-        "options": [
-            "Locke & Key",
-            "Goosebumps",
-            "Wednesday",
-            "The Addams Family"
-        ],
-        "correctIndex": 3,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Two detectives hunt ghosts like it’s a 9-to-5 job.",
-        "options": [
-            "Evil",
-            "Supernatural",
-            "The X-Files",
-            "Constantine"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A mortician gets haunted by her own career choices.",
-        "options": [
-            "The Fall of the House of Usher",
-            "Six Feet Under",
-            "Hill House",
-            "The Midnight Club"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A girl eats brains and solves crimes. Weird hobby.",
-        "options": [
-            "Santa Clarita Diet",
-            "Dexter",
-            "iZombie",
-            "Dead Like Me"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A family moves into a cursed house because rent is cheap.",
-        "options": [
-            "The Watcher",
-            "Locke & Key",
-            "The Haunting of Hill House",
-            "AHS: Murder House"
-        ],
-        "correctIndex": 3,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Vampires drink fake blood and make real bad decisions.",
-        "options": [
-            "Daybreakers",
-            "True Blood",
-            "Van Helsing",
-            "Midnight Mass"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "The devil is your neighbor and surprisingly charming.",
-        "options": [
-            "Lucifer",
-            "Constantine",
-            "Good Omens",
-            "Evil"
-        ],
-        "correctIndex": 0,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A priest accidentally starts the vampire apocalypse. Whoops.",
-        "options": [
-            "The Passage",
-            "The Strain",
-            "Midnight Mass",
-            "30 Coins"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Group of kids start a ghost story club, summon actual ghosts.",
-        "options": [
-            "Goosebumps",
-            "The Midnight Club",
-            "Are You Afraid of the Dark?",
-            "Creeped Out"
-        ],
-        "correctIndex": 2,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "Goth teens open a door and unleash ancient evil. Again.",
-        "options": [
-            "The Order",
-            "Locke & Key",
-            "Chilling Adventures of Sabrina",
-            "Hill House"
-        ],
-        "correctIndex": 1,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "A group of ghosts just wants you to cry on Netflix.",
-        "options": [
-            "Bly Manor",
-            "Hill House",
-            "Midnight Mass",
-            "The Fall of the House of Usher"
-        ],
-        "correctIndex": 3,
-        "category": "dumb_description",
-        "difficulty": "easy",
-        "type": "TVShow"
-    }
+  {
+    "question": "Teen girl with telekinesis ruins bullies’ lives every Wednesday.",
+    "options": [
+      "Chilling Adventures of Sabrina",
+      "Wednesday",
+      "Buffy the Vampire Slayer",
+      "The Winchesters"
+    ],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Small town kids fight a wall socket that leads to hell.",
+    "options": [
+      "The Mist",
+      "Locke & Key",
+      "Stranger Things",
+      "The Midnight Club"
+    ],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Guy just wanted his wife back but got zombies instead.",
+    "options": [
+      "Fear the Walking Dead",
+      "The Walking Dead",
+      "Kingdom",
+      "Z Nation"
+    ],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A babysitter job goes horribly wrong when the house is full of ghosts.",
+    "options": [
+      "Archive 81",
+      "The Haunting of Bly Manor",
+      "Marianne",
+      "The Watcher"
+    ],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Two brothers road-trip through America to fight literal nightmares.",
+    "options": ["Supernatural", "The X-Files", "The Winchesters", "Evil"],
+    "correctIndex": 0,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Vampires exist, but they’re terrible at adulting.",
+    "options": [
+      "True Blood",
+      "Being Human",
+      "What We Do in the Shadows",
+      "V Wars"
+    ],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "House full of dead people just wants a little attention.",
+    "options": [
+      "Locke & Key",
+      "The Others",
+      "The Haunting of Hill House",
+      "AHS: Murder House"
+    ],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Vampire diaries, but with more abs and less blood.",
+    "options": ["The Originals", "Teen Wolf", "The Vampire Diaries", "Charmed"],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Blonde girl slays monsters after school, no big deal.",
+    "options": [
+      "Buffy the Vampire Slayer",
+      "Teen Wolf",
+      "Supernatural",
+      "Sabrina the Teenage Witch"
+    ],
+    "correctIndex": 0,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A high school cheerleader accidentally joins a cult of witches.",
+    "options": [
+      "AHS: Coven",
+      "The Order",
+      "Chilling Adventures of Sabrina",
+      "Wednesday"
+    ],
+    "correctIndex": 0,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Sexy Louisiana vampires learn the power of soap opera drama.",
+    "options": [
+      "Interview with the Vampire",
+      "True Blood",
+      "The Originals",
+      "Dracula"
+    ],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Every season, new people suffer. Same title. Lots of screaming.",
+    "options": [
+      "Slasher",
+      "Scream Queens",
+      "The Purge",
+      "American Horror Story"
+    ],
+    "correctIndex": 3,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Teen wolf boy tries to play lacrosse but keeps turning furry.",
+    "options": ["Teen Wolf", "The Order", "The Originals", "Bitten"],
+    "correctIndex": 0,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Ghost stories for kids who didn’t sleep anyway.",
+    "options": [
+      "Goosebumps",
+      "Tales from the Cryptkeeper",
+      "Are You Afraid of the Dark?",
+      "Creeped Out"
+    ],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Pretty people die in the woods because horror logic.",
+    "options": ["Scream Queens", "Slasher", "Harper’s Island", "The Purge"],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Zombie virus, but make it Korean and cooler.",
+    "options": ["Sweet Home", "Kingdom", "Hellbound", "All of Us Are Dead"],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A nurse with no chill gets promoted to head witch of manipulation.",
+    "options": ["Servant", "Bates Motel", "Marianne", "Ratched"],
+    "correctIndex": 3,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A haunted orphanage but make it emotional.",
+    "options": ["Hill House", "Midnight Mass", "Bly Manor", "The Orphanage"],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "People read creepy books and then regret literacy.",
+    "options": [
+      "Guillermo del Toro’s Cabinet of Curiosities",
+      "Creepshow",
+      "Channel Zero",
+      "Tales from the Crypt"
+    ],
+    "correctIndex": 0,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A talking hand and a cello girl become besties.",
+    "options": ["Locke & Key", "Goosebumps", "Wednesday", "The Addams Family"],
+    "correctIndex": 3,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Two detectives hunt ghosts like it’s a 9-to-5 job.",
+    "options": ["Evil", "Supernatural", "The X-Files", "Constantine"],
+    "correctIndex": 0,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A mortician gets haunted by her own career choices.",
+    "options": [
+      "The Fall of the House of Usher",
+      "Six Feet Under",
+      "Hill House",
+      "The Midnight Club"
+    ],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A girl eats brains and solves crimes. Weird hobby.",
+    "options": ["Santa Clarita Diet", "Dexter", "iZombie", "Dead Like Me"],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A family moves into a cursed house because rent is cheap.",
+    "options": [
+      "The Watcher",
+      "Locke & Key",
+      "The Haunting of Hill House",
+      "AHS: Murder House"
+    ],
+    "correctIndex": 3,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Vampires drink fake blood and make real bad decisions.",
+    "options": ["Daybreakers", "True Blood", "Van Helsing", "Midnight Mass"],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "The devil is your neighbor and surprisingly charming.",
+    "options": ["Lucifer", "Constantine", "Good Omens", "Evil"],
+    "correctIndex": 0,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A priest accidentally starts the vampire apocalypse. Whoops.",
+    "options": ["The Passage", "The Strain", "Midnight Mass", "30 Coins"],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Group of kids start a ghost story club, summon actual ghosts.",
+    "options": [
+      "Goosebumps",
+      "The Midnight Club",
+      "Are You Afraid of the Dark?",
+      "Creeped Out"
+    ],
+    "correctIndex": 2,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "Goth teens open a door and unleash ancient evil. Again.",
+    "options": [
+      "The Order",
+      "Locke & Key",
+      "Chilling Adventures of Sabrina",
+      "Hill House"
+    ],
+    "correctIndex": 1,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "A group of ghosts just wants you to cry on Netflix.",
+    "options": [
+      "Bly Manor",
+      "Hill House",
+      "Midnight Mass",
+      "The Fall of the House of Usher"
+    ],
+    "correctIndex": 3,
+    "category": "dumb_description",
+    "difficulty": "easy",
+    "type": "TVShow"
+  }
 ]

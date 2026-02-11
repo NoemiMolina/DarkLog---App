@@ -11,7 +11,6 @@ export interface IQuiz extends Document {
   type: string;
   imageUrl?: string;
   source: string;
-
 }
 
 const QuizQuestionSchema = new Schema(
@@ -19,14 +18,21 @@ const QuizQuestionSchema = new Schema(
     question: { type: String, required: true },
     options: [{ type: String, required: true }],
     correctIndex: { type: Number, required: true },
-    category: { type: String, enum: ["culture", "dumb_description", "titleless_poster"], default: "culture" }, // check later for dumb description in case they say it's too vulgar...
-    difficulty: { type: String, enum: ["easy", "medium", "hard"], default: "medium" },
+    category: {
+      type: String,
+      enum: ["culture", "dumb_description", "titleless_poster"],
+      default: "culture",
+    }, // check later for dumb description in case they say it's too vulgar...
+    difficulty: {
+      type: String,
+      enum: ["easy", "medium", "hard"],
+      default: "medium",
+    },
     type: { type: String, enum: ["movie", "TVShow"], default: "movie" },
     imageUrl: { type: String },
-    source: { type: String, default: "manual" }
+    source: { type: String, default: "manual" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model("QuizQuestion", QuizQuestionSchema);
-

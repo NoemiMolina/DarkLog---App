@@ -1,6 +1,12 @@
-import React from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../../components/ui/dialog';
-import { Input } from '../../components/ui/input';
+import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "../../components/ui/dialog";
+import { Input } from "../../components/ui/input";
 
 interface SearchDialogProps {
   open: boolean;
@@ -12,7 +18,7 @@ interface SearchDialogProps {
   onSearch?: () => void;
   results: any[];
   onSelect: (item: any) => void;
-  type: 'movie' | 'tv';
+  type: "movie" | "tv";
 }
 
 const SearchDialog: React.FC<SearchDialogProps> = ({
@@ -25,7 +31,7 @@ const SearchDialog: React.FC<SearchDialogProps> = ({
   onSearch,
   results,
   onSelect,
-  type
+  type,
 }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -40,7 +46,7 @@ const SearchDialog: React.FC<SearchDialogProps> = ({
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchQueryChange(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && onSearch?.()}
+            onKeyPress={(e) => e.key === "Enter" && onSearch?.()}
             placeholder={`Search for a ${type}...`}
             className="flex-1"
           />
@@ -48,13 +54,23 @@ const SearchDialog: React.FC<SearchDialogProps> = ({
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {results.map((item) => (
-            <div key={item.id} className="cursor-pointer hover:scale-105 transition" onClick={() => onSelect(item)}>
+            <div
+              key={item.id}
+              className="cursor-pointer hover:scale-105 transition"
+              onClick={() => onSelect(item)}
+            >
               <img
-                src={item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '/placeholder.png'}
-                alt={type === 'movie' ? item.title : item.name}
+                src={
+                  item.poster_path
+                    ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+                    : "/placeholder.png"
+                }
+                alt={type === "movie" ? item.title : item.name}
                 className="w-full object-cover rounded-lg"
               />
-              <p className="text-sm mt-2 text-center">{type === 'movie' ? item.title : item.name}</p>
+              <p className="text-sm mt-2 text-center">
+                {type === "movie" ? item.title : item.name}
+              </p>
             </div>
           ))}
         </div>

@@ -31,7 +31,9 @@ export const getNotificationCounts = async (req: Request, res: Response) => {
     const forumNotifications = await Notification.countDocuments({
       recipientId: userId,
       isRead: false,
-      type: { $in: ["forum_like", "forum_comment", "comment_reply", "comment_like"] },
+      type: {
+        $in: ["forum_like", "forum_comment", "comment_reply", "comment_like"],
+      },
     });
 
     const friendRequests = await Notification.countDocuments({
@@ -61,7 +63,7 @@ export const markAsRead = async (req: Request, res: Response) => {
     const notification = await Notification.findByIdAndUpdate(
       notificationId,
       { isRead: true },
-      { new: true }
+      { new: true },
     );
 
     if (!notification) {
@@ -83,7 +85,9 @@ export const markAllAsRead = async (req: Request, res: Response) => {
     const query: any = { recipientId: userId, isRead: false };
     if (type) {
       if (type === "forum") {
-        query.type = { $in: ["forum_like", "forum_comment", "comment_reply", "comment_like"] };
+        query.type = {
+          $in: ["forum_like", "forum_comment", "comment_reply", "comment_like"],
+        };
       } else if (type === "friend_request") {
         query.type = "friend_request";
       }
@@ -97,7 +101,6 @@ export const markAllAsRead = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Error marking notifications as read" });
   }
 };
-
 
 export const deleteNotification = async (req: Request, res: Response) => {
   try {
@@ -120,7 +123,9 @@ export const deleteAllNotifications = async (req: Request, res: Response) => {
     const query: any = { recipientId: userId };
     if (type) {
       if (type === "forum") {
-        query.type = { $in: ["forum_like", "forum_comment", "comment_reply", "comment_like"] };
+        query.type = {
+          $in: ["forum_like", "forum_comment", "comment_reply", "comment_like"],
+        };
       } else if (type === "friend_request") {
         query.type = "friend_request";
       }
@@ -141,13 +146,15 @@ export const createNotification = async (
   type: NotificationType,
   message: string,
   postId?: string,
-  commentId?: string
+  commentId?: string,
 ) => {
   try {
     if (recipientId === senderId) {
       return;
     }
-    const sender = await User.findById(senderId).select("UserPseudo UserProfilePicture");
+    const sender = await User.findById(senderId).select(
+      "UserPseudo UserProfilePicture",
+    );
     if (!sender) return;
     if (type.includes("like")) {
       const exists = await Notification.findOne({
@@ -161,7 +168,7 @@ export const createNotification = async (
       });
 
       if (exists) {
-        return; 
+        return;
       }
     }
 

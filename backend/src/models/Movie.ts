@@ -12,23 +12,26 @@ export interface IMovie extends Document {
   release_date?: string;
   ratings: [
     {
-      userId: Types.ObjectId,
-      value: Number
-    }
-  ]
+      userId: Types.ObjectId;
+      value: Number;
+    },
+  ];
 }
 
-const MovieSchema: Schema = new Schema({
-  tmdb_id: { type: Number, unique: true, required: true },
-  title: { type: String, required: true },
-  year: { type: Number, required: true },
-  genres: { type: [String], required: true },
-  genre_ids: { type: [Number], default: [] },
-  tags: { type: [String], default: [] },
-  poster_path: { type: String },
-  runtime: { type: Number },
-  release_date: { type: String },
-  ratings: { type: [Number], default: [] }
-}, { timestamps: true });
+const MovieSchema: Schema = new Schema(
+  {
+    tmdb_id: { type: Number, unique: true, required: true },
+    title: { type: String, required: true },
+    year: { type: Number, required: true },
+    genres: { type: [String], required: true },
+    genre_ids: { type: [Number], default: [] },
+    tags: { type: [String], default: [] },
+    poster_path: { type: String },
+    runtime: { type: Number },
+    release_date: { type: String },
+    ratings: { type: [Number], default: [] },
+  },
+  { timestamps: true },
+);
 
 export default mongoose.model<IMovie>("Movie", MovieSchema, "movies");

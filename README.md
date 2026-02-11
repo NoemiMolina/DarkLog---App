@@ -22,21 +22,20 @@ Users can log their horror movies, interact with friends, participate in quizzes
 
 ## 🎬 Movie Features
 
-- Search for horror movies  
-- Rate movies (5-skull system)  
-- Leave comments  
-- Create a personal wishlist  
+- Search for horror movies
+- Rate movies (5-skull system)
+- Leave comments
+- Create a personal wishlist
 
 ![Movie Page Preview](https://github.com/user-attachments/assets/fbcd8628-0553-4814-b2f4-542d5953f559)
-
 
 ---
 
 ## 👥 Social Features
 
-- Add friends  
-- View friends’ activity  
-- User profiles  
+- Add friends
+- View friends’ activity
+- User profiles
 
 DarkLog is not just a movie tracker — it's a community space for horror fans.
 
@@ -47,7 +46,7 @@ DarkLog is not just a movie tracker — it's a community space for horror fans.
 
 ## 🧠 Fun & Interactive
 
-- Horror-themed quizzes  
+- Horror-themed quizzes
 
 ![Quiz Preview](https://github.com/user-attachments/assets/6f9a9ee3-d4a9-4fdf-a2e4-411c5bdb4b2c)
 
@@ -56,17 +55,18 @@ DarkLog is not just a movie tracker — it's a community space for horror fans.
 ## 💬 Community Forum
 
 A built-in forum allows users to:
-- Discuss horror movies  
-- Share opinions  
-- Interact with the community  
+
+- Discuss horror movies
+- Share opinions
+- Interact with the community
 
 ![Forum Preview](https://github.com/user-attachments/assets/aec69b04-c98d-40f1-8500-fc761990e2bd)
-
 
 ## 📰 Horror News
 
 DarkLog also includes editorial content:
-- Horror movie news  
+
+- Horror movie news
 - Articles written specifically for the platform
 
 ![News Preview](https://github.com/user-attachments/assets/b2845063-c5d4-4185-a206-17eb79cced40)
@@ -83,25 +83,28 @@ DarkLog also includes editorial content:
 
 ---
 
-
 ## 🛠 Technologies Used
 
 ### Frontend
-- ReactJS  
-- TypeScript  
-- Tailwind CSS  
+
+- ReactJS
+- TypeScript
+- Tailwind CSS
 
 ### Backend
-- Node.js  
-- Express  
+
+- Node.js
+- Express
 
 ### Database
-- MongoDB  
+
+- MongoDB
 
 ### Tools
+
 - Postman (API testing)
 
---- 
+---
 
 ## 🙋‍♀️
 
@@ -128,10 +131,10 @@ Les utilisateurs peuvent noter leurs films, interagir avec leurs amis, participe
 
 ## 🎬 Fonctionnalités Cinéma
 
-- Recherche de films d’horreur  
-- Notation sur 5 cranes 
-- Commentaires  
-- Wishlist personnelle  
+- Recherche de films d’horreur
+- Notation sur 5 cranes
+- Commentaires
+- Wishlist personnelle
 
 ![Movie Page Preview](https://github.com/user-attachments/assets/fbcd8628-0553-4814-b2f4-542d5953f559)
 
@@ -139,9 +142,9 @@ Les utilisateurs peuvent noter leurs films, interagir avec leurs amis, participe
 
 ## 👥 Fonctionnalités Sociales
 
-- Ajout d’amis  
-- Fil d’activité des amis  
-- Profils utilisateurs  
+- Ajout d’amis
+- Fil d’activité des amis
+- Profils utilisateurs
 
 DarkLog est un espace communautaire pour les fans d’horreur.
 
@@ -152,9 +155,9 @@ DarkLog est un espace communautaire pour les fans d’horreur.
 
 ## 🧠 Fun & Interaction
 
-- Quiz sur l’univers de l’horreur  
-- Défis entre utilisateurs  
-- Comparaison des résultats  
+- Quiz sur l’univers de l’horreur
+- Défis entre utilisateurs
+- Comparaison des résultats
 
 ![Quiz Preview](https://github.com/user-attachments/assets/6f9a9ee3-d4a9-4fdf-a2e4-411c5bdb4b2c)
 
@@ -163,9 +166,10 @@ DarkLog est un espace communautaire pour les fans d’horreur.
 ## 💬 Forum Communautaire
 
 Un forum intégré permet de :
-- Discuter de films d’horreur  
-- Partager des avis  
-- Échanger avec la communauté  
+
+- Discuter de films d’horreur
+- Partager des avis
+- Échanger avec la communauté
 
 ![Forum Preview](https://github.com/user-attachments/assets/aec69b04-c98d-40f1-8500-fc761990e2bd)
 
@@ -174,7 +178,8 @@ Un forum intégré permet de :
 ## 📰 News Horreur
 
 DarkLog propose également :
-- Des actualités sur le cinéma d’horreur  
+
+- Des actualités sur le cinéma d’horreur
 - Des articles rédigés pour la plateforme
 
 ![News Preview](https://github.com/user-attachments/assets/b2845063-c5d4-4185-a206-17eb79cced40)
@@ -194,18 +199,22 @@ DarkLog propose également :
 ## 🛠 Technologies Utilisées
 
 ### Frontend
-- ReactJS  
-- TypeScript  
-- Tailwind CSS  
+
+- ReactJS
+- TypeScript
+- Tailwind CSS
 
 ### Backend
-- Node.js  
-- Express  
+
+- Node.js
+- Express
 
 ### Base de données
-- MongoDB  
+
+- MongoDB
 
 ### Outils
+
 - Postman (tests API)
 
 ---
@@ -218,4 +227,3 @@ Projet personnel autour du cinéma d’horreur.
 </details>
 
 ---
-

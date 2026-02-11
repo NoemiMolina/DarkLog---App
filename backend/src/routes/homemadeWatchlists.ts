@@ -1,11 +1,11 @@
 import express from "express";
 import {
-    getAllWatchlists,
-    getWatchlistById,
-    addWatchlistToUser,
-    rateWatchlist,
-    commentWatchlist,
-    markMovieAsWatched,
+  getAllWatchlists,
+  getWatchlistById,
+  addWatchlistToUser,
+  rateWatchlist,
+  commentWatchlist,
+  markMovieAsWatched,
 } from "../controllers/homemadeWatchlistsController";
 
 const router = express.Router();

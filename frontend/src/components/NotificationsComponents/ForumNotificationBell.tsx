@@ -1,36 +1,47 @@
-import React, { useState } from 'react';
-import { IoMdNotificationsOutline } from 'react-icons/io';
-import { useNotifications } from '../../context/NotificationContext';
-import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
+import React, { useState } from "react";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { useNotifications } from "../../context/NotificationContext";
+import { NotificationBadge } from "../NotificationsComponents/NotificationBadge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
-import { ScrollArea } from '../ui/scroll-area';
-import { API_URL } from '../../config/api';
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
+import { ScrollArea } from "../ui/scroll-area";
+import { API_URL } from "../../config/api";
 
 export const ForumNotificationBell: React.FC = () => {
-  const { notifications, forumNotificationsCount, markAsRead, deleteNotification, markAllAsRead } = useNotifications();
+  const {
+    notifications,
+    forumNotificationsCount,
+    markAsRead,
+    deleteNotification,
+    markAllAsRead,
+  } = useNotifications();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const forumNotifs = notifications.filter(
-    (n) => ['forum_like', 'forum_comment', 'comment_reply', 'comment_like'].includes(n.type) && !n.isRead
+    (n) =>
+      ["forum_like", "forum_comment", "comment_reply", "comment_like"].includes(
+        n.type,
+      ) && !n.isRead,
   );
 
   const handleNotificationClick = async (notif: any) => {
     await markAsRead(notif._id);
     if (notif.postId) {
       setOpen(false);
-      navigate('/forum', { state: { postId: notif.postId, commentId: notif.commentId } });
+      navigate("/forum", {
+        state: { postId: notif.postId, commentId: notif.commentId },
+      });
     }
   };
 
   const handleClearAll = async () => {
-    await markAllAsRead('forum');
+    await markAllAsRead("forum");
   };
 
   return (
@@ -42,8 +53,8 @@ export const ForumNotificationBell: React.FC = () => {
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent 
-        align="end" 
+      <DropdownMenuContent
+        align="end"
         className="w-80 bg-black/75 backdrop-blur-md text-white border-white/20"
       >
         <div className="p-4 border-b border-white/10">
@@ -88,12 +99,17 @@ export const ForumNotificationBell: React.FC = () => {
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm">
-                        <span className="font-semibold text-white">{notif.senderPseudo}</span>
-                        {' '}
+                        <span className="font-semibold text-white">
+                          {notif.senderPseudo}
+                        </span>{" "}
                         <span className="text-gray-300">{notif.message}</span>
                       </p>
                       <p className="text-xs text-gray-500 mt-1">
-                        {new Date(notif.createdAt).toLocaleDateString()} {new Date(notif.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        {new Date(notif.createdAt).toLocaleDateString()}{" "}
+                        {new Date(notif.createdAt).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
                       </p>
                     </div>
                     <button

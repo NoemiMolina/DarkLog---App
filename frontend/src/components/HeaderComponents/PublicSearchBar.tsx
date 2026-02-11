@@ -17,7 +17,10 @@ interface PublicSearchBarProps {
   isVisibleMobile?: boolean;
 }
 
-const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isVisibleMobile = true }) => {
+const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
+  onResultSelected,
+  isVisibleMobile = true,
+}) => {
   const location = useLocation();
   const isForumPage = location.pathname === "/forum";
 
@@ -42,7 +45,7 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
   const [authDialogState, setAuthDialogState] = useState<{
     isOpen: boolean;
     itemTitle: string;
-  }>({ isOpen: false, itemTitle: '' });
+  }>({ isOpen: false, itemTitle: "" });
 
   useEffect(() => {
     if (query.trim().length === 0) {
@@ -56,7 +59,9 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
         const encoded = encodeURIComponent(query);
 
         if (isForumPage) {
-          const response = await fetch(`${API_URL}/forum/posts/search?q=${encoded}`);
+          const response = await fetch(
+            `${API_URL}/forum/posts/search?q=${encoded}`,
+          );
           const data = response.ok ? await response.json() : { posts: [] };
           setResults(data.posts || []);
         } else {
@@ -133,7 +138,8 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
         }
       }, 100);
     } else {
-      const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
+      const type =
+        item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
       setDialogData({
         trigger: (
           <div
@@ -159,7 +165,11 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
     if (isForumPage) {
       return results.map((post) => {
         const author = post.author || {};
-        const authorName = author.UserPseudo || author.username || author.UserFirstName || 'Unknown';
+        const authorName =
+          author.UserPseudo ||
+          author.username ||
+          author.UserFirstName ||
+          "Unknown";
         const authorPic = author.UserProfilePicture;
 
         return (
@@ -172,9 +182,11 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
             <div className="flex items-center gap-2 mb-2">
               {authorPic ? (
                 <img
-                  src={authorPic.startsWith("http")
-                    ? authorPic
-                    : `${API_URL}/${authorPic}`}
+                  src={
+                    authorPic.startsWith("http")
+                      ? authorPic
+                      : `${API_URL}/${authorPic}`
+                  }
                   alt={authorName}
                   className="w-6 h-6 rounded-full object-cover"
                 />
@@ -186,10 +198,12 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
               <span className="text-sm font-semibold">{authorName}</span>
             </div>
             {post.title && (
-              <h4 className="text-white font-bold text-sm mb-1">{post.title}</h4>
+              <h4 className="text-white font-bold text-sm mb-1">
+                {post.title}
+              </h4>
             )}
             <p className="text-sm text-gray-300 line-clamp-3">
-              {post.content || 'No content'}
+              {post.content || "No content"}
             </p>
 
             <div className="flex gap-3 mt-2 text-xs text-gray-400">
@@ -201,10 +215,16 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
       });
     } else {
       return results.map((item) => {
-        const id = item._id ?? item.id ?? `${item.type ?? "item"}-${item.title ?? item.name ?? Math.random()}`;
-        const type = item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
+        const id =
+          item._id ??
+          item.id ??
+          `${item.type ?? "item"}-${item.title ?? item.name ?? Math.random()}`;
+        const type =
+          item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
         const rawRating = item.vote_average ?? item.rating ?? null;
-        const ratingStr = rawRating ? (Number(rawRating) / 2).toFixed(1) : "N/A";
+        const ratingStr = rawRating
+          ? (Number(rawRating) / 2).toFixed(1)
+          : "N/A";
 
         return (
           <div
@@ -212,13 +232,22 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
             className="bg-black bg-opacity-100 text-white p-3 
               rounded-md w-full border border-white/30 mb-2 last:mb-0 hover:bg-white/10 relative group"
           >
-            <div onClick={() => handleResultClick(item)} className="cursor-pointer">
-              <h3 className="text-sm font-semibold">{item.title || item.name}</h3>
+            <div
+              onClick={() => handleResultClick(item)}
+              className="cursor-pointer"
+            >
+              <h3 className="text-sm font-semibold">
+                {item.title || item.name}
+              </h3>
               <p className="text-xs italic text-gray-400">
                 {type === "movie" ? "🎬 Movie" : "📺 TV Show"}
               </p>
-              <p className="text-sm text-gray-300 line-clamp-4">{item.overview}</p>
-              <p className="text-yellow-400 mt-1"><IoSkull /> {ratingStr}/5</p>
+              <p className="text-sm text-gray-300 line-clamp-4">
+                {item.overview}
+              </p>
+              <p className="text-yellow-400 mt-1">
+                <IoSkull /> {ratingStr}/5
+              </p>
             </div>
           </div>
         );
@@ -228,27 +257,27 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
   const dropdown =
     isVisible && rect
       ? createPortal(
-        <div
-          style={{
-            position: "fixed",
-            top: rect.bottom + 4,
-            left: rect.left,
-            width: rect.width,
-            zIndex: 999999,
-          }}
-          className="transition-all duration-200 ease-in-out"
-        >
-          {results.length > 0 && (
-            <div
-              className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
+          <div
+            style={{
+              position: "fixed",
+              top: rect.bottom + 4,
+              left: rect.left,
+              width: rect.width,
+              zIndex: 999999,
+            }}
+            className="transition-all duration-200 ease-in-out"
+          >
+            {results.length > 0 && (
+              <div
+                className="bg-black bg-opacity-100 text-white rounded-md border border-white/80 
                   shadow-2xl p-3 max-h-[15rem] overflow-y-auto modern-scrollbar pointer-events-auto 2xl:max-h-[25rem]"
-            >
-              {renderDropdownContent()}
-            </div>
-          )}
-        </div>,
-        document.body
-      )
+              >
+                {renderDropdownContent()}
+              </div>
+            )}
+          </div>,
+          document.body,
+        )
       : null;
 
   const placeholder = isForumPage
@@ -257,7 +286,9 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
 
   return (
     <>
-      <div className={`relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg 2xl:max-w-xl mt-[2rem] ml-4 ${isVisibleMobile ? '' : 'sm:block hidden'}`}>
+      <div
+        className={`relative z-[9999] mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg 2xl:max-w-xl mt-[2rem] ml-4 ${isVisibleMobile ? "" : "sm:block hidden"}`}
+      >
         <div className="relative z-[10000]">
           <InputGroup className="w-70">
             <InputGroupInput
@@ -285,7 +316,7 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({ onResultSelected, isV
       )}
       <AuthRequiredDialog
         isOpen={authDialogState.isOpen}
-        onClose={() => setAuthDialogState({ isOpen: false, itemTitle: '' })}
+        onClose={() => setAuthDialogState({ isOpen: false, itemTitle: "" })}
         itemTitle={authDialogState.itemTitle}
       />
     </>

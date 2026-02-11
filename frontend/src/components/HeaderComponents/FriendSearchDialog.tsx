@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { API_URL } from '../../config/api';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
+import React, { useState, useEffect } from "react";
+import { API_URL } from "../../config/api";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { IoSearch } from "react-icons/io5";
-import { UserPlus } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { UserPlus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface SearchedUser {
   _id: string;
@@ -19,7 +26,7 @@ interface SearchedUser {
 
 const FriendSearchDialog: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchedUser[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -41,16 +48,16 @@ const FriendSearchDialog: React.FC = () => {
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
-    
+
     setLoading(true);
     try {
       const response = await fetch(
         `${API_URL}/users/search?query=${encodeURIComponent(searchQuery)}`,
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {
@@ -58,11 +65,11 @@ const FriendSearchDialog: React.FC = () => {
         setSearchResults(data);
       } else {
         setSearchResults([]);
-        setMessage('No users found');
+        setMessage("No users found");
       }
     } catch (error) {
-      console.error('Error searching users:', error);
-      setMessage('Error searching users');
+      console.error("Error searching users:", error);
+      setMessage("Error searching users");
     } finally {
       setLoading(false);
     }
@@ -79,23 +86,23 @@ const FriendSearchDialog: React.FC = () => {
       const response = await fetch(
         `${API_URL}/users/${userId}/friends/${friendId}`,
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (response.ok) {
-        setMessage('Friend request sent!');
+        setMessage("Friend request sent!");
         setTimeout(() => setMessage(null), 2000);
       } else {
         const error = await response.json();
-        setMessage(error.message || 'Failed to send friend request');
+        setMessage(error.message || "Failed to send friend request");
       }
     } catch (error) {
-      console.error('Error adding friend:', error);
-      setMessage('Error sending friend request');
+      console.error("Error adding friend:", error);
+      setMessage("Error sending friend request");
     }
   };
 
@@ -122,7 +129,7 @@ const FriendSearchDialog: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+            onKeyPress={(e) => e.key === "Enter" && handleSearch()}
             placeholder="Enter username or email..."
             className="flex-1 bg-[#1A1A1A] border-white/20 text-white"
           />
@@ -142,7 +149,7 @@ const FriendSearchDialog: React.FC = () => {
             <div className="text-center py-8 text-gray-400">Searching...</div>
           ) : searchResults.length === 0 ? (
             <div className="text-center py-8 text-gray-400">
-              {searchQuery ? 'No users found' : 'Start typing to search'}
+              {searchQuery ? "No users found" : "Start typing to search"}
             </div>
           ) : (
             searchResults.map((user) => (
@@ -154,7 +161,7 @@ const FriendSearchDialog: React.FC = () => {
                   {user.UserProfilePicture ? (
                     <img
                       src={
-                        user.UserProfilePicture.startsWith('http')
+                        user.UserProfilePicture.startsWith("http")
                           ? user.UserProfilePicture
                           : `${API_URL}/${user.UserProfilePicture}`
                       }

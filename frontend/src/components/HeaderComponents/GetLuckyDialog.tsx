@@ -54,7 +54,9 @@ const GetLuckyDialog: React.FC = () => {
     setAddingToWatchlist(true);
 
     try {
-      const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
+      const userId = localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")!)?._id
+        : null;
       const token = localStorage.getItem("token");
 
       if (!userId || !token) {
@@ -64,22 +66,23 @@ const GetLuckyDialog: React.FC = () => {
           poster_path: movieOrTVShow.poster_path,
           vote_average: movieOrTVShow.vote_average,
           overview: movieOrTVShow.overview,
-          genre: movieOrTVShow.genre
+          genre: movieOrTVShow.genre,
         };
         pendingWatchlistService.setPendingItem(item, movieOrTVShow.type);
         navigate("/login");
         return;
       }
 
-      const route = movieOrTVShow.type === "movie"
-        ? `${API_URL}/users/${userId}/watchlist/movie/${movieOrTVShow.id}`
-        : `${API_URL}/users/${userId}/watchlist/tvshow/${movieOrTVShow.id}`;
+      const route =
+        movieOrTVShow.type === "movie"
+          ? `${API_URL}/users/${userId}/watchlist/movie/${movieOrTVShow.id}`
+          : `${API_URL}/users/${userId}/watchlist/tvshow/${movieOrTVShow.id}`;
 
       const res = await fetch(route, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (res.status === 403 || res.status === 401) {
@@ -93,7 +96,7 @@ const GetLuckyDialog: React.FC = () => {
           poster_path: movieOrTVShow.poster_path,
           vote_average: movieOrTVShow.vote_average,
           overview: movieOrTVShow.overview,
-          genre: movieOrTVShow.genre
+          genre: movieOrTVShow.genre,
         };
         pendingWatchlistService.setPendingItem(item, movieOrTVShow.type);
 
@@ -104,15 +107,14 @@ const GetLuckyDialog: React.FC = () => {
       if (!res.ok) {
         const errorData = await res.json();
         console.error("❌ Error response:", errorData);
-        setError(errorData.message || 'Error adding to watchlist');
+        setError(errorData.message || "Error adding to watchlist");
         return;
       }
 
       const data = await res.json();
       console.log("🎉 Watchlist updated:", data);
       setError(null);
-      window.dispatchEvent(new Event('watchlistUpdated'));
-
+      window.dispatchEvent(new Event("watchlistUpdated"));
     } catch (err: any) {
       console.error("❌ Error adding to watchlist:", err);
       setError("❌ Error adding to watchlist.");
@@ -125,7 +127,11 @@ const GetLuckyDialog: React.FC = () => {
     if (!path) return "";
     if (path.startsWith("http://") || path.startsWith("https://")) return path;
     if (path.startsWith("/")) return `https://image.tmdb.org/t/p/w500${path}`;
-    if (path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png")) {
+    if (
+      path.endsWith(".jpg") ||
+      path.endsWith(".jpeg") ||
+      path.endsWith(".png")
+    ) {
       return `${API_URL}/uploads/${path}`;
     }
     return path;
@@ -133,14 +139,17 @@ const GetLuckyDialog: React.FC = () => {
 
   return (
     <div className="relative flex flex-col items-center sm:mt-6">
-      <Dialog open={open} onOpenChange={(v) => {
-        setOpen(v);
-        if (!v) {
-          setMovieOrTVShow(null);
-          setShowFullOverview(false);
-          setError(null);
-        }
-      }}>
+      <Dialog
+        open={open}
+        onOpenChange={(v) => {
+          setOpen(v);
+          if (!v) {
+            setMovieOrTVShow(null);
+            setShowFullOverview(false);
+            setError(null);
+          }
+        }}
+      >
         <DialogTrigger asChild>
           <Button
             onClick={handleClick}
@@ -164,16 +173,18 @@ const GetLuckyDialog: React.FC = () => {
           </Button>
         </DialogTrigger>
 
-        <DialogContent
-          className="z-[60] w-[90vw] sm:w-[30rem] bg-black text-white rounded-md border border-white/80 shadow-lg mr-25 translate-y-[-50%] md:ml-5"
-        >
+        <DialogContent className="z-[60] w-[90vw] sm:w-[30rem] bg-black text-white rounded-md border border-white/80 shadow-lg mr-25 translate-y-[-50%] md:ml-5">
           <DialogHeader>
             <DialogTitle className="sr-only">Random pick</DialogTitle>
           </DialogHeader>
 
           <div
             className="p-5"
-            style={{ maxHeight: "60vh", overflowY: "auto", WebkitOverflowScrolling: "touch" }}
+            style={{
+              maxHeight: "60vh",
+              overflowY: "auto",
+              WebkitOverflowScrolling: "touch",
+            }}
           >
             {error && <p className="text-red-500 mb-2">{error}</p>}
 
@@ -204,7 +215,9 @@ const GetLuckyDialog: React.FC = () => {
                 <div
                   className={`text-sm text-gray-300 ${showFullOverview ? "" : "line-clamp-4"}`}
                   onClick={() => setShowFullOverview((s) => !s)}
-                  title={showFullOverview ? "Cliquer pour réduire" : "Lire la suite"}
+                  title={
+                    showFullOverview ? "Cliquer pour réduire" : "Lire la suite"
+                  }
                   style={{ cursor: "pointer", width: "100%" }}
                 >
                   {movieOrTVShow.overview}

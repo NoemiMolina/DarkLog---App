@@ -1,24 +1,24 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
-export type NotificationType = 
-  | "forum_like"           
-  | "forum_comment"       
-  | "comment_reply"      
-  | "comment_like"         
-  | "friend_request";      
+export type NotificationType =
+  | "forum_like"
+  | "forum_comment"
+  | "comment_reply"
+  | "comment_like"
+  | "friend_request";
 
 export interface INotification extends Document {
-  recipientId: Types.ObjectId;  
-  senderId: Types.ObjectId;    
-  senderPseudo: string;          
-  senderProfilePicture?: string; 
+  recipientId: Types.ObjectId;
+  senderId: Types.ObjectId;
+  senderPseudo: string;
+  senderProfilePicture?: string;
   type: NotificationType;
-  message: string;            
+  message: string;
   isRead: boolean;
   createdAt: Date;
-  postId?: Types.ObjectId;       
-  commentId?: Types.ObjectId;    
-  friendRequestId?: Types.ObjectId; 
+  postId?: Types.ObjectId;
+  commentId?: Types.ObjectId;
+  friendRequestId?: Types.ObjectId;
 }
 
 const NotificationSchema: Schema = new Schema({
@@ -43,7 +43,13 @@ const NotificationSchema: Schema = new Schema({
   },
   type: {
     type: String,
-    enum: ["forum_like", "forum_comment", "comment_reply", "comment_like", "friend_request"],
+    enum: [
+      "forum_like",
+      "forum_comment",
+      "comment_reply",
+      "comment_like",
+      "friend_request",
+    ],
     required: true,
     index: true,
   },
@@ -67,11 +73,14 @@ const NotificationSchema: Schema = new Schema({
   },
   commentId: {
     type: Schema.Types.ObjectId,
-    ref: "Comment", 
+    ref: "Comment",
   },
   friendRequestId: {
     type: Schema.Types.ObjectId,
   },
 });
 
-export default mongoose.model<INotification>("Notification", NotificationSchema);
+export default mongoose.model<INotification>(
+  "Notification",
+  NotificationSchema,
+);

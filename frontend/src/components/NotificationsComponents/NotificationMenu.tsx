@@ -1,25 +1,34 @@
-import React, { useState } from 'react';
-import { IoMdNotificationsOutline } from 'react-icons/io';
-import { useNotifications } from '../../context/NotificationContext';
-import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
+import React, { useState } from "react";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { useNotifications } from "../../context/NotificationContext";
+import { NotificationBadge } from "../NotificationsComponents/NotificationBadge";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { useNavigate } from 'react-router-dom';
-import { ScrollArea } from '../ui/scroll-area';
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { useNavigate } from "react-router-dom";
+import { ScrollArea } from "../ui/scroll-area";
 
 export const NotificationMenu: React.FC = () => {
-  const { notifications, forumNotificationsCount, markAsRead, markAllAsRead, deleteNotification } = useNotifications();
+  const {
+    notifications,
+    forumNotificationsCount,
+    markAsRead,
+    markAllAsRead,
+    deleteNotification,
+  } = useNotifications();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const forumNotifs = notifications.filter(
-    (n) => ['forum_like', 'forum_comment', 'comment_reply', 'comment_like'].includes(n.type) && !n.isRead
+    (n) =>
+      ["forum_like", "forum_comment", "comment_reply", "comment_like"].includes(
+        n.type,
+      ) && !n.isRead,
   );
 
   const handleNotificationClick = async (notif: any) => {
@@ -29,12 +38,14 @@ export const NotificationMenu: React.FC = () => {
     // Navigate to post
     if (notif.postId) {
       setOpen(false);
-      navigate(`/forum/${notif.postId}`, { state: { commentId: notif.commentId } });
+      navigate(`/forum/${notif.postId}`, {
+        state: { commentId: notif.commentId },
+      });
     }
   };
 
   const handleClearAll = async () => {
-    await markAllAsRead('forum');
+    await markAllAsRead("forum");
   };
 
   return (
@@ -85,8 +96,9 @@ export const NotificationMenu: React.FC = () => {
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="text-sm">
-                        <span className="font-semibold">{notif.senderPseudo}</span>
-                        {' '}
+                        <span className="font-semibold">
+                          {notif.senderPseudo}
+                        </span>{" "}
                         {notif.message}
                       </p>
                       <p className="text-xs text-gray-400 mt-1">

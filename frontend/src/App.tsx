@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import WelcomePage from "./features/pages/WelcomePage";
 import HomePage from "./features/pages/HomePage";
-import UserProfile from './features/pages/UserProfilePage';
+import UserProfile from "./features/pages/UserProfilePage";
 import UserPublicProfile from "./features/pages/UserPublicProfilePage";
 import QuizzPage from "./features/pages/QuizzPage";
-import  ForumPage  from "./features/pages/ForumPage";
+import ForumPage from "./features/pages/ForumPage";
 import LoginPage from "./features/pages/LoginPage";
 import SignUpPage from "./features/pages/SignUpPage";
 import ContactFormPage from "./features/pages/ContactFormPage";
@@ -17,19 +17,19 @@ import { useEffect, useState } from "react";
 
 export default function App() {
   const [isTVShowMode, setIsTVShowMode] = useState<boolean>(() => {
-    const storedType = localStorage.getItem('mediaType');
-    return storedType === 'tvshows';
+    const storedType = localStorage.getItem("mediaType");
+    return storedType === "tvshows";
   });
 
   useEffect(() => {
     const handleStorageChange = () => {
-      const storedType = localStorage.getItem('mediaType');
-      setIsTVShowMode(storedType === 'tvshows');
+      const storedType = localStorage.getItem("mediaType");
+      setIsTVShowMode(storedType === "tvshows");
     };
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
@@ -48,21 +48,33 @@ function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen text-white">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-white">
+        Loading...
+      </div>
+    );
   }
 
   return (
     <div className="min-h-screen bg-[var(--background)] flex flex-col">
       <div className="flex-1">
         <Routes>
-          <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <WelcomePage />} />
+          <Route
+            path="/"
+            element={
+              isAuthenticated ? <Navigate to="/home" /> : <WelcomePage />
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/contactform" element={<ContactFormPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/user/:userId" element={<UserPublicProfile />} />
-          <Route path="/quiz" element={<QuizzPage isTVShowMode={isTVShowMode} />} />
+          <Route
+            path="/quiz"
+            element={<QuizzPage isTVShowMode={isTVShowMode} />}
+          />
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />

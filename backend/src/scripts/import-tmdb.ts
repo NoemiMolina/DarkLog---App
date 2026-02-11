@@ -4,10 +4,14 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const TMDB_KEY = process.env.TMDB_API_KEY!;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
+const MONGO_URI =
+  process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
 const GENRE_ID = 27;
-const MAX_PAGES = 5;
-const MANUAL_TMDB_IDS = [46633, 351286, 7569, 1771, 8134, 37837, 7929, 15017, 10539, 11604, 1700, 59429, 185341, 27370, 159117, 267806, 8348, 359246, 11281, 3987, 10072]; //sale un peu oups ni vu ni connu
+const MAX_PAGES = 10;
+const MANUAL_TMDB_IDS = [
+  46633, 351286, 7569, 1771, 8134, 37837, 7929, 15017, 10539, 11604, 1700,
+  59429, 185341, 27370, 159117, 267806, 8348, 359246, 11281, 3987, 10072,
+]; //sale un peu oups ni vu ni connu
 
 const filmSchema = new mongoose.Schema(
   {
@@ -29,18 +33,18 @@ const filmSchema = new mongoose.Schema(
         provider_id: Number,
         provider_name: String,
         logo_path: String,
-      }
+      },
     ],
     cast: [
       {
         name: String,
         character: String,
         profile_path: String,
-      }
+      },
     ],
     raw: Object,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const Film = mongoose.model("movies", filmSchema);
@@ -61,7 +65,7 @@ const fetchKeywords = async (movieId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/keywords`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
     return (res.data.keywords || []).map((k: any) => k.name.toLowerCase());
   } catch {
@@ -73,7 +77,7 @@ const fetchPlatforms = async (id: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/watch/providers`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
 
     const fr = res.data.results?.FR;
@@ -93,7 +97,7 @@ const fetchCast = async (movieId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/credits`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
 
     return res.data.cast.slice(0, 10).map((actor: any) => ({
@@ -110,7 +114,7 @@ const fetchMovieDetails = async (movieId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
     return res.data;
   } catch {
@@ -125,13 +129,13 @@ const fetchTrailer = async (movieId: number) => {
       {
         params: {
           api_key: TMDB_KEY,
-          language: 'en-US'
-        }
-      }
+          language: "en-US",
+        },
+      },
     );
 
     const trailer = res.data.results.find(
-      (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
+      (vid: any) => vid.type === "Trailer" && vid.site === "YouTube",
     );
 
     return trailer?.key || null;
@@ -175,7 +179,7 @@ const main = async () => {
             raw: item,
           },
         },
-        { upsert: true }
+        { upsert: true },
       );
     }
 
@@ -213,7 +217,7 @@ const main = async () => {
               raw: details,
             },
           },
-          { upsert: true }
+          { upsert: true },
         );
       } catch (err) {
         console.error(`❌ Erreur pour le film ${tmdbId}:`, err);

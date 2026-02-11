@@ -12,7 +12,7 @@ export default function ConfirmationStep({
   isLoading,
   successMessage,
   stats,
-  onClose
+  onClose,
 }: ConfirmationStepProps) {
   if (isLoading) {
     return (

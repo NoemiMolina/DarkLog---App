@@ -1,379 +1,289 @@
 [
-    {
-        "question": "In 'Stranger Things', what is the name of the dark parallel dimension?",
-        "options": [
-            "The Upside Down",
-            "The Dark Zone",
-            "The Mirror World",
-            "The Nether"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Walking Dead', what are the undead creatures called?",
-        "options": [
-            "Walkers",
-            "Biters",
-            "Creepers",
-            "Runners"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Haunting of Hill House', who is the youngest sibling?",
-        "options": [
-            "Theo",
-            "Luke",
-            "Shirley",
-            "Nell"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Supernatural', what are the Winchester brothers' first names?",
-        "options": [
-            "John and Bobby",
-            "Sam and Dean",
-            "Jack and Adam",
-            "Nick and Mark"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Buffy the Vampire Slayer', what is Buffy's last name?",
-        "options": [
-            "Winters",
-            "Harris",
-            "Summers",
-            "Chase"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'American Horror Story: Murder House', who are the original homeowners?",
-        "options": [
-            "The Harmons",
-            "The Langdons",
-            "The Montgomerys",
-            "The Johnsons"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The X-Files', who are the two main FBI agents?",
-        "options": [
-            "Dean and Sam",
-            "Mulder and Scully",
-            "Fox and Clarice",
-            "John and Lisa"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Wednesday', which school does Wednesday attend?",
-        "options": [
-            "Blackwood Academy",
-            "Hillcrest High",
-            "Ravenwood School",
-            "Nevermore Academy"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Goosebumps', who is the author behind the books that inspired the show?",
-        "options": [
-            "Stephen King",
-            "R.L. Stine",
-            "Christopher Pike",
-            "Alvin Schwartz"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Chilling Adventures of Sabrina', what is the name of Sabrina's cat?",
-        "options": [
-            "Salem",
-            "Shadow",
-            "Lucifer",
-            "Binx"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Haunting of Bly Manor', what is the profession of Dani, the main character?",
-        "options": [
-            "Governess",
-            "Nurse",
-            "Writer",
-            "Teacher"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Fear the Walking Dead', what city does the TV Show begin in?",
-        "options": [
-            "Atlanta",
-            "Houston",
-            "Los Angeles",
-            "Miami"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Penny Dreadful', which classic monster is NOT featured?",
-        "options": [
-            "Dracula",
-            "The Mummy",
-            "Frankenstein's Creature",
-            "Dorian Gray"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Vampire Diaries', what town is the story set in?",
-        "options": [
-            "Mystic Falls",
-            "Shadow Creek",
-            "Sunnydale",
-            "Riverdale"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'True Blood', what beverage allows vampires to live without human blood?",
-        "options": [
-            "Synthetic Blood",
-            "VitaBlood",
-            "Hemolife",
-            "Tru Blood"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Hannibal', what is Dr. Lecter’s profession?",
-        "options": [
-            "Psychiatrist",
-            "Chef",
-            "Surgeon",
-            "Writer"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Addams Family', what is the butler’s name?",
-        "options": [
-            "Thing",
-            "Lurch",
-            "Cousin Itt",
-            "Mortimer"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Teen Wolf', what sport does Scott play?",
-        "options": [
-            "Lacrosse",
-            "Football",
-            "Basketball",
-            "Baseball"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Bates Motel', who plays Norman Bates?",
-        "options": [
-            "Evan Peters",
-            "Freddie Highmore",
-            "Finn Wittrock",
-            "Nicholas Hoult"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'What We Do in the Shadows', what kind of creatures are the main characters?",
-        "options": [
-            "Vampires",
-            "Werewolves",
-            "Ghosts",
-            "Zombies"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Locke & Key', what do the keys unlock?",
-        "options": [
-            "Magic powers",
-            "Monsters",
-            "Doors to the past",
-            "Memories"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Are You Afraid of the Dark?', what do the kids call their group?",
-        "options": [
-            "The Ghost Club",
-            "The Fear Circle",
-            "The Midnight Society",
-            "The Night Crew"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Grimm', what does Nick Burkhardt discover he is?",
-        "options": [
-            "A Witch Hunter",
-            "A Demon Slayer",
-            "A Werewolf",
-            "A Grimm"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'iZombie', what does Liv need to eat to survive?",
-        "options": [
-            "Brains",
-            "Blood",
-            "Hearts",
-            "Souls"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Chilling Adventures of Sabrina', who are her aunts?",
-        "options": [
-            "Agatha and Prudence",
-            "Hilda and Zelda",
-            "Morgana and Lilith",
-            "Lucia and Eliza"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Sandman', what is Dream also called?",
-        "options": [
-            "Lucifer",
-            "Morpheus",
-            "Sleepwalker",
-            "Endless"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Midnight Club', what do the teenagers share every night?",
-        "options": [
-            "Secrets",
-            "Dreams",
-            "Scary stories",
-            "Letters"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Twilight Zone', what kind of show format is it?",
-        "options": [
-            "Sitcom",
-            "Reality",
-            "Drama",
-            "Anthology"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Guillermo del Toro’s Cabinet of Curiosities', what connects the episodes?",
-        "options": [
-            "They share the same characters",
-            "They occur in the same town",
-            "Each story is introduced by Guillermo del Toro",
-            "They follow the same curse"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "TVShow"
-    }
+  {
+    "question": "In 'Stranger Things', what is the name of the dark parallel dimension?",
+    "options": [
+      "The Upside Down",
+      "The Dark Zone",
+      "The Mirror World",
+      "The Nether"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Walking Dead', what are the undead creatures called?",
+    "options": ["Walkers", "Biters", "Creepers", "Runners"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Haunting of Hill House', who is the youngest sibling?",
+    "options": ["Theo", "Luke", "Shirley", "Nell"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Supernatural', what are the Winchester brothers' first names?",
+    "options": [
+      "John and Bobby",
+      "Sam and Dean",
+      "Jack and Adam",
+      "Nick and Mark"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Buffy the Vampire Slayer', what is Buffy's last name?",
+    "options": ["Winters", "Harris", "Summers", "Chase"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'American Horror Story: Murder House', who are the original homeowners?",
+    "options": [
+      "The Harmons",
+      "The Langdons",
+      "The Montgomerys",
+      "The Johnsons"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The X-Files', who are the two main FBI agents?",
+    "options": [
+      "Dean and Sam",
+      "Mulder and Scully",
+      "Fox and Clarice",
+      "John and Lisa"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Wednesday', which school does Wednesday attend?",
+    "options": [
+      "Blackwood Academy",
+      "Hillcrest High",
+      "Ravenwood School",
+      "Nevermore Academy"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Goosebumps', who is the author behind the books that inspired the show?",
+    "options": [
+      "Stephen King",
+      "R.L. Stine",
+      "Christopher Pike",
+      "Alvin Schwartz"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Chilling Adventures of Sabrina', what is the name of Sabrina's cat?",
+    "options": ["Salem", "Shadow", "Lucifer", "Binx"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Haunting of Bly Manor', what is the profession of Dani, the main character?",
+    "options": ["Governess", "Nurse", "Writer", "Teacher"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Fear the Walking Dead', what city does the TV Show begin in?",
+    "options": ["Atlanta", "Houston", "Los Angeles", "Miami"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Penny Dreadful', which classic monster is NOT featured?",
+    "options": [
+      "Dracula",
+      "The Mummy",
+      "Frankenstein's Creature",
+      "Dorian Gray"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Vampire Diaries', what town is the story set in?",
+    "options": ["Mystic Falls", "Shadow Creek", "Sunnydale", "Riverdale"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'True Blood', what beverage allows vampires to live without human blood?",
+    "options": ["Synthetic Blood", "VitaBlood", "Hemolife", "Tru Blood"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Hannibal', what is Dr. Lecter’s profession?",
+    "options": ["Psychiatrist", "Chef", "Surgeon", "Writer"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Addams Family', what is the butler’s name?",
+    "options": ["Thing", "Lurch", "Cousin Itt", "Mortimer"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Teen Wolf', what sport does Scott play?",
+    "options": ["Lacrosse", "Football", "Basketball", "Baseball"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Bates Motel', who plays Norman Bates?",
+    "options": [
+      "Evan Peters",
+      "Freddie Highmore",
+      "Finn Wittrock",
+      "Nicholas Hoult"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'What We Do in the Shadows', what kind of creatures are the main characters?",
+    "options": ["Vampires", "Werewolves", "Ghosts", "Zombies"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Locke & Key', what do the keys unlock?",
+    "options": ["Magic powers", "Monsters", "Doors to the past", "Memories"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Are You Afraid of the Dark?', what do the kids call their group?",
+    "options": [
+      "The Ghost Club",
+      "The Fear Circle",
+      "The Midnight Society",
+      "The Night Crew"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Grimm', what does Nick Burkhardt discover he is?",
+    "options": ["A Witch Hunter", "A Demon Slayer", "A Werewolf", "A Grimm"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'iZombie', what does Liv need to eat to survive?",
+    "options": ["Brains", "Blood", "Hearts", "Souls"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Chilling Adventures of Sabrina', who are her aunts?",
+    "options": [
+      "Agatha and Prudence",
+      "Hilda and Zelda",
+      "Morgana and Lilith",
+      "Lucia and Eliza"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Sandman', what is Dream also called?",
+    "options": ["Lucifer", "Morpheus", "Sleepwalker", "Endless"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Midnight Club', what do the teenagers share every night?",
+    "options": ["Secrets", "Dreams", "Scary stories", "Letters"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Twilight Zone', what kind of show format is it?",
+    "options": ["Sitcom", "Reality", "Drama", "Anthology"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Guillermo del Toro’s Cabinet of Curiosities', what connects the episodes?",
+    "options": [
+      "They share the same characters",
+      "They occur in the same town",
+      "Each story is introduced by Guillermo del Toro",
+      "They follow the same curse"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "TVShow"
+  }
 ]

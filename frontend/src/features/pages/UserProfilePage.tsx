@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Separator } from '../../components/ui/separator';
-import { jwtDecode } from 'jwt-decode';
-import { API_URL } from '../../config/api';
-import { useNavigate } from 'react-router-dom';
-import ProfileInfoSection from '../../components/ProfileComponents/ProfileInfosSection';
-import Top3Section from '../../components/ProfileComponents/Top3Section';
-import WatchlistSection from '../../components/ProfileComponents/WatchlistSection';
-import StatsSection from '../../components/ProfileComponents/ProfileStatsSection';
-import SearchDialog from '../../components/HeaderComponents/SearchDialog';
+import React, { useState, useEffect } from "react";
+import { Separator } from "../../components/ui/separator";
+import { jwtDecode } from "jwt-decode";
+import { API_URL } from "../../config/api";
+import { useNavigate } from "react-router-dom";
+import ProfileInfoSection from "../../components/ProfileComponents/ProfileInfosSection";
+import Top3Section from "../../components/ProfileComponents/Top3Section";
+import WatchlistSection from "../../components/ProfileComponents/WatchlistSection";
+import StatsSection from "../../components/ProfileComponents/ProfileStatsSection";
+import SearchDialog from "../../components/HeaderComponents/SearchDialog";
 
 interface JwtPayload {
   id: string;
@@ -24,9 +24,25 @@ interface UserProfileData {
   userPassword: string;
   top3Movies: Array<{ id: number; title: string; poster: string }>;
   top3TvShows: Array<{ id: number; title: string; poster: string }>;
-  movieWatchlist: Array<{ _id: string; id: number; title: string; poster: string }>;
-  tvShowWatchlist: Array<{ _id: string; id: number; title: string; poster: string }>;
-  savedHomemadeWatchlists: Array<{ _id: string; id: string; title: string; poster: string; posterPath: string }>; // Ajout posterPath
+  movieWatchlist: Array<{
+    _id: string;
+    id: number;
+    title: string;
+    poster: string;
+  }>;
+  tvShowWatchlist: Array<{
+    _id: string;
+    id: number;
+    title: string;
+    poster: string;
+  }>;
+  savedHomemadeWatchlists: Array<{
+    _id: string;
+    id: string;
+    title: string;
+    poster: string;
+    posterPath: string;
+  }>; // Ajout posterPath
   numberOfWatchedMovies: number;
   numberOfWatchedTvShows: number;
   numberOfGivenReviews: number;
@@ -44,17 +60,21 @@ const UserProfile: React.FC = () => {
   const [profileData, setProfileData] = useState<UserProfileData | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [oldPassword, setOldPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(true);
   const [showMovieSearch, setShowMovieSearch] = useState(false);
   const [showTvShowSearch, setShowTvShowSearch] = useState(false);
-  const [showMovieWatchlistSearch, setShowMovieWatchlistSearch] = useState(false);
-  const [showTvShowWatchlistSearch, setShowTvShowWatchlistSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [showMovieWatchlistSearch, setShowMovieWatchlistSearch] =
+    useState(false);
+  const [showTvShowWatchlistSearch, setShowTvShowWatchlistSearch] =
+    useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(null);
+  const [profilePictureFile, setProfilePictureFile] = useState<File | null>(
+    null,
+  );
 
   const token = localStorage.getItem("token");
   let userId: string | undefined;
@@ -74,9 +94,9 @@ const UserProfile: React.FC = () => {
     const handleWatchlistUpdate = () => {
       fetchProfileData();
     };
-    window.addEventListener('watchlistUpdated', handleWatchlistUpdate);
+    window.addEventListener("watchlistUpdated", handleWatchlistUpdate);
     return () => {
-      window.removeEventListener('watchlistUpdated', handleWatchlistUpdate);
+      window.removeEventListener("watchlistUpdated", handleWatchlistUpdate);
     };
   }, [userId]);
 
@@ -85,7 +105,7 @@ const UserProfile: React.FC = () => {
       const token = localStorage.getItem("token");
       const response = await fetch(`${API_URL}/users/${userId}/profile`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -97,14 +117,16 @@ const UserProfile: React.FC = () => {
 
       const data = await response.json();
       if (data.savedHomemadeWatchlists) {
-        data.savedHomemadeWatchlists = data.savedHomemadeWatchlists.map((wl: any) => ({
-          ...wl,
-          posterPath: wl.posterPath || wl.poster || ""
-        }));
+        data.savedHomemadeWatchlists = data.savedHomemadeWatchlists.map(
+          (wl: any) => ({
+            ...wl,
+            posterPath: wl.posterPath || wl.poster || "",
+          }),
+        );
       }
       setProfileData(data);
     } catch (error) {
-      console.error('❌ Error fetching profile:', error);
+      console.error("❌ Error fetching profile:", error);
     } finally {
       setLoading(false);
     }
@@ -112,84 +134,93 @@ const UserProfile: React.FC = () => {
 
   const handleSave = async () => {
     if (newPassword && newPassword !== passwordConfirm) {
-      alert('New passwords do not match!');
+      alert("New passwords do not match!");
       return;
     }
     if (newPassword && !oldPassword) {
-      alert('Please enter your current password to change it!');
+      alert("Please enter your current password to change it!");
       return;
     }
 
     try {
       if (profilePictureFile) {
         const formData = new FormData();
-        formData.append('UserProfilePicture', profilePictureFile);
-        const pictureResponse = await fetch(`${API_URL}/users/${userId}/profile-picture`, {
-          method: 'PUT',
-          headers: {
-            'Authorization': `Bearer ${token}`,
+        formData.append("UserProfilePicture", profilePictureFile);
+        const pictureResponse = await fetch(
+          `${API_URL}/users/${userId}/profile-picture`,
+          {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: formData,
           },
-          body: formData,
-        });
+        );
 
         if (!pictureResponse.ok) {
           const errorData = await pictureResponse.json();
-          console.error('❌ Failed to update profile picture:', errorData);
-          throw new Error('Failed to update profile picture');
+          console.error("❌ Failed to update profile picture:", errorData);
+          throw new Error("Failed to update profile picture");
         }
       }
-      const profileResponse = await fetch(`${API_URL}/users/${userId}/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          UserFirstName: profileData?.userFirstName,
-          UserLastName: profileData?.userLastName,
-          UserPseudo: profileData?.userPseudo,
-          UserMail: profileData?.userMail,
-        }),
-      });
-
-      if (!profileResponse.ok) throw new Error('Failed to update profile');
-      if (newPassword && oldPassword) {
-        const passwordResponse = await fetch(`${API_URL}/users/${userId}/password`, {
-          method: 'PUT',
+      const profileResponse = await fetch(
+        `${API_URL}/users/${userId}/profile`,
+        {
+          method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ oldPassword, newPassword }),
-        });
-        if (!passwordResponse.ok) throw new Error('Failed to update password');
+          body: JSON.stringify({
+            UserFirstName: profileData?.userFirstName,
+            UserLastName: profileData?.userLastName,
+            UserPseudo: profileData?.userPseudo,
+            UserMail: profileData?.userMail,
+          }),
+        },
+      );
+
+      if (!profileResponse.ok) throw new Error("Failed to update profile");
+      if (newPassword && oldPassword) {
+        const passwordResponse = await fetch(
+          `${API_URL}/users/${userId}/password`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ oldPassword, newPassword }),
+          },
+        );
+        if (!passwordResponse.ok) throw new Error("Failed to update password");
       }
-      alert('Profile updated successfully!');
+      alert("Profile updated successfully!");
       setIsEditing(false);
-      setOldPassword('');
-      setNewPassword('');
-      setPasswordConfirm('');
+      setOldPassword("");
+      setNewPassword("");
+      setPasswordConfirm("");
       setProfilePictureFile(null);
       fetchProfileData();
     } catch (error: any) {
-      alert(error.message || 'Failed to update profile');
+      alert(error.message || "Failed to update profile");
     }
   };
 
   const handleInputChange = (field: string, value: any) => {
-    setProfileData((prev) => prev ? { ...prev, [field]: value } : null);
+    setProfileData((prev) => (prev ? { ...prev, [field]: value } : null));
   };
 
   const handleProfilePictureChange = (file: File) => {
     setProfilePictureFile(file);
     const reader = new FileReader();
     reader.onloadend = () => {
-      handleInputChange('userProfilePicture', reader.result as string);
+      handleInputChange("userProfilePicture", reader.result as string);
     };
     reader.readAsDataURL(file);
   };
 
-  const handleSearch = async (type: 'movie' | 'tv', query: string) => {
+  const handleSearch = async (type: "movie" | "tv", query: string) => {
     if (!query.trim()) {
       setSearchResults([]);
       return;
@@ -199,7 +230,7 @@ const UserProfile: React.FC = () => {
       const encoded = encodeURIComponent(query);
 
       const response = await fetch(
-        `${API_URL}/search?query=${encoded}&type=${type}`
+        `${API_URL}/search?query=${encoded}&type=${type}`,
       );
 
       if (!response.ok) {
@@ -210,11 +241,10 @@ const UserProfile: React.FC = () => {
       const data = await response.json();
       setSearchResults(data.slice(0, 10));
     } catch (error) {
-      console.error('Error searching:', error);
+      console.error("Error searching:", error);
       setSearchResults([]);
     }
   };
-
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -222,10 +252,10 @@ const UserProfile: React.FC = () => {
       return;
     }
 
-    let type: 'movie' | 'tv' = 'movie';
+    let type: "movie" | "tv" = "movie";
 
     if (showTvShowSearch || showTvShowWatchlistSearch) {
-      type = 'tv';
+      type = "tv";
     }
 
     const debounce = setTimeout(() => {
@@ -238,109 +268,118 @@ const UserProfile: React.FC = () => {
     showMovieSearch,
     showTvShowSearch,
     showMovieWatchlistSearch,
-    showTvShowWatchlistSearch
+    showTvShowWatchlistSearch,
   ]);
 
-  const handleAddToTop3 = async (item: any, type: 'movie' | 'tv') => {
+  const handleAddToTop3 = async (item: any, type: "movie" | "tv") => {
     if (!userId) return;
     try {
       const tmdbId = item.tmdb_id;
       const addResponse = await fetch(
-        `${API_URL}/users/${userId}/top3favorites/${type === 'movie' ? 'movie' : 'tvshow'}/${tmdbId}`,
-        { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } }
+        `${API_URL}/users/${userId}/top3favorites/${type === "movie" ? "movie" : "tvshow"}/${tmdbId}`,
+        { method: "POST", headers: { Authorization: `Bearer ${token}` } },
       );
 
       if (!addResponse.ok) {
         const errorData = await addResponse.json();
-        console.error('Error response:', errorData);
-        alert(`Error: ${errorData.message || 'Failed to add to Top 3'}`);
+        console.error("Error response:", errorData);
+        alert(`Error: ${errorData.message || "Failed to add to Top 3"}`);
         return;
       }
 
       if (addResponse.ok) {
         setShowMovieSearch(false);
         setShowTvShowSearch(false);
-        setSearchQuery('');
+        setSearchQuery("");
         setSearchResults([]);
         alert(`${item.title || item.name} added to Top 3!`);
         fetchProfileData();
       }
     } catch (error) {
-      console.error('Error adding to Top 3:', error);
+      console.error("Error adding to Top 3:", error);
     }
   };
 
-  const removeFromTop3 = async (itemId: number, type: 'movie' | 'tv') => {
+  const removeFromTop3 = async (itemId: number, type: "movie" | "tv") => {
     try {
-      const endpoint = type === 'movie'
-        ? `${API_URL}/users/${userId}/top3favorites/movie/${itemId}`
-        : `${API_URL}/users/${userId}/top3favorites/tvshow/${itemId}`;
+      const endpoint =
+        type === "movie"
+          ? `${API_URL}/users/${userId}/top3favorites/movie/${itemId}`
+          : `${API_URL}/users/${userId}/top3favorites/tvshow/${itemId}`;
 
       await fetch(endpoint, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` },
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
       });
       fetchProfileData();
     } catch (error) {
-      console.error('Error removing from Top 3:', error);
+      console.error("Error removing from Top 3:", error);
     }
   };
 
-  const handleAddToWatchlist = async (item: any, type: 'movie' | 'tv') => {
+  const handleAddToWatchlist = async (item: any, type: "movie" | "tv") => {
     if (!userId) return;
     try {
       const tmdbId = item.tmdb_id;
 
-      const endpoint = type === 'movie'
-        ? `${API_URL}/users/${userId}/watchlist/movie/${tmdbId}`
-        : `${API_URL}/users/${userId}/watchlist/tvshow/${tmdbId}`;
+      const endpoint =
+        type === "movie"
+          ? `${API_URL}/users/${userId}/watchlist/movie/${tmdbId}`
+          : `${API_URL}/users/${userId}/watchlist/tvshow/${tmdbId}`;
 
       const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Error: ${errorData.message || 'Failed to add to watchlist'}`);
+        alert(`Error: ${errorData.message || "Failed to add to watchlist"}`);
         return;
       }
 
       setShowMovieWatchlistSearch(false);
       setShowTvShowWatchlistSearch(false);
-      setSearchQuery('');
+      setSearchQuery("");
       setSearchResults([]);
       alert(`${item.title || item.name} added to watchlist!`);
       fetchProfileData();
     } catch (error) {
-      console.error('Error adding to watchlist:', error);
+      console.error("Error adding to watchlist:", error);
     }
   };
 
-  const removeFromWatchlist = async (id: string, type: 'movie' | 'tv' | 'homemadewatchlist') => {
+  const removeFromWatchlist = async (
+    id: string,
+    type: "movie" | "tv" | "homemadewatchlist",
+  ) => {
     try {
       let endpoint: string;
 
-      if (type === 'movie') {
+      if (type === "movie") {
         endpoint = `${API_URL}/users/${userId}/watchlist/movie/${id}`;
-      } else if (type === 'tv') {
+      } else if (type === "tv") {
         endpoint = `${API_URL}/users/${userId}/watchlist/tvshow/${id}`;
-      } else if (type === 'homemadewatchlist') {
+      } else if (type === "homemadewatchlist") {
         endpoint = `${API_URL}/users/${userId}/saved-homemade-watchlists/${id}`;
       }
 
       await fetch(endpoint!, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` },
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
       });
       fetchProfileData();
     } catch (error) {
-      console.error('Error removing from watchlist:', error);
+      console.error("Error removing from watchlist:", error);
     }
   };
 
   if (loading || !profileData) {
-    return <div className="flex justify-center items-center h-screen text-white">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-white">
+        Loading...
+      </div>
+    );
   }
 
   return (
@@ -369,8 +408,8 @@ const UserProfile: React.FC = () => {
         }}
         onInputChange={handleInputChange}
         onPasswordChange={(field, value) => {
-          if (field === 'old') setOldPassword(value);
-          else if (field === 'new') setNewPassword(value);
+          if (field === "old") setOldPassword(value);
+          else if (field === "new") setNewPassword(value);
           else setPasswordConfirm(value);
         }}
         onTogglePasswordVisibility={() => setShowPassword(!showPassword)}
@@ -395,7 +434,7 @@ const UserProfile: React.FC = () => {
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         results={searchResults}
-        onSelect={(item) => handleAddToTop3(item, 'movie')}
+        onSelect={(item) => handleAddToTop3(item, "movie")}
         type="movie"
       />
 
@@ -407,7 +446,7 @@ const UserProfile: React.FC = () => {
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         results={searchResults}
-        onSelect={(item) => handleAddToTop3(item, 'tv')}
+        onSelect={(item) => handleAddToTop3(item, "tv")}
         type="tv"
       />
 
@@ -422,7 +461,6 @@ const UserProfile: React.FC = () => {
         onRemove={removeFromWatchlist}
       />
 
-
       <SearchDialog
         open={showMovieWatchlistSearch}
         onOpenChange={setShowMovieWatchlistSearch}
@@ -431,7 +469,7 @@ const UserProfile: React.FC = () => {
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         results={searchResults}
-        onSelect={(item) => handleAddToWatchlist(item, 'movie')}
+        onSelect={(item) => handleAddToWatchlist(item, "movie")}
         type="movie"
       />
 
@@ -443,7 +481,7 @@ const UserProfile: React.FC = () => {
         searchQuery={searchQuery}
         onSearchQueryChange={setSearchQuery}
         results={searchResults}
-        onSelect={(item) => handleAddToWatchlist(item, 'tv')}
+        onSelect={(item) => handleAddToWatchlist(item, "tv")}
         type="tv"
       />
 
@@ -458,7 +496,9 @@ const UserProfile: React.FC = () => {
         numberOfFriends={profileData.numberOfFriends}
         watchedMovies={profileData.watchedMovies || []}
         watchedTvShows={profileData.watchedTvShows || []}
-        totalWatchTimeFromWatchlists={profileData.totalWatchTimeFromWatchlists || 0}
+        totalWatchTimeFromWatchlists={
+          profileData.totalWatchTimeFromWatchlists || 0
+        }
         userId={userId!}
       />
     </div>

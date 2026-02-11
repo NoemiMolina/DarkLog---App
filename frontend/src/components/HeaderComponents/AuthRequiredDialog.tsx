@@ -1,13 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
+} from "../ui/dialog";
+import { Button } from "../ui/button";
 
 interface AuthRequiredDialogProps {
   isOpen: boolean;
@@ -18,17 +18,17 @@ interface AuthRequiredDialogProps {
 const AuthRequiredDialog: React.FC<AuthRequiredDialogProps> = ({
   isOpen,
   onClose,
-  itemTitle
+  itemTitle,
 }) => {
   const navigate = useNavigate();
 
   const handleSignIn = () => {
-    navigate('/login');
+    navigate("/login");
     onClose();
   };
 
   const handleCreateAccount = () => {
-    navigate('/signup');
+    navigate("/signup");
     onClose();
   };
 

@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { useNotifications } from '../../context/NotificationContext';
+import React, { useState, useEffect } from "react";
+import { useNotifications } from "../../context/NotificationContext";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '../ui/dialog';
-import { Button } from '../ui/button';
-import { API_URL } from '../../config/api';
+} from "../ui/dialog";
+import { Button } from "../ui/button";
+import { API_URL } from "../../config/api";
 
 interface FriendRequestDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 
-export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, onOpenChange }) => {
+export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({
+  open,
+  onOpenChange,
+}) => {
   const { notifications, markAsRead, deleteNotification } = useNotifications();
   const [currentRequest, setCurrentRequest] = useState<any | null>(null);
 
-  const friendRequests = notifications.filter((n) => n.type === 'friend_request' && !n.isRead);
+  const friendRequests = notifications.filter(
+    (n) => n.type === "friend_request" && !n.isRead,
+  );
 
   useEffect(() => {
     if (open && friendRequests.length > 0 && !currentRequest) {
@@ -38,24 +43,26 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, 
   const handleAccept = async () => {
     if (!currentRequest) return;
 
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const token = localStorage.getItem("token");
 
     try {
       const response = await fetch(
         `${API_URL}/users/${user._id}/friends/${currentRequest.senderId}`,
         {
-          method: 'POST',
+          method: "POST",
           headers: { Authorization: `Bearer ${token}` },
-        }
+        },
       );
 
       if (response.ok) {
         // Mark notification as read and navigate
         await markAsRead(currentRequest._id);
-        
+
         // Move to next request or close
-        const nextRequest = friendRequests.find((r) => r._id !== currentRequest._id);
+        const nextRequest = friendRequests.find(
+          (r) => r._id !== currentRequest._id,
+        );
         if (nextRequest) {
           setCurrentRequest(nextRequest);
         } else {
@@ -64,7 +71,7 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, 
         }
       }
     } catch (error) {
-      console.error('Error accepting friend request:', error);
+      console.error("Error accepting friend request:", error);
     }
   };
 
@@ -74,7 +81,9 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, 
     await deleteNotification(currentRequest._id);
 
     // Move to next request or close
-    const nextRequest = friendRequests.find((r) => r._id !== currentRequest._id);
+    const nextRequest = friendRequests.find(
+      (r) => r._id !== currentRequest._id,
+    );
     if (nextRequest) {
       setCurrentRequest(nextRequest);
     } else {
@@ -89,7 +98,10 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, 
         <DialogHeader>
           <DialogTitle className="text-white">Friend Request</DialogTitle>
           <DialogDescription className="text-gray-300">
-            <span className="font-semibold text-white">{currentRequest?.senderPseudo}</span> has sent you a friend request
+            <span className="font-semibold text-white">
+              {currentRequest?.senderPseudo}
+            </span>{" "}
+            has sent you a friend request
           </DialogDescription>
         </DialogHeader>
 
@@ -125,11 +137,11 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({ open, 
 
         {friendRequests.length > 1 && (
           <p className="text-xs text-gray-400 text-center">
-            {friendRequests.filter((r) => r._id !== currentRequest?._id).length} more request(s)
+            {friendRequests.filter((r) => r._id !== currentRequest?._id).length}{" "}
+            more request(s)
           </p>
         )}
       </DialogContent>
     </Dialog>
   );
 };
-       

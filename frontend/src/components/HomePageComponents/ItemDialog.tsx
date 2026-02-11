@@ -35,7 +35,7 @@ export default function ItemDialog({ trigger, item, type }: ItemDialogProps) {
 
         <DialogDescription className="hidden" />
 
-        <ItemCard item={item} type={type} onClose={() => setOpen(false)}  />
+        <ItemCard item={item} type={type} onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

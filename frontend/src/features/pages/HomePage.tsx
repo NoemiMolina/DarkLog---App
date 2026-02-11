@@ -8,17 +8,19 @@ import HomemadeWatchlistsCarousel from "../../components/HomePageComponents/Home
 import TinderStyleWatchlistsCarousel from "../../components/HomePageComponents/TinderStyleWatchlistsCarousel";
 import News from "../../components/NewsComponents/News";
 
-
 const HomePage = () => {
-
   const [username, setUsername] = useState<string>("Guest");
   const [profilePic, setProfilePic] = useState<string | null>(null);
   const [slasherMovies, setSlasherMovies] = useState<any[]>([]);
   const [supernaturalMovies, setSupernaturalMovies] = useState<any[]>([]);
   const [zombieMovies, setZombieMovies] = useState<any[]>([]);
   const [monsterMovies, setMonsterMovies] = useState<any[]>([]);
-  const [basedOnTrueStoryMovies, setBasedOnTrueStoryMovies] = useState<any[]>([]);
-  const [basedOnNovelOrBooksMovies, setBasedOnNovelOrBooksMovies] = useState<any[]>([]);
+  const [basedOnTrueStoryMovies, setBasedOnTrueStoryMovies] = useState<any[]>(
+    [],
+  );
+  const [basedOnNovelOrBooksMovies, setBasedOnNovelOrBooksMovies] = useState<
+    any[]
+  >([]);
   const [revengeStyleMovies, setRevengeStyleMovies] = useState<any[]>([]);
   const [bodyHorrorMovies, setBodyHorrorMovies] = useState<any[]>([]);
   const [vampireMovies, setVampireMovies] = useState<any[]>([]);
@@ -31,8 +33,12 @@ const HomePage = () => {
   const [supernaturalTVShows, setSupernaturalTVShows] = useState<any[]>([]);
   const [zombieTVShows, setZombieTVShows] = useState<any[]>([]);
   const [monsterTVShows, setMonsterTVShows] = useState<any[]>([]);
-  const [basedOnTrueStoryTVShows, setBasedOnTrueStoryTVShows] = useState<any[]>([]);
-  const [basedOnNovelOrBooksTVShows, setBasedOnNovelOrBooksTVShows] = useState<any[]>([]);
+  const [basedOnTrueStoryTVShows, setBasedOnTrueStoryTVShows] = useState<any[]>(
+    [],
+  );
+  const [basedOnNovelOrBooksTVShows, setBasedOnNovelOrBooksTVShows] = useState<
+    any[]
+  >([]);
   const [revengeStyleTVShows, setRevengeStyleTVShows] = useState<any[]>([]);
   const [bodyHorrorTVShows, setBodyHorrorTVShows] = useState<any[]>([]);
   const [vampireTVShows, setVampireTVShows] = useState<any[]>([]);
@@ -60,12 +66,10 @@ const HomePage = () => {
             : `${API_URL}/${parsed.UserProfilePicture}`;
           setProfilePic(fullPath);
         }
-
       } catch {
         setUsername("Guest");
       }
     }
-
   }, []);
 
   const fetchMovieCategory = async (endpoint: string, setter: any) => {
@@ -107,8 +111,14 @@ const HomePage = () => {
         setTimeout(() => {
           fetchTVShowCategory("body horror", setBodyHorrorTVShows);
           fetchTVShowCategory("survival horror", setSurvivalTVShows);
-          fetchTVShowCategory("based on novel or book", setBasedOnNovelOrBooksTVShows);
-          fetchTVShowCategory("based on true story", setBasedOnTrueStoryTVShows);
+          fetchTVShowCategory(
+            "based on novel or book",
+            setBasedOnNovelOrBooksTVShows,
+          );
+          fetchTVShowCategory(
+            "based on true story",
+            setBasedOnTrueStoryTVShows,
+          );
           fetchTVShowCategory("anime", setAnimeTVShows);
         }, 1000);
       } else {
@@ -128,7 +138,10 @@ const HomePage = () => {
         setTimeout(() => {
           fetchMovieCategory("body horror", setBodyHorrorMovies);
           fetchMovieCategory("survival horror", setSurvivalMovies);
-          fetchMovieCategory("based on novel or book", setBasedOnNovelOrBooksMovies);
+          fetchMovieCategory(
+            "based on novel or book",
+            setBasedOnNovelOrBooksMovies,
+          );
           fetchMovieCategory("based on true story", setBasedOnTrueStoryMovies);
           fetchMovieCategory("satire", setSatireMovies);
         }, 1000);
@@ -140,7 +153,12 @@ const HomePage = () => {
 
   return (
     <main className="min-h-screen relative">
-      <Header username={username} userProfilePicture={profilePic} isTVShowMode={isTVShowMode} onToggleTVShowMode={setIsTVShowMode} />
+      <Header
+        username={username}
+        userProfilePicture={profilePic}
+        isTVShowMode={isTVShowMode}
+        onToggleTVShowMode={setIsTVShowMode}
+      />
 
       <section className="mt-8 px-4 xl:-translate-y-[15px]">
         <div className="mb-12 lg:-translate-x-40 xl:translate-x-0 2xl:translate-x-0">
@@ -152,113 +170,208 @@ const HomePage = () => {
             <TinderStyleWatchlistsCarousel />
           </div>
 
-          <div className="hidden sm:block" >
+          <div className="hidden sm:block">
             <HomemadeWatchlistsCarousel />
           </div>
 
           <div className="-mt-10 xl:-mt-40 2xl:-mt-50">
-            <News newsCarouselClassName="sm:pl-0 lg:-translate-x-[10px] xl:translate-y-5 xl:max-w-[91%] xl:translate-x-15 2xl:translate-x-45 2xl:max-w-[80%]"/>
+            <News newsCarouselClassName="sm:pl-0 lg:-translate-x-[10px] xl:translate-y-5 xl:max-w-[91%] xl:translate-x-15 2xl:translate-x-45 2xl:max-w-[80%]" />
           </div>
         </div>
 
         <div className="text-[1rem] text-center text-white">
-
           {!isTVShowMode ? (
             <>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Popular slashers" items={slasherMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Popular slashers"
+                    items={slasherMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Popular slashers" items={slasherMovies} type="movie" />
+                  <CarouselItems
+                    title="Popular slashers"
+                    items={slasherMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Ghost and possession stories"
+                    items={supernaturalMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Ghost and possession stories" items={supernaturalMovies} type="movie" />
+                  <CarouselItems
+                    title="Ghost and possession stories"
+                    items={supernaturalMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Zombies universe" items={zombieMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Zombies universe"
+                    items={zombieMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Zombies universe" items={zombieMovies} type="movie" />
+                  <CarouselItems
+                    title="Zombies universe"
+                    items={zombieMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Monster core" items={monsterMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Monster core"
+                    items={monsterMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Monster core" items={monsterMovies} type="movie" />
+                  <CarouselItems
+                    title="Monster core"
+                    items={monsterMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Aliens" items={aliensMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Aliens"
+                    items={aliensMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Aliens" items={aliensMovies} type="movie" />
+                  <CarouselItems
+                    title="Aliens"
+                    items={aliensMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Vampire" items={vampireMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Vampire"
+                    items={vampireMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Vampire" items={vampireMovies} type="movie" />
+                  <CarouselItems
+                    title="Vampire"
+                    items={vampireMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Revenge" items={revengeStyleMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Revenge"
+                    items={revengeStyleMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Revenge" items={revengeStyleMovies} type="movie" />
+                  <CarouselItems
+                    title="Revenge"
+                    items={revengeStyleMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Body horror" items={bodyHorrorMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Body horror"
+                    items={bodyHorrorMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Body horror" items={bodyHorrorMovies} type="movie" />
+                  <CarouselItems
+                    title="Body horror"
+                    items={bodyHorrorMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Survival" items={survivalMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Survival"
+                    items={survivalMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Survival" items={survivalMovies} type="movie" />
+                  <CarouselItems
+                    title="Survival"
+                    items={survivalMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Based on novel or book"
+                    items={basedOnNovelOrBooksMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksMovies} type="movie" />
+                  <CarouselItems
+                    title="Based on novel or book"
+                    items={basedOnNovelOrBooksMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Based on true story"
+                    items={basedOnTrueStoryMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Based on true story" items={basedOnTrueStoryMovies} type="movie" />
+                  <CarouselItems
+                    title="Based on true story"
+                    items={basedOnTrueStoryMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Satire" items={satireMovies} type="movie" />
+                  <TinderStyleCarousel
+                    title="Satire"
+                    items={satireMovies}
+                    type="movie"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Satire" items={satireMovies} type="movie" />
+                  <CarouselItems
+                    title="Satire"
+                    items={satireMovies}
+                    type="movie"
+                  />
                 </div>
               </div>
             </>
@@ -266,98 +379,194 @@ const HomePage = () => {
             <>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Anime" items={animeTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Anime"
+                    items={animeTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Anime" items={animeTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Anime"
+                    items={animeTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Popular slashers" items={slasherTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Popular slashers"
+                    items={slasherTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Popular slashers" items={slasherTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Popular slashers"
+                    items={slasherTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Ghost and possession stories" items={supernaturalTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Ghost and possession stories"
+                    items={supernaturalTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Ghost and possession stories" items={supernaturalTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Ghost and possession stories"
+                    items={supernaturalTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Zombies universe" items={zombieTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Zombies universe"
+                    items={zombieTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Zombies universe" items={zombieTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Zombies universe"
+                    items={zombieTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Monster core" items={monsterTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Monster core"
+                    items={monsterTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Monster core" items={monsterTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Monster core"
+                    items={monsterTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Aliens" items={aliensTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Aliens"
+                    items={aliensTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Aliens" items={aliensTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Aliens"
+                    items={aliensTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Vampire" items={vampireTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Vampire"
+                    items={vampireTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Vampire" items={vampireTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Vampire"
+                    items={vampireTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Revenge" items={revengeStyleTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Revenge"
+                    items={revengeStyleTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Revenge" items={revengeStyleTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Revenge"
+                    items={revengeStyleTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Body horror" items={bodyHorrorTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Body horror"
+                    items={bodyHorrorTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Body horror" items={bodyHorrorTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Body horror"
+                    items={bodyHorrorTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Survival" items={survivalTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Survival"
+                    items={survivalTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Survival" items={survivalTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Survival"
+                    items={survivalTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Based on novel or book" items={basedOnNovelOrBooksTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Based on novel or book"
+                    items={basedOnNovelOrBooksTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Based on novel or book" items={basedOnNovelOrBooksTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Based on novel or book"
+                    items={basedOnNovelOrBooksTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
               <div className="mb-32 sm:mb-0 xl:mt-12">
                 <div className="sm:hidden">
-                  <TinderStyleCarousel title="Based on true story" items={basedOnTrueStoryTVShows} type="tvshow" />
+                  <TinderStyleCarousel
+                    title="Based on true story"
+                    items={basedOnTrueStoryTVShows}
+                    type="tvshow"
+                  />
                 </div>
                 <div className="hidden sm:block">
-                  <CarouselItems title="Based on true story" items={basedOnTrueStoryTVShows} type="tvshow" />
+                  <CarouselItems
+                    title="Based on true story"
+                    items={basedOnTrueStoryTVShows}
+                    type="tvshow"
+                  />
                 </div>
               </div>
             </>

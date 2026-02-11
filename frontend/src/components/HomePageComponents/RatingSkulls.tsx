@@ -2,7 +2,7 @@ import { IoSkull, IoSkullOutline } from "react-icons/io5";
 import halfSkullImg from "../../assets/homemadeIcons/halfskull.png";
 
 interface RatingSkullsProps {
-  value: number; 
+  value: number;
   onChange: (value: number) => void;
 }
 
@@ -10,13 +10,13 @@ export default function RatingSkulls({ value, onChange }: RatingSkullsProps) {
   const handleClick = (index: number) => {
     const current = value - index;
     let newValue = index + 1;
-    
+
     if (current >= 1) {
       newValue = index + 0.5;
     } else if (current === 0.5) {
       newValue = index;
     }
-    
+
     onChange(newValue);
   };
 
@@ -44,7 +44,11 @@ export default function RatingSkulls({ value, onChange }: RatingSkullsProps) {
             )}
 
             {state === "half-moon" && (
-              <img src={halfSkullImg} alt="half skull" className="w-6 h-6 object-contain relative top-0.5" />
+              <img
+                src={halfSkullImg}
+                alt="half skull"
+                className="w-6 h-6 object-contain relative top-0.5"
+              />
             )}
 
             {state === "empty" && (

@@ -33,7 +33,9 @@ const calcAgeFromDate = (date: Date | null) => {
   return Math.max(age, 0);
 };
 
-export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
+export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
+  onClose,
+}) => {
   const navigate = useNavigate();
   const [userPseudo, setUserPseudo] = useState("");
   const [userFirstName, setUserFirstName] = useState("");
@@ -58,46 +60,62 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
   const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]);
 
   useEffect(() => {
-    if (!qMovies.trim()) { setResMovies([]); return; }
+    if (!qMovies.trim()) {
+      setResMovies([]);
+      return;
+    }
     const t = setTimeout(async () => {
       try {
-        const r = await fetch(`${API_URL}/search?query=${encodeURIComponent(qMovies)}`);
+        const r = await fetch(
+          `${API_URL}/search?query=${encodeURIComponent(qMovies)}`,
+        );
         const data: SearchItem[] = await r.json();
-        setResMovies((data || []).filter(i => (i.type === "movie")));
-      } catch { setResMovies([]); }
+        setResMovies((data || []).filter((i) => i.type === "movie"));
+      } catch {
+        setResMovies([]);
+      }
     }, 350);
     return () => clearTimeout(t);
   }, [qMovies]);
 
   useEffect(() => {
-    if (!qShows.trim()) { setResShows([]); return; }
+    if (!qShows.trim()) {
+      setResShows([]);
+      return;
+    }
     const t = setTimeout(async () => {
       try {
-        const r = await fetch(`${API_URL}/search?query=${encodeURIComponent(qShows)}`);
+        const r = await fetch(
+          `${API_URL}/search?query=${encodeURIComponent(qShows)}`,
+        );
         const data: SearchItem[] = await r.json();
-        setResShows((data || []).filter(i => (i.type === "tvshow")));
-      } catch { setResShows([]); }
+        setResShows((data || []).filter((i) => i.type === "tvshow"));
+      } catch {
+        setResShows([]);
+      }
     }, 350);
     return () => clearTimeout(t);
   }, [qShows]);
 
   const addMovie = (item: SearchItem) => {
-    if (top3Movies.find(x => x._id === item._id)) return;
+    if (top3Movies.find((x) => x._id === item._id)) return;
     if (top3Movies.length >= 3) return;
     setTop3Movies([...top3Movies, item]);
     setQMovies("");
     setResMovies([]);
   };
-  const removeMovie = (id: string) => setTop3Movies(top3Movies.filter(x => x._id !== id));
+  const removeMovie = (id: string) =>
+    setTop3Movies(top3Movies.filter((x) => x._id !== id));
 
   const addShow = (item: SearchItem) => {
-    if (top3TvShow.find(x => x._id === item._id)) return;
+    if (top3TvShow.find((x) => x._id === item._id)) return;
     if (top3TvShow.length >= 3) return;
     setTop3TvShow([...top3TvShow, item]);
     setQShows("");
     setResShows([]);
   };
-  const removeShow = (id: string) => setTop3TvShow(top3TvShow.filter(x => x._id !== id));
+  const removeShow = (id: string) =>
+    setTop3TvShow(top3TvShow.filter((x) => x._id !== id));
 
   const emailValid = /\S+@\S+\.\S+/.test(email);
   const passwordValid = passwordRegex.test(password);
@@ -130,8 +148,8 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
         UserPassword: password,
         UserAge: age,
         UserLocation: location.trim(),
-        Top3Movies: JSON.stringify(top3Movies.map(x => x.tmdb_id || x.id)),
-        Top3TvShow: JSON.stringify(top3TvShow.map(x => x.tmdb_id || x.id)),
+        Top3Movies: JSON.stringify(top3Movies.map((x) => x.tmdb_id || x.id)),
+        Top3TvShow: JSON.stringify(top3TvShow.map((x) => x.tmdb_id || x.id)),
       };
 
       const formData = new FormData();
@@ -181,13 +199,14 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
         data.user._id
       ) {
         try {
-          const route = pendingItem.type === "movie"
-            ? `${API_URL}/users/${data.user._id}/watchlist/movie/${pendingItem.id}`
-            : `${API_URL}/users/${data.user._id}/watchlist/tvshow/${pendingItem.id}`;
+          const route =
+            pendingItem.type === "movie"
+              ? `${API_URL}/users/${data.user._id}/watchlist/movie/${pendingItem.id}`
+              : `${API_URL}/users/${data.user._id}/watchlist/tvshow/${pendingItem.id}`;
 
           await fetch(route, {
             method: "POST",
-            headers: { Authorization: `Bearer ${data.token}` }
+            headers: { Authorization: `Bearer ${data.token}` },
           });
 
           pendingWatchlistService.clearPendingItem();
@@ -196,14 +215,16 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
           console.error("❌ Failed to add pending item:", err);
         }
       } else if (pendingItem) {
-        console.warn("⛔ Pending item or user ID is undefined, skipping watchlist addition.", { pendingItem, userId: data.user?._id });
+        console.warn(
+          "⛔ Pending item or user ID is undefined, skipping watchlist addition.",
+          { pendingItem, userId: data.user?._id },
+        );
       }
 
       setTimeout(() => {
         onClose?.();
         navigate("/home");
       }, 800);
-
     } catch (e: any) {
       setSubmitError(e?.message || "Unknown error");
     } finally {
@@ -266,22 +287,43 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
 
       <div className="space-y-2">
         <Label htmlFor="userName">Pseudo *</Label>
-        <Input id="userName" value={userPseudo} onChange={(e) => setUserPseudo(e.target.value)} placeholder="ex: Ghostface" />
+        <Input
+          id="userName"
+          value={userPseudo}
+          onChange={(e) => setUserPseudo(e.target.value)}
+          placeholder="ex: Ghostface"
+        />
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="firstName">First name *</Label>
-        <Input id="firstName" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} placeholder="ex : Stuart" />
+        <Input
+          id="firstName"
+          value={userFirstName}
+          onChange={(e) => setUserFirstName(e.target.value)}
+          placeholder="ex : Stuart"
+        />
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="lastName">Last name *</Label>
-        <Input id="lastName" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} placeholder="ex : Macher" />
+        <Input
+          id="lastName"
+          value={userLastName}
+          onChange={(e) => setUserLastName(e.target.value)}
+          placeholder="ex : Macher"
+        />
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="email">Email *</Label>
-        <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="stumacherisnotdead@ghostface.com" />
+        <Input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="stumacherisnotdead@ghostface.com"
+        />
         {!emailValid && email.length > 0 && (
           <p className="text-xs text-red-400">Invalid email address.</p>
         )}
@@ -307,10 +349,10 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
         </div>
         {!passwordValid && password.length > 0 && (
           <p className="text-xs text-red-400">
-            Must contain 1 uppercase letter, 1 number, 1 special character, and at least 8 characters.
+            Must contain 1 uppercase letter, 1 number, 1 special character, and
+            at least 8 characters.
           </p>
         )}
-
       </div>
 
       <div className="space-y-2">
@@ -334,20 +376,28 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
         {confirmPassword.length > 0 && !passwordsMatch && (
           <p className="text-xs text-red-400">Passwords don't match</p>
         )}
-
       </div>
 
       <div className="space-y-2 md:col-span-2">
         <Label htmlFor="location">Location *</Label>
-        <CountrySelect value={location} onChange={setLocation} placeholder="Search for a country..." />
+        <CountrySelect
+          value={location}
+          onChange={setLocation}
+          placeholder="Search for a country..."
+        />
       </div>
 
       <div className="space-y-2">
         <Label>Birth date *</Label>
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="outline" className="w-full justify-between text-white">
-              {birthDate ? format(birthDate, "dd MMM yyyy", { locale: fr }) : "Choose a date"}
+            <Button
+              variant="outline"
+              className="w-full justify-between text-white"
+            >
+              {birthDate
+                ? format(birthDate, "dd MMM yyyy", { locale: fr })
+                : "Choose a date"}
             </Button>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-0" align="start">
@@ -367,7 +417,6 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
         <p className="text-xs text-gray-400"> : {age || "—"} years old</p>
       </div>
 
-
       <div className="mt-4">
         <Label className="mb-2 block">Top 3 horror movies *</Label>
         <Input
@@ -379,7 +428,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
           <div className="mt-2 border border-white/10 rounded-md">
             <ScrollArea className="max-h-[12rem]">
               <ul className="divide-y divide-white/10">
-                {resMovies.map(item => (
+                {resMovies.map((item) => (
                   <li key={item._id}>
                     <button
                       type="button"
@@ -397,15 +446,25 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
 
         <div className="mt-2 flex flex-wrap gap-2">
           {top3Movies.map((m) => (
-            <span key={m._id} className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10">
+            <span
+              key={m._id}
+              className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10"
+            >
               <span className="text-sm">{m.title || m.name}</span>
-              <button onClick={() => removeMovie(m._id)} className="hover:text-red-400" aria-label="Retirer">
+              <button
+                onClick={() => removeMovie(m._id)}
+                className="hover:text-red-400"
+                aria-label="Retirer"
+              >
                 <X size={16} />
               </button>
             </span>
           ))}
           {top3Movies.length < 3 && (
-            <span className="text-xs text-gray-400">({3 - top3Movies.length} remaining{3 - top3Movies.length === 1 ? "" : "s"})</span>
+            <span className="text-xs text-gray-400">
+              ({3 - top3Movies.length} remaining
+              {3 - top3Movies.length === 1 ? "" : "s"})
+            </span>
           )}
         </div>
       </div>
@@ -421,7 +480,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
           <div className="mt-2 border border-white/10 rounded-md">
             <ScrollArea className="max-h-[12rem]">
               <ul className="divide-y divide-white/10">
-                {resShows.map(item => (
+                {resShows.map((item) => (
                   <li key={item._id}>
                     <button
                       type="button"
@@ -439,27 +498,49 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
 
         <div className="mt-2 flex flex-wrap gap-2">
           {top3TvShow.map((s) => (
-            <span key={s._id} className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10">
+            <span
+              key={s._id}
+              className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10"
+            >
               <span className="text-sm">{s.title || s.name}</span>
-              <button onClick={() => removeShow(s._id)} className="hover:text-red-400" aria-label="Retirer">
+              <button
+                onClick={() => removeShow(s._id)}
+                className="hover:text-red-400"
+                aria-label="Retirer"
+              >
                 <X size={16} />
               </button>
             </span>
           ))}
           {top3TvShow.length < 3 && top3TvShow.length > 0 && (
-            <span className="text-xs text-gray-400">(optional — {3 - top3TvShow.length} remaining{3 - top3TvShow.length === 1 ? "" : "s"})</span>
+            <span className="text-xs text-gray-400">
+              (optional — {3 - top3TvShow.length} remaining
+              {3 - top3TvShow.length === 1 ? "" : "s"})
+            </span>
           )}
         </div>
       </div>
 
-      {submitError && <p className="mt-4 text-sm text-red-400">{submitError}</p>}
-      {submitSuccess && <p className="mt-4 text-sm text-green-400">{submitSuccess}</p>}
+      {submitError && (
+        <p className="mt-4 text-sm text-red-400">{submitError}</p>
+      )}
+      {submitSuccess && (
+        <p className="mt-4 text-sm text-green-400">{submitSuccess}</p>
+      )}
 
       <div className="mt-6 flex justify-end gap-3">
-        <Button variant="outline" onClick={() => onClose?.()} className="text-white hover:bg-white/10">
+        <Button
+          variant="outline"
+          onClick={() => onClose?.()}
+          className="text-white hover:bg-white/10"
+        >
           Cancel
         </Button>
-        <Button onClick={handleSubmit} disabled={!canSubmit || submitting} className="text-white">
+        <Button
+          onClick={handleSubmit}
+          disabled={!canSubmit || submitting}
+          className="text-white"
+        >
           {submitting ? "Saving..." : "Save"}
         </Button>
       </div>

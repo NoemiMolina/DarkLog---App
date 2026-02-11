@@ -4,10 +4,11 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const TMDB_KEY = process.env.TMDB_API_KEY!;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
+const MONGO_URI =
+  process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
 const KEYWORD_ID = 315058; // Mot-clé Horror pour les séries
 const MAX_PAGES = 5;
-const MANUAL_TMDB_IDS = [54671]; // cracra 
+const MANUAL_TMDB_IDS = [54671]; // cracra
 
 interface Episode {
   episode_number: number;
@@ -82,17 +83,17 @@ const tvSchema = new mongoose.Schema(
                   { userId: mongoose.Schema.Types.ObjectId, value: Number },
                 ],
               },
-              { _id: false }
+              { _id: false },
             ),
           ],
         },
-        { _id: false }
+        { _id: false },
       ),
     ],
 
     raw: Object,
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const TVShow = mongoose.model("tvshows", tvSchema);
@@ -114,7 +115,7 @@ const fetchKeywords = async (tvId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/keywords`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
 
     return (res.data?.results || []).map((k: any) => k.name.toLowerCase());
@@ -127,7 +128,7 @@ const fetchPlatforms = async (tvId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/watch/providers`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
 
     const fr = res.data.results?.FR;
@@ -147,7 +148,7 @@ const fetchCast = async (tvId: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/credits`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
 
     return res.data.cast.slice(0, 10).map((actor: any) => ({
@@ -183,7 +184,7 @@ const fetchEpisodes = async (tvId: number, seasonNumber: number) => {
   try {
     const res = await axios.get(
       `https://api.themoviedb.org/3/tv/${tvId}/season/${seasonNumber}`,
-      { params: { api_key: TMDB_KEY } }
+      { params: { api_key: TMDB_KEY } },
     );
     return res.data.episodes || [];
   } catch {
@@ -198,12 +199,12 @@ const fetchTrailer = async (tvId: number) => {
       {
         params: {
           api_key: TMDB_KEY,
-          language: 'en-US'
-        }
-      }
+          language: "en-US",
+        },
+      },
     );
     const trailer = res.data.results.find(
-      (vid: any) => vid.type === "Trailer" && vid.site === "YouTube"
+      (vid: any) => vid.type === "Trailer" && vid.site === "YouTube",
     );
     return trailer?.key || null;
   } catch {
@@ -224,7 +225,11 @@ const main = async () => {
       const trailer_key = await fetchTrailer(item.id);
 
       const seasonsRaw = await fetchSeasons(item.id);
-      const { seasons: rawSeasons, episode_runtime, number_of_episodes } = seasonsRaw;
+      const {
+        seasons: rawSeasons,
+        episode_runtime,
+        number_of_episodes,
+      } = seasonsRaw;
       const seasons: Season[] = [];
       const total_runtime = episode_runtime * number_of_episodes;
 
@@ -275,7 +280,7 @@ const main = async () => {
             raw: item,
           },
         },
-        { upsert: true }
+        { upsert: true },
       );
     }
 
@@ -295,7 +300,11 @@ async function importManualTVShows() {
         const trailer_key = await fetchTrailer(tmdbId);
 
         const seasonsRaw = await fetchSeasons(tmdbId);
-        const { seasons: rawSeasons, episode_runtime, number_of_episodes } = seasonsRaw;
+        const {
+          seasons: rawSeasons,
+          episode_runtime,
+          number_of_episodes,
+        } = seasonsRaw;
 
         const seasons: Season[] = [];
         const total_runtime = episode_runtime * number_of_episodes;
@@ -324,7 +333,7 @@ async function importManualTVShows() {
 
         const detailsRes = await axios.get(
           `https://api.themoviedb.org/3/tv/${tmdbId}`,
-          { params: { api_key: TMDB_KEY } }
+          { params: { api_key: TMDB_KEY } },
         );
 
         const details = detailsRes.data;
@@ -354,7 +363,7 @@ async function importManualTVShows() {
               raw: details,
             },
           },
-          { upsert: true }
+          { upsert: true },
         );
       } catch (err) {
         console.error(`❌ Erreur pour la série ${tmdbId}:`, err);
@@ -362,7 +371,6 @@ async function importManualTVShows() {
     }
   }
 }
-
 
 main()
   .then(() => importManualTVShows())

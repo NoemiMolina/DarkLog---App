@@ -14,12 +14,7 @@
   },
   {
     "question": "In 'Marianne', what is Marianne?",
-    "options": [
-      "A ghost",
-      "A witch",
-      "A demon",
-      "A vampire"
-    ],
+    "options": ["A ghost", "A witch", "A demon", "A vampire"],
     "correctIndex": 1,
     "category": "culture",
     "difficulty": "medium",
@@ -40,12 +35,7 @@
   },
   {
     "question": "In 'Hemlock Grove', what type of creature is Roman Godfrey?",
-    "options": [
-      "Werewolf",
-      "Witch",
-      "Upir (vampire)",
-      "Ghoul"
-    ],
+    "options": ["Werewolf", "Witch", "Upir (vampire)", "Ghoul"],
     "correctIndex": 2,
     "category": "culture",
     "difficulty": "medium",
@@ -53,12 +43,7 @@
   },
   {
     "question": "In 'The Outsider', which author wrote the novel the TV Show is based on?",
-    "options": [
-      "Stephen King",
-      "Dean Koontz",
-      "Clive Barker",
-      "Peter Straub"
-    ],
+    "options": ["Stephen King", "Dean Koontz", "Clive Barker", "Peter Straub"],
     "correctIndex": 0,
     "category": "culture",
     "difficulty": "medium",
@@ -66,12 +51,7 @@
   },
   {
     "question": "In 'Midnight Mass', what is the 'miracle' on Crockett Island actually caused by?",
-    "options": [
-      "A demon",
-      "A vampire",
-      "An angel",
-      "A plague"
-    ],
+    "options": ["A demon", "A vampire", "An angel", "A plague"],
     "correctIndex": 1,
     "category": "culture",
     "difficulty": "medium",
@@ -118,12 +98,7 @@
   },
   {
     "question": "In 'The Stand' (2020), what wipes out most of humanity?",
-    "options": [
-      "A deadly virus",
-      "Nuclear war",
-      "A meteor",
-      "A famine"
-    ],
+    "options": ["A deadly virus", "Nuclear war", "A meteor", "A famine"],
     "correctIndex": 0,
     "category": "culture",
     "difficulty": "medium",
@@ -209,12 +184,7 @@
   },
   {
     "question": "In 'Dexter: New Blood', what town does Dexter live in?",
-    "options": [
-      "Miami",
-      "Coldwater",
-      "Iron Lake",
-      "Silver Springs"
-    ],
+    "options": ["Miami", "Coldwater", "Iron Lake", "Silver Springs"],
     "correctIndex": 2,
     "category": "culture",
     "difficulty": "medium",
@@ -235,12 +205,7 @@
   },
   {
     "question": "In 'Archive 81', what format reveals the horrors of the past?",
-    "options": [
-      "Audio recordings",
-      "Videotapes",
-      "Photographs",
-      "Letters"
-    ],
+    "options": ["Audio recordings", "Videotapes", "Photographs", "Letters"],
     "correctIndex": 1,
     "category": "culture",
     "difficulty": "medium",
@@ -248,12 +213,7 @@
   },
   {
     "question": "In 'Yellowjackets', what event isolates the team?",
-    "options": [
-      "A storm",
-      "A plane crash",
-      "A kidnapping",
-      "An avalanche"
-    ],
+    "options": ["A storm", "A plane crash", "A kidnapping", "An avalanche"],
     "correctIndex": 1,
     "category": "culture",
     "difficulty": "medium",
@@ -274,12 +234,7 @@
   },
   {
     "question": "In 'Parasyte: The Maxim', what invades the human body?",
-    "options": [
-      "Alien parasites",
-      "Demons",
-      "Ghosts",
-      "Mutant viruses"
-    ],
+    "options": ["Alien parasites", "Demons", "Ghosts", "Mutant viruses"],
     "correctIndex": 0,
     "category": "culture",
     "difficulty": "medium",
@@ -339,12 +294,7 @@
   },
   {
     "question": "In 'The Strain', what is the cause of the epidemic?",
-    "options": [
-      "Ancient vampires",
-      "Zombies",
-      "Parasites",
-      "Bioweapons"
-    ],
+    "options": ["Ancient vampires", "Zombies", "Parasites", "Bioweapons"],
     "correctIndex": 0,
     "category": "culture",
     "difficulty": "medium",

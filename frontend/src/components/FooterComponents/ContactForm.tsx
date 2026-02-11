@@ -30,12 +30,18 @@ interface ContactFormContentProps {
   onClose?: () => void;
 }
 
-export const ContactFormContent: React.FC<ContactFormContentProps> = ({ userEmail = "", onClose }) => {
+export const ContactFormContent: React.FC<ContactFormContentProps> = ({
+  userEmail = "",
+  onClose,
+}) => {
   const [email, setEmail] = useState(userEmail);
   const [subjectType, setSubjectType] = useState("");
   const [itemName, setItemName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [message, setMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
 
   useEffect(() => {
     setEmail(userEmail);
@@ -66,12 +72,12 @@ export const ContactFormContent: React.FC<ContactFormContentProps> = ({ userEmai
         emailjs.send(
           import.meta.env.VITE_EMAILJS_SERVICE_ID,
           import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-          userTemplateParams
+          userTemplateParams,
         ),
         emailjs.send(
           import.meta.env.VITE_EMAILJS_SERVICE_ID,
           import.meta.env.VITE_EMAILJS_NOTIFICATION_TEMPLATE_ID,
-          adminTemplateParams
+          adminTemplateParams,
         ),
       ]);
 
@@ -86,7 +92,10 @@ export const ContactFormContent: React.FC<ContactFormContentProps> = ({ userEmai
       }, 2000);
     } catch (error) {
       console.error("Error sending email:", error);
-      setMessage({ type: "error", text: "Failed to send message. Please try again." });
+      setMessage({
+        type: "error",
+        text: "Failed to send message. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
@@ -110,19 +119,31 @@ export const ContactFormContent: React.FC<ContactFormContentProps> = ({ userEmai
       <div className="space-y-2">
         <Label htmlFor="subject">What are you looking for? *</Label>
         <Select value={subjectType} onValueChange={setSubjectType}>
-          <SelectTrigger id="subject" className="bg-black/20 border-white/20 text-white">
+          <SelectTrigger
+            id="subject"
+            className="bg-black/20 border-white/20 text-white"
+          >
             <SelectValue placeholder="Select..." />
           </SelectTrigger>
           <SelectContent className="bg-black border-white/20 text-white">
-            <SelectItem value="Could not find a movie">Could not find a movie</SelectItem>
-            <SelectItem value="Could not find a tvshow">Could not find a TV show</SelectItem>
+            <SelectItem value="Could not find a movie">
+              Could not find a movie
+            </SelectItem>
+            <SelectItem value="Could not find a tvshow">
+              Could not find a TV show
+            </SelectItem>
             <SelectItem value="Report a bug">Report a bug</SelectItem>
           </SelectContent>
         </Select>
       </div>
       <div className="space-y-2">
         <Label htmlFor="itemName">
-          {subjectType === "Could not find a movie" ? "Movie name" : subjectType === "Could not find a tvshow" ? "TV show name" : "Bug description"} *
+          {subjectType === "Could not find a movie"
+            ? "Movie name"
+            : subjectType === "Could not find a tvshow"
+              ? "TV show name"
+              : "Bug description"}{" "}
+          *
         </Label>
         <Input
           id="itemName"
@@ -130,17 +151,22 @@ export const ContactFormContent: React.FC<ContactFormContentProps> = ({ userEmai
           value={itemName}
           onChange={(e) => setItemName(e.target.value)}
           placeholder={
-            subjectType === "Could not find a movie" ? "e.g., Inception" : subjectType === "Could not find a tvshow" ? "e.g., Breaking Bad" : "Tell The Dev what's wrong..."
+            subjectType === "Could not find a movie"
+              ? "e.g., Inception"
+              : subjectType === "Could not find a tvshow"
+                ? "e.g., Breaking Bad"
+                : "Tell The Dev what's wrong..."
           }
           required
         />
       </div>
       {message && (
         <div
-          className={`p-3 rounded-md text-sm ${message.type === "success"
+          className={`p-3 rounded-md text-sm ${
+            message.type === "success"
               ? "bg-green-500/20 text-green-400 border border-green-500/50"
               : "bg-red-500/20 text-red-400 border border-red-500/50"
-            }`}
+          }`}
         >
           {message.text}
         </div>
@@ -167,7 +193,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
         </button>
       </DialogTrigger>
 
-      <DialogContent className="w-full max-w-lg md:max-w-md bg-black/40 backdrop-blur-md text-white border border-white/20" style={{ fontFamily: "'Metal Mania', serif" }}>
+      <DialogContent
+        className="w-full max-w-lg md:max-w-md bg-black/40 backdrop-blur-md text-white border border-white/20"
+        style={{ fontFamily: "'Metal Mania', serif" }}
+      >
         <DialogHeader>
           <DialogTitle>Contact The Dev</DialogTitle>
           <DialogDescription className="text-gray-400">
@@ -175,7 +204,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
           </DialogDescription>
         </DialogHeader>
 
-        <ContactFormContent userEmail={userEmail} onClose={() => setOpen(false)} />
+        <ContactFormContent
+          userEmail={userEmail}
+          onClose={() => setOpen(false)}
+        />
       </DialogContent>
     </Dialog>
   );

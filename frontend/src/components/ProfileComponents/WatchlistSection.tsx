@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Trash2 } from 'lucide-react';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Trash2 } from "lucide-react";
 
 interface WatchlistItem {
   _id: string;
@@ -22,7 +22,7 @@ interface WatchlistSectionProps {
   savedHomemadeWatchlists?: HomemadeWatchlistItem[];
   onAddMovie: () => void;
   onAddTvShow: () => void;
-  onRemove: (id: string, type: 'movie' | 'tv' | 'homemadewatchlist') => void;
+  onRemove: (id: string, type: "movie" | "tv" | "homemadewatchlist") => void;
 }
 
 const WatchlistSection: React.FC<WatchlistSectionProps> = ({
@@ -31,7 +31,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
   savedHomemadeWatchlists = [],
   onAddMovie,
   onAddTvShow,
-  onRemove
+  onRemove,
 }) => {
   return (
     <Card className="bg-[#2A2A2A] border-white/20 text-white">
@@ -54,9 +54,13 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {movieWatchlist.map((movie) => (
                 <div key={movie._id} className="relative group h-64 sm:h-80">
-                  <img src={movie.poster} alt={movie.title} className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover" />
+                  <img
+                    src={movie.poster}
+                    alt={movie.title}
+                    className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover"
+                  />
                   <button
-                    onClick={() => onRemove(movie._id, 'movie')}
+                    onClick={() => onRemove(movie._id, "movie")}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={16} />
@@ -67,7 +71,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           )}
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">
-          <h3 className="text-xl mb-4">TV Shows Watchlist ({tvShowWatchlist.length})</h3>
+          <h3 className="text-xl mb-4">
+            TV Shows Watchlist ({tvShowWatchlist.length})
+          </h3>
           {tvShowWatchlist.length === 0 ? (
             <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
               <button
@@ -81,9 +87,13 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {tvShowWatchlist.map((show) => (
                 <div key={show._id} className="relative group h-64 sm:h-80">
-                  <img src={show.poster} alt={show.title} className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover" />
+                  <img
+                    src={show.poster}
+                    alt={show.title}
+                    className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover"
+                  />
                   <button
-                    onClick={() => onRemove(show._id, 'tv')}
+                    onClick={() => onRemove(show._id, "tv")}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={16} />
@@ -94,7 +104,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           )}
         </div>
         <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-8 shadow-2xl border border-purple-500/20">
-          <h3 className="text-xl mb-4">Homemade Watchlists ({savedHomemadeWatchlists.length})</h3>
+          <h3 className="text-xl mb-4">
+            Homemade Watchlists ({savedHomemadeWatchlists.length})
+          </h3>
           {savedHomemadeWatchlists.length === 0 ? (
             <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
               <p className="text-gray-400">No homemade watchlists added yet</p>
@@ -102,9 +114,16 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {savedHomemadeWatchlists.map((watchlist) => (
-                <div key={watchlist._id} className="relative group h-64 sm:h-80">
+                <div
+                  key={watchlist._id}
+                  className="relative group h-64 sm:h-80"
+                >
                   <img
-                    src={watchlist.posterPath ? `http://localhost:5000${watchlist.posterPath}` : '/placeholder.jpg'}
+                    src={
+                      watchlist.posterPath
+                        ? `http://localhost:5000${watchlist.posterPath}`
+                        : "/placeholder.jpg"
+                    }
                     alt={watchlist.title}
                     className="w-full h-full rounded-lg group-hover:scale-105 transition-transform duration-300 shadow-lg object-cover"
                   />
@@ -112,7 +131,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
                     {watchlist.title}
                   </div>
                   <button
-                    onClick={() => onRemove(watchlist._id, 'homemadewatchlist')}
+                    onClick={() => onRemove(watchlist._id, "homemadewatchlist")}
                     className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                   >
                     <Trash2 size={16} />

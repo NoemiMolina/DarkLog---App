@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { API_URL } from '../../config/api';
+import React, { useState } from "react";
+import { API_URL } from "../../config/api";
 import appLogo from "@/assets/logo/appLogo.png";
-import PublicSearchBar from './PublicSearchBar';
-import SignUpForm from './SignUpForm';
-import LogInForm from './LogInForm';
-import GetLuckyDialog from './GetLuckyDialog';
-import AddFriendDialog from './AddFriendDialog';
-import { ImportModal } from '../ImportComponents';
-import { FriendRequestDialog } from '../NotificationsComponents/FriendRequestDialog';
-import { NotificationBadge } from '../NotificationsComponents/NotificationBadge';
-import { useNotifications } from '../../context/NotificationContext';
-import { useAuth } from '../../context/AuthContext';
-import { Button } from '../../components/ui/button';
+import PublicSearchBar from "./PublicSearchBar";
+import SignUpForm from "./SignUpForm";
+import LogInForm from "./LogInForm";
+import GetLuckyDialog from "./GetLuckyDialog";
+import AddFriendDialog from "./AddFriendDialog";
+import { ImportModal } from "../ImportComponents";
+import { FriendRequestDialog } from "../NotificationsComponents/FriendRequestDialog";
+import { NotificationBadge } from "../NotificationsComponents/NotificationBadge";
+import { useNotifications } from "../../context/NotificationContext";
+import { useAuth } from "../../context/AuthContext";
+import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
 import { Switch } from "../../components/ui/switch";
 import { IoIosMenu } from "react-icons/io";
 import { GiShamblingZombie } from "react-icons/gi";
 import { IoSearchSharp } from "react-icons/io5";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,17 +33,23 @@ interface HeaderProps {
   isTVShowMode?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture, onToggleTVShowMode, isTVShowMode }) => {
+const Header: React.FC<HeaderProps> = ({
+  username = "Guest",
+  userProfilePicture,
+  onToggleTVShowMode,
+  isTVShowMode,
+}) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [addFriendOpen, setAddFriendOpen] = useState(false);
   const [friendRequestOpen, setFriendRequestOpen] = useState(false);
   const [importModalOpen, setImportModalOpen] = useState(false);
-  const { unreadCount, friendRequestsCount, forumNotificationsCount } = useNotifications();
+  const { unreadCount, friendRequestsCount, forumNotificationsCount } =
+    useNotifications();
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const userId = localStorage.getItem('userId') || '';
+  const userId = localStorage.getItem("userId") || "";
   const handleToggle = (value: boolean) => {
-    localStorage.setItem('mediaType', value ? 'tvshows' : 'movies');
+    localStorage.setItem("mediaType", value ? "tvshows" : "movies");
     onToggleTVShowMode?.(value);
   };
 
@@ -58,24 +64,30 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                 <DropdownMenuTrigger asChild>
                   <div className="relative cursor-pointer">
                     <IoIosMenu className="text-4xl w-10 h-10 lg:w-5 2xl:translate-x-40" />
-                    <NotificationBadge count={unreadCount} className="-top-1 -right-1" />
+                    <NotificationBadge
+                      count={unreadCount}
+                      className="-top-1 -right-1"
+                    />
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2 2xl:translate-x-[120px] 2xl:translate-y-0">
                   <DropdownMenuItem
-                    onClick={() => navigate('/quiz')}
+                    onClick={() => navigate("/quiz")}
                     className="cursor-pointer hover:bg-white/10"
                   >
                     Quizzes
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
-                    onClick={() => navigate('/forum')}
+                  <DropdownMenuItem
+                    className="cursor-pointer hover:bg-white/10"
+                    onClick={() => navigate("/forum")}
                   >
                     <div className="flex items-center gap-2">
                       Forum
                       {forumNotificationsCount > 0 && (
                         <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                          {forumNotificationsCount > 99 ? '99+' : forumNotificationsCount}
+                          {forumNotificationsCount > 99
+                            ? "99+"
+                            : forumNotificationsCount}
                         </span>
                       )}
                     </div>
@@ -93,7 +105,9 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                       Add Friend
                       {friendRequestsCount > 0 && (
                         <span className="bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                          {friendRequestsCount > 99 ? '99+' : friendRequestsCount}
+                          {friendRequestsCount > 99
+                            ? "99+"
+                            : friendRequestsCount}
                         </span>
                       )}
                     </div>
@@ -107,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   <DropdownMenuItem
                     onClick={() => {
                       logout();
-                      navigate('/');
+                      navigate("/");
                     }}
                     className="cursor-pointer hover:bg-red-500/20 text-red-400"
                   >
@@ -119,7 +133,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
             <img
               src={appLogo}
               alt="App Logo"
-              onClick={() => navigate('/home')}
+              onClick={() => navigate("/home")}
               className="hidden sm:block h-auto w-20 sm:w-32 md:w-40 lg:w-56 xl:w-80 2xl:translate-x-45 cursor-pointer hover:opacity-80 transition-opacity"
             />
           </div>
@@ -130,7 +144,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
               <img
                 src={appLogo}
                 alt="App Logo"
-                onClick={() => navigate('/home')}
+                onClick={() => navigate("/home")}
                 className="h-auto w-56 cursor-pointer hover:opacity-80 transition-opacity xl:w-80 xl:-translate-x-15 2xl:w-72 2xl:-translate-x-20 2xl:w-70"
               />
             </div>
@@ -138,7 +152,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
             <img
               src={appLogo}
               alt="App Logo"
-              onClick={() => navigate('/home')}
+              onClick={() => navigate("/home")}
               className="hidden sm:block lg:hidden h-auto w-20 sm:w-32 md:w-40 cursor-pointer hover:opacity-80 transition-opacity"
             />
           </>
@@ -199,24 +213,28 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                       >
                         <IoIosMenu className="text-2xl w-6 h-6" />
                       </Button>
-                      <NotificationBadge count={unreadCount} className="top-0 right-0" />
+                      <NotificationBadge
+                        count={unreadCount}
+                        className="top-0 right-0"
+                      />
                     </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="bg-black/40 backdrop-blur-md border-white/20 text-white translate-y-2">
                     <DropdownMenuItem
-                      onClick={() => navigate('/profile')}
+                      onClick={() => navigate("/profile")}
                       className="cursor-pointer hover:bg-white/10"
                     >
                       Profile
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      onClick={() => navigate('/quiz')}
+                      onClick={() => navigate("/quiz")}
                       className="cursor-pointer hover:bg-white/10"
                     >
                       Quizzes
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer hover:bg-white/10"
-                      onClick={() => navigate('/forum')}
+                    <DropdownMenuItem
+                      className="cursor-pointer hover:bg-white/10"
+                      onClick={() => navigate("/forum")}
                     >
                       Forum
                     </DropdownMenuItem>
@@ -231,7 +249,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                         localStorage.removeItem("token");
                         localStorage.removeItem("user");
                         localStorage.removeItem("userId");
-                        navigate('/');
+                        navigate("/");
                       }}
                       className="cursor-pointer hover:bg-red-500/20 text-red-400"
                     >
@@ -239,11 +257,7 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <img
-                  src={appLogo}
-                  alt="App Logo"
-                  className="h-auto w-32"
-                />
+                <img src={appLogo} alt="App Logo" className="h-auto w-32" />
                 <div className="flex flex-col items-center gap-1 -mt-2">
                   <Switch
                     id="tv-shows-switch-mobile"
@@ -289,9 +303,9 @@ const Header: React.FC<HeaderProps> = ({ username = "Guest", userProfilePicture,
                   </Label>
                 </div>
                 {/* PROFILE PICTURE */}
-                <div 
+                <div
                   className="cursor-pointer"
-                  onClick={() => navigate('/profile')}
+                  onClick={() => navigate("/profile")}
                 >
                   {userProfilePicture ? (
                     <img

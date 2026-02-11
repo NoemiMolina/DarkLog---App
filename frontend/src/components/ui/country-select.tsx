@@ -18,11 +18,11 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const filtered = countries.filter((country) =>
-    country.name.toLowerCase().includes(search.toLowerCase())
+    country.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const selectedCountry = countries.find(
-    (c) => c.name.toLowerCase() === value.toLowerCase()
+    (c) => c.name.toLowerCase() === value.toLowerCase(),
   );
 
   return (
@@ -36,7 +36,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
           }}
           onFocus={() => setIsOpen(true)}
           placeholder={placeholder}
-          className={`w-full ${selectedCountry && !search ? 'pl-10' : ''}`}
+          className={`w-full ${selectedCountry && !search ? "pl-10" : ""}`}
         />
         {selectedCountry && !search && (
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xl pointer-events-none">
@@ -75,10 +75,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
       )}
 
       {isOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
       )}
     </div>
   );

@@ -1,392 +1,377 @@
 [
-    {
-        "question": "In 'Twin Peaks: The Return', what is the name of Dale Cooper’s evil doppelgänger?",
-        "options": [
-            "Bob",
-            "The Fireman",
-            "Mr. C",
-            "The Man from Another Place"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Higurashi When They Cry', what constantly resets in the story?",
-        "options": [
-            "The characters’ memories",
-            "Time loops",
-            "The location",
-            "The killer’s identity"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Channel Zero: No-End House', what does each room in the house represent?",
-        "options": [
-            "A memory",
-            "A deeper fear of the visitor",
-            "A demon",
-            "A stage of death"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Beyond the Walls' (French: 'Au-delà des murs'), what happens when Lisa enters the house?",
-        "options": [
-            "She becomes invisible",
-            "She meets her doppelgänger",
-            "Time stops",
-            "She finds an endless labyrinth inside"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Kingdom' (1994), what unusual event occurs at the Danish hospital?",
-        "options": [
-            "Patients vanish into walls",
-            "Ghosts haunt the staff",
-            "A god is born",
-            "The dead run the hospital at night"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Hellbound' (2021), how are people condemned to death?",
-        "options": [
-            "They’re chosen by demons",
-            "They’re infected",
-            "A supernatural decree appears",
-            "They’re cursed by priests"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Enfield Haunting', which real-life event inspired the TV Show?",
-        "options": [
-            "The Amityville haunting",
-            "The Bell Witch case",
-            "The Enfield Poltergeist",
-            "The Black Monk of Pontefract"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In '30 Coins', what is Father Vergara’s dark past?",
-        "options": [
-            "He was an exorcist involved with the Vatican’s secrets",
-            "He murdered a bishop",
-            "He worked for the Mafia",
-            "He discovered immortality"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Third Day', what type of island does Sam visit?",
-        "options": [
-            "A pagan island with cult rituals",
-            "A ghost island",
-            "A government base",
-            "A time-warped land"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Dead Set', where does the zombie outbreak begin?",
-        "options": [
-            "At a concert",
-            "At a news station",
-            "Inside a prison",
-            "During a reality TV show"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Paranoia Agent', what weapon does Lil’ Slugger use?",
-        "options": [
-            "A hammer",
-            "A knife",
-            "A steel pipe",
-            "A golden baseball bat"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Returned' (US version), what happens when the dead return?",
-        "options": [
-            "They decay slowly",
-            "They lose their voices",
-            "They appear unchanged but emotionally distant",
-            "They spread disease"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Haunting of Hill House', what is the Red Room actually revealed to be?",
-        "options": [
-            "A portal to the past",
-            "A room that changes to fit each person",
-            "A dream world",
-            "A feeding ground for ghosts"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'P.T.'-inspired TV Show 'Silent Hill: Ascension', what determines the story’s outcome?",
-        "options": [
-            "Random selection",
-            "Audience participation",
-            "AI decisions",
-            "Director’s edits"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Keepers', what horrific truth is uncovered?",
-        "options": [
-            "A cover-up of abuse within the Catholic Church",
-            "A mass grave",
-            "An exorcism gone wrong",
-            "A supernatural conspiracy"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Dark', what connects the families of Winden?",
-        "options": [
-            "A nuclear accident",
-            "A cult summoning",
-            "A time loop spanning generations",
-            "An alien abduction"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Les Oubliées' (The Forgotten Ones), what discovery shocks the detectives?",
-        "options": [
-            "Girls buried alive in a wall",
-            "A family turned to stone",
-            "A village with no bodies",
-            "A frozen lake of corpses"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Requiem' (BBC), what drives Matilda to the small Welsh town?",
-        "options": [
-            "A missing person case",
-            "A vision",
-            "Her mother’s mysterious suicide",
-            "A letter from a priest"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Taboo' (2017), what supernatural ability does James Delaney seem to have?",
-        "options": [
-            "He communicates with spirits",
-            "He controls animals",
-            "He cannot die",
-            "He reads thoughts"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Rehearsal' (2022), why is the TV Show considered psychologically horrifying?",
-        "options": [
-            "It uses AI doubles",
-            "It traps contestants",
-            "It manipulates real people’s lives",
-            "It includes death rituals"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Veil' (1958), what is unique about the show’s host Boris Karloff?",
-        "options": [
-            "He presents and stars in each supernatural tale",
-            "He interviews real witnesses",
-            "He was also the writer",
-            "He played himself"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The River', what is the expedition searching for?",
-        "options": [
-            "A lost civilization",
-            "A mythical beast",
-            "A secret cure",
-            "A missing TV explorer"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'The Devil’s Hour', what time does Lucy always wake up?",
-        "options": [
-            "4:00 AM",
-            "3:33 AM",
-            "2:22 AM",
-            "12:06 AM"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Penny Dreadful: City of Angels', which mythological element replaces the gothic horror?",
-        "options": [
-            "Greek gods",
-            "Egyptian curses",
-            "Nordic myths",
-            "Mexican folklore and Santa Muerte"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Ghoul' (2018, India), what is the ghoul used as a metaphor for?",
-        "options": [
-            "Political oppression and fear",
-            "Religious extremism",
-            "Western colonialism",
-            "Global warming"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Rampo Kitan: Game of Laplace', what is the central theme?",
-        "options": [
-            "Psychological murder mysteries",
-            "Supernatural revenge",
-            "Demon summoning",
-            "Time travel paradoxes"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Bloodride', what links the anthology’s episodes?",
-        "options": [
-            "A cursed book",
-            "Passengers on a mysterious bus",
-            "A TV broadcast",
-            "A shared killer"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Marble Hornets', how is the Slender Man depicted?",
-        "options": [
-            "As a tall man in dreams",
-            "As 'The Operator', an unseen presence",
-            "As a child abductor",
-            "As a shapeshifter"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'Utopia' (UK), what manuscript causes chaos among the characters?",
-        "options": [
-            "The Utopia Experiments",
-            "The Black Bible",
-            "The Harbinger Protocol",
-            "The Manuscript of 9"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    },
-    {
-        "question": "In 'To the Lake' (Russian TV Show), what kind of apocalypse strikes?",
-        "options": [
-            "A nuclear winter",
-            "An alien invasion",
-            "A demonic outbreak",
-            "A deadly epidemic"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "hard",
-        "type": "TVShow"
-    }
+  {
+    "question": "In 'Twin Peaks: The Return', what is the name of Dale Cooper’s evil doppelgänger?",
+    "options": ["Bob", "The Fireman", "Mr. C", "The Man from Another Place"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Higurashi When They Cry', what constantly resets in the story?",
+    "options": [
+      "The characters’ memories",
+      "Time loops",
+      "The location",
+      "The killer’s identity"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Channel Zero: No-End House', what does each room in the house represent?",
+    "options": [
+      "A memory",
+      "A deeper fear of the visitor",
+      "A demon",
+      "A stage of death"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Beyond the Walls' (French: 'Au-delà des murs'), what happens when Lisa enters the house?",
+    "options": [
+      "She becomes invisible",
+      "She meets her doppelgänger",
+      "Time stops",
+      "She finds an endless labyrinth inside"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Kingdom' (1994), what unusual event occurs at the Danish hospital?",
+    "options": [
+      "Patients vanish into walls",
+      "Ghosts haunt the staff",
+      "A god is born",
+      "The dead run the hospital at night"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Hellbound' (2021), how are people condemned to death?",
+    "options": [
+      "They’re chosen by demons",
+      "They’re infected",
+      "A supernatural decree appears",
+      "They’re cursed by priests"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Enfield Haunting', which real-life event inspired the TV Show?",
+    "options": [
+      "The Amityville haunting",
+      "The Bell Witch case",
+      "The Enfield Poltergeist",
+      "The Black Monk of Pontefract"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In '30 Coins', what is Father Vergara’s dark past?",
+    "options": [
+      "He was an exorcist involved with the Vatican’s secrets",
+      "He murdered a bishop",
+      "He worked for the Mafia",
+      "He discovered immortality"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Third Day', what type of island does Sam visit?",
+    "options": [
+      "A pagan island with cult rituals",
+      "A ghost island",
+      "A government base",
+      "A time-warped land"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Dead Set', where does the zombie outbreak begin?",
+    "options": [
+      "At a concert",
+      "At a news station",
+      "Inside a prison",
+      "During a reality TV show"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Paranoia Agent', what weapon does Lil’ Slugger use?",
+    "options": ["A hammer", "A knife", "A steel pipe", "A golden baseball bat"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Returned' (US version), what happens when the dead return?",
+    "options": [
+      "They decay slowly",
+      "They lose their voices",
+      "They appear unchanged but emotionally distant",
+      "They spread disease"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Haunting of Hill House', what is the Red Room actually revealed to be?",
+    "options": [
+      "A portal to the past",
+      "A room that changes to fit each person",
+      "A dream world",
+      "A feeding ground for ghosts"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'P.T.'-inspired TV Show 'Silent Hill: Ascension', what determines the story’s outcome?",
+    "options": [
+      "Random selection",
+      "Audience participation",
+      "AI decisions",
+      "Director’s edits"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Keepers', what horrific truth is uncovered?",
+    "options": [
+      "A cover-up of abuse within the Catholic Church",
+      "A mass grave",
+      "An exorcism gone wrong",
+      "A supernatural conspiracy"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Dark', what connects the families of Winden?",
+    "options": [
+      "A nuclear accident",
+      "A cult summoning",
+      "A time loop spanning generations",
+      "An alien abduction"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Les Oubliées' (The Forgotten Ones), what discovery shocks the detectives?",
+    "options": [
+      "Girls buried alive in a wall",
+      "A family turned to stone",
+      "A village with no bodies",
+      "A frozen lake of corpses"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Requiem' (BBC), what drives Matilda to the small Welsh town?",
+    "options": [
+      "A missing person case",
+      "A vision",
+      "Her mother’s mysterious suicide",
+      "A letter from a priest"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Taboo' (2017), what supernatural ability does James Delaney seem to have?",
+    "options": [
+      "He communicates with spirits",
+      "He controls animals",
+      "He cannot die",
+      "He reads thoughts"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Rehearsal' (2022), why is the TV Show considered psychologically horrifying?",
+    "options": [
+      "It uses AI doubles",
+      "It traps contestants",
+      "It manipulates real people’s lives",
+      "It includes death rituals"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Veil' (1958), what is unique about the show’s host Boris Karloff?",
+    "options": [
+      "He presents and stars in each supernatural tale",
+      "He interviews real witnesses",
+      "He was also the writer",
+      "He played himself"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The River', what is the expedition searching for?",
+    "options": [
+      "A lost civilization",
+      "A mythical beast",
+      "A secret cure",
+      "A missing TV explorer"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'The Devil’s Hour', what time does Lucy always wake up?",
+    "options": ["4:00 AM", "3:33 AM", "2:22 AM", "12:06 AM"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Penny Dreadful: City of Angels', which mythological element replaces the gothic horror?",
+    "options": [
+      "Greek gods",
+      "Egyptian curses",
+      "Nordic myths",
+      "Mexican folklore and Santa Muerte"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Ghoul' (2018, India), what is the ghoul used as a metaphor for?",
+    "options": [
+      "Political oppression and fear",
+      "Religious extremism",
+      "Western colonialism",
+      "Global warming"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Rampo Kitan: Game of Laplace', what is the central theme?",
+    "options": [
+      "Psychological murder mysteries",
+      "Supernatural revenge",
+      "Demon summoning",
+      "Time travel paradoxes"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Bloodride', what links the anthology’s episodes?",
+    "options": [
+      "A cursed book",
+      "Passengers on a mysterious bus",
+      "A TV broadcast",
+      "A shared killer"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Marble Hornets', how is the Slender Man depicted?",
+    "options": [
+      "As a tall man in dreams",
+      "As 'The Operator', an unseen presence",
+      "As a child abductor",
+      "As a shapeshifter"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'Utopia' (UK), what manuscript causes chaos among the characters?",
+    "options": [
+      "The Utopia Experiments",
+      "The Black Bible",
+      "The Harbinger Protocol",
+      "The Manuscript of 9"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  },
+  {
+    "question": "In 'To the Lake' (Russian TV Show), what kind of apocalypse strikes?",
+    "options": [
+      "A nuclear winter",
+      "An alien invasion",
+      "A demonic outbreak",
+      "A deadly epidemic"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "hard",
+    "type": "TVShow"
+  }
 ]

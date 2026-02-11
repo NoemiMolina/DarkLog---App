@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { API_URL } from '../config/api';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { API_URL } from "../config/api";
 
 interface AuthContextType {
   username: string;
@@ -14,21 +14,25 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [username, setUsername] = useState<string>('Guest');
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [username, setUsername] = useState<string>("Guest");
   const [userId, setUserId] = useState<string | null>(null);
-  const [userProfilePicture, setUserProfilePicture] = useState<string | null>(null);
+  const [userProfilePicture, setUserProfilePicture] = useState<string | null>(
+    null,
+  );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const updateAuthState = () => {
-    const storedUsername = localStorage.getItem('username');
-    const storedUserId = localStorage.getItem('userId');
-    const storedUser = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
+    const storedUsername = localStorage.getItem("username");
+    const storedUserId = localStorage.getItem("userId");
+    const storedUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
 
     if (token && storedUserId) {
-      setUsername(storedUsername || 'Guest');
+      setUsername(storedUsername || "Guest");
       setUserId(storedUserId);
       if (storedUser) {
         try {
@@ -40,7 +44,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       setIsAuthenticated(true);
     } else {
-      setUsername('Guest');
+      setUsername("Guest");
       setUserId(null);
       setUserProfilePicture(null);
       setIsAuthenticated(false);
@@ -49,8 +53,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     const verifyStoredToken = async () => {
-      const token = localStorage.getItem('token');
-      
+      const token = localStorage.getItem("token");
+
       if (!token) {
         setIsLoading(false);
         return;
@@ -58,37 +62,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       try {
         const response = await fetch(`${API_URL}/users/verify-token`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
           },
         });
 
         if (response.ok) {
           const data = await response.json();
           if (data.user) {
-            localStorage.setItem('user', JSON.stringify(data.user));
-            localStorage.setItem('userId', data.user._id);
-            localStorage.setItem('username', data.user.UserPseudo || 'Guest');
-            setUsername(data.user.UserPseudo || 'Guest');
+            localStorage.setItem("user", JSON.stringify(data.user));
+            localStorage.setItem("userId", data.user._id);
+            localStorage.setItem("username", data.user.UserPseudo || "Guest");
+            setUsername(data.user.UserPseudo || "Guest");
             setUserId(data.user._id);
             setUserProfilePicture(data.user.UserProfilePicture || null);
             setIsAuthenticated(true);
           }
         } else {
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          localStorage.removeItem('userId');
-          localStorage.removeItem('username');
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("username");
           setIsAuthenticated(false);
         }
       } catch (error) {
-        console.error('Error verifying token:', error);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('username');
+        console.error("Error verifying token:", error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("userId");
+        localStorage.removeItem("username");
         setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
@@ -101,15 +105,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const handleStorageChange = () => {
       updateAuthState();
     };
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
   const refreshAuth = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
       setIsAuthenticated(false);
       return;
@@ -117,17 +121,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     try {
       const response = await fetch(`${API_URL}/users/verify-token`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
 
       if (response.ok) {
         const data = await response.json();
         if (data.user) {
-          setUsername(data.user.UserPseudo || 'Guest');
+          setUsername(data.user.UserPseudo || "Guest");
           setUserId(data.user._id);
           setUserProfilePicture(data.user.UserProfilePicture || null);
           setIsAuthenticated(true);
@@ -136,24 +140,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.error('Error refreshing auth:', error);
+      console.error("Error refreshing auth:", error);
       setIsAuthenticated(false);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('username');
-    setUsername('Guest');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+    setUsername("Guest");
     setUserId(null);
     setUserProfilePicture(null);
     setIsAuthenticated(false);
   };
 
   return (
-    <AuthContext.Provider value={{ username, userId, userProfilePicture, isAuthenticated, isLoading, logout, refreshAuth, updateAuthState }}>
+    <AuthContext.Provider
+      value={{
+        username,
+        userId,
+        userProfilePicture,
+        isAuthenticated,
+        isLoading,
+        logout,
+        refreshAuth,
+        updateAuthState,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -162,7 +177,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error("useAuth must be used within AuthProvider");
   }
   return context;
 };

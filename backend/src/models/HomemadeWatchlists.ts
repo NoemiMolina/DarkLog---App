@@ -21,11 +21,11 @@ const HomemadeWatchlistSchema: Schema = new Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export default mongoose.model<IHomemadeWatchlist>(
   "HomemadeWatchlist",
   HomemadeWatchlistSchema,
-  "homemade_watchlists"
+  "homemade_watchlists",
 );

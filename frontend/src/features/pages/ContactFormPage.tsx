@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { X } from 'lucide-react';
-import { ContactFormContent } from '../../components/FooterComponents/ContactForm';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { X } from "lucide-react";
+import { ContactFormContent } from "../../components/FooterComponents/ContactForm";
 
 export default function ContactFormPage() {
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem("user");
     if (user) {
       try {
         const parsedUser = JSON.parse(user);
-        setUserEmail(parsedUser.UserMail || '');
+        setUserEmail(parsedUser.UserMail || "");
       } catch (error) {
-        console.error('Error parsing user:', error);
+        console.error("Error parsing user:", error);
       }
     }
   }, []);
@@ -31,15 +31,19 @@ export default function ContactFormPage() {
 
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white drop-shadow mb-2">📧 Contact Us</h1>
-        <p className="text-gray-400">Let us know if you can't find a movie or TV show</p>
+        <h1 className="text-3xl font-bold text-white drop-shadow mb-2">
+          📧 Contact Us
+        </h1>
+        <p className="text-gray-400">
+          Let us know if you can't find a movie or TV show
+        </p>
       </div>
 
       {/* Form Content */}
       <div className="w-full max-w-lg">
-        <ContactFormContent 
-          userEmail={userEmail} 
-          onClose={() => navigate(-1)} 
+        <ContactFormContent
+          userEmail={userEmail}
+          onClose={() => navigate(-1)}
         />
       </div>
     </div>

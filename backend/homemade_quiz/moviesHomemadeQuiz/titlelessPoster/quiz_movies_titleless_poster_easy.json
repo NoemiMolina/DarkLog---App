@@ -1,422 +1,312 @@
 [
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Nun",
-            "It",
-            "Annabelle",
-            "The Conjuring"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Strangers",
-            "Halloween",
-            "Scream",
-            "The Purge"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/dyhaB19AICF7TO7CK2aD6KfymnZ.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Insidious",
-            "Sinister",
-            "The Conjuring",
-            "Amityville Horror"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/wVYREutTvI2tmxr6ujrHT704wGF.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Final Destination",
-            "Scream",
-            "I Know What You Did Last Summer",
-            "Urban Legend"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/4R2zzEYzTZs5aP0Zp1pa9V5qfYc.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Pennywise",
-            "It",
-            "Killer Klowns from Outer Space",
-            "Terrifier"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Others",
-            "Sinister",
-            "A Nightmare on Elm Street",
-            "The Babadook"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/7tLOz4LhKM2yz1d3R0JJbJZg4Ag.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "REC",
-            "The Blair Witch Project",
-            "Cloverfield",
-            "Paranormal Activity"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/d8bWJzvlzFxlmGvG1YkFA2RzK4v.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Omen",
-            "Hereditary",
-            "Rosemary’s Baby",
-            "The Conjuring"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/yG1Xl9B7pA1CzF4mYlC4ZKKM9dD.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Mirrors",
-            "Candyman",
-            "Oculus",
-            "The Bye Bye Man"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/77rZ8J5LQYVydtazg2HCZtf28yn.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Coraline",
-            "Beetlejuice",
-            "The Addams Family",
-            "The Munsters"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/qvktm0BHcnmDpul4Hz01GIazWPr.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Nun",
-            "Candyman",
-            "Beetlejuice",
-            "The Bye Bye Man"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/1MAm0RZKjHfO9t1K9VdzgeMJHic.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "M3GAN",
-            "Annabelle",
-            "The Boy",
-            "Chucky"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/lYfRc57Kx9VgLZ48iulu0HKnM15.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Pope’s Exorcist",
-            "The Exorcist",
-            "The Possession",
-            "The Conjuring"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/3xf3T7G8vobJkF7o0CzvNnE2yWz.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Others",
-            "Let Me In",
-            "Nosferatu",
-            "Dracula"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/6dOeXKjBqfdz4OjiOspxRwjC4Hh.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Hannibal",
-            "You’re Next",
-            "American Psycho",
-            "The Collector"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/9uGHEgsiUXjCNq8wdq4r49YL8A1.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Ritual",
-            "Midsommar",
-            "Apostle",
-            "The Wicker Man"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/lcbjUI4VncvClDrGM1dwRkPguWz.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Forest",
-            "The Evil Dead",
-            "Cabin Fever",
-            "The Ritual"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/xBLDysQJFhI7vZ6R9sQ8zM6aYj2.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "47 Meters Down",
-            "Open Water",
-            "Jaws",
-            "The Meg"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/s2xcqSFfT6F7ZXHxowjxfG0yisT.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Warm Bodies",
-            "Army of the Dead",
-            "Shaun of the Dead",
-            "Zombieland"
-        ],
-        "correctIndex": 3,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/dUkAmAyPVqubSBNRjRqCgHggZcK.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Sinister",
-            "The Orphan",
-            "Children of the Corn",
-            "The Omen"
-        ],
-        "correctIndex": 3,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/lz3zdeGk0AucjT6v4F9TRJc7u0c.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Hereditary",
-            "The Wailing",
-            "The Witch",
-            "The Medium"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/dRVAlaU0vbG6hMf2K45NSiIyoUe.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Wrong Turn",
-            "The Descent",
-            "The Ritual",
-            "The Forest"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/fXOnvHApqkRkUsgHfY2a3N9DqjY.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Unfriended",
-            "The Ring",
-            "Pulse",
-            "Smile"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/e2t5ck2F0rZAYL7fJxRB3Esl3mG.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Pan’s Labyrinth",
-            "Mama",
-            "The Orphanage",
-            "The Others"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/6cD3U3g8YjzD62qQsaEpCiwGGr5.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Sixth Sense",
-            "Beetlejuice",
-            "Ghostbusters",
-            "The Frighteners"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/nnl6OWkyPpuMm595hmAxNW3rZFn.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Grave Encounters",
-            "Paranormal Activity",
-            "The Visit",
-            "Sinister"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/2uA3dPAXTxHjfYxzj9ZMMkqD8B3.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Dead Silence",
-            "Chucky",
-            "M3GAN",
-            "Annabelle"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/zxkY8byBnCsXodEYpK8tmwEGXBI.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Mist",
-            "Silent Hill",
-            "The Crazies",
-            "Resident Evil"
-        ],
-        "correctIndex": 1,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/9ukJS7mQLz8Jk3Uf3r4eywWPI7h.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "The Host",
-            "Jaws",
-            "Piranha 3D",
-            "The Meg"
-        ],
-        "correctIndex": 0,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/vqRLtE8aT4ItMizsKqZqV1rj2tP.jpg"
-    },
-    {
-        "question": "Guess the movie from this poster:",
-        "options": [
-            "Videodrome",
-            "Smile",
-            "Poltergeist",
-            "The Ring"
-        ],
-        "correctIndex": 2,
-        "category": "titleless_poster",
-        "difficulty": "easy",
-        "type": "movie",
-        "imageUrl": "https://image.tmdb.org/t/p/w500/3FsrPEUtHzdNFtueUoPQgDgQHbM.jpg"
-    }
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Nun", "It", "Annabelle", "The Conjuring"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Strangers", "Halloween", "Scream", "The Purge"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/dyhaB19AICF7TO7CK2aD6KfymnZ.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Insidious", "Sinister", "The Conjuring", "Amityville Horror"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/wVYREutTvI2tmxr6ujrHT704wGF.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "Final Destination",
+      "Scream",
+      "I Know What You Did Last Summer",
+      "Urban Legend"
+    ],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/4R2zzEYzTZs5aP0Zp1pa9V5qfYc.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "Pennywise",
+      "It",
+      "Killer Klowns from Outer Space",
+      "Terrifier"
+    ],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/9E2y5Q7WlCVNEhP5GiVTjhEhx1o.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "The Others",
+      "Sinister",
+      "A Nightmare on Elm Street",
+      "The Babadook"
+    ],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/7tLOz4LhKM2yz1d3R0JJbJZg4Ag.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "REC",
+      "The Blair Witch Project",
+      "Cloverfield",
+      "Paranormal Activity"
+    ],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/d8bWJzvlzFxlmGvG1YkFA2RzK4v.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Omen", "Hereditary", "Rosemary’s Baby", "The Conjuring"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/yG1Xl9B7pA1CzF4mYlC4ZKKM9dD.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Mirrors", "Candyman", "Oculus", "The Bye Bye Man"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/77rZ8J5LQYVydtazg2HCZtf28yn.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Coraline", "Beetlejuice", "The Addams Family", "The Munsters"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/qvktm0BHcnmDpul4Hz01GIazWPr.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Nun", "Candyman", "Beetlejuice", "The Bye Bye Man"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/1MAm0RZKjHfO9t1K9VdzgeMJHic.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["M3GAN", "Annabelle", "The Boy", "Chucky"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/lYfRc57Kx9VgLZ48iulu0HKnM15.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "The Pope’s Exorcist",
+      "The Exorcist",
+      "The Possession",
+      "The Conjuring"
+    ],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/3xf3T7G8vobJkF7o0CzvNnE2yWz.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Others", "Let Me In", "Nosferatu", "Dracula"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/6dOeXKjBqfdz4OjiOspxRwjC4Hh.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Hannibal", "You’re Next", "American Psycho", "The Collector"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/9uGHEgsiUXjCNq8wdq4r49YL8A1.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Ritual", "Midsommar", "Apostle", "The Wicker Man"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/lcbjUI4VncvClDrGM1dwRkPguWz.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Forest", "The Evil Dead", "Cabin Fever", "The Ritual"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/xBLDysQJFhI7vZ6R9sQ8zM6aYj2.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["47 Meters Down", "Open Water", "Jaws", "The Meg"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/s2xcqSFfT6F7ZXHxowjxfG0yisT.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "Warm Bodies",
+      "Army of the Dead",
+      "Shaun of the Dead",
+      "Zombieland"
+    ],
+    "correctIndex": 3,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/dUkAmAyPVqubSBNRjRqCgHggZcK.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Sinister", "The Orphan", "Children of the Corn", "The Omen"],
+    "correctIndex": 3,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/lz3zdeGk0AucjT6v4F9TRJc7u0c.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Hereditary", "The Wailing", "The Witch", "The Medium"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/dRVAlaU0vbG6hMf2K45NSiIyoUe.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Wrong Turn", "The Descent", "The Ritual", "The Forest"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/fXOnvHApqkRkUsgHfY2a3N9DqjY.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Unfriended", "The Ring", "Pulse", "Smile"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/e2t5ck2F0rZAYL7fJxRB3Esl3mG.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Pan’s Labyrinth", "Mama", "The Orphanage", "The Others"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/6cD3U3g8YjzD62qQsaEpCiwGGr5.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "The Sixth Sense",
+      "Beetlejuice",
+      "Ghostbusters",
+      "The Frighteners"
+    ],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/nnl6OWkyPpuMm595hmAxNW3rZFn.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": [
+      "Grave Encounters",
+      "Paranormal Activity",
+      "The Visit",
+      "Sinister"
+    ],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/2uA3dPAXTxHjfYxzj9ZMMkqD8B3.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Dead Silence", "Chucky", "M3GAN", "Annabelle"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/zxkY8byBnCsXodEYpK8tmwEGXBI.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Mist", "Silent Hill", "The Crazies", "Resident Evil"],
+    "correctIndex": 1,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/9ukJS7mQLz8Jk3Uf3r4eywWPI7h.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["The Host", "Jaws", "Piranha 3D", "The Meg"],
+    "correctIndex": 0,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/vqRLtE8aT4ItMizsKqZqV1rj2tP.jpg"
+  },
+  {
+    "question": "Guess the movie from this poster:",
+    "options": ["Videodrome", "Smile", "Poltergeist", "The Ring"],
+    "correctIndex": 2,
+    "category": "titleless_poster",
+    "difficulty": "easy",
+    "type": "movie",
+    "imageUrl": "https://image.tmdb.org/t/p/w500/3FsrPEUtHzdNFtueUoPQgDgQHbM.jpg"
+  }
 ]

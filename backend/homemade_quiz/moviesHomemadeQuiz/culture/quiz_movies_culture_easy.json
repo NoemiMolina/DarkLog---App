@@ -1,392 +1,322 @@
 [
-    {
-        "question": "In 'Scream' (1996), what is the name of the masked killer?",
-        "options": [
-            "Ghostface",
-            "Leatherface",
-            "Michael Myers",
-            "Jigsaw"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'It' (2017), what form does the creature take to scare children?",
-        "options": [
-            "A doll",
-            "A clown",
-            "A dog",
-            "The developer of this fabulous website"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Exorcist' (1973), what is the name of the possessed girl?",
-        "options": [
-            "Regan",
-            "Sarah",
-            "Carrie",
-            "Linda"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Texas Chainsaw Massacre' (1974), what weapon does the killer use?",
-        "options": [
-            "Hammer",
-            "Chainsaw",
-            "Knife",
-            "Axe"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Jaws' (1975), what creature terrorizes the beach?",
-        "options": [
-            "Alligator",
-            "Shark",
-            "Giant Octopus",
-            "Crocodile"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Halloween' (1978), what is the first name of the masked killer?",
-        "options": [
-            "Jason",
-            "Freddy",
-            "Michael",
-            "Norman"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Friday the 13th' (1980), where does the story mainly take place?",
-        "options": [
-            "Elm Street",
-            "Camp Crystal Lake",
-            "Silent Hill",
-            "Woodsboro"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'A Nightmare on Elm Street' (1984), how does Freddy Krueger kill his victims?",
-        "options": [
-            "In their dreams",
-            "By poison",
-            "By drowning",
-            "By fire"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Conjuring' (2013), which couple investigates paranormal cases?",
-        "options": [
-            "John and Mary Smith",
-            "Dean and Sam Winchester",
-            "Bill and Janet Perron",
-            "Ed and Lorraine Warren"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Get Out' (2017), what color is the cup used to hypnotize Chris?",
-        "options": [
-            "White",
-            "Red",
-            "Blue",
-            "Black"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Annabelle' (2014), what object is possessed?",
-        "options": [
-            "A doll",
-            "A mirror",
-            "A book",
-            "The developer's computer"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Orphanage' (2007), where does most of the story take place?",
-        "options": [
-            "In a school",
-            "In a hospital",
-            "In an isolated house",
-            "In a cemetery"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Paranormal Activity' (2007), what type of camera is used?",
-        "options": [
-            "Security camera",
-            "Professional camera",
-            "Infrared camera",
-            "Hidden camera"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Midsommar' (2019), where does the ritual take place?",
-        "options": [
-            "Iceland",
-            "Norway",
-            "Finland",
-            "Sweden"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Ring' (2002), what happens after watching the cursed tape?",
-        "options": [
-            "You die in 7 days",
-            "You go blind",
-            "You get possessed",
-            "You go to the toilet"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Bird Box' (2018), what must you not do to survive?",
-        "options": [
-            "Leave the house",
-            "Look at the creatures",
-            "Speak too loud",
-            "Look at the code of this website"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Sinister' (2012), what kind of videos does the writer find?",
-        "options": [
-            "Super 8 murder films",
-            "VHS news tapes",
-            "Security footage",
-            "TV reports"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Babadook' (2014), where does the creature come from?",
-        "options": [
-            "A box",
-            "A photo",
-            "A song",
-            "A children's book"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'It: Chapter Two' (2019), where does Pennywise live?",
-        "options": [
-            "In the sewers",
-            "In an abandoned house",
-            "In a cave",
-            "In a circus"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Us' (2019), what is the name of Adelaide’s evil double?",
-        "options": [
-            "Red",
-            "Ruby",
-            "Rose",
-            "Ruth"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Shaun of the Dead' (2004), what type of horror movie is parodied?",
-        "options": [
-            "Slasher films",
-            "Exorcism movies",
-            "Zombie movies",
-            "Vampire movies"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Nun' (2018), which cinematic universe does it belong to?",
-        "options": [
-            "The Insidious Universe",
-            "The Conjuring Universe",
-            "The Sinister Universe",
-            "The Ring Universe"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Evil Dead' (1981), which book causes the horrors?",
-        "options": [
-            "The Book of Shadows",
-            "The Book of the Dead",
-            "The Black Codex",
-            "The Necronomicon"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Witch' (2015), in what century does the story take place?",
-        "options": [
-            "17th century",
-            "19th century",
-            "20th century",
-            "Middle Ages"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In '28 Days Later' (2002), what type of outbreak devastates London?",
-        "options": [
-            "A zombie virus",
-            "A rage virus",
-            "A mutant plague",
-            "An alien infection"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Blair Witch Project' (1999), what do the students find at the end?",
-        "options": [
-            "An abandoned house",
-            "A cursed chest",
-            "An ancient book",
-            "An open grave"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'Gremlins' (1984), what must you never do to a Mogwai?",
-        "options": [
-            "Feed it after midnight",
-            "Expose it to sunlight",
-            "Drop it",
-            "Shout at it"
-        ],
-        "correctIndex": 0,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Invisible Man' (2020), why is the killer invisible?",
-        "options": [
-            "A curse",
-            "A ghostly power",
-            "A technological suit",
-            "A magic potion"
-        ],
-        "correctIndex": 2,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'A Quiet Place' (2018), what attracts the creatures?",
-        "options": [
-            "Light",
-            "Blood",
-            "Movement",
-            "Sound"
-        ],
-        "correctIndex": 3,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    },
-    {
-        "question": "In 'The Cabin in the Woods' (2012), who controls the horrific events?",
-        "options": [
-            "Demons",
-            "A secret organization",
-            "Students",
-            "The government"
-        ],
-        "correctIndex": 1,
-        "category": "culture",
-        "difficulty": "easy",
-        "type": "movie"
-    }
+  {
+    "question": "In 'Scream' (1996), what is the name of the masked killer?",
+    "options": ["Ghostface", "Leatherface", "Michael Myers", "Jigsaw"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'It' (2017), what form does the creature take to scare children?",
+    "options": [
+      "A doll",
+      "A clown",
+      "A dog",
+      "The developer of this fabulous website"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Exorcist' (1973), what is the name of the possessed girl?",
+    "options": ["Regan", "Sarah", "Carrie", "Linda"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Texas Chainsaw Massacre' (1974), what weapon does the killer use?",
+    "options": ["Hammer", "Chainsaw", "Knife", "Axe"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Jaws' (1975), what creature terrorizes the beach?",
+    "options": ["Alligator", "Shark", "Giant Octopus", "Crocodile"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Halloween' (1978), what is the first name of the masked killer?",
+    "options": ["Jason", "Freddy", "Michael", "Norman"],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Friday the 13th' (1980), where does the story mainly take place?",
+    "options": ["Elm Street", "Camp Crystal Lake", "Silent Hill", "Woodsboro"],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'A Nightmare on Elm Street' (1984), how does Freddy Krueger kill his victims?",
+    "options": ["In their dreams", "By poison", "By drowning", "By fire"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Conjuring' (2013), which couple investigates paranormal cases?",
+    "options": [
+      "John and Mary Smith",
+      "Dean and Sam Winchester",
+      "Bill and Janet Perron",
+      "Ed and Lorraine Warren"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Get Out' (2017), what color is the cup used to hypnotize Chris?",
+    "options": ["White", "Red", "Blue", "Black"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Annabelle' (2014), what object is possessed?",
+    "options": ["A doll", "A mirror", "A book", "The developer's computer"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Orphanage' (2007), where does most of the story take place?",
+    "options": [
+      "In a school",
+      "In a hospital",
+      "In an isolated house",
+      "In a cemetery"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Paranormal Activity' (2007), what type of camera is used?",
+    "options": [
+      "Security camera",
+      "Professional camera",
+      "Infrared camera",
+      "Hidden camera"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Midsommar' (2019), where does the ritual take place?",
+    "options": ["Iceland", "Norway", "Finland", "Sweden"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Ring' (2002), what happens after watching the cursed tape?",
+    "options": [
+      "You die in 7 days",
+      "You go blind",
+      "You get possessed",
+      "You go to the toilet"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Bird Box' (2018), what must you not do to survive?",
+    "options": [
+      "Leave the house",
+      "Look at the creatures",
+      "Speak too loud",
+      "Look at the code of this website"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Sinister' (2012), what kind of videos does the writer find?",
+    "options": [
+      "Super 8 murder films",
+      "VHS news tapes",
+      "Security footage",
+      "TV reports"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Babadook' (2014), where does the creature come from?",
+    "options": ["A box", "A photo", "A song", "A children's book"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'It: Chapter Two' (2019), where does Pennywise live?",
+    "options": [
+      "In the sewers",
+      "In an abandoned house",
+      "In a cave",
+      "In a circus"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Us' (2019), what is the name of Adelaide’s evil double?",
+    "options": ["Red", "Ruby", "Rose", "Ruth"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Shaun of the Dead' (2004), what type of horror movie is parodied?",
+    "options": [
+      "Slasher films",
+      "Exorcism movies",
+      "Zombie movies",
+      "Vampire movies"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Nun' (2018), which cinematic universe does it belong to?",
+    "options": [
+      "The Insidious Universe",
+      "The Conjuring Universe",
+      "The Sinister Universe",
+      "The Ring Universe"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Evil Dead' (1981), which book causes the horrors?",
+    "options": [
+      "The Book of Shadows",
+      "The Book of the Dead",
+      "The Black Codex",
+      "The Necronomicon"
+    ],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Witch' (2015), in what century does the story take place?",
+    "options": ["17th century", "19th century", "20th century", "Middle Ages"],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In '28 Days Later' (2002), what type of outbreak devastates London?",
+    "options": [
+      "A zombie virus",
+      "A rage virus",
+      "A mutant plague",
+      "An alien infection"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Blair Witch Project' (1999), what do the students find at the end?",
+    "options": [
+      "An abandoned house",
+      "A cursed chest",
+      "An ancient book",
+      "An open grave"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'Gremlins' (1984), what must you never do to a Mogwai?",
+    "options": [
+      "Feed it after midnight",
+      "Expose it to sunlight",
+      "Drop it",
+      "Shout at it"
+    ],
+    "correctIndex": 0,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Invisible Man' (2020), why is the killer invisible?",
+    "options": [
+      "A curse",
+      "A ghostly power",
+      "A technological suit",
+      "A magic potion"
+    ],
+    "correctIndex": 2,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'A Quiet Place' (2018), what attracts the creatures?",
+    "options": ["Light", "Blood", "Movement", "Sound"],
+    "correctIndex": 3,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  },
+  {
+    "question": "In 'The Cabin in the Woods' (2012), who controls the horrific events?",
+    "options": [
+      "Demons",
+      "A secret organization",
+      "Students",
+      "The government"
+    ],
+    "correctIndex": 1,
+    "category": "culture",
+    "difficulty": "easy",
+    "type": "movie"
+  }
 ]

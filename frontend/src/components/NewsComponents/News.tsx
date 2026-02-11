@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../../config/api";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import {
   Carousel,
   CarouselContent,
@@ -32,7 +27,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
 
   useEffect(() => {
     fetch(`${API_URL}/news`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setNews)
       .catch(console.error);
   }, []);
@@ -50,7 +45,6 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
         <Carousel
           className={`w-full -mt-5 overflow-x-auto scroll-smooth ${newsCarouselClassName}`}
         >
-
           <CarouselContent className="gap-6 pl-4 sm:pl-0 lg:-translate-x-[20px] 2xl:gap-1">
             {news.map((article) => (
               <CarouselItem
@@ -64,21 +58,25 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
                 />
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-xs text-gray-200">
-                    Published on {new Date(article.publishedAt).toLocaleDateString()}
+                    Published on{" "}
+                    {new Date(article.publishedAt).toLocaleDateString()}
                   </span>
                   {article.isSatirical && (
-                    <span className="text-[0.65rem] text-red-700 italic font-normal">(satirical)</span>
+                    <span className="text-[0.65rem] text-red-700 italic font-normal">
+                      (satirical)
+                    </span>
                   )}
                 </div>
                 <h3 className="text-lg font-semibold mb-2 flex items-center gap-2">
                   {article.title}
                 </h3>
-                <p className="text-sm text-gray-200 line-clamp-3">{article.excerpt}</p>
+                <p className="text-sm text-gray-200 line-clamp-3">
+                  {article.excerpt}
+                </p>
               </CarouselItem>
             ))}
           </CarouselContent>
         </Carousel>
-
       </div>
 
       <Dialog open={!!selected} onOpenChange={() => setSelected(null)}>
@@ -90,13 +88,16 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
                   <span className="flex items-center gap-2">
                     {selected.title}
                     {selected.isSatirical && (
-                      <span className="text-xs text-red-700 font-semibold">(satirical)</span>
+                      <span className="text-xs text-red-700 font-semibold">
+                        (satirical)
+                      </span>
                     )}
                   </span>
                 </DialogTitle>
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-gray-200">
-                    Published on {new Date(selected.publishedAt).toLocaleDateString()}
+                    Published on{" "}
+                    {new Date(selected.publishedAt).toLocaleDateString()}
                   </span>
                 </div>
               </DialogHeader>

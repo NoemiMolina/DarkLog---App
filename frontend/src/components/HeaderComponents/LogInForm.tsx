@@ -8,8 +8,9 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
-export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
-
+export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
+  onClose,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -41,7 +42,9 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }
 
       const data = await res.json();
       if (!res.ok) {
-        setErrorMsg("Mail or password incorrect, not telling you which one it is, try again");
+        setErrorMsg(
+          "Mail or password incorrect, not telling you which one it is, try again",
+        );
         setLoading(false);
         return;
       }
@@ -73,13 +76,15 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }
           const watchlistRes = await fetch(route, {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${data.token}`
-            }
+              Authorization: `Bearer ${data.token}`,
+            },
           });
           const responseData = await watchlistRes.json();
           console.log("📥 Response data:", responseData);
           if (watchlistRes.ok) {
-            setSuccessMsg(`✅ Connected! "${pendingItem.title}" added to your watchlist!`);
+            setSuccessMsg(
+              `✅ Connected! "${pendingItem.title}" added to your watchlist!`,
+            );
           }
 
           pendingWatchlistService.clearPendingItem();
@@ -92,7 +97,6 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }
         onClose?.();
         navigate("/home");
       }, 1500);
-
     } finally {
       setLoading(false);
     }
@@ -100,7 +104,6 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }
 
   return (
     <div className="flex flex-col gap-4 py-2">
-
       <div className="space-y-2">
         <Label htmlFor="email">Email *</Label>
         <Input
@@ -126,13 +129,9 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }
         />
       </div>
 
-      {errorMsg && (
-        <p className="text-sm text-red-400">{errorMsg}</p>
-      )}
+      {errorMsg && <p className="text-sm text-red-400">{errorMsg}</p>}
 
-      {successMsg && (
-        <p className="text-sm text-green-400">{successMsg}</p>
-      )}
+      {successMsg && <p className="text-sm text-green-400">{successMsg}</p>}
 
       <div className="flex justify-end mt-4 gap-3">
         <Button
@@ -173,7 +172,6 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({ onClose }
 };
 
 const DialogLoginForm: React.FC = () => {
-
   const navigate = useNavigate();
 
   return (

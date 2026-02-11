@@ -1,7 +1,7 @@
 import express from "express";
 import {
   previewLetterboxdImport,
-  confirmLetterboxdImport
+  confirmLetterboxdImport,
 } from "../controllers/importController";
 
 const router = express.Router();

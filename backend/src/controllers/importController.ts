@@ -5,7 +5,7 @@ import {
   isHorrorGenre,
   findAlreadyRatedMovie,
   initializeMovieCache,
-  type MovieMatchResult
+  type MovieMatchResult,
 } from "../services/movieMatcher";
 
 interface LetterboxdMovieData {
@@ -48,7 +48,9 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
     }
 
     if (!Array.isArray(csvData) || csvData.length === 0) {
-      return res.status(400).json({ message: "csvData must be a non-empty array" });
+      return res
+        .status(400)
+        .json({ message: "csvData must be a non-empty array" });
     }
 
     console.log("⏳ [1/3] Initializing movie cache...");
@@ -69,14 +71,17 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
       summary: {
         totalInCSV: csvData.length,
         found: 0,
-        notFound: 0
-      }
+        notFound: 0,
+      },
     };
 
     console.log(`⏳ [3/3] Matching ${csvData.length} films (pool of 10)...`);
     const matchStart = Date.now();
     const poolSize = 10;
-    const results: Array<{ filmData: LetterboxdMovieData; matchResult: MovieMatchResult }> = [];
+    const results: Array<{
+      filmData: LetterboxdMovieData;
+      matchResult: MovieMatchResult;
+    }> = [];
 
     for (let i = 0; i < csvData.length; i += poolSize) {
       const batch = csvData.slice(i, i + poolSize);
@@ -85,13 +90,17 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
           const { name, year } = filmData as LetterboxdMovieData;
           const matchResult = await matchMovieByNameAndYear(name, year);
           return { filmData, matchResult };
-        })
+        }),
       );
       results.push(...batchMatches);
-      console.log(`   ✅ Batch ${Math.floor(i / poolSize) + 1}/${Math.ceil(csvData.length / poolSize)} done`);
+      console.log(
+        `   ✅ Batch ${Math.floor(i / poolSize) + 1}/${Math.ceil(csvData.length / poolSize)} done`,
+      );
     }
     const matchTime = Date.now() - matchStart;
-    console.log(`✅ Matched ${csvData.length} films in ${matchTime}ms (${(matchTime / csvData.length).toFixed(1)}ms per film)`);
+    console.log(
+      `✅ Matched ${csvData.length} films in ${matchTime}ms (${(matchTime / csvData.length).toFixed(1)}ms per film)`,
+    );
 
     for (const { filmData, matchResult } of results) {
       const { name, year, rating, review } = filmData;
@@ -99,7 +108,7 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
         previewResult.notFound.push({
           name,
           year,
-          reason: "not_in_database"
+          reason: "not_in_database",
         });
         previewResult.summary.notFound++;
         continue;
@@ -108,12 +117,15 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
         previewResult.notFound.push({
           name,
           year,
-          reason: "not_horror"
+          reason: "not_horror",
         });
         previewResult.summary.notFound++;
         continue;
       }
-      const alreadyRated = findAlreadyRatedMovie(user, matchResult.movie.tmdb_id);
+      const alreadyRated = findAlreadyRatedMovie(
+        user,
+        matchResult.movie.tmdb_id,
+      );
 
       const status = alreadyRated ? "update" : "new";
       const oldRating = alreadyRated ? alreadyRated.rating : undefined;
@@ -125,7 +137,7 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
         review: review || "",
         runtime: matchResult.movie.runtime || 0,
         status,
-        oldRating
+        oldRating,
       });
       previewResult.summary.found++;
     }
@@ -133,15 +145,16 @@ export const previewLetterboxdImport = async (req: Request, res: Response) => {
     console.log(`\n✅ Preview completed in ${totalTime}ms:`);
     console.log(`   - Cache init: ${cacheTime}ms`);
     console.log(`   - Matching: ${matchTime}ms`);
-    console.log(`   - Results: ${previewResult.summary.found} found, ${previewResult.summary.notFound} not found\n`);
+    console.log(
+      `   - Results: ${previewResult.summary.found} found, ${previewResult.summary.notFound} not found\n`,
+    );
     res.status(200).json(previewResult);
-
   } catch (err) {
     const totalTime = Date.now() - startTime;
     console.error(`\n❌ Preview failed after ${totalTime}ms:`, err);
     res.status(500).json({
       message: "Erreur lors du préview de l'import",
-      error: err instanceof Error ? err.message : "Unknown error"
+      error: err instanceof Error ? err.message : "Unknown error",
     });
   }
 };
@@ -155,7 +168,9 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     }
 
     if (!Array.isArray(filmsToImport) || filmsToImport.length === 0) {
-      return res.status(400).json({ message: "filmsToImport must be a non-empty array" });
+      return res
+        .status(400)
+        .json({ message: "filmsToImport must be a non-empty array" });
     }
 
     console.log("⏳ Initializing movie cache for confirmation...");
@@ -166,7 +181,9 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "User not found" });
     }
     console.log(`\n🎬 === CONFIRM LETTERBOXD IMPORT === 🎬`);
-    console.log(`📥 Importing ${filmsToImport.length} films for ${user.UserPseudo}`);
+    console.log(
+      `📥 Importing ${filmsToImport.length} films for ${user.UserPseudo}`,
+    );
 
     let importedCount = 0;
     let updatedCount = 0;
@@ -177,11 +194,13 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
       const { tmdbId, title, rating, review, runtime } = film;
       console.log(`\n📽️ Import: "${title}" (ID: ${tmdbId}), Note: ${rating}/5`);
       const existingIndex = user.RatedMovies.findIndex(
-        (r: any) => r.tmdbMovieId === tmdbId
+        (r: any) => r.tmdbMovieId === tmdbId,
       );
 
       if (existingIndex !== -1) {
-        console.log(`   → Updating old rating: ${user.RatedMovies[existingIndex].rating} → ${rating}`);
+        console.log(
+          `   → Updating old rating: ${user.RatedMovies[existingIndex].rating} → ${rating}`,
+        );
         user.RatedMovies[existingIndex].rating = rating;
         user.RatedMovies[existingIndex].review = review || "";
         user.RatedMovies[existingIndex].runtime = runtime || 0;
@@ -195,22 +214,31 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
           rating,
           review: review || "",
           runtime: runtime || 0,
-          createdAt: new Date()
+          createdAt: new Date(),
         } as any);
         importedCount++;
       }
     }
     const ratedMovies = user.RatedMovies;
     const numberOfWatchedMovies = ratedMovies.length;
-    const averageMovieRating = ratedMovies.length > 0
-      ? ratedMovies.reduce((sum: number, movie: any) => sum + (movie.rating || 0), 0) / ratedMovies.length
-      : 0;
-    const totalWatchTime = ratedMovies.reduce((sum: number, movie: any) => sum + (movie.runtime || 0), 0);
+    const averageMovieRating =
+      ratedMovies.length > 0
+        ? ratedMovies.reduce(
+            (sum: number, movie: any) => sum + (movie.rating || 0),
+            0,
+          ) / ratedMovies.length
+        : 0;
+    const totalWatchTime = ratedMovies.reduce(
+      (sum: number, movie: any) => sum + (movie.runtime || 0),
+      0,
+    );
 
     console.log(`\n📊 === UPDATING STATS === `);
     console.log(`   📽️ Watched movies: ${numberOfWatchedMovies}`);
     console.log(`   ⭐ Average rating: ${averageMovieRating.toFixed(2)}/5`);
-    console.log(`   ⏱️ Total watchtime: ${totalWatchTime} min (${(totalWatchTime / 60).toFixed(1)}h)`);
+    console.log(
+      `   ⏱️ Total watchtime: ${totalWatchTime} min (${(totalWatchTime / 60).toFixed(1)}h)`,
+    );
     user.NumberOfWatchedMovies = numberOfWatchedMovies;
     user.AverageMovieRating = averageMovieRating;
 
@@ -218,7 +246,9 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
     await user.save();
 
     const elapsedTime = Date.now() - startTime;
-    console.log(`\n✅ Import finished! ${importedCount} new films, ${updatedCount} updates (took ${elapsedTime}ms)`);
+    console.log(
+      `\n✅ Import finished! ${importedCount} new films, ${updatedCount} updates (took ${elapsedTime}ms)`,
+    );
 
     res.status(200).json({
       message: "Import successful",
@@ -227,15 +257,14 @@ export const confirmLetterboxdImport = async (req: Request, res: Response) => {
       stats: {
         numberOfWatchedMovies,
         averageMovieRating: parseFloat(averageMovieRating.toFixed(2)),
-        totalWatchTime
-      }
+        totalWatchTime,
+      },
     });
-
   } catch (err) {
     console.error("❌ Error in confirmLetterboxdImport:", err);
     res.status(500).json({
       message: "Error during import confirmation",
-      error: err instanceof Error ? err.message : "Unknown error"
+      error: err instanceof Error ? err.message : "Unknown error",
     });
   }
 };

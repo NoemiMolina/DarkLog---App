@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
-import { API_URL } from '../../config/api';
+import { API_URL } from "../../config/api";
 import RatingSkulls from "./RatingSkulls";
 
 interface ItemCardProps {
@@ -33,9 +33,9 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
           `${API_URL}/users/${userId}/items/${itemId}?type=${type}`,
           {
             headers: {
-              "Authorization": `Bearer ${token}`
-            }
-          }
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
 
         if (res.ok) {
@@ -56,9 +56,9 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
   }, [userId, itemId, type, token]);
 
   const poster = item.poster_path
-    ? (item.poster_path.startsWith("http")
+    ? item.poster_path.startsWith("http")
       ? item.poster_path
-      : `https://image.tmdb.org/t/p/w500${item.poster_path}`)
+      : `https://image.tmdb.org/t/p/w500${item.poster_path}`
     : null;
 
   const releaseYear =
@@ -86,15 +86,15 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             type,
             rating,
             reviewText: review,
-            itemTitle
-          })
-        }
+            itemTitle,
+          }),
+        },
       );
 
       if (res.status === 403 || res.status === 401) {
@@ -112,13 +112,11 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
       showMessage("✔ Successfully saved!");
 
       setTimeout(() => {
-        window.dispatchEvent(new Event('userDataUpdated'));
+        window.dispatchEvent(new Event("userDataUpdated"));
         if (onClose) {
           onClose();
         }
       }, 500);
-
-
     } catch (err) {
       console.error(err);
       showMessage("❌ Error saving.");
@@ -126,7 +124,9 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
   };
 
   const handleAddToWatchlist = async () => {
-    const userId = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")!)?._id : null;
+    const userId = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user")!)?._id
+      : null;
     const token = localStorage.getItem("token");
     if (!userId || !token) {
       pendingWatchlistService.setPendingItem(item, type);
@@ -142,8 +142,8 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
       const res = await fetch(route, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (res.status === 403 || res.status === 401) {
@@ -162,14 +162,14 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
       if (!res.ok) {
         const errorData = await res.json();
         console.error("❌ Error response:", errorData);
-        showMessage(`❌ ${errorData.message || 'Error adding to watchlist'}`);
+        showMessage(`❌ ${errorData.message || "Error adding to watchlist"}`);
         return;
       }
       const data = await res.json();
       console.log("🎉 Watchlist updated:", data);
       showMessage("🎬 Successfully added to watchlist!");
       setTimeout(() => {
-        window.dispatchEvent(new Event('watchlistUpdated'));
+        window.dispatchEvent(new Event("watchlistUpdated"));
         if (onClose) onClose();
       }, 1000);
     } catch (err) {
@@ -239,7 +239,9 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">No cast information available.</p>
+            <p className="text-gray-500 text-sm">
+              No cast information available.
+            </p>
           )}
         </div>
         <div>
@@ -303,11 +305,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
             + Add to watchlist
           </button>
         </div>
-        {message && (
-          <p className="text-green-400 text-sm mt-2">
-            {message}
-          </p>
-        )}
+        {message && <p className="text-green-400 text-sm mt-2">{message}</p>}
       </div>
     </div>
   );

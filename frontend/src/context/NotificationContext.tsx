@@ -1,10 +1,21 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import io, { Socket } from 'socket.io-client';
-import { API_URL } from '../config/api';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
+import io, { Socket } from "socket.io-client";
+import { API_URL } from "../config/api";
 
 export interface Notification {
   _id: string;
-  type: 'forum_like' | 'forum_comment' | 'comment_reply' | 'comment_like' | 'friend_request';
+  type:
+    | "forum_like"
+    | "forum_comment"
+    | "comment_reply"
+    | "comment_like"
+    | "friend_request";
   message: string;
   senderPseudo: string;
   senderProfilePicture?: string;
@@ -21,16 +32,20 @@ interface NotificationContextType {
   friendRequestsCount: number;
   socket: Socket | null;
   markAsRead: (notificationId: string) => Promise<void>;
-  markAllAsRead: (type?: 'forum' | 'friend_request') => Promise<void>;
+  markAllAsRead: (type?: "forum" | "friend_request") => Promise<void>;
   deleteNotification: (notificationId: string) => Promise<void>;
-  deleteAllNotifications: (type?: 'forum' | 'friend_request') => Promise<void>;
+  deleteAllNotifications: (type?: "forum" | "friend_request") => Promise<void>;
   fetchNotifications: () => Promise<void>;
   fetchNotificationCounts: () => Promise<void>;
 }
 
-const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
+const NotificationContext = createContext<NotificationContextType | undefined>(
+  undefined,
+);
 
-export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [forumNotificationsCount, setForumNotificationsCount] = useState(0);
@@ -38,7 +53,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
   const [socket, setSocket] = useState<Socket | null>(null);
 
   const getUserId = () => {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem("user");
     if (!user) return null;
     try {
       return JSON.parse(user)._id;
@@ -47,16 +62,19 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     }
   };
 
-  const getToken = () => localStorage.getItem('token');
+  const getToken = () => localStorage.getItem("token");
   const fetchNotificationCounts = useCallback(async () => {
     const userId = getUserId();
     const token = getToken();
     if (!userId || !token) return;
 
     try {
-      const response = await fetch(`${API_URL}/notifications/${userId}/counts`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        `${API_URL}/notifications/${userId}/counts`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       if (response.ok) {
         const data = await response.json();
         setUnreadCount(data.total);
@@ -64,7 +82,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         setFriendRequestsCount(data.friendRequests);
       }
     } catch (error) {
-      console.error('Error fetching notification counts:', error);
+      console.error("Error fetching notification counts:", error);
     }
   }, []);
   const fetchNotifications = useCallback(async () => {
@@ -81,98 +99,147 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         setNotifications(data);
       }
     } catch (error) {
-      console.error('Error fetching notifications:', error);
+      console.error("Error fetching notifications:", error);
     }
   }, []);
-  const markAsRead = useCallback(async (notificationId: string) => {
-    const token = getToken();
-    if (!token) return;
+  const markAsRead = useCallback(
+    async (notificationId: string) => {
+      const token = getToken();
+      if (!token) return;
 
-    try {
-      const response = await fetch(`${API_URL}/notifications/${notificationId}/read`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response.ok) {
-        setNotifications((prev) =>
-          prev.map((n) => (n._id === notificationId ? { ...n, isRead: true } : n))
+      try {
+        const response = await fetch(
+          `${API_URL}/notifications/${notificationId}/read`,
+          {
+            method: "PATCH",
+            headers: { Authorization: `Bearer ${token}` },
+          },
         );
-        await fetchNotificationCounts();
+        if (response.ok) {
+          setNotifications((prev) =>
+            prev.map((n) =>
+              n._id === notificationId ? { ...n, isRead: true } : n,
+            ),
+          );
+          await fetchNotificationCounts();
+        }
+      } catch (error) {
+        console.error("Error marking notification as read:", error);
       }
-    } catch (error) {
-      console.error('Error marking notification as read:', error);
-    }
-  }, [fetchNotificationCounts]);
-  const markAllAsRead = useCallback(async (type?: 'forum' | 'friend_request') => {
-    const userId = getUserId();
-    const token = getToken();
-    if (!userId || !token) return;
+    },
+    [fetchNotificationCounts],
+  );
+  const markAllAsRead = useCallback(
+    async (type?: "forum" | "friend_request") => {
+      const userId = getUserId();
+      const token = getToken();
+      if (!userId || !token) return;
 
-    try {
-      const response = await fetch(`${API_URL}/notifications/${userId}/read-all`, {
-        method: 'PATCH',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type }),
-      });
-      if (response.ok) {
-        setNotifications((prev) =>
-          type
-            ? prev.map((n) => {
-                const isForumType = ['forum_like', 'forum_comment', 'comment_reply', 'comment_like'].includes(n.type);
-                const shouldUpdate = (type === 'forum' && isForumType) || (type === 'friend_request' && n.type === 'friend_request');
-                return shouldUpdate ? { ...n, isRead: true } : n;
-              })
-            : prev.map((n) => ({ ...n, isRead: true }))
+      try {
+        const response = await fetch(
+          `${API_URL}/notifications/${userId}/read-all`,
+          {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ type }),
+          },
         );
-        await fetchNotificationCounts();
+        if (response.ok) {
+          setNotifications((prev) =>
+            type
+              ? prev.map((n) => {
+                  const isForumType = [
+                    "forum_like",
+                    "forum_comment",
+                    "comment_reply",
+                    "comment_like",
+                  ].includes(n.type);
+                  const shouldUpdate =
+                    (type === "forum" && isForumType) ||
+                    (type === "friend_request" && n.type === "friend_request");
+                  return shouldUpdate ? { ...n, isRead: true } : n;
+                })
+              : prev.map((n) => ({ ...n, isRead: true })),
+          );
+          await fetchNotificationCounts();
+        }
+      } catch (error) {
+        console.error("Error marking all as read:", error);
       }
-    } catch (error) {
-      console.error('Error marking all as read:', error);
-    }
-  }, [fetchNotificationCounts]);
-  const deleteNotification = useCallback(async (notificationId: string) => {
-    const token = getToken();
-    if (!token) return;
+    },
+    [fetchNotificationCounts],
+  );
+  const deleteNotification = useCallback(
+    async (notificationId: string) => {
+      const token = getToken();
+      if (!token) return;
 
-    try {
-      const response = await fetch(`${API_URL}/notifications/${notificationId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (response.ok) {
-        setNotifications((prev) => prev.filter((n) => n._id !== notificationId));
-        await fetchNotificationCounts();
-      }
-    } catch (error) {
-      console.error('Error deleting notification:', error);
-    }
-  }, [fetchNotificationCounts]);
-  const deleteAllNotifications = useCallback(async (type?: 'forum' | 'friend_request') => {
-    const userId = getUserId();
-    const token = getToken();
-    if (!userId || !token) return;
-
-    try {
-      const response = await fetch(`${API_URL}/notifications/${userId}/delete-all`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type }),
-      });
-      if (response.ok) {
-        setNotifications((prev) =>
-          type
-            ? prev.filter((n) => {
-                const isForumType = ['forum_like', 'forum_comment', 'comment_reply', 'comment_like'].includes(n.type);
-                return (type === 'forum' && !isForumType) || (type === 'friend_request' && n.type !== 'friend_request');
-              })
-            : []
+      try {
+        const response = await fetch(
+          `${API_URL}/notifications/${notificationId}`,
+          {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          },
         );
-        await fetchNotificationCounts();
+        if (response.ok) {
+          setNotifications((prev) =>
+            prev.filter((n) => n._id !== notificationId),
+          );
+          await fetchNotificationCounts();
+        }
+      } catch (error) {
+        console.error("Error deleting notification:", error);
       }
-    } catch (error) {
-      console.error('Error deleting all notifications:', error);
-    }
-  }, [fetchNotificationCounts]);
+    },
+    [fetchNotificationCounts],
+  );
+  const deleteAllNotifications = useCallback(
+    async (type?: "forum" | "friend_request") => {
+      const userId = getUserId();
+      const token = getToken();
+      if (!userId || !token) return;
+
+      try {
+        const response = await fetch(
+          `${API_URL}/notifications/${userId}/delete-all`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ type }),
+          },
+        );
+        if (response.ok) {
+          setNotifications((prev) =>
+            type
+              ? prev.filter((n) => {
+                  const isForumType = [
+                    "forum_like",
+                    "forum_comment",
+                    "comment_reply",
+                    "comment_like",
+                  ].includes(n.type);
+                  return (
+                    (type === "forum" && !isForumType) ||
+                    (type === "friend_request" && n.type !== "friend_request")
+                  );
+                })
+              : [],
+          );
+          await fetchNotificationCounts();
+        }
+      } catch (error) {
+        console.error("Error deleting all notifications:", error);
+      }
+    },
+    [fetchNotificationCounts],
+  );
 
   useEffect(() => {
     const userId = getUserId();
@@ -183,23 +250,30 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
         auth: { userId },
       });
 
-      newSocket.on('connect', () => {
-        newSocket.emit('joinRoom', userId);
+      newSocket.on("connect", () => {
+        newSocket.emit("joinRoom", userId);
       });
 
-      newSocket.on('newNotification', (notif: Notification) => {
+      newSocket.on("newNotification", (notif: Notification) => {
         setNotifications((prev) => [notif, ...prev]);
         setUnreadCount((prev) => prev + 1);
-        
-        if (['forum_like', 'forum_comment', 'comment_reply', 'comment_like'].includes(notif.type)) {
+
+        if (
+          [
+            "forum_like",
+            "forum_comment",
+            "comment_reply",
+            "comment_like",
+          ].includes(notif.type)
+        ) {
           setForumNotificationsCount((prev) => prev + 1);
-        } else if (notif.type === 'friend_request') {
+        } else if (notif.type === "friend_request") {
           setFriendRequestsCount((prev) => prev + 1);
         }
       });
 
-      newSocket.on('disconnect', () => {
-        console.log('❌ WebSocket disconnected');
+      newSocket.on("disconnect", () => {
+        console.log("❌ WebSocket disconnected");
       });
 
       setSocket(newSocket);
@@ -228,13 +302,19 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
     fetchNotificationCounts,
   };
 
-  return <NotificationContext.Provider value={value}>{children}</NotificationContext.Provider>;
+  return (
+    <NotificationContext.Provider value={value}>
+      {children}
+    </NotificationContext.Provider>
+  );
 };
 
 export const useNotifications = () => {
   const context = useContext(NotificationContext);
   if (!context) {
-    throw new Error('useNotifications must be used within NotificationProvider');
+    throw new Error(
+      "useNotifications must be used within NotificationProvider",
+    );
   }
   return context;
 };

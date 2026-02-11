@@ -29,24 +29,42 @@ export const getRandomQuizQuestions = async (req: Request, res: Response) => {
   try {
     const { type, category, difficulty } = req.params;
 
-    const validTypes = ['movies', 'tvshows'];
-    const validCategories = ['culture', 'dumbDescription'];
-    const validDifficulties = ['easy', 'medium', 'hard'];
+    const validTypes = ["movies", "tvshows"];
+    const validCategories = ["culture", "dumbDescription"];
+    const validDifficulties = ["easy", "medium", "hard"];
 
-    if (!validTypes.includes(type) || !validCategories.includes(category) || !validDifficulties.includes(difficulty)) {
+    if (
+      !validTypes.includes(type) ||
+      !validCategories.includes(category) ||
+      !validDifficulties.includes(difficulty)
+    ) {
       return res.status(400).json({ message: "Invalid parameters" });
     }
 
-    const folderName = type === 'movies' ? 'moviesHomemadeQuiz' : 'tvShowsHomemadeQuiz';
+    const folderName =
+      type === "movies" ? "moviesHomemadeQuiz" : "tvShowsHomemadeQuiz";
     const fileName = `quiz_${type}_${category}_${difficulty}.json`;
-    
+
     const possiblePaths = [
-      path.join(__dirname, '../../homemade_quiz', folderName, category, fileName),
-      path.join(process.cwd(), 'homemade_quiz', folderName, category, fileName),
-      path.join(process.cwd(), 'backend', 'homemade_quiz', folderName, category, fileName),
+      path.join(
+        __dirname,
+        "../../homemade_quiz",
+        folderName,
+        category,
+        fileName,
+      ),
+      path.join(process.cwd(), "homemade_quiz", folderName, category, fileName),
+      path.join(
+        process.cwd(),
+        "backend",
+        "homemade_quiz",
+        folderName,
+        category,
+        fileName,
+      ),
     ];
 
-    let filePath = '';
+    let filePath = "";
     for (const p of possiblePaths) {
       if (fs.existsSync(p)) {
         filePath = p;
@@ -56,12 +74,14 @@ export const getRandomQuizQuestions = async (req: Request, res: Response) => {
 
     if (!filePath) {
       console.error(`❌ Quiz file not found. Tried paths:`, possiblePaths);
-      return res.status(404).json({ message: "Quiz file not found", paths: possiblePaths });
+      return res
+        .status(404)
+        .json({ message: "Quiz file not found", paths: possiblePaths });
     }
 
     console.log(`📂 Loaded quiz file from: ${filePath}`);
 
-    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const fileContent = fs.readFileSync(filePath, "utf-8");
     const allQuestions = JSON.parse(fileContent);
 
     const shuffled = allQuestions.sort(() => 0.5 - Math.random());
@@ -70,6 +90,8 @@ export const getRandomQuizQuestions = async (req: Request, res: Response) => {
     res.status(200).json({ questions: selectedQuestions });
   } catch (err) {
     console.error("Error fetching quiz questions:", err);
-    res.status(500).json({ message: "Error fetching quiz questions", error: String(err) });
+    res
+      .status(500)
+      .json({ message: "Error fetching quiz questions", error: String(err) });
   }
 };
