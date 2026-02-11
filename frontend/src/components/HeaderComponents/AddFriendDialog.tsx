@@ -25,8 +25,8 @@ interface User {
   UserFirstName?: string;
 }
 
-const AddFriendDialog: React.FC<AddFriendDialogProps> = ({ 
-  currentUserId, 
+const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
+  currentUserId,
   onFriendAdded,
   open: controlledOpen,
   onOpenChange: onControlledOpenChange,
@@ -133,6 +133,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
           variant="ghost"
           size="sm"
           className="text-white hover:bg-[#4C4C4C] p-2 hidden"
+          style={{ fontFamily: "'Metal Mania', serif" }}
           title="Add a friend"
         >
           <FaUserPlus className="text-xl w-6 h-6" />
@@ -140,7 +141,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
       </DialogTrigger>
       <DialogContent className="bg-black/40 backdrop-blur-md border-white/20 text-white max-w-sm">
         <DialogHeader>
-          <DialogTitle className="text-center text-2xl">Add Friend</DialogTitle>
+          <DialogTitle className="text-center text-2xl" style={{ fontFamily: "'Metal Mania', serif" }}>Add Friend</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
@@ -159,9 +160,8 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
                 <button
                   key={user._id}
                   onClick={() => handleSelectUser(user)}
-                  className={`w-full text-left px-4 py-3 hover:bg-white/10 transition border-b border-white/5 last:border-b-0 ${
-                    selectedUser?._id === user._id ? 'bg-white/20' : ''
-                  }`}
+                  className={`w-full text-left px-4 py-3 hover:bg-white/10 transition border-b border-white/5 last:border-b-0 ${selectedUser?._id === user._id ? 'bg-white/20' : ''
+                    }`}
                 >
                   <div className="font-semibold">{user.UserPseudo}</div>
                   <div className="text-sm text-white/60">
@@ -173,11 +173,10 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
           )}
           {message && (
             <div
-              className={`p-2 rounded text-sm text-center ${
-                messageType === 'success'
+              className={`p-2 rounded text-sm text-center ${messageType === 'success'
                   ? 'bg-green-500/20 text-green-200'
                   : 'bg-red-500/20 text-red-200'
-              }`}
+                }`}
             >
               {message}
             </div>

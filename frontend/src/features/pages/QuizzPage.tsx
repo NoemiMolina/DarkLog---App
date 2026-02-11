@@ -55,7 +55,11 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
                 token: token ? 'present' : 'missing'
             });
             const response = await fetch(quizUrl, {
-                headers: { 'Authorization': `Bearer ${token}` }
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Cache-Control': 'no-cache, no-store, must-revalidate'
+                },
+                cache: 'no-store'
             });
 
             console.log('📊 Response status:', response.status);

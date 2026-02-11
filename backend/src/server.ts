@@ -55,7 +55,15 @@ const publicPath = path.resolve("public");
 app.use("/", express.static(publicPath));
 
 const quizPath = path.resolve("homemade_quiz");
-app.use("/homemade_quiz", express.static(quizPath));
+app.use("/homemade_quiz", express.static(quizPath, {
+  maxAge: 0,
+  etag: false,
+  setHeaders: (res) => {
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+  }
+}));
 
 app.use("/users", userRoutes);
 app.use("/movies", movieRoutes);

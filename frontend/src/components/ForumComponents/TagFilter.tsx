@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Badge } from '../ui/badge';
+import { ChevronDown } from 'lucide-react';
 
 interface TagFilterProps {
     onTagClick: (tag: string) => void;
@@ -26,6 +27,8 @@ const POPULAR_TAGS = [
 ];
 
 export const TagFilter: React.FC<TagFilterProps> = ({ onTagClick, selectedTag, posts }) => {
+    const [showAllTags, setShowAllTags] = useState(false);
+    const INITIAL_TAGS_COUNT = 5;
     const allTags = useMemo(() => {
         const tagsSet = new Set<string>();
         POPULAR_TAGS.forEach(tag => tagsSet.add(tag.name));
@@ -37,12 +40,14 @@ export const TagFilter: React.FC<TagFilterProps> = ({ onTagClick, selectedTag, p
 
         return Array.from(tagsSet);
     }, [posts]);
+    const visibleTags = showAllTags ? allTags : allTags.slice(0, INITIAL_TAGS_COUNT);
+    const hasMoreTags = allTags.length > INITIAL_TAGS_COUNT;
 
     return (
         <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <span className="text-white/70 text-sm font-medium">Popular tags:</span>
 
-            {allTags.map((tagName) => (
+            {visibleTags.map((tagName) => (
                 <Badge
                     key={tagName}
                     onClick={() => onTagClick(tagName)}
@@ -54,6 +59,16 @@ export const TagFilter: React.FC<TagFilterProps> = ({ onTagClick, selectedTag, p
                     {tagName}
                 </Badge>
             ))}
+
+            {hasMoreTags && (
+                <button
+                    onClick={() => setShowAllTags(!showAllTags)}
+                    className="flex items-center gap-1 cursor-pointer transition-all duration-200 bg-gray-500/20 hover:bg-gray-500/40 border-gray-500/50 border text-white font-medium px-3 py-2 text-sm rounded-full"
+                >
+                    <span>{showAllTags ? 'Show less' : `See more (${allTags.length - INITIAL_TAGS_COUNT})`}</span>
+                    <ChevronDown size={16} className={`transition-transform duration-200 ${showAllTags ? 'rotate-180' : ''}`} />
+                </button>
+            )}
 
             {selectedTag && (
                 <Badge

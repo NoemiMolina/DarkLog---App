@@ -213,256 +213,256 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({ onClose 
 
   return (
     <div className="w-full">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4 lg:mr-50">
-            <Label htmlFor="profilePic">Profile picture (optional)</Label>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4 lg:mr-50">
+        <Label htmlFor="profilePic">Profile picture (optional)</Label>
 
-            <div
-              onDrop={(e) => {
-                e.preventDefault();
-                const file = e.dataTransfer.files?.[0];
-                if (file) setProfilePic(file);
-              }}
-              onDragOver={(e) => e.preventDefault()}
-              className="border-2 border-dashed border-white/30 rounded-lg p-6 text-center cursor-pointer hover:border-white/60 transition"
-            >
-              {profilePic ? (
-                <div className="flex flex-col items-center gap-2">
-                  <img
-                    src={URL.createObjectURL(profilePic)}
-                    alt="Preview"
-                    className="w-24 h-24 rounded-full object-cover border border-white/30 "
-                  />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setProfilePic(null)}
-                    className="text-white hover:bg-white/10"
-                  >
-                    Remove
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  <p className="text-sm text-gray-400">
-                    Drag & drop your image here, or
-                  </p>
-                  <label
-                    htmlFor="profilePicInput"
-                    className="text-blue-400 underline cursor-pointer"
-                  >
-                    browse files
-                  </label>
-                  <input
-                    id="profilePicInput"
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setProfilePic(e.target.files?.[0] || null)}
-                    className="hidden"
-                  />
-                </>
-              )}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="userName">Pseudo *</Label>
-            <Input id="userName" value={userPseudo} onChange={(e) => setUserPseudo(e.target.value)} placeholder="ex: Ghostface" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="firstName">First name *</Label>
-            <Input id="firstName" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} placeholder="ex : Stuart" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="lastName">Last name *</Label>
-            <Input id="lastName" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} placeholder="ex : Macher" />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="email">Email *</Label>
-            <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="stumacherisnotdead@ghostface.com" />
-            {!emailValid && email.length > 0 && (
-              <p className="text-xs text-red-400">Invalid email address.</p>
-            )}
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="password">Password *</Label>
-            <div className="relative">
-              <Input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Min. 8, 1 maj, 1 number, 1 special"
+        <div
+          onDrop={(e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files?.[0];
+            if (file) setProfilePic(file);
+          }}
+          onDragOver={(e) => e.preventDefault()}
+          className="border-2 border-dashed border-white/30 rounded-lg p-6 text-center cursor-pointer hover:border-white/60 transition"
+        >
+          {profilePic ? (
+            <div className="flex flex-col items-center gap-2">
+              <img
+                src={URL.createObjectURL(profilePic)}
+                alt="Preview"
+                className="w-24 h-24 rounded-full object-cover border border-white/30 "
               />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setProfilePic(null)}
+                className="text-white hover:bg-white/10"
               >
-                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-              </button>
+                Remove
+              </Button>
             </div>
-            {!passwordValid && password.length > 0 && (
-              <p className="text-xs text-red-400">
-                Must contain 1 uppercase letter, 1 number, 1 special character, and at least 8 characters.
+          ) : (
+            <>
+              <p className="text-sm text-gray-400">
+                Drag & drop your image here, or
               </p>
-            )}
-
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password *</Label>
-            <div className="relative">
-              <Input
-                id="confirmPassword"
-                type={showConfirmPassword ? "text" : "password"}
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm your password"
-              />
-              <button
-                type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+              <label
+                htmlFor="profilePicInput"
+                className="text-blue-400 underline cursor-pointer"
               >
-                {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                browse files
+              </label>
+              <input
+                id="profilePicInput"
+                type="file"
+                accept="image/*"
+                onChange={(e) => setProfilePic(e.target.files?.[0] || null)}
+                className="hidden"
+              />
+            </>
+          )}
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="userName">Pseudo *</Label>
+        <Input id="userName" value={userPseudo} onChange={(e) => setUserPseudo(e.target.value)} placeholder="ex: Ghostface" />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="firstName">First name *</Label>
+        <Input id="firstName" value={userFirstName} onChange={(e) => setUserFirstName(e.target.value)} placeholder="ex : Stuart" />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="lastName">Last name *</Label>
+        <Input id="lastName" value={userLastName} onChange={(e) => setUserLastName(e.target.value)} placeholder="ex : Macher" />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="email">Email *</Label>
+        <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="stumacherisnotdead@ghostface.com" />
+        {!emailValid && email.length > 0 && (
+          <p className="text-xs text-red-400">Invalid email address.</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="password">Password *</Label>
+        <div className="relative">
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Min. 8, 1 maj, 1 number, 1 special"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+        {!passwordValid && password.length > 0 && (
+          <p className="text-xs text-red-400">
+            Must contain 1 uppercase letter, 1 number, 1 special character, and at least 8 characters.
+          </p>
+        )}
+
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="confirmPassword">Confirm Password *</Label>
+        <div className="relative">
+          <Input
+            id="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm your password"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white"
+          >
+            {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
+        {confirmPassword.length > 0 && !passwordsMatch && (
+          <p className="text-xs text-red-400">Passwords don't match</p>
+        )}
+
+      </div>
+
+      <div className="space-y-2 md:col-span-2">
+        <Label htmlFor="location">Location *</Label>
+        <CountrySelect value={location} onChange={setLocation} placeholder="Search for a country..." />
+      </div>
+
+      <div className="space-y-2">
+        <Label>Birth date *</Label>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="outline" className="w-full justify-between text-white">
+              {birthDate ? format(birthDate, "dd MMM yyyy", { locale: fr }) : "Choose a date"}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              mode="single"
+              selected={birthDate || undefined}
+              onSelect={(d) => setBirthDate(d ?? null)}
+              initialFocus
+              locale={enUS}
+              captionLayout="dropdown"
+              fromYear={1930}
+              toYear={new Date().getFullYear()}
+              className="rounded-md border w-95 h-105"
+            />
+          </PopoverContent>
+        </Popover>
+        <p className="text-xs text-gray-400"> : {age || "—"} years old</p>
+      </div>
+
+
+      <div className="mt-4">
+        <Label className="mb-2 block">Top 3 horror movies *</Label>
+        <Input
+          placeholder="Search for a movie…"
+          value={qMovies}
+          onChange={(e) => setQMovies(e.target.value)}
+        />
+        {qMovies && resMovies.length > 0 && (
+          <div className="mt-2 border border-white/10 rounded-md">
+            <ScrollArea className="max-h-[12rem]">
+              <ul className="divide-y divide-white/10">
+                {resMovies.map(item => (
+                  <li key={item._id}>
+                    <button
+                      type="button"
+                      onClick={() => addMovie(item)}
+                      className="w-full text-left px-3 py-2 hover:bg-white/5"
+                    >
+                      {item.title || item.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </ScrollArea>
+          </div>
+        )}
+
+        <div className="mt-2 flex flex-wrap gap-2">
+          {top3Movies.map((m) => (
+            <span key={m._id} className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10">
+              <span className="text-sm">{m.title || m.name}</span>
+              <button onClick={() => removeMovie(m._id)} className="hover:text-red-400" aria-label="Retirer">
+                <X size={16} />
               </button>
-            </div>
-            {confirmPassword.length > 0 && !passwordsMatch && (
-              <p className="text-xs text-red-400">Passwords don't match</p>
-            )}
+            </span>
+          ))}
+          {top3Movies.length < 3 && (
+            <span className="text-xs text-gray-400">({3 - top3Movies.length} remaining{3 - top3Movies.length === 1 ? "" : "s"})</span>
+          )}
+        </div>
+      </div>
 
+      <div className="mt-6">
+        <Label className="mb-2 block">Top 3 TV Shows (optional)</Label>
+        <Input
+          placeholder="Search for a show…"
+          value={qShows}
+          onChange={(e) => setQShows(e.target.value)}
+        />
+        {qShows && resShows.length > 0 && (
+          <div className="mt-2 border border-white/10 rounded-md">
+            <ScrollArea className="max-h-[12rem]">
+              <ul className="divide-y divide-white/10">
+                {resShows.map(item => (
+                  <li key={item._id}>
+                    <button
+                      type="button"
+                      onClick={() => addShow(item)}
+                      className="w-full text-left px-3 py-2 hover:bg-white/5"
+                    >
+                      {item.title || item.name}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </ScrollArea>
           </div>
+        )}
 
-          <div className="space-y-2 md:col-span-2">
-            <Label htmlFor="location">Location *</Label>
-            <CountrySelect value={location} onChange={setLocation} placeholder="Search for a country..." />
-          </div>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {top3TvShow.map((s) => (
+            <span key={s._id} className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10">
+              <span className="text-sm">{s.title || s.name}</span>
+              <button onClick={() => removeShow(s._id)} className="hover:text-red-400" aria-label="Retirer">
+                <X size={16} />
+              </button>
+            </span>
+          ))}
+          {top3TvShow.length < 3 && top3TvShow.length > 0 && (
+            <span className="text-xs text-gray-400">(optional — {3 - top3TvShow.length} remaining{3 - top3TvShow.length === 1 ? "" : "s"})</span>
+          )}
+        </div>
+      </div>
 
-          <div className="space-y-2">
-            <Label>Birth date *</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" className="w-full justify-between text-white">
-                  {birthDate ? format(birthDate, "dd MMM yyyy", { locale: fr }) : "Choose a date"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={birthDate || undefined}
-                  onSelect={(d) => setBirthDate(d ?? null)}
-                  initialFocus
-                  locale={enUS}
-                  captionLayout="dropdown"
-                  fromYear={1930}
-                  toYear={new Date().getFullYear()}
-                  className="rounded-md border w-95 h-105"
-                />
-              </PopoverContent>
-            </Popover>
-            <p className="text-xs text-gray-400"> : {age || "—"} years old</p>
-          </div>
+      {submitError && <p className="mt-4 text-sm text-red-400">{submitError}</p>}
+      {submitSuccess && <p className="mt-4 text-sm text-green-400">{submitSuccess}</p>}
 
-
-          <div className="mt-4">
-            <Label className="mb-2 block">Top 3 horror movies *</Label>
-            <Input
-              placeholder="Search for a movie…"
-              value={qMovies}
-              onChange={(e) => setQMovies(e.target.value)}
-            />
-            {qMovies && resMovies.length > 0 && (
-              <div className="mt-2 border border-white/10 rounded-md">
-                <ScrollArea className="max-h-[12rem]">
-                  <ul className="divide-y divide-white/10">
-                    {resMovies.map(item => (
-                      <li key={item._id}>
-                        <button
-                          type="button"
-                          onClick={() => addMovie(item)}
-                          className="w-full text-left px-3 py-2 hover:bg-white/5"
-                        >
-                          {item.title || item.name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </div>
-            )}
-
-            <div className="mt-2 flex flex-wrap gap-2">
-              {top3Movies.map((m) => (
-                <span key={m._id} className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10">
-                  <span className="text-sm">{m.title || m.name}</span>
-                  <button onClick={() => removeMovie(m._id)} className="hover:text-red-400" aria-label="Retirer">
-                    <X size={16} />
-                  </button>
-                </span>
-              ))}
-              {top3Movies.length < 3 && (
-                <span className="text-xs text-gray-400">({3 - top3Movies.length} remaining{3 - top3Movies.length === 1 ? "" : "s"})</span>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <Label className="mb-2 block">Top 3 TV Shows (optional)</Label>
-            <Input
-              placeholder="Search for a show…"
-              value={qShows}
-              onChange={(e) => setQShows(e.target.value)}
-            />
-            {qShows && resShows.length > 0 && (
-              <div className="mt-2 border border-white/10 rounded-md">
-                <ScrollArea className="max-h-[12rem]">
-                  <ul className="divide-y divide-white/10">
-                    {resShows.map(item => (
-                      <li key={item._id}>
-                        <button
-                          type="button"
-                          onClick={() => addShow(item)}
-                          className="w-full text-left px-3 py-2 hover:bg-white/5"
-                        >
-                          {item.title || item.name}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </ScrollArea>
-              </div>
-            )}
-
-            <div className="mt-2 flex flex-wrap gap-2">
-              {top3TvShow.map((s) => (
-                <span key={s._id} className="inline-flex items-center gap-2 px-2.5 py-1.5 rounded-md bg-white/10">
-                  <span className="text-sm">{s.title || s.name}</span>
-                  <button onClick={() => removeShow(s._id)} className="hover:text-red-400" aria-label="Retirer">
-                    <X size={16} />
-                  </button>
-                </span>
-              ))}
-              {top3TvShow.length < 3 && top3TvShow.length > 0 && (
-                <span className="text-xs text-gray-400">(optional — {3 - top3TvShow.length} remaining{3 - top3TvShow.length === 1 ? "" : "s"})</span>
-              )}
-            </div>
-          </div>
-
-          {submitError && <p className="mt-4 text-sm text-red-400">{submitError}</p>}
-          {submitSuccess && <p className="mt-4 text-sm text-green-400">{submitSuccess}</p>}
-
-          <div className="mt-6 flex justify-end gap-3">
-            <Button variant="outline" onClick={() => onClose?.()} className="text-white hover:bg-white/10">
-              Cancel
-            </Button>
-            <Button onClick={handleSubmit} disabled={!canSubmit || submitting} className="text-white">
-              {submitting ? "Saving..." : "Save"}
-            </Button>
-          </div>
+      <div className="mt-6 flex justify-end gap-3">
+        <Button variant="outline" onClick={() => onClose?.()} className="text-white hover:bg-white/10">
+          Cancel
+        </Button>
+        <Button onClick={handleSubmit} disabled={!canSubmit || submitting} className="text-white">
+          {submitting ? "Saving..." : "Save"}
+        </Button>
+      </div>
     </div>
   );
 };
@@ -475,6 +475,7 @@ const DialogSignUpForm: React.FC = () => {
       variant="outline"
       size="sm"
       className="button-text mt-9 text-white hover:bg-[#4C4C4C] px-6 text-sm font-semibold z-50"
+      style={{ fontFamily: "'Metal Mania', serif" }}
       onClick={() => navigate("/signup")}
     >
       Sign Up

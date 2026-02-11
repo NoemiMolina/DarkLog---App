@@ -137,11 +137,10 @@ export const ContactFormContent: React.FC<ContactFormContentProps> = ({ userEmai
       </div>
       {message && (
         <div
-          className={`p-3 rounded-md text-sm ${
-            message.type === "success"
+          className={`p-3 rounded-md text-sm ${message.type === "success"
               ? "bg-green-500/20 text-green-400 border border-green-500/50"
               : "bg-red-500/20 text-red-400 border border-red-500/50"
-          }`}
+            }`}
         >
           {message.text}
         </div>
@@ -168,11 +167,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ userEmail = "" }) => {
         </button>
       </DialogTrigger>
 
-      <DialogContent className="w-full max-w-lg md:max-w-md bg-black/40 backdrop-blur-md text-white border border-white/20">
+      <DialogContent className="w-full max-w-lg md:max-w-md bg-black/40 backdrop-blur-md text-white border border-white/20" style={{ fontFamily: "'Metal Mania', serif" }}>
         <DialogHeader>
-          <DialogTitle>Contact Us</DialogTitle>
+          <DialogTitle>Contact The Dev</DialogTitle>
           <DialogDescription className="text-gray-400">
-            Let us know if you can't find a movie or TV show
+            Let it know if you can't find a movie or TV show
           </DialogDescription>
         </DialogHeader>
 

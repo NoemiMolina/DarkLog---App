@@ -7,7 +7,14 @@ import {
 
 const router = express.Router();
 
-router.get("/", getQuizzes);
-router.get("/:type/:category/:difficulty", authMiddleware,getRandomQuizQuestions);
+const noCacheMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    next();
+};
+
+router.get("/", noCacheMiddleware, getQuizzes);
+router.get("/:type/:category/:difficulty", noCacheMiddleware, authMiddleware, getRandomQuizQuestions);
 
 export default router;
