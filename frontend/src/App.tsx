@@ -10,6 +10,9 @@ import SignUpPage from "./features/pages/SignUpPage";
 import ContactFormPage from "./features/pages/ContactFormPage";
 import PrivacyPage from "./features/pages/PrivacyPage";
 import TermsPage from "./features/pages/TermsPage";
+import WatchedItemsPage from "./features/pages/WatchedItemsPage";
+import VerifyEmailPage from "./features/pages/VerifyEmailPage";
+import CheckEmailPage from "./features/pages/CheckEmailPage";
 import { Footer } from "./components/FooterComponents/Footer";
 import { NotificationProvider } from "./context/NotificationContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
@@ -78,6 +81,9 @@ function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
           <Route path="/forum" element={<ForumPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/watched-items" element={<WatchedItemsPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/check-email" element={<CheckEmailPage />} />
         </Routes>
       </div>
       <Footer />

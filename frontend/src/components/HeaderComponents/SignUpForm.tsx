@@ -1,17 +1,11 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
-import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
-import { Calendar } from "../ui/calendar";
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
-import { CountrySelect } from "../ui/country-select";
-import { format } from "date-fns";
-import { enUS, fr } from "date-fns/locale";
-import { X, Eye, EyeOff } from "lucide-react";
+import { X, Eye, EyeOff, Check } from "lucide-react";
 
 type SearchItem = {
   _id: string;
@@ -24,40 +18,33 @@ type SearchItem = {
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
 
-const calcAgeFromDate = (date: Date | null) => {
-  if (!date) return 0;
-  const now = new Date();
-  let age = now.getFullYear() - date.getFullYear();
-  const m = now.getMonth() - date.getMonth();
-  if (m < 0 || (m === 0 && now.getDate() < date.getDate())) age--;
-  return Math.max(age, 0);
-};
-
 export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
   onClose,
 }) => {
   const navigate = useNavigate();
   const [userPseudo, setUserPseudo] = useState("");
-  const [userFirstName, setUserFirstName] = useState("");
-  const [userLastName, setUserLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [birthDate, setBirthDate] = useState<Date | null>(null);
-  const [location, setLocation] = useState("");
   const [profilePic, setProfilePic] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
-  const age = useMemo(() => calcAgeFromDate(birthDate), [birthDate]);
+  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
   const [qMovies, setQMovies] = useState("");
   const [resMovies, setResMovies] = useState<SearchItem[]>([]);
   const [top3Movies, setTop3Movies] = useState<SearchItem[]>([]);
   const [qShows, setQShows] = useState("");
   const [resShows, setResShows] = useState<SearchItem[]>([]);
   const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]);
+  const [duplicateMovieError, setDuplicateMovieError] = useState<string | null>(
+    null
+  );
+  const [duplicateShowError, setDuplicateShowError] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     if (!qMovies.trim()) {
@@ -98,42 +85,55 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
   }, [qShows]);
 
   const addMovie = (item: SearchItem) => {
-    if (top3Movies.find((x) => x._id === item._id)) return;
+    if (top3Movies.find((x) => x._id === item._id)) {
+      setDuplicateMovieError(
+        "We get it, you truly love this movie, but you can put it only once in your top3"
+      );
+      setTimeout(() => setDuplicateMovieError(null), 3000);
+      return;
+    }
     if (top3Movies.length >= 3) return;
     setTop3Movies([...top3Movies, item]);
     setQMovies("");
     setResMovies([]);
+    setDuplicateMovieError(null);
   };
   const removeMovie = (id: string) =>
     setTop3Movies(top3Movies.filter((x) => x._id !== id));
 
   const addShow = (item: SearchItem) => {
-    if (top3TvShow.find((x) => x._id === item._id)) return;
+    if (top3TvShow.find((x) => x._id === item._id)) {
+      setDuplicateShowError(
+        "We get it, you truly love this show, but you can put it only once in your top3"
+      );
+      setTimeout(() => setDuplicateShowError(null), 3000);
+      return;
+    }
     if (top3TvShow.length >= 3) return;
     setTop3TvShow([...top3TvShow, item]);
     setQShows("");
     setResShows([]);
+    setDuplicateShowError(null);
   };
   const removeShow = (id: string) =>
     setTop3TvShow(top3TvShow.filter((x) => x._id !== id));
 
-  const emailValid = /\S+@\S+\.\S+/.test(email);
+  const hasMinLength = password.length >= 8;
+  const hasUppercase = /[A-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*]/.test(password);
   const passwordValid = passwordRegex.test(password);
+  const emailValid = /\S+@\S+\.\S+/.test(email);
   const passwordsMatch = password === confirmPassword && password.length > 0;
   const canSubmit =
-    userFirstName.trim().length > 0 &&
-    userLastName.trim().length > 0 &&
     userPseudo.trim().length > 0 &&
-    userFirstName.trim().length > 0 &&
-    userLastName.trim().length > 0 &&
     emailValid &&
     passwordValid &&
     passwordsMatch &&
-    age > 0 &&
-    location.trim().length > 0 &&
     top3Movies.length === 3;
 
   const handleSubmit = async () => {
+    setAttemptedSubmit(true);
     if (!canSubmit || submitting) return;
     setSubmitting(true);
     setSubmitError(null);
@@ -141,13 +141,9 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
 
     try {
       const payload = {
-        UserFirstName: userFirstName.trim(),
-        UserLastName: userLastName.trim(),
         UserPseudo: userPseudo.trim(),
         UserMail: email.trim(),
         UserPassword: password,
-        UserAge: age,
-        UserLocation: location.trim(),
         Top3Movies: JSON.stringify(top3Movies.map((x) => x.tmdb_id || x.id)),
         Top3TvShow: JSON.stringify(top3TvShow.map((x) => x.tmdb_id || x.id)),
       };
@@ -166,65 +162,19 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
         body: formData,
       });
 
-      const data = await res.json();
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err?.message || "Subscription failed");
       }
 
-      setSubmitSuccess("Well done! Your account has been created.");
+      setSubmitSuccess("Account created! Check your email to verify your account.");
 
-      const newUser = {
-        UserPseudo: userPseudo.trim(),
-        UserFirstName: userFirstName.trim(),
-        UserLastName: userLastName.trim(),
-        UserMail: email.trim(),
-        UserProfilePicture: data.user.UserProfilePicture || null,
-        top3Movies: [...top3Movies],
-        top3TvShow: [...top3TvShow],
-      };
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(newUser));
-      localStorage.setItem("userId", data.user._id);
-      localStorage.setItem("firstConnection", "true");
-
-      const pendingItem = pendingWatchlistService.getPendingItem();
-      if (
-        pendingItem &&
-        data.user &&
-        data.token &&
-        typeof pendingItem.id === "number" &&
-        !isNaN(pendingItem.id) &&
-        data.user._id
-      ) {
-        try {
-          const route =
-            pendingItem.type === "movie"
-              ? `${API_URL}/users/${data.user._id}/watchlist/movie/${pendingItem.id}`
-              : `${API_URL}/users/${data.user._id}/watchlist/tvshow/${pendingItem.id}`;
-
-          await fetch(route, {
-            method: "POST",
-            headers: { Authorization: `Bearer ${data.token}` },
-          });
-
-          pendingWatchlistService.clearPendingItem();
-          console.log(`🎬 "${pendingItem.title}" added to watchlist!`);
-        } catch (err) {
-          console.error("❌ Failed to add pending item:", err);
-        }
-      } else if (pendingItem) {
-        console.warn(
-          "⛔ Pending item or user ID is undefined, skipping watchlist addition.",
-          { pendingItem, userId: data.user?._id },
-        );
-      }
-
+      // Redirect to email verification page instead of logging in
       setTimeout(() => {
         onClose?.();
-        navigate("/home");
-      }, 800);
+        navigate(`/check-email?email=${encodeURIComponent(email.trim())}`);
+      }, 1000);
     } catch (e: any) {
       setSubmitError(e?.message || "Unknown error");
     } finally {
@@ -250,7 +200,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
             <div className="flex flex-col items-center gap-2">
               <img
                 src={URL.createObjectURL(profilePic)}
-                alt="Preview"
+                alt="Profile picture preview"
                 className="w-24 h-24 rounded-full object-cover border border-white/30 "
               />
               <Button
@@ -290,28 +240,16 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
         <Input
           id="userName"
           value={userPseudo}
-          onChange={(e) => setUserPseudo(e.target.value)}
+          onChange={(e) => {
+            setUserPseudo(e.target.value);
+            setAttemptedSubmit(false);
+          }}
           placeholder="ex: Ghostface"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="firstName">First name *</Label>
-        <Input
-          id="firstName"
-          value={userFirstName}
-          onChange={(e) => setUserFirstName(e.target.value)}
-          placeholder="ex : Stuart"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="lastName">Last name *</Label>
-        <Input
-          id="lastName"
-          value={userLastName}
-          onChange={(e) => setUserLastName(e.target.value)}
-          placeholder="ex : Macher"
+          className={
+            attemptedSubmit && userPseudo.trim().length === 0
+              ? "border-red-500 bg-red-500/10"
+              : ""
+          }
         />
       </div>
 
@@ -321,8 +259,16 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
           id="email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setAttemptedSubmit(false);
+          }}
           placeholder="stumacherisnotdead@ghostface.com"
+          className={
+            attemptedSubmit && !emailValid && email.length > 0
+              ? "border-red-500 bg-red-500/10"
+              : ""
+          }
         />
         {!emailValid && email.length > 0 && (
           <p className="text-xs text-red-400">Invalid email address.</p>
@@ -336,8 +282,16 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
             id="password"
             type={showPassword ? "text" : "password"}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setAttemptedSubmit(false);
+            }}
             placeholder="Min. 8, 1 maj, 1 number, 1 special"
+            className={
+              attemptedSubmit && (!passwordValid || password.length === 0)
+                ? "border-red-500 bg-red-500/10"
+                : ""
+            }
           />
           <button
             type="button"
@@ -347,11 +301,45 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
-        {!passwordValid && password.length > 0 && (
-          <p className="text-xs text-red-400">
-            Must contain 1 uppercase letter, 1 number, 1 special character, and
-            at least 8 characters.
-          </p>
+
+        {password.length > 0 && (
+          <div className="mt-3 space-y-2 p-3 bg-white/5 rounded-lg border border-white/10">
+            <p className="text-xs font-semibold text-gray-300">Password requirements:</p>
+            <div className="space-y-1">
+              <div
+                className={`flex items-center gap-2 text-xs ${
+                  hasMinLength ? "text-green-400" : "text-gray-400"
+                }`}
+              >
+                <Check size={14} className={hasMinLength ? "visible" : "invisible"} />
+                At least 8 characters
+              </div>
+              <div
+                className={`flex items-center gap-2 text-xs ${
+                  hasUppercase ? "text-green-400" : "text-gray-400"
+                }`}
+              >
+                <Check size={14} className={hasUppercase ? "visible" : "invisible"} />
+                One uppercase letter
+              </div>
+              <div
+                className={`flex items-center gap-2 text-xs ${
+                  hasNumber ? "text-green-400" : "text-gray-400"
+                }`}
+              >
+                <Check size={14} className={hasNumber ? "visible" : "invisible"} />
+                One number
+              </div>
+              <div
+                className={`flex items-center gap-2 text-xs ${
+                  hasSpecialChar ? "text-green-400" : "text-gray-400"
+                }`}
+              >
+                <Check size={14} className={hasSpecialChar ? "visible" : "invisible"} />
+                One special character (!@#$%^&*)
+              </div>
+            </div>
+          </div>
         )}
       </div>
 
@@ -362,8 +350,16 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
             id="confirmPassword"
             type={showConfirmPassword ? "text" : "password"}
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
+              setAttemptedSubmit(false);
+            }}
             placeholder="Confirm your password"
+            className={
+              attemptedSubmit && (!passwordsMatch || confirmPassword.length === 0)
+                ? "border-red-500 bg-red-500/10"
+                : ""
+            }
           />
           <button
             type="button"
@@ -378,52 +374,29 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
         )}
       </div>
 
-      <div className="space-y-2 md:col-span-2">
-        <Label htmlFor="location">Location *</Label>
-        <CountrySelect
-          value={location}
-          onChange={setLocation}
-          placeholder="Search for a country..."
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label>Birth date *</Label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="w-full justify-between text-white"
-            >
-              {birthDate
-                ? format(birthDate, "dd MMM yyyy", { locale: fr })
-                : "Choose a date"}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={birthDate || undefined}
-              onSelect={(d) => setBirthDate(d ?? null)}
-              initialFocus
-              locale={enUS}
-              captionLayout="dropdown"
-              fromYear={1930}
-              toYear={new Date().getFullYear()}
-              className="rounded-md border w-95 h-105"
-            />
-          </PopoverContent>
-        </Popover>
-        <p className="text-xs text-gray-400"> : {age || "—"} years old</p>
-      </div>
-
       <div className="mt-4">
         <Label className="mb-2 block">Top 3 horror movies *</Label>
         <Input
           placeholder="Search for a movie…"
           value={qMovies}
-          onChange={(e) => setQMovies(e.target.value)}
+          onChange={(e) => {
+            setQMovies(e.target.value);
+            setAttemptedSubmit(false);
+          }}
+          className={
+            attemptedSubmit && top3Movies.length < 3
+              ? "border-red-500 bg-red-500/10"
+              : ""
+          }
         />
+        {attemptedSubmit && top3Movies.length < 3 && (
+          <p className="text-xs text-red-400 mt-1">
+            You must select 3 movies for your top3
+          </p>
+        )}
+        {duplicateMovieError && (
+          <p className="text-xs text-red-400 mt-1">{duplicateMovieError}</p>
+        )}
         {qMovies && resMovies.length > 0 && (
           <div className="mt-2 border border-white/10 rounded-md">
             <ScrollArea className="max-h-[12rem]">
@@ -476,6 +449,9 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
           value={qShows}
           onChange={(e) => setQShows(e.target.value)}
         />
+        {duplicateShowError && (
+          <p className="text-xs text-red-400 mt-1">{duplicateShowError}</p>
+        )}
         {qShows && resShows.length > 0 && (
           <div className="mt-2 border border-white/10 rounded-md">
             <ScrollArea className="max-h-[12rem]">
@@ -538,7 +514,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
         </Button>
         <Button
           onClick={handleSubmit}
-          disabled={!canSubmit || submitting}
+          disabled={submitting}
           className="text-white"
         >
           {submitting ? "Saving..." : "Save"}

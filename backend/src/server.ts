@@ -17,7 +17,9 @@ import notificationRoutes from "./routes/notification";
 import newsRoutes from "./routes/news";
 import importRoutes from "./routes/import";
 
-dotenv.config();
+const envFile =
+  process.env.NODE_ENV === "production" ? ".env" : ".env.development";
+dotenv.config({ path: envFile });
 
 const app = express();
 const server = http.createServer(app);

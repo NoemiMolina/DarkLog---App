@@ -11,11 +11,6 @@ import backgroundOption7 from "@/assets/images/WelcomePageBackgroundImgs/shining
 import backgroundOption8 from "@/assets/images/WelcomePageBackgroundImgs/midsommarMainHomePic.jpg";
 import backgroundOption9 from "@/assets/images/WelcomePageBackgroundImgs/signsMainHomePic.jpg";
 import backgroundOption10 from "@/assets/images/WelcomePageBackgroundImgs/dawnOfTheDeadMainHomePic.jpg";
-
-import { IoSkullOutline } from "react-icons/io5";
-import { LiaGhostSolid } from "react-icons/lia";
-import { RiUserCommunityLine } from "react-icons/ri";
-import { IoGameControllerOutline } from "react-icons/io5";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
 import News from "../../components/NewsComponents/News";
 
@@ -66,7 +61,7 @@ const WelcomePage: React.FC = () => {
           </div>
         </div>
 
-        <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:-translate-y-95 xl:mt-40 2xl:mt-50 2xl:-translate-y-120">
+        <div className="translate-y-0 text-[0.75rem] sm:text-[1rem] text-center text-white px-4 -mt-16 sm:mt-10 sm:-translate-y-[420px] md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 md:mt-40 xl:-translate-y-95 xl:mt-40 2xl:mt-90 2xl:-translate-y-120">
           <h1
             className="font-bold tracking-wide text-[0.85rem] sm:text-[1rem] xl:text-[1.5rem] 2xl:text-[1.5rem] italic"
             style={{ fontFamily: "'Workbench', monospace" }}
@@ -101,46 +96,6 @@ const WelcomePage: React.FC = () => {
                 className="w-4 h-4 sm:w-6 sm:h-6 md:w-7 md:h-7 2xl:w-5"
               />
             </a>
-          </div>
-        </div>
-        <div className="hidden sm:grid grid-cols-1 -mt-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-2 gap-4 lg:mt-12 lg:-w-[90%] xl:max-w-[80%] xl:translate-x-35 xl:-translate-y-80 2xl:-translate-y-95 2xl:translate-x-0 2xl:w-[60%] 2xl:mx-auto px-4 sm:px-0">
-          <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-            <IoSkullOutline className="text-2xl sm:text-4xl mb-2" />
-            <p className="text-sm sm:hidden">Explore and rate horror movies</p>
-            <p className="text-sm hidden sm:block">
-              Discover and explore a vast collection of horror movies or series.
-              Rate and comment the ones you've already seen, add to your
-              wishlist the ones you did not watch yet.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-            <LiaGhostSolid className="text-2xl sm:text-4xl mb-2" />
-            <p className="text-sm sm:hidden">
-              See what your friends are watching
-            </p>
-            <p className="text-sm hidden sm:block">
-              Connect with your friends, see what they are watching, and share
-              your own horror movie or tv show experiences.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-            <RiUserCommunityLine className="text-2xl sm:text-4xl mb-2" />
-            <p className="text-sm sm:hidden">Join the horror community</p>
-            <p className="text-sm hidden sm:block">
-              Join a community of horror enthusiasts, participate in
-              discussions, and stay updated with the latest news and trends in
-              the horror genre with our dedicated forum.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-center text-center p-4 border border-white rounded-lg bg-black/30 backdrop-blur-sm shadow-sm">
-            <IoGameControllerOutline className="text-2xl sm:text-4xl mb-2" />
-            <p className="text-sm sm:hidden">Challenge yourself</p>
-            <p className="text-sm hidden sm:block">
-              Challenge yourself with our home made horror-themed quizzes.
-            </p>
           </div>
         </div>
         <div className="xl:-mt-70 2xl:-mt-80">

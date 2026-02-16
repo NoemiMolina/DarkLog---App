@@ -75,7 +75,6 @@ const TinderStyleCarousel = ({
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
-      addToWatchlist(currentMovie);
       setExitDirection("left");
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
@@ -85,6 +84,7 @@ const TinderStyleCarousel = ({
       }, 300);
     },
     onSwipedRight: () => {
+      addToWatchlist(currentMovie);
       setExitDirection("right");
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);

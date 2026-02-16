@@ -18,6 +18,7 @@ interface FriendReview {
 const PopularWFriendsSection: React.FC = () => {
   const [friendReviews, setFriendReviews] = useState<FriendReview[]>([]);
   const [loading, setLoading] = useState(true);
+  const [expandedReview, setExpandedReview] = useState<number | null>(null);
 
   useEffect(() => {
     fetchFriendReviews();
@@ -103,7 +104,12 @@ const PopularWFriendsSection: React.FC = () => {
                   <div className="flex items-center justify-center gap-0.5 mb-1 scale-50">
                     <RatingSkulls value={review.rating} onChange={() => {}} />
                   </div>
-                  <p className="text-[0.6rem] text-gray-300 text-center line-clamp-2">
+                  <p 
+                    onClick={() => setExpandedReview(expandedReview === index ? null : index)}
+                    className={`text-[0.6rem] text-gray-300 text-center cursor-pointer hover:text-purple-400 transition ${
+                      expandedReview === index ? "" : "line-clamp-2"
+                    }`}
+                  >
                     {review.review}
                   </p>
                 </div>

@@ -14,15 +14,14 @@ interface ITopTvShow {
 }
 
 export interface IUser extends Document {
-  UserFirstName: string;
-  UserLastName: string;
   UserPseudo: string;
   UserMail: string;
   UserPassword: string;
-  UserLocation: string;
-  UserAge: number;
   UserProfilePicture?: string;
   SignUpDate: Date;
+  EmailVerified: boolean;
+  VerificationToken?: string | null;
+  VerificationTokenExpiry?: Date | null;
   NumberOfWatchedMovies: number;
   NumberOfWatchedTvShows: number;
   NumberOfGivenReviews: number;
@@ -79,15 +78,14 @@ export interface IUser extends Document {
 }
 
 const UserSchema: Schema = new Schema({
-  UserFirstName: { type: String, required: true },
-  UserLastName: { type: String, required: true },
   UserPseudo: { type: String, required: true },
   UserMail: { type: String, required: true },
-  UserLocation: { type: String, required: true },
   UserPassword: { type: String, required: true },
-  UserAge: { type: Number },
   UserProfilePicture: { type: String, default: "" },
   SignUpDate: { type: Date, default: Date.now },
+  EmailVerified: { type: Boolean, default: false },
+  VerificationToken: { type: String, default: null },
+  VerificationTokenExpiry: { type: Date, default: null },
   NumberOfWatchedMovies: { type: Number, default: 0 },
   NumberOfWatchedTvShows: { type: Number, default: 0 },
   NumberOfGivenReviews: { type: Number, default: 0 },

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import { Button } from "../ui/button";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
-import { GiPerspectiveDiceSixFacesRandom } from "react-icons/gi";
+import { GiCardRandom } from "react-icons/gi";
 import {
   Dialog,
   DialogContent,
@@ -158,7 +158,7 @@ const GetLuckyDialog: React.FC = () => {
             className="hidden sm:inline-flex button-text sm:mt-3 text-white hover:bg-[#4C4C4C] px-6 py-3 text-sm font-semibold z-50"
             style={{ fontFamily: "'Metal Mania', serif" }}
           >
-            {loading ? "Loading..." : "Get Lucky"}
+            {loading ? "Loading..." : "Random picker !"}
           </Button>
         </DialogTrigger>
 
@@ -169,7 +169,7 @@ const GetLuckyDialog: React.FC = () => {
             size="sm"
             className="sm:hidden text-white hover:bg-[#4C4C4C] p-2"
           >
-            <GiPerspectiveDiceSixFacesRandom className="text-2xl w-6 h-6" />
+            <GiCardRandom className="text-2xl w-6 h-6" />
           </Button>
         </DialogTrigger>
 

@@ -36,10 +36,11 @@ const TinderStyleWatchlistsCarousel = () => {
 
   const addToWatchlist = async (watchlist: Watchlist) => {
     if (!userId) {
+      console.warn("⚠️ User not authenticated");
       return;
     }
     try {
-      await fetch(`${API_URL}/homemade-watchlists/add`, {
+      const res = await fetch(`${API_URL}/homemade-watchlists/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,7 +51,16 @@ const TinderStyleWatchlistsCarousel = () => {
           watchlistId: watchlist._id,
         }),
       });
-    } catch (err) {}
+
+      if (res.ok) {
+        console.log("✅ Watchlist added successfully:", watchlist.title);
+        window.dispatchEvent(new Event("watchlistUpdated"));
+      } else {
+        console.error("❌ Failed to add watchlist:", res.statusText);
+      }
+    } catch (err) {
+      console.error("❌ Error adding watchlist:", err);
+    }
   };
 
   const handlers = useSwipeable({

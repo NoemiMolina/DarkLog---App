@@ -8,6 +8,8 @@ import TVShow from "../models/TVShow";
 import HomemadeWatchlist from "../models/HomemadeWatchlists";
 import { isNumberObject } from "util/types";
 import { createNotification } from "./notificationController";
+import { sendVerificationEmail } from "../services/emailService";
+import crypto from "crypto";
 
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
@@ -58,20 +60,29 @@ export const registerUser = async (req: Request, res: Response) => {
       UserProfilePicture: profilePicUrl,
       Top3Movies: parsedMovies,
       Top3TvShow: parsedTv,
+      EmailVerified: false,
     });
+
+    // Generate verification token
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    newUser.VerificationToken = verificationToken;
+    newUser.VerificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
     await newUser.save();
 
-    const token = jwt.sign(
-      { id: newUser._id },
-      process.env.JWT_SECRET || "secretKey",
-      { expiresIn: "7d" },
-    );
+    // Send verification email
+    try {
+      await sendVerificationEmail(UserMail, verificationToken);
+    } catch (emailError) {
+      console.error("❌ Failed to send verification email:", emailError);
+      // Continue anyway, user can request resend
+    }
 
+    // Don't log the user in yet - they need to verify their email first
     res.status(201).json({
-      message: "User successfully created",
-      token,
-      user: newUser,
+      message: "User created successfully. Please check your email to verify your account.",
+      userId: newUser._id,
+      email: UserMail,
     });
   } catch (err) {
     console.error("❌ Error in registerUser:", err);
@@ -85,6 +96,14 @@ export const loginUser = async (req: Request, res: Response) => {
     const { UserMail, UserPassword } = req.body;
     const user = await User.findOne({ UserMail });
     if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Check if email is verified
+    if (!user.EmailVerified) {
+      return res.status(403).json({
+        message: "Please verify your email before logging in",
+        email: UserMail,
+      });
+    }
 
     const isMatch = await bcrypt.compare(UserPassword, user.UserPassword);
     if (!isMatch)
@@ -133,6 +152,99 @@ export const verifyToken = async (req: Request, res: Response) => {
   }
 };
 
+// ------------- VERIFY EMAIL
+export const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    const { token, email } = req.query;
+
+    if (!token || !email) {
+      return res.status(400).json({ message: "Token and email are required" });
+    }
+
+    const user = await User.findOne({ UserMail: email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if token matches and hasn't expired
+    if (user.VerificationToken !== token) {
+      return res.status(400).json({ message: "Invalid verification token" });
+    }
+
+    if (!user.VerificationTokenExpiry || user.VerificationTokenExpiry < new Date()) {
+      return res.status(400).json({ message: "Verification token has expired" });
+    }
+
+    // Mark email as verified
+    user.EmailVerified = true;
+    user.VerificationToken = null;
+    user.VerificationTokenExpiry = null;
+    await user.save();
+
+    // Generate login token
+    const jwtToken = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET || "secretKey",
+      { expiresIn: "7d" },
+    );
+
+    res.status(200).json({
+      message: "Email verified successfully!",
+      token: jwtToken,
+      user: {
+        _id: user._id,
+        UserMail: user.UserMail,
+        UserPseudo: user.UserPseudo,
+        UserProfilePicture: user.UserProfilePicture,
+      },
+    });
+  } catch (err) {
+    console.error("❌ Error in verifyEmail:", err);
+    res.status(500).json({ message: "Error verifying email", error: err });
+  }
+};
+
+// ------------- RESEND VERIFICATION EMAIL
+export const resendVerificationEmail = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const user = await User.findOne({ UserMail: email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.EmailVerified) {
+      return res.status(400).json({ message: "Email already verified" });
+    }
+
+    // Generate new verification token
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    user.VerificationToken = verificationToken;
+    user.VerificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await user.save();
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(email, verificationToken);
+    } catch (emailError) {
+      console.error("❌ Failed to send verification email:", emailError);
+      return res.status(500).json({ message: "Failed to send verification email" });
+    }
+
+    res.status(200).json({
+      message: "Verification email sent successfully",
+    });
+  } catch (err) {
+    console.error("❌ Error in resendVerificationEmail:", err);
+    res.status(500).json({ message: "Error resending verification email", error: err });
+  }
+};
+
 // ------------- UPDATE PROFILE INFOS
 export const updateProfileInfos = async (req: Request, res: Response) => {
   try {
@@ -142,11 +254,7 @@ export const updateProfileInfos = async (req: Request, res: Response) => {
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
-    user.UserFirstName = UserFirstName || user.UserFirstName;
-    user.UserLastName = UserLastName || user.UserLastName;
     user.UserPseudo = UserPseudo || user.UserPseudo;
-    user.UserLocation = UserLocation || user.UserLocation;
-    user.UserAge = UserAge || user.UserAge;
     await user.save();
 
     res.status(200).json({ message: "Profile updated successfully", user });
@@ -236,14 +344,49 @@ export const getUserProfile = async (req: Request, res: Response) => {
     const averageMovieRating =
       user.RatedMovies && user.RatedMovies.length > 0
         ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) /
-          user.RatedMovies.length
+        user.RatedMovies.length
         : 0;
 
     const averageTvShowRating =
       user.RatedTvShows && user.RatedTvShows.length > 0
         ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) /
-          user.RatedTvShows.length
+        user.RatedTvShows.length
         : 0;
+
+    const movieIds = (user.RatedMovies || []).map((r: any) => r.tmdbMovieId);
+    const moviePosterData =
+      movieIds.length > 0
+        ? await Movie.find({ tmdb_id: { $in: movieIds } }).select(
+          "tmdb_id poster_path",
+        )
+        : [];
+    const moviePosterMap: { [key: number]: string } = {};
+    moviePosterData.forEach((m: any) => {
+      moviePosterMap[m.tmdb_id] = m.poster_path || "";
+    });
+
+    const enrichedRatedMovies = (user.RatedMovies || []).map((rm: any) => ({
+      ...rm.toObject?.() || rm,
+      poster_path: moviePosterMap[rm.tmdbMovieId] || null,
+    }));
+
+    const tvShowIds = (user.RatedTvShows || []).map((r: any) => r.tmdbTvShowId);
+    const tvShowPosterData =
+      tvShowIds.length > 0
+        ? await TVShow.find({ tmdb_id: { $in: tvShowIds } }).select(
+          "tmdb_id poster_path",
+        )
+        : [];
+    const tvShowPosterMap: { [key: number]: string } = {};
+    tvShowPosterData.forEach((t: any) => {
+      tvShowPosterMap[t.tmdb_id] = t.poster_path || "";
+    });
+
+    const enrichedRatedTvShows = (user.RatedTvShows || []).map((rt: any) => ({
+      ...rt.toObject?.() || rt,
+      poster_path: tvShowPosterMap[rt.tmdbTvShowId] || null,
+    }));
+
     const watchedMoviesWithDetails = user.RatedMovies.map((ratedMovie: any) => {
       return { runtime: ratedMovie.runtime || 0 };
     });
@@ -255,8 +398,6 @@ export const getUserProfile = async (req: Request, res: Response) => {
     );
     const profileData = {
       userProfilePicture: user.UserProfilePicture || null,
-      userFirstName: user.UserFirstName || "",
-      userLastName: user.UserLastName || "",
       userPseudo: user.UserPseudo || "",
       userMail: user.UserMail || "",
       userPassword: "",
@@ -303,8 +444,8 @@ export const getUserProfile = async (req: Request, res: Response) => {
       averageMovieRating: Number(averageMovieRating.toFixed(1)),
       averageTvShowRating: Number(averageTvShowRating.toFixed(1)),
       reviews: user.Reviews || [],
-      ratedMovies: user.RatedMovies || [],
-      ratedTvShows: user.RatedTvShows || [],
+      ratedMovies: enrichedRatedMovies,
+      ratedTvShows: enrichedRatedTvShows,
       watchedMovies: watchedMoviesWithDetails,
       watchedTvShows: watchedTvShowsWithDetails,
       totalWatchTimeFromWatchlists: user.TotalWatchTimeFromWatchlists || 0,
@@ -420,18 +561,18 @@ export const getPublicProfile = async (req: Request, res: Response) => {
     }
     const averageMovieRating =
       user.RatedMovies &&
-      Array.isArray(user.RatedMovies) &&
-      user.RatedMovies.length > 0
+        Array.isArray(user.RatedMovies) &&
+        user.RatedMovies.length > 0
         ? user.RatedMovies.reduce((sum, item) => sum + (item.rating || 0), 0) /
-          user.RatedMovies.length
+        user.RatedMovies.length
         : 0;
 
     const averageTvShowRating =
       user.RatedTvShows &&
-      Array.isArray(user.RatedTvShows) &&
-      user.RatedTvShows.length > 0
+        Array.isArray(user.RatedTvShows) &&
+        user.RatedTvShows.length > 0
         ? user.RatedTvShows.reduce((sum, item) => sum + (item.rating || 0), 0) /
-          user.RatedTvShows.length
+        user.RatedTvShows.length
         : 0;
 
     const watchedMoviesWithDetails = (
@@ -448,8 +589,6 @@ export const getPublicProfile = async (req: Request, res: Response) => {
 
     const responseData = {
       UserPseudo: user.UserPseudo || "",
-      UserFirstName: user.UserFirstName || "",
-      UserLastName: user.UserLastName || "",
       UserProfilePicture: user.UserProfilePicture || null,
       isBlocked,
       top3Movies: top3Movies.map((movie: any) => ({
@@ -1031,8 +1170,8 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
 
     const reviews = Array.isArray(user.Reviews)
       ? user.Reviews.filter(
-          (r) => r && r.itemId && r.itemId.toString().trim().length > 0,
-        )
+        (r) => r && r.itemId && r.itemId.toString().trim().length > 0,
+      )
       : [];
 
     if (type === "movie") {
@@ -1062,9 +1201,9 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
       const averageMovieRating =
         ratedMovies.length > 0
           ? ratedMovies.reduce(
-              (acc: number, r: any) => acc + (r.rating || 0),
-              0,
-            ) / ratedMovies.length
+            (acc: number, r: any) => acc + (r.rating || 0),
+            0,
+          ) / ratedMovies.length
           : 0;
 
       console.log("📊 Updated movie stats:", {
@@ -1119,9 +1258,9 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
       const averageTvShowRating =
         ratedTvShows.length > 0
           ? ratedTvShows.reduce(
-              (acc: number, r: any) => acc + (r.rating || 0),
-              0,
-            ) / ratedTvShows.length
+            (acc: number, r: any) => acc + (r.rating || 0),
+            0,
+          ) / ratedTvShows.length
           : 0;
 
       console.log("📊 Updated TV show stats:", {

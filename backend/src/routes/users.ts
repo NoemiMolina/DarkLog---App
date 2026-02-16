@@ -5,6 +5,8 @@ import {
   registerUser,
   loginUser,
   verifyToken,
+  verifyEmail,
+  resendVerificationEmail,
   getUserProfile,
   updateProfileInfos,
   updatePassword,
@@ -40,6 +42,8 @@ router.post(
 );
 router.post("/login", loginUser);
 router.post("/verify-token", verifyToken);
+router.get("/verify-email", verifyEmail);
+router.post("/resend-verification-email", resendVerificationEmail);
 router.get("/:userId/profile", authMiddleware, getUserProfile);
 router.put(
   "/:userId/profile",

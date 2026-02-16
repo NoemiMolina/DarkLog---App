@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -40,6 +41,7 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   totalWatchTimeFromWatchlists = 0,
   userId,
 }) => {
+  const navigate = useNavigate();
   const [showFriendsModal, setShowFriendsModal] = useState(false);
   const [friends, setFriends] = useState<any[]>([]);
   const [loadingFriends, setLoadingFriends] = useState(false);
@@ -69,6 +71,18 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
   const handleFriendsClick = () => {
     setShowFriendsModal(true);
     fetchFriends();
+  };
+
+  const handleMoviesClick = () => {
+    navigate("/watched-items?type=movies", {
+      state: { items: watchedMovies },
+    });
+  };
+
+  const handleTvShowsClick = () => {
+    navigate("/watched-items?type=tvshows", {
+      state: { items: watchedTvShows },
+    });
   };
 
   useEffect(() => {
@@ -104,13 +118,19 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+            <div
+              className="text-center p-4 bg-[#1A1A1A] rounded-lg cursor-pointer hover:bg-[#333333] transition-colors"
+              onClick={handleMoviesClick}
+            >
               <p className="text-2xl font-bold text-purple-400">
                 {numberOfWatchedMovies}
               </p>
               <p className="text-sm text-white/60">Movies Watched</p>
             </div>
-            <div className="text-center p-4 bg-[#1A1A1A] rounded-lg">
+            <div
+              className="text-center p-4 bg-[#1A1A1A] rounded-lg cursor-pointer hover:bg-[#333333] transition-colors"
+              onClick={handleTvShowsClick}
+            >
               <p className="text-2xl font-bold text-purple-400">
                 {numberOfWatchedTvShows}
               </p>
