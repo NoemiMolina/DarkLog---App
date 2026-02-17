@@ -272,50 +272,52 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
         </div>
 
         {/* Interaction Section */}
-        <div className="space-y-6 max-w-2xl">
-          <Button
-            onClick={handleAddToWatchlist}
-            className="w-full bg-gray-800/50 border border-purple-500/20 text-white hover:bg-gray-700/50"
-          >
-            ➕ Add to my watchlists
-          </Button>
+        <div className="flex justify-center">
+          <div className="space-y-6 max-w-2xl w-full">
+            <Button
+              onClick={handleAddToWatchlist}
+              className="w-full bg-gray-800/50 border border-purple-500/20 text-white hover:bg-gray-700/50"
+            >
+              ➕ Add to my watchlists
+            </Button>
 
-          <div>
-            <h3 className="font-semibold mb-3 text-white text-lg">
-              Rate this watchlist:
-            </h3>
-            <RatingSkulls
-              key={rating}
-              value={rating}
-              onChange={(r) => {
-                setRating(r);
-              }}
-            />
+            <div>
+              <h3 className="font-semibold mb-3 text-white text-lg">
+                Rate this watchlist:
+              </h3>
+              <RatingSkulls
+                key={rating}
+                value={rating}
+                onChange={(r) => {
+                  setRating(r);
+                }}
+              />
+            </div>
+
+            <div>
+              <h3 className="font-semibold mb-3 text-white text-lg">
+                Write a comment:
+              </h3>
+              <Textarea
+                className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white"
+                rows={4}
+                placeholder="Share your thoughts…"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+
+            <Button
+              onClick={handleSave}
+              className="w-full bg-gray-800/50 border border-purple-500/20 text-white hover:bg-gray-700/50"
+            >
+              Save rating & comment
+            </Button>
+
+            {message && (
+              <p className="text-green-400 text-sm mt-2 text-center">{message}</p>
+            )}
           </div>
-
-          <div>
-            <h3 className="font-semibold mb-3 text-white text-lg">
-              Write a comment:
-            </h3>
-            <Textarea
-              className="w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white"
-              rows={4}
-              placeholder="Share your thoughts…"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-          </div>
-
-          <Button
-            onClick={handleSave}
-            className="w-full bg-gray-800/50 border border-purple-500/20 text-white hover:bg-gray-700/50"
-          >
-            Save rating & comment
-          </Button>
-
-          {message && (
-            <p className="text-green-400 text-sm mt-2 text-center">{message}</p>
-          )}
         </div>
       </div>
     </div>

@@ -16,11 +16,9 @@ export const getTVShowById = async (req: Request, res: Response) => {
   try {
     const id = req.params.tvShowId;
     
-    // Try to find by tmdb_id first (most common case)
     let tvShow = await TVShow.findOne({ tmdb_id: Number(id) });
     
-    // If not found, try MongoDB ObjectId
-    if (!tvShow) {
+    if (!tvShow && id.match(/^[0-9a-fA-F]{24}$/)) {
       tvShow = await TVShow.findById(id);
     }
     
