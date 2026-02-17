@@ -25,8 +25,10 @@ export const getMovieById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     
+    // Try to find by TMDB ID first (most common case)
     let movie = await Movie.findOne({ tmdb_id: Number(id) });
     
+    // Only try ObjectId if it matches the pattern and not found by TMDB ID
     if (!movie && id.match(/^[0-9a-fA-F]{24}$/)) {
       movie = await Movie.findById(id);
     }
