@@ -76,7 +76,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         } else {
           if (response.status === 401) {
-
             localStorage.removeItem("user");
             localStorage.removeItem("userId");
             localStorage.removeItem("username");
@@ -95,12 +94,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         }
       } catch (error) {
+        // Network error or CORS issue - use localStorage as fallback
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId) {
           updateAuthState();
-          if (!isRetry) {
-            retryTimeout = setTimeout(() => verifyToken(true), 2000);
-          }
         } else {
           setUsername("Guest");
           setUserId(null);
@@ -112,11 +109,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
 
+    // First check localStorage immediately
+    updateAuthState();
+    
+    // Then try to verify with backend
     verifyToken();
 
     const verifyInterval = setInterval(() => {
       verifyToken();
-    }, 30000);
+    }, 60000);
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
