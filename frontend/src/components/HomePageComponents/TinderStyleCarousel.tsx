@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { API_URL } from "../../config/api";
 import { jwtDecode } from "jwt-decode";
-import ItemDialog from "./ItemDialog";
 
 interface Movie {
   _id: string;
+  tmdb_id?: number;
   title: string;
   original_title?: string;
   poster_path: string | null;
@@ -39,6 +40,7 @@ const TinderStyleCarousel = ({
   items,
   type = "movie",
 }: TinderStyleCarouselProps) => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [exitDirection, setExitDirection] = useState<"left" | "right" | null>(
     null,
@@ -148,34 +150,38 @@ const TinderStyleCarousel = ({
                     : "https://via.placeholder.com/200x300?text=No+Image"
                 }
                 alt={items[currentIndex + 1].title}
+                loading="lazy"
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
           )}
 
-          <ItemDialog
-            trigger={
-              <div
-                {...handlers}
-                style={{
-                  transform: swiping
-                    ? `translateX(${swipeDelta}px)`
-                    : "translateX(0)",
-                  transition: swiping ? "none" : "transform 0.3s ease-out",
-                }}
-                className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 touch-none ${
-                  exitDirection === "left" ? "opacity-0" : ""
-                } ${exitDirection === "right" ? "opacity-0" : ""}`}
-              >
-                <img
-                  src={
-                    currentMovie.poster_path
-                      ? getPosterUrl(currentMovie.poster_path)
-                      : "https://via.placeholder.com/200x300?text=No+Image"
-                  }
-                  alt={currentMovie.title}
-                  className="w-full h-full object-contain rounded-lg"
-                />
+          <div
+            onClick={() => {
+              const itemId = currentMovie.tmdb_id || currentMovie._id;
+              navigate(`/item/${type}/${itemId}`);
+            }}
+            {...handlers}
+            style={{
+              transform: swiping
+                ? `translateX(${swipeDelta}px)`
+                : "translateX(0)",
+              transition: swiping ? "none" : "transform 0.3s ease-out",
+            }}
+            className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 touch-none ${
+              exitDirection === "left" ? "opacity-0" : ""
+            } ${exitDirection === "right" ? "opacity-0" : ""}`}
+          >
+            <img
+              src={
+                currentMovie.poster_path
+                  ? getPosterUrl(currentMovie.poster_path)
+                  : "https://placehold.co/200x300?text=No+Image"
+              }
+              alt={currentMovie.title}
+              loading="lazy"
+              className="w-full h-full object-contain rounded-lg"
+            />
                 {swipeDelta > 30 && (
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                     <div
@@ -203,10 +209,6 @@ const TinderStyleCarousel = ({
                   </div>
                 )}
               </div>
-            }
-            item={currentMovie}
-            type={type}
-          />
         </div>
       </div>
     </section>

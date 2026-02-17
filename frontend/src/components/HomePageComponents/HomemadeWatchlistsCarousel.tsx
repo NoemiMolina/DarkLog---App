@@ -3,11 +3,13 @@ import {
   CarouselContent,
   CarouselItem,
 } from "../../components/ui/carousel";
-import HomemadeWatchlistsDialog from "./HomemadeWatchlistsDialog";
 import { useWatchlists } from "../../hooks/useWatchlists";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config/api";
 
 const HomemadeWatchlistsCarousel = () => {
   const { watchlists, loading } = useWatchlists();
+  const navigate = useNavigate();
 
   if (loading) {
     return (
@@ -23,7 +25,7 @@ const HomemadeWatchlistsCarousel = () => {
   }
 
   return (
-    <section className="hidden sm:block 2xl:translate-y-[-120px]">
+    <section className="2xl:translate-y-[-120px]">
       <h2
         className="text-xl font-bold text-white mb-4 tracking-wide xl:text-center xl:-translate-y-[50px] 2xl:translate-y-[40px] 2xl:text-center"
         style={{ fontFamily: "'Metal Mania', serif" }}
@@ -40,10 +42,20 @@ const HomemadeWatchlistsCarousel = () => {
             watchlists.map((watchlist, idx) => (
               <CarouselItem
                 key={watchlist._id}
-                className={`basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/6 2xl:basis-1/8 2xl:mt-15 px-2 xl:px-0 bg-transparent ${idx === 0 ? "ml-4" : ""}`}
+                className={`basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/6 2xl:basis-1/8 2xl:mt-15 px-2 ${idx === 0 ? "ml-4" : ""}`}
               >
-                <div className="relative group transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:opacity-15 w-full">
-                  <HomemadeWatchlistsDialog watchlist={watchlist} />
+                <div
+                  onClick={() => navigate(`/homemade-watchlist/${watchlist._id}`)}
+                  className="relative group transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:opacity-15 w-full cursor-pointer rounded-lg shadow-xl overflow-hidden aspect-[2/3] h-80 sm:h-80 bg-red-800 flex flex-col items-center justify-end"
+                >
+                  {watchlist.posterPath && (
+                    <img
+                      src={`${API_URL}${watchlist.posterPath}`}
+                      alt={watchlist.title}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  )}
                   <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 px-2 py-1 rounded text-white text-sm text-center truncate max-w-[120px] xl:-translate-x-2/3 xl:max-w-[140px] 2xl:-translate-x-1/2">
                     {watchlist.title}
                   </div>

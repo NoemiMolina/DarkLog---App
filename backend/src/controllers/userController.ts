@@ -8,8 +8,17 @@ import TVShow from "../models/TVShow";
 import HomemadeWatchlist from "../models/HomemadeWatchlists";
 import { isNumberObject } from "util/types";
 import { createNotification } from "./notificationController";
-import { sendVerificationEmail } from "../services/emailService";
-import crypto from "crypto";
+
+const getCookieOptions = () => {
+  const isProduction = process.env.NODE_ENV === "production";
+  return {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax" as const,
+    path: "/",
+    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  };
+};
 
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
@@ -60,29 +69,22 @@ export const registerUser = async (req: Request, res: Response) => {
       UserProfilePicture: profilePicUrl,
       Top3Movies: parsedMovies,
       Top3TvShow: parsedTv,
-      EmailVerified: false,
     });
-
-    // Generate verification token
-    const verificationToken = crypto.randomBytes(32).toString("hex");
-    newUser.VerificationToken = verificationToken;
-    newUser.VerificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
 
     await newUser.save();
 
-    // Send verification email
-    try {
-      await sendVerificationEmail(UserMail, verificationToken);
-    } catch (emailError) {
-      console.error("❌ Failed to send verification email:", emailError);
-      // Continue anyway, user can request resend
-    }
+    // Log the user in directly
+    const token = jwt.sign(
+      { id: newUser._id },
+      process.env.JWT_SECRET || "secretKey",
+      { expiresIn: "7d" },
+    );
 
-    // Don't log the user in yet - they need to verify their email first
+    res.cookie("token", token, getCookieOptions());
+
     res.status(201).json({
-      message: "User created successfully. Please check your email to verify your account.",
-      userId: newUser._id,
-      email: UserMail,
+      message: "User created successfully",
+      user: newUser,
     });
   } catch (err) {
     console.error("❌ Error in registerUser:", err);
@@ -97,14 +99,6 @@ export const loginUser = async (req: Request, res: Response) => {
     const user = await User.findOne({ UserMail });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Check if email is verified
-    if (!user.EmailVerified) {
-      return res.status(403).json({
-        message: "Please verify your email before logging in",
-        email: UserMail,
-      });
-    }
-
     const isMatch = await bcrypt.compare(UserPassword, user.UserPassword);
     if (!isMatch)
       return res.status(401).json({ message: "Oops, wrong password" });
@@ -115,9 +109,10 @@ export const loginUser = async (req: Request, res: Response) => {
       { expiresIn: "7d" },
     );
 
-    res
-      .status(200)
-      .json({ message: "User successfully connected", token, user });
+    // Send token as HttpOnly cookie
+    res.cookie("token", token, getCookieOptions());
+
+    res.status(200).json({ message: "User successfully connected", user });
   } catch (err) {
     res.status(500).json({ message: "Error while connecting", error: err });
   }
@@ -126,7 +121,8 @@ export const loginUser = async (req: Request, res: Response) => {
 // ------------- VERIFY TOKEN & GET USER
 export const verifyToken = async (req: Request, res: Response) => {
   try {
-    const token = req.headers.authorization?.split(" ")[1];
+    // Read token from cookie (or fallback to Authorization header for backwards compatibility)
+    const token = (req.cookies as any).token || req.headers.authorization?.split(" ")[1];
 
     if (!token) {
       return res.status(401).json({ message: "No token provided" });
@@ -151,100 +147,6 @@ export const verifyToken = async (req: Request, res: Response) => {
     res.status(401).json({ message: "Invalid or expired token", error: err });
   }
 };
-
-// ------------- VERIFY EMAIL
-export const verifyEmail = async (req: Request, res: Response) => {
-  try {
-    const { token, email } = req.query;
-
-    if (!token || !email) {
-      return res.status(400).json({ message: "Token and email are required" });
-    }
-
-    const user = await User.findOne({ UserMail: email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // Check if token matches and hasn't expired
-    if (user.VerificationToken !== token) {
-      return res.status(400).json({ message: "Invalid verification token" });
-    }
-
-    if (!user.VerificationTokenExpiry || user.VerificationTokenExpiry < new Date()) {
-      return res.status(400).json({ message: "Verification token has expired" });
-    }
-
-    // Mark email as verified
-    user.EmailVerified = true;
-    user.VerificationToken = null;
-    user.VerificationTokenExpiry = null;
-    await user.save();
-
-    // Generate login token
-    const jwtToken = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET || "secretKey",
-      { expiresIn: "7d" },
-    );
-
-    res.status(200).json({
-      message: "Email verified successfully!",
-      token: jwtToken,
-      user: {
-        _id: user._id,
-        UserMail: user.UserMail,
-        UserPseudo: user.UserPseudo,
-        UserProfilePicture: user.UserProfilePicture,
-      },
-    });
-  } catch (err) {
-    console.error("❌ Error in verifyEmail:", err);
-    res.status(500).json({ message: "Error verifying email", error: err });
-  }
-};
-
-// ------------- RESEND VERIFICATION EMAIL
-export const resendVerificationEmail = async (req: Request, res: Response) => {
-  try {
-    const { email } = req.body;
-
-    if (!email) {
-      return res.status(400).json({ message: "Email is required" });
-    }
-
-    const user = await User.findOne({ UserMail: email });
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    if (user.EmailVerified) {
-      return res.status(400).json({ message: "Email already verified" });
-    }
-
-    // Generate new verification token
-    const verificationToken = crypto.randomBytes(32).toString("hex");
-    user.VerificationToken = verificationToken;
-    user.VerificationTokenExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
-    await user.save();
-
-    // Send verification email
-    try {
-      await sendVerificationEmail(email, verificationToken);
-    } catch (emailError) {
-      console.error("❌ Failed to send verification email:", emailError);
-      return res.status(500).json({ message: "Failed to send verification email" });
-    }
-
-    res.status(200).json({
-      message: "Verification email sent successfully",
-    });
-  } catch (err) {
-    console.error("❌ Error in resendVerificationEmail:", err);
-    res.status(500).json({ message: "Error resending verification email", error: err });
-  }
-};
-
 // ------------- UPDATE PROFILE INFOS
 export const updateProfileInfos = async (req: Request, res: Response) => {
   try {
@@ -1354,5 +1256,17 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
   } catch (err) {
     console.error("❌ Error getting item with user data:", err);
     res.status(500).json({ message: "Error getting item data", error: err });
+  }
+};
+
+// ------------- LOGOUT
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    // Clear the token cookie
+    res.clearCookie("token", getCookieOptions());
+
+    res.status(200).json({ message: "Logged out successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error logging out", error: err });
   }
 };

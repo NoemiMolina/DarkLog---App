@@ -168,12 +168,26 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
         throw new Error(err?.message || "Subscription failed");
       }
 
-      setSubmitSuccess("Account created! Check your email to verify your account.");
+      const data = await res.json();
+      
+      setSubmitSuccess("Account created successfully!");
 
-      // Redirect to email verification page instead of logging in
+      // Log in directly and redirect to home
       setTimeout(() => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+          
+          // Add pending watchlists if available
+          const pendingWatchlists = localStorage.getItem("pendingWatchlists");
+          if (pendingWatchlists) {
+            const watchlists = JSON.parse(pendingWatchlists);
+            console.log("Adding pending watchlists:", watchlists);
+            localStorage.removeItem("pendingWatchlists");
+          }
+        }
         onClose?.();
-        navigate(`/check-email?email=${encodeURIComponent(email.trim())}`);
+        navigate("/home");
       }, 1000);
     } catch (e: any) {
       setSubmitError(e?.message || "Unknown error");

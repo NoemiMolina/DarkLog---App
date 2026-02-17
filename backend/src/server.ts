@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import path from "path";
 import http from "http";
@@ -50,6 +51,7 @@ app.use(
   }),
 );
 app.use(express.json());
+app.use(cookieParser());
 
 connectDB();
 

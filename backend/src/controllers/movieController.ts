@@ -23,7 +23,16 @@ export const getAllMovies = async (req: Request, res: Response) => {
 
 export const getMovieById = async (req: Request, res: Response) => {
   try {
-    const movie = await Movie.findById(req.params.id);
+    const id = req.params.id;
+    
+    // Try to find by tmdb_id first (most common case)
+    let movie = await Movie.findOne({ tmdb_id: Number(id) });
+    
+    // If not found, try MongoDB ObjectId
+    if (!movie) {
+      movie = await Movie.findById(id);
+    }
+    
     if (!movie) return res.status(404).json({ message: "Film non trouvé" });
     res.status(200).json(movie);
   } catch (err) {

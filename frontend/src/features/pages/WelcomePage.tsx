@@ -42,6 +42,7 @@ const WelcomePage: React.FC = () => {
           <img
             src={randomImageSelection}
             alt="MainPic"
+            loading="lazy"
             style={{
               height: window.innerWidth < 640 ? "30vh" : "auto",
             }}
@@ -56,6 +57,7 @@ const WelcomePage: React.FC = () => {
             <img
               src={appLogo}
               alt="App Logo"
+              loading="lazy"
               className="h-2 w-2 sm:h-auto sm:w-10"
             />
           </div>

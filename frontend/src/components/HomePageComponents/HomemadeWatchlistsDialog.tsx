@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -15,12 +16,12 @@ import {
 import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
 import { IoSkull } from "react-icons/io5";
-import ItemDialog from "./ItemDialog";
 import RatingSkulls from "./RatingSkulls";
 import { API_URL } from "../../config/api";
 
 interface Movie {
   _id: string;
+  tmdb_id?: number;
   title: string;
   poster_path?: string;
   vote_average?: number;
@@ -43,6 +44,7 @@ const HomemadeWatchlistsDialog = ({
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) => {
+  const navigate = useNavigate();
   const [internalOpen, setInternalOpen] = useState(false);
   const open = isOpen !== undefined ? isOpen : internalOpen;
   const setOpen = onOpenChange || setInternalOpen;
@@ -217,20 +219,15 @@ const HomemadeWatchlistsDialog = ({
                       }
                     >
                       <div className="relative group">
-                        <ItemDialog
-                          item={movie}
-                          type="movie"
-                          trigger={
-                            <img
-                              src={
-                                movie.poster_path
-                                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                                  : "https://via.placeholder.com/200x300?text=No+Image"
-                              }
-                              alt={movie.title}
-                              className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl"
-                            />
+                        <img
+                          onClick={() => navigate(`/item/movie/${movie.tmdb_id || movie._id}`)}
+                          src={
+                            movie.poster_path
+                              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                              : "https://placehold.co/200x300?text=No+Image"
                           }
+                          alt={movie.title}
+                          className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl"
                         />
                         <div className="pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100">
                           <div className="px-3 py-1 rounded bg-black bg-opacity-70 flex items-center gap-1">

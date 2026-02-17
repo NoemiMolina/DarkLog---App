@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import {
   Card,
@@ -9,8 +9,13 @@ import {
 } from "../../components/ui/card";
 import { Separator } from "../../components/ui/separator";
 import { Button } from "../../components/ui/button";
-import { UserPlus, UserCheck, Ban, ShieldOff } from "lucide-react";
+import { UserPlus, UserCheck, Ban, ShieldOff, ArrowLeft } from "lucide-react";
 import { jwtDecode } from "jwt-decode";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "../../components/ui/carousel";
 
 interface JwtPayload {
   id: string;
@@ -39,6 +44,7 @@ interface PublicProfileData {
 
 const UserPublicProfile: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState<PublicProfileData | null>(
     null,
   );
@@ -221,6 +227,13 @@ const UserPublicProfile: React.FC = () => {
 
   return (
     <div className="container mx-auto p-6 space-y-8 max-w-6xl 2xl:scale-83 2xl:-translate-y-45">
+      <button
+        onClick={() => navigate(-1)}
+        className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition mb-4"
+      >
+        <ArrowLeft size={20} />
+        Back
+      </button>
       <Card className="bg-[#2A2A2A] border-white/20 text-white">
         <CardHeader className="relative p-5">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
@@ -368,20 +381,22 @@ const UserPublicProfile: React.FC = () => {
                 </h2>
                 {profileData.MovieWatchlist &&
                 profileData.MovieWatchlist.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    {profileData.MovieWatchlist.map((movie) => (
-                      <div key={movie.movieId} className="relative group">
-                        <img
-                          src={movie.poster}
-                          alt={movie.title}
-                          className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <p className="text-center mt-2 text-xs truncate">
-                          {movie.title}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {profileData.MovieWatchlist.map((movie) => (
+                        <CarouselItem key={movie.movieId} className="basis-1/2 sm:basis-1/3 md:basis-1/3">
+                          <div className="relative group aspect-[2/3] overflow-hidden">
+                            <img
+                              src={movie.poster}
+                              alt={movie.title}
+                              loading="lazy"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                            />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                  </Carousel>
                 ) : (
                   <p className="text-center text-gray-400 py-8">
                     No movies in watchlist
@@ -394,20 +409,22 @@ const UserPublicProfile: React.FC = () => {
                 </h2>
                 {profileData.TvShowWatchlist &&
                 profileData.TvShowWatchlist.length > 0 ? (
-                  <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    {profileData.TvShowWatchlist.map((show) => (
-                      <div key={show.tvshowId} className="relative group">
-                        <img
-                          src={show.poster}
-                          alt={show.title}
-                          className="w-full rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <p className="text-center mt-2 text-xs truncate">
-                          {show.title}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                  <Carousel className="w-full">
+                    <CarouselContent>
+                      {profileData.TvShowWatchlist.map((show) => (
+                        <CarouselItem key={show.tvshowId} className="basis-1/2 sm:basis-1/3 md:basis-1/3">
+                          <div className="relative group aspect-[2/3] overflow-hidden">
+                            <img
+                              src={show.poster}
+                              alt={show.title}
+                              loading="lazy"
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                            />
+                          </div>
+                        </CarouselItem>
+                      ))}
+                    </CarouselContent>
+                  </Carousel>
                 ) : (
                   <p className="text-center text-gray-400 py-8">
                     No TV shows in watchlist

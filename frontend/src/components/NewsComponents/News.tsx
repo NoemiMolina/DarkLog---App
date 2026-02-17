@@ -55,6 +55,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
                 <img
                   src={article.coverImage}
                   alt={article.title}
+                  loading="lazy"
                   className="rounded-lg mb-4 aspect-video object-cover group-hover:opacity-80 transition"
                 />
                 <div className="flex items-center gap-2 mb-1">
@@ -106,6 +107,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
               <img
                 src={selected.coverImage}
                 alt={selected.title}
+                loading="lazy"
                 className="rounded-lg my-4 object-cover max-h-[100%] w-full"
               />
 

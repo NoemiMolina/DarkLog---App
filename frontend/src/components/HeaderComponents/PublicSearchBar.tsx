@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import {
   InputGroup,
@@ -8,7 +8,6 @@ import {
   InputGroupInput,
 } from "../ui/input-group";
 import { Search } from "lucide-react";
-import ItemDialog from "../HomePageComponents/ItemDialog";
 import AuthRequiredDialog from "./AuthRequiredDialog";
 import { IoSkull } from "react-icons/io5";
 
@@ -21,6 +20,7 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
   onResultSelected,
   isVisibleMobile = true,
 }) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const isForumPage = location.pathname === "/forum";
 
@@ -34,13 +34,6 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
     width: number;
     bottom: number;
   } | null>(null);
-  const triggerRef = useRef<HTMLDivElement | null>(null);
-
-  const [dialogData, setDialogData] = useState<{
-    trigger: React.ReactNode | null;
-    item: any;
-    type: "movie" | "tvshow" | null;
-  }>({ trigger: null, item: null, type: null });
 
   const [authDialogState, setAuthDialogState] = useState<{
     isOpen: boolean;
@@ -122,12 +115,6 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
     };
   }, []);
 
-  useEffect(() => {
-    if (dialogData.trigger && triggerRef.current) {
-      triggerRef.current.click();
-    }
-  }, [dialogData]);
-
   const handleResultClick = (item: any) => {
     if (isForumPage) {
       window.location.hash = `post-${item._id}`;
@@ -139,18 +126,9 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
       }, 100);
     } else {
       const type =
-        item.type ?? item.media_type ?? (item.title ? "movie" : "tv");
-      setDialogData({
-        trigger: (
-          <div
-            ref={triggerRef}
-            style={{ width: 1, height: 1 }}
-            className="invisible"
-          />
-        ),
-        item,
-        type,
-      });
+        item.type ?? item.media_type ?? (item.title ? "movie" : "tvshow");
+      const itemId = item.tmdb_id || item.id;
+      navigate(`/item/${type}/${itemId}`);
     }
 
     setIsVisible(false);
@@ -307,13 +285,6 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
 
         {dropdown}
       </div>
-      {dialogData.trigger && dialogData.item && dialogData.type && (
-        <ItemDialog
-          trigger={dialogData.trigger}
-          item={dialogData.item}
-          type={dialogData.type}
-        />
-      )}
       <AuthRequiredDialog
         isOpen={authDialogState.isOpen}
         onClose={() => setAuthDialogState({ isOpen: false, itemTitle: "" })}

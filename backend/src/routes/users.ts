@@ -4,9 +4,8 @@ import { uploadMiddleware } from "../middleware/uploadMiddleware";
 import {
   registerUser,
   loginUser,
+  logoutUser,
   verifyToken,
-  verifyEmail,
-  resendVerificationEmail,
   getUserProfile,
   updateProfileInfos,
   updatePassword,
@@ -41,9 +40,8 @@ router.post(
   registerUser,
 );
 router.post("/login", loginUser);
+router.post("/logout", logoutUser);
 router.post("/verify-token", verifyToken);
-router.get("/verify-email", verifyEmail);
-router.post("/resend-verification-email", resendVerificationEmail);
 router.get("/:userId/profile", authMiddleware, getUserProfile);
 router.put(
   "/:userId/profile",

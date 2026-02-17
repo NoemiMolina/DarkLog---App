@@ -29,9 +29,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const storedUsername = localStorage.getItem("username");
     const storedUserId = localStorage.getItem("userId");
     const storedUser = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
 
-    if (token && storedUserId) {
+    if (storedUserId) {
       setUsername(storedUsername || "Guest");
       setUserId(storedUserId);
       if (storedUser) {
@@ -52,19 +51,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    const verifyStoredToken = async () => {
-      const token = localStorage.getItem("token");
+    let retryTimeout: NodeJS.Timeout;
 
-      if (!token) {
-        setIsLoading(false);
-        return;
-      }
-
+    const verifyToken = async (isRetry = false) => {
       try {
         const response = await fetch(`${API_URL}/users/verify-token`, {
           method: "POST",
+          credentials: "include", 
           headers: {
-            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
@@ -81,49 +75,75 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             setIsAuthenticated(true);
           }
         } else {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          localStorage.removeItem("userId");
-          localStorage.removeItem("username");
-          setIsAuthenticated(false);
+          if (response.status === 401) {
+
+            localStorage.removeItem("user");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("username");
+            setIsAuthenticated(false);
+            setUsername("Guest");
+            setUserId(null);
+            setUserProfilePicture(null);
+          } else {
+            const storedUserId = localStorage.getItem("userId");
+            if (storedUserId) {
+              updateAuthState();
+              if (!isRetry) {
+                retryTimeout = setTimeout(() => verifyToken(true), 2000);
+              }
+            }
+          }
         }
       } catch (error) {
-        console.error("Error verifying token:", error);
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("username");
-        setIsAuthenticated(false);
+        const storedUserId = localStorage.getItem("userId");
+        if (storedUserId) {
+          updateAuthState();
+          if (!isRetry) {
+            retryTimeout = setTimeout(() => verifyToken(true), 2000);
+          }
+        } else {
+          setUsername("Guest");
+          setUserId(null);
+          setUserProfilePicture(null);
+          setIsAuthenticated(false);
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
-    verifyStoredToken();
+    verifyToken();
 
-    // Écouter les changements du localStorage (pour la connexion via LogInForm)
+    const verifyInterval = setInterval(() => {
+      verifyToken();
+    }, 30000);
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        verifyToken();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     const handleStorageChange = () => {
       updateAuthState();
     };
     window.addEventListener("storage", handleStorageChange);
 
     return () => {
+      clearInterval(verifyInterval);
+      clearTimeout(retryTimeout);
       window.removeEventListener("storage", handleStorageChange);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
   const refreshAuth = async () => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setIsAuthenticated(false);
-      return;
-    }
-
     try {
       const response = await fetch(`${API_URL}/users/verify-token`, {
         method: "POST",
+        credentials: "include",
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -146,7 +166,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");

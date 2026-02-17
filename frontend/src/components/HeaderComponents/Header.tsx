@@ -119,7 +119,21 @@ const Header: React.FC<HeaderProps> = ({
                     Import from
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    onClick={() => {
+                    onClick={() => navigate("/contactform")}
+                    className="cursor-pointer hover:bg-white/10"
+                  >
+                    Contact
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={async () => {
+                      try {
+                        await fetch(`${API_URL}/users/logout`, {
+                          method: "POST",
+                          credentials: "include",
+                        });
+                      } catch (err) {
+                        console.error("Error calling logout endpoint:", err);
+                      }
                       logout();
                       navigate("/");
                     }}

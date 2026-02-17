@@ -19,9 +19,6 @@ export interface IUser extends Document {
   UserPassword: string;
   UserProfilePicture?: string;
   SignUpDate: Date;
-  EmailVerified: boolean;
-  VerificationToken?: string | null;
-  VerificationTokenExpiry?: Date | null;
   NumberOfWatchedMovies: number;
   NumberOfWatchedTvShows: number;
   NumberOfGivenReviews: number;
@@ -83,9 +80,6 @@ const UserSchema: Schema = new Schema({
   UserPassword: { type: String, required: true },
   UserProfilePicture: { type: String, default: "" },
   SignUpDate: { type: Date, default: Date.now },
-  EmailVerified: { type: Boolean, default: false },
-  VerificationToken: { type: String, default: null },
-  VerificationTokenExpiry: { type: Date, default: null },
   NumberOfWatchedMovies: { type: Number, default: 0 },
   NumberOfWatchedTvShows: { type: Number, default: 0 },
   NumberOfGivenReviews: { type: Number, default: 0 },

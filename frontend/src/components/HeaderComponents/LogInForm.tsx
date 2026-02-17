@@ -34,6 +34,7 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
       const res = await fetch(`${API_URL}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           UserMail: email.trim(),
           UserPassword: password.trim(),

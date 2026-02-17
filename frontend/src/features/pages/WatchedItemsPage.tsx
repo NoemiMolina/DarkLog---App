@@ -40,7 +40,7 @@ const WatchedItemsPage: React.FC = () => {
 
     const getPosterUrl = (posterPath: string | null | undefined): string => {
         if (!posterPath) {
-            return "https://via.placeholder.com/300x450?text=No+Poster";
+            return "https://placehold.co/300x450?text=No+Poster";
         }
         return posterPath.startsWith("http")
             ? posterPath
@@ -124,7 +124,7 @@ const WatchedItemsPage: React.FC = () => {
                 </button>
                 <h1 className="text-4xl font-bold text-purple-400">{getTitle()}</h1>
                 <p className="text-gray-400 mt-2">
-                    {items.length} {type === "movies" ? "movies" : "shows"} watched
+                    You've watched {items.length} {type === "movies" ? "movies" : "shows"} ! Keep going !
                 </p>
             </div>
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 import RatingSkulls from "./RatingSkulls";
 
 interface ItemCardProps {
@@ -19,7 +20,6 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   const userId = user?._id;
-  const token = localStorage.getItem("token");
 
   const itemId = item.tmdb_id || item.id;
   const itemTitle = item.title || item.name;
@@ -29,13 +29,8 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
       if (!userId || !itemId) return;
 
       try {
-        const res = await fetch(
+        const res = await fetchWithCreds(
           `${API_URL}/users/${userId}/items/${itemId}?type=${type}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          },
         );
 
         if (res.ok) {
@@ -44,7 +39,6 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
           setReview(data.myReview || "");
         } else if (res.status === 403 || res.status === 401) {
           console.warn("⚠ Unauthorized access when loading user data");
-          localStorage.removeItem("token");
           localStorage.removeItem("user");
         }
       } catch (err) {
@@ -53,7 +47,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
     };
 
     loadUserData();
-  }, [userId, itemId, type, token]);
+  }, [userId, itemId, type]);
 
   const poster = item.poster_path
     ? item.poster_path.startsWith("http")
@@ -72,21 +66,19 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
   };
 
   const handleSave = async () => {
-    if (!userId) return;
-    if (!token) {
+    if (!userId) {
       showMessage("⚠️ Please sign in to save");
       setTimeout(() => navigate("/login"), 1500);
       return;
     }
 
     try {
-      const res = await fetch(
+      const res = await fetchWithCreds(
         `${API_URL}/users/${userId}/items/${itemId}/rating-review`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             type,
@@ -98,7 +90,6 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
       );
 
       if (res.status === 403 || res.status === 401) {
-        localStorage.removeItem("token");
         localStorage.removeItem("user");
         showMessage("⚠️ Session expired. Please sign in again.");
         setTimeout(() => navigate("/login"), 1500);
@@ -127,8 +118,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
     const userId = localStorage.getItem("user")
       ? JSON.parse(localStorage.getItem("user")!)?._id
       : null;
-    const token = localStorage.getItem("token");
-    if (!userId || !token) {
+    if (!userId) {
       pendingWatchlistService.setPendingItem(item, type);
       navigate("/login");
       return;
@@ -139,17 +129,14 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
         : `${API_URL}/users/${userId}/watchlist/tvshow/${itemId}`;
 
     try {
-      const res = await fetch(route, {
+      const res = await fetchWithCreds(route, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: {},
       });
 
       if (res.status === 403 || res.status === 401) {
         console.warn("⚠️ Token expired, saving item and redirecting...");
 
-        localStorage.removeItem("token");
         localStorage.removeItem("user");
 
         pendingWatchlistService.setPendingItem(item, type);
@@ -185,7 +172,8 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
           <img
             src={poster}
             alt={item.title || item.name}
-            className="xl:w-70 xl:h-100 xl:mt-25 xl:rounded-lg 2xl:w-70 2xl:h-100 2xl:mt-11 2xl:rounded-lg"
+            loading="lazy"
+            className="rounded-lg xl:w-70 xl:h-100 xl:mt-25 xl:rounded-lg 2xl:w-70 2xl:h-100 2xl:mt-11 2xl:rounded-lg"
           />
         ) : (
           <div className="w-64 h-96 bg-gray-700 rounded-lg" />
@@ -222,9 +210,10 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
                     src={
                       actor.profile_path
                         ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                        : "https://via.placeholder.com/100x100?text=?"
+                        : "https://placehold.co/100x100?text=?"
                     }
                     alt={actor.name}
+                    loading="lazy"
                     className="w-16 h-16 rounded-full object-cover border border-gray-600 shadow-md"
                   />
 
@@ -256,6 +245,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
                   {p.logo_path && (
                     <img
                       src={`https://image.tmdb.org/t/p/w45${p.logo_path}`}
+                      loading="lazy"
                       className="w-5 h-5"
                     />
                   )}
@@ -290,7 +280,7 @@ const ItemCard = ({ item, type, onClose }: ItemCardProps) => {
             onChange={(e) => setReview(e.target.value)}
           />
         </div>
-        <div className="flex gap-4 mt-4">
+        <div className="flex flex-col md:flex-row gap-4 mt-4 md:justify-start justify-center">
           <button
             onClick={handleSave}
             className="px-4 py-2 rounded-lg bg-gray-800/50 border border-purple-500/20 text-white transition font-semibold text-white"

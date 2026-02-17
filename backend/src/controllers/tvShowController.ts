@@ -14,8 +14,16 @@ export const getAllTVShows = async (req: Request, res: Response) => {
 
 export const getTVShowById = async (req: Request, res: Response) => {
   try {
-    const { tvShowId } = req.params;
-    const tvShow = await TVShow.findById(tvShowId);
+    const id = req.params.tvShowId;
+    
+    // Try to find by tmdb_id first (most common case)
+    let tvShow = await TVShow.findOne({ tmdb_id: Number(id) });
+    
+    // If not found, try MongoDB ObjectId
+    if (!tvShow) {
+      tvShow = await TVShow.findById(id);
+    }
+    
     if (!tvShow) return res.status(404).json({ message: "TV show not found" });
     res.status(200).json(tvShow);
   } catch (err) {
