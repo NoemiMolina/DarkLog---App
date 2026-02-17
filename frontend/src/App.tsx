@@ -5,6 +5,7 @@ import { Footer } from "./components/FooterComponents/Footer";
 import { NotificationProvider } from "./context/NotificationContext";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { useEffect, useState } from "react";
+import MaintenancePage from "./features/pages/MaintenancePage";
 
 // Lazy load pages to reduce initial bundle
 const WelcomePage = lazy(() => import("./features/pages/WelcomePage"));
@@ -28,6 +29,9 @@ const PageLoader = () => (
     <div className="animate-spin">⏳</div>
   </div>
 );
+
+// Set to true to enable maintenance mode
+const MAINTENANCE_MODE = true;
 
 export default function App() {
   const [isTVShowMode, setIsTVShowMode] = useState<boolean>(() => {
@@ -60,6 +64,10 @@ export default function App() {
 
 function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
   const { isAuthenticated, isLoading } = useAuth();
+
+  if (MAINTENANCE_MODE) {
+    return <MaintenancePage />;
+  }
 
   if (isLoading) {
     return (
