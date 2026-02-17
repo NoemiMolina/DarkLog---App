@@ -9,17 +9,6 @@ import HomemadeWatchlist from "../models/HomemadeWatchlists";
 import { isNumberObject } from "util/types";
 import { createNotification } from "./notificationController";
 
-const getCookieOptions = () => {
-  const isProduction = process.env.NODE_ENV === "production";
-  return {
-    httpOnly: true,
-    secure: isProduction,
-    sameSite: isProduction ? ("none" as const) : ("lax" as const),
-    path: "/",
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-  };
-};
-
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -80,10 +69,9 @@ export const registerUser = async (req: Request, res: Response) => {
       { expiresIn: "7d" },
     );
 
-    res.cookie("token", token, getCookieOptions());
-
     res.status(201).json({
       message: "User created successfully",
+      token,
       user: newUser,
     });
   } catch (err) {
@@ -109,10 +97,7 @@ export const loginUser = async (req: Request, res: Response) => {
       { expiresIn: "7d" },
     );
 
-    // Send token as HttpOnly cookie
-    res.cookie("token", token, getCookieOptions());
-
-    res.status(200).json({ message: "User successfully connected", user });
+    res.status(200).json({ message: "User successfully connected", token, user });
   } catch (err) {
     res.status(500).json({ message: "Error while connecting", error: err });
   }
@@ -1262,9 +1247,7 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
 // ------------- LOGOUT
 export const logoutUser = async (req: Request, res: Response) => {
   try {
-    // Clear the token cookie
-    res.clearCookie("token", getCookieOptions());
-
+    // JWT is stored on frontend, just send success response
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error logging out", error: err });
