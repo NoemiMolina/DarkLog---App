@@ -17,27 +17,20 @@ const MaintenancePage: React.FC = () => {
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-red-500">🚨 MAINTENANCE 🚨</h1>
         
         <p className="text-lg sm:text-xl md:text-2xl mb-6 text-gray-300">
-          Sorry folks, the site is under maintenance for the next <span className="text-yellow-400 font-bold">48 hours</span>
+          Sorry folks, the site is under maintenance.
         </p>
         
         <p className="text-base sm:text-lg mb-8 text-gray-400">
-          The Dev is fixing its mess right now (changing DNS servers for cloudflare, for the curious recruiters that might see this page). ⚙️
+          The Dev is fixing its mess right now. ⚙️
         </p>
         
         <div className="bg-gray-800/50 border border-purple-500/30 rounded-lg p-4 sm:p-6 mb-8">
           <p className="text-sm sm:text-base text-gray-300 italic">
             In the meantime, go watch some horror movies and come back to share them once FearLog is back from the dead again! 🎬👻
           </p>
-        </div>
-
-        <div className="flex justify-center gap-3 sm:gap-4 mb-8">
-          <span className="text-4xl sm:text-5xl md:text-6xl">🎬</span>
-          <span className="text-4xl sm:text-5xl md:text-6xl">👻</span>
-          <span className="text-4xl sm:text-5xl md:text-6xl">🍿</span>
-        </div>
-        
+        </div>        
         <p className="text-xs sm:text-sm text-gray-500">
-          We'll be back soon. Thanks for your patience! 💜
+          We'll be back soon. Thanks for your patience! 🍿
         </p>
       </div>
     </div>
