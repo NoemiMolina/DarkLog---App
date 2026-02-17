@@ -98,15 +98,11 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
   const markAsRead = useCallback(
     async (notificationId: string) => {
-      const token = getToken();
-      if (!token) return;
-
       try {
-        const response = await fetch(
+        const response = await fetchWithCreds(
           `${API_URL}/notifications/${notificationId}/read`,
           {
             method: "PATCH",
-            headers: { Authorization: `Bearer ${token}` },
           },
         );
         if (response.ok) {
@@ -126,16 +122,14 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   const markAllAsRead = useCallback(
     async (type?: "forum" | "friend_request") => {
       const userId = getUserId();
-      const token = getToken();
-      if (!userId || !token) return;
+      if (!userId) return;
 
       try {
-        const response = await fetch(
+        const response = await fetchWithCreds(
           `${API_URL}/notifications/${userId}/read-all`,
           {
             method: "PATCH",
             headers: {
-              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ type }),
@@ -168,15 +162,11 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const deleteNotification = useCallback(
     async (notificationId: string) => {
-      const token = getToken();
-      if (!token) return;
-
       try {
-        const response = await fetch(
+        const response = await fetchWithCreds(
           `${API_URL}/notifications/${notificationId}`,
           {
             method: "DELETE",
-            headers: { Authorization: `Bearer ${token}` },
           },
         );
         if (response.ok) {
@@ -194,16 +184,14 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   const deleteAllNotifications = useCallback(
     async (type?: "forum" | "friend_request") => {
       const userId = getUserId();
-      const token = getToken();
-      if (!userId || !token) return;
+      if (!userId) return;
 
       try {
-        const response = await fetch(
+        const response = await fetchWithCreds(
           `${API_URL}/notifications/${userId}/delete-all`,
           {
             method: "DELETE",
             headers: {
-              Authorization: `Bearer ${token}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ type }),
