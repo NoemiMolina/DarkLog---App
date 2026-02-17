@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../../config/api";
-import { fetchWithCreds } from "../../config/fetchClient";
 import Header from "../../components/HeaderComponents/Header";
 import CarouselItems from "../../components/HomePageComponents/CarouselItems";
 import TinderStyleCarousel from "../../components/HomePageComponents/TinderStyleCarousel";
@@ -75,7 +74,7 @@ const HomePage = () => {
 
   const fetchMovieCategory = async (endpoint: string, setter: any) => {
     try {
-      const res = await fetchWithCreds(`${API_URL}/movies/style/${endpoint}`);
+      const res = await fetch(`${API_URL}/movies/style/${endpoint}`);
       const data = await res.json();
       setter(data);
     } catch (error) {
@@ -85,7 +84,7 @@ const HomePage = () => {
 
   const fetchTVShowCategory = async (endpoint: string, setter: any) => {
     try {
-      const res = await fetchWithCreds(`${API_URL}/tvshows/style/${endpoint}`);
+      const res = await fetch(`${API_URL}/tvshows/style/${endpoint}`);
       const data = await res.json();
       setter(data);
     } catch (error) {

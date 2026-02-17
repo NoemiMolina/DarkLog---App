@@ -13,16 +13,14 @@ export const authMiddleware = (
   next: NextFunction,
 ) => {
   try {
-    // Try to get token from Authorization header first (preferred)
-    let token = req.headers.authorization?.split(" ")[1];
-    
-    // Fallback to cookie if no Authorization header (backwards compatibility)
-    if (!token) {
-      token = (req.cookies as any).token;
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "No token provided" });
     }
 
+    const token = authHeader.split(" ")[1];
     if (!token) {
-      return res.status(401).json({ message: "No token provided" });
+      return res.status(401).json({ message: "Invalid token format" });
     }
 
     const decoded = jwt.verify(

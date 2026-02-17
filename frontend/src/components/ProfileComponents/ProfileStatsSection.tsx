@@ -15,7 +15,6 @@ import {
 } from "../ui/dialog";
 import { Clock, Users } from "lucide-react";
 import { API_URL } from "../../config/api";
-import { fetchWithCreds } from "../../config/fetchClient";
 
 interface ProfileStatsSection {
   numberOfWatchedMovies: number;
@@ -55,7 +54,10 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
     }
     setLoadingFriends(true);
     try {
-      const response = await fetchWithCreds(`${API_URL}/users/${userId}/friends`);
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_URL}/users/${userId}/friends`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       const data = await response.json();
       console.log("📥 Friends data received:", data);
       setFriends(data);
