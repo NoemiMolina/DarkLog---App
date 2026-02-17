@@ -29,7 +29,7 @@ const PageLoader = () => (
   </div>
 );
 
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = false;
 
 export default function App() {
   const [isTVShowMode, setIsTVShowMode] = useState<boolean>(() => {
