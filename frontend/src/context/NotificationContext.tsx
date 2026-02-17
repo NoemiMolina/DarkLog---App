@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import io, { Socket } from "socket.io-client";
 import { API_URL } from "../config/api";
+import { fetchWithCreds } from "../config/fetchClient";
 
 export interface Notification {
   _id: string;
@@ -62,18 +63,14 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const getToken = () => localStorage.getItem("token");
+  const getToken = () => localStorage.getItem("authToken");
   const fetchNotificationCounts = useCallback(async () => {
     const userId = getUserId();
-    const token = getToken();
-    if (!userId || !token) return;
+    if (!userId) return;
 
     try {
-      const response = await fetch(
+      const response = await fetchWithCreds(
         `${API_URL}/notifications/${userId}/counts`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
       );
       if (response.ok) {
         const data = await response.json();
@@ -87,13 +84,10 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
   const fetchNotifications = useCallback(async () => {
     const userId = getUserId();
-    const token = getToken();
-    if (!userId || !token) return;
+    if (!userId) return;
 
     try {
-      const response = await fetch(`${API_URL}/notifications/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetchWithCreds(`${API_URL}/notifications/${userId}`);
       if (response.ok) {
         const data = await response.json();
         setNotifications(data);
