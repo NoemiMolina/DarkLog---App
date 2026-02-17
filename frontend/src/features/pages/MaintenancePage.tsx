@@ -13,22 +13,32 @@ const MaintenancePage: React.FC = () => {
     >
       <div className="absolute inset-0 bg-black/60"></div>
       
-      <div className="relative z-10 text-center max-w-2xl">
-        <h1 className="text-5xl font-bold mb-4 text-red-500">🚨 MAINTENANCE 🚨</h1>
+      <div className="relative z-10 text-center max-w-2xl px-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-red-500">🚨 MAINTENANCE 🚨</h1>
         
-        <p className="text-2xl mb-6 text-gray-300">
+        <p className="text-lg sm:text-xl md:text-2xl mb-6 text-gray-300">
           Sorry folks, the site is under maintenance for the next <span className="text-yellow-400 font-bold">48 hours</span>
         </p>
         
-        <p className="text-lg mb-8 text-gray-400">
-          The Dev is fixing his mess right now (changing DNS servers for cloudflare, for the curious recruiters that might see this page). ⚙️
+        <p className="text-base sm:text-lg mb-8 text-gray-400">
+          The Dev is fixing its mess right now (changing DNS servers for cloudflare, for the curious recruiters that might see this page). ⚙️
         </p>
         
-        <div className="bg-gray-800/50 border border-purple-500/30 rounded-lg p-6 mb-8">
-          <p className="text-base text-gray-300 italic">
+        <div className="bg-gray-800/50 border border-purple-500/30 rounded-lg p-4 sm:p-6 mb-8">
+          <p className="text-sm sm:text-base text-gray-300 italic">
             In the meantime, go watch some horror movies and come back to share them once FearLog is back from the dead again! 🎬👻
           </p>
         </div>
+
+        <div className="flex justify-center gap-3 sm:gap-4 mb-8">
+          <span className="text-4xl sm:text-5xl md:text-6xl">🎬</span>
+          <span className="text-4xl sm:text-5xl md:text-6xl">👻</span>
+          <span className="text-4xl sm:text-5xl md:text-6xl">🍿</span>
+        </div>
+        
+        <p className="text-xs sm:text-sm text-gray-500">
+          We'll be back soon. Thanks for your patience! 💜
+        </p>
       </div>
     </div>
   );

@@ -23,15 +23,13 @@ const WatchedItemsPage = lazy(() => import("./features/pages/WatchedItemsPage"))
 const ItemDetailPage = lazy(() => import("./features/pages/ItemDetailPage"));
 const HomemadeWatchlistDetailPage = lazy(() => import("./features/pages/HomemadeWatchlistDetailPage"));
 
-// Loading fallback
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-screen">
     <div className="animate-spin">⏳</div>
   </div>
 );
 
-// Set to true to enable maintenance mode
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = false //please dont make me change this to true too many times
 
 export default function App() {
   const [isTVShowMode, setIsTVShowMode] = useState<boolean>(() => {
