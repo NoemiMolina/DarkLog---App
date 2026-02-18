@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
-import HomemadeWatchlistsDialog from "./HomemadeWatchlistsDialog";
 import { API_URL } from "../../config/api";
 import { fetchWithCreds } from "../../config/fetchClient";
 
@@ -22,12 +22,14 @@ import { useWatchlists } from "../../hooks/useWatchlists";
 
 const TinderStyleWatchlistsCarousel = () => {
   const { watchlists, loading } = useWatchlists();
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [exitDirection, setExitDirection] = useState<"left" | "right" | null>(
     null,
   );
   const [swipeDelta, setSwipeDelta] = useState(0);
   const [swiping, setSwiping] = useState(false);
+  const [swipeDetected, setSwipeDetected] = useState(false);
 
   const currentWatchlist = watchlists[currentIndex];
   const storedUser = localStorage.getItem("user");
@@ -61,15 +63,18 @@ const TinderStyleWatchlistsCarousel = () => {
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
+      setSwipeDetected(true);
       setExitDirection("left");
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
         setExitDirection(null);
         setSwipeDelta(0);
         setSwiping(false);
+        setSwipeDetected(false);
       }, 300);
     },
     onSwipedRight: () => {
+      setSwipeDetected(true);
       if (currentWatchlist) addToWatchlist(currentWatchlist);
       setExitDirection("right");
       setTimeout(() => {
@@ -77,6 +82,7 @@ const TinderStyleWatchlistsCarousel = () => {
         setExitDirection(null);
         setSwipeDelta(0);
         setSwiping(false);
+        setSwipeDetected(false);
       }, 300);
     },
     onSwiping: (eventData) => {
@@ -131,7 +137,7 @@ const TinderStyleWatchlistsCarousel = () => {
         style={{ fontFamily: "'Metal Mania', serif" }}
       >
         <p>← Swipe LEFT to ignore, swipe RIGHT to add to your watchlist →</p>
-        <p>CLICK to rate and comment</p>
+        <p>CLICK to view watchlist details</p>
       </div>
       <h2
         className="text-sm font-bold text-white mb-7 tracking-wide text-center"
@@ -141,6 +147,12 @@ const TinderStyleWatchlistsCarousel = () => {
       </h2>
       <div className="w-full flex flex-col items-center">
         <div
+          onClick={() => {
+            // Only navigate if this wasn't a swipe action
+            if (!swipeDetected) {
+              navigate(`/homemade-watchlist/${currentWatchlist._id}`);
+            }
+          }}
           {...handlers}
           style={{
             transform: swiping
@@ -152,7 +164,17 @@ const TinderStyleWatchlistsCarousel = () => {
             exitDirection === "left" ? "translate-x-full opacity-0" : ""
           } ${exitDirection === "right" ? "-translate-x-full opacity-0" : ""}`}
         >
-          <HomemadeWatchlistsDialog watchlist={currentWatchlist} />
+          {currentWatchlist.posterPath && (
+            <img
+              src={`${API_URL}${currentWatchlist.posterPath}`}
+              alt={currentWatchlist.title}
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+          )}
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 px-2 py-1 rounded text-white text-sm text-center truncate max-w-[140px]">
+            {currentWatchlist.title}
+          </div>
           {/* swipe right (green - Add to watchlist) */}
           {swipeDelta > 30 && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

@@ -48,6 +48,9 @@ const TinderStyleCarousel = ({
   const [swipeDelta, setSwipeDelta] = useState(0);
   const [swiping, setSwiping] = useState(false);
 
+  const [lastClickTime, setLastClickTime] = useState(0);
+  const [swipeDetected, setSwipeDetected] = useState(false);
+
   const token = localStorage.getItem("authToken");
   const userId = token ? jwtDecode<any>(token).id : null;
   const currentMovie = items[currentIndex];
@@ -77,15 +80,18 @@ const TinderStyleCarousel = ({
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
+      setSwipeDetected(true);
       setExitDirection("left");
       setTimeout(() => {
         setCurrentIndex((prev) => prev + 1);
         setExitDirection(null);
         setSwipeDelta(0);
         setSwiping(false);
+        setSwipeDetected(false);
       }, 300);
     },
     onSwipedRight: () => {
+      setSwipeDetected(true);
       addToWatchlist(currentMovie);
       setExitDirection("right");
       setTimeout(() => {
@@ -93,6 +99,7 @@ const TinderStyleCarousel = ({
         setExitDirection(null);
         setSwipeDelta(0);
         setSwiping(false);
+        setSwipeDetected(false);
       }, 300);
     },
     onSwiping: (eventData) => {
@@ -158,8 +165,11 @@ const TinderStyleCarousel = ({
 
           <div
             onClick={() => {
-              const itemId = currentMovie.tmdb_id || currentMovie._id;
-              navigate(`/item/${type}/${itemId}`);
+              // Only navigate if this wasn't a swipe action
+              if (!swipeDetected) {
+                const itemId = currentMovie.tmdb_id || currentMovie._id;
+                navigate(`/item/${type}/${itemId}`);
+              }
             }}
             {...handlers}
             style={{
@@ -168,7 +178,7 @@ const TinderStyleCarousel = ({
                 : "translateX(0)",
               transition: swiping ? "none" : "transform 0.3s ease-out",
             }}
-            className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 touch-none ${
+            className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 ${
               exitDirection === "left" ? "opacity-0" : ""
             } ${exitDirection === "right" ? "opacity-0" : ""}`}
           >
