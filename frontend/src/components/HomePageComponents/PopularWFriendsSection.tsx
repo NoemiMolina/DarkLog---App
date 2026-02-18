@@ -26,16 +26,17 @@ const PopularWFriendsSection: React.FC = () => {
 
   const fetchFriendReviews = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       const userId = user._id;
-      if (!userId) {
-        console.warn(
-          "⛔ fetchFriendReviews: userId is undefined, skipping API call.",
-        );
+      
+      // Don't fetch if user not authenticated
+      if (!userId || !token) {
+        console.warn("⛔ fetchFriendReviews: No userId or token, skipping API call.");
         setLoading(false);
         return;
       }
+      
       const response = await fetch(
         `${API_URL}/users/${userId}/friends-reviews`,
         {
@@ -46,6 +47,11 @@ const PopularWFriendsSection: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setFriendReviews(data.reviews || []);
+      } else if (response.status === 401 || response.status === 403) {
+        // Token invalid or expired
+        console.warn("⛔ Token invalid, clearing auth data");
+        localStorage.removeItem("authToken");
+        setFriendReviews([]);
       }
     } catch (error) {
       console.error("💥 Error fetching friend reviews:", error);

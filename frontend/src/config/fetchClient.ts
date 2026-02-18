@@ -15,8 +15,8 @@ export const fetchWithCreds = (
     },
   };
 
-  // Add Authorization header if token exists
-  if (token) {
+  // Add Authorization header ONLY if token exists
+  if (token && token !== "null") {
     (options.headers as any)["Authorization"] = `Bearer ${token}`;
   }
 
