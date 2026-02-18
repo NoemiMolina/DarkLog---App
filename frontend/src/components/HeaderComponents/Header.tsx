@@ -132,7 +132,6 @@ const Header: React.FC<HeaderProps> = ({
                           method: "POST",
                         });
                       } catch (err) {
-                        console.error("Error calling logout endpoint:", err);
                       }
                       logout();
                       navigate("/");

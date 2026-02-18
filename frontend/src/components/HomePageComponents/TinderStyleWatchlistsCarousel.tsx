@@ -36,7 +36,6 @@ const TinderStyleWatchlistsCarousel = () => {
 
   const addToWatchlist = async (watchlist: Watchlist) => {
     if (!userId) {
-      console.warn("⚠️ User not authenticated");
       return;
     }
     try {
@@ -52,13 +51,11 @@ const TinderStyleWatchlistsCarousel = () => {
       });
 
       if (res.ok) {
-        console.log("✅ Watchlist added successfully:", watchlist.title);
         window.dispatchEvent(new Event("watchlistUpdated"));
       } else {
-        console.error("❌ Failed to add watchlist:", res.statusText);
       }
     } catch (err) {
-      console.error("❌ Error adding watchlist:", err);
+
     }
   };
 

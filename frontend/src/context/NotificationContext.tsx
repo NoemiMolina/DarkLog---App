@@ -79,7 +79,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
         setFriendRequestsCount(data.friendRequests);
       }
     } catch (error) {
-      console.error("Error fetching notification counts:", error);
     }
   }, []);
   const fetchNotifications = useCallback(async () => {
@@ -93,7 +92,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
         setNotifications(data);
       }
     } catch (error) {
-      console.error("Error fetching notifications:", error);
     }
   }, []);
   const markAsRead = useCallback(
@@ -114,7 +112,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           await fetchNotificationCounts();
         }
       } catch (error) {
-        console.error("Error marking notification as read:", error);
       }
     },
     [fetchNotificationCounts],
@@ -155,7 +152,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           await fetchNotificationCounts();
         }
       } catch (error) {
-        console.error("Error marking all as read:", error);
       }
     },
     [fetchNotificationCounts],
@@ -176,7 +172,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           await fetchNotificationCounts();
         }
       } catch (error) {
-        console.error("Error deleting notification:", error);
       }
     },
     [fetchNotificationCounts],
@@ -217,7 +212,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           await fetchNotificationCounts();
         }
       } catch (error) {
-        console.error("Error deleting all notifications:", error);
       }
     },
     [fetchNotificationCounts],
