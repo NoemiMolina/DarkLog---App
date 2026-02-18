@@ -18,6 +18,7 @@ import { Textarea } from "../../components/ui/textarea";
 import { IoSkull } from "react-icons/io5";
 import RatingSkulls from "./RatingSkulls";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 
 interface Movie {
   _id: string;
@@ -74,11 +75,10 @@ const HomemadeWatchlistsDialog = ({
 
     try {
       if (rating > 0) {
-        const rateRes = await fetch(`${API_URL}/homemade-watchlists/rate`, {
+        const rateRes = await fetchWithCreds(`${API_URL}/homemade-watchlists/rate`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             userId,
@@ -130,11 +130,10 @@ const HomemadeWatchlistsDialog = ({
     }
 
     try {
-      const res = await fetch(`${API_URL}/homemade-watchlists/add`, {
+      const res = await fetchWithCreds(`${API_URL}/homemade-watchlists/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           userId,
@@ -202,8 +201,8 @@ const HomemadeWatchlistsDialog = ({
             )}
           </div>
           <div className="mt-5 sm:mt-6 flex-1 overflow-hidden">
-            <Carousel className="w-full">
-              <CarouselContent>
+            <Carousel className="w-full h-full">
+              <CarouselContent className="h-full">
                 {watchlist.movies.length === 0 ? (
                   <p className="text-gray-400">
                     There's no movies in this watchlist.
@@ -214,11 +213,11 @@ const HomemadeWatchlistsDialog = ({
                       key={movie._id}
                       className={
                         watchlist.movies.length === 1
-                          ? "basis-full px-1 sm:px-2"
-                          : "basis-1/3 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 px-1 sm:px-2"
+                          ? "basis-full px-1 sm:px-2 flex items-center justify-center"
+                          : "basis-1/3 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 px-1 sm:px-2 flex items-center justify-center"
                       }
                     >
-                      <div className="relative group">
+                      <div className="relative group w-full h-full flex items-center justify-center">
                         <img
                           onClick={() => navigate(`/item/movie/${movie.tmdb_id || movie._id}`)}
                           src={
@@ -227,7 +226,7 @@ const HomemadeWatchlistsDialog = ({
                               : "https://placehold.co/200x300?text=No+Image"
                           }
                           alt={movie.title}
-                          className="rounded-lg shadow-md transition object-contain w-full h-auto hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl"
+                          className="rounded-lg shadow-md transition object-cover w-full h-full hover:opacity-80 cursor-pointer aspect-[2/3] hover:-translate-y-2 hover:opacity-15 hover:shadow-xl"
                         />
                         <div className="pointer-events-none absolute inset-0 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100">
                           <div className="px-3 py-1 rounded bg-black bg-opacity-70 flex items-center gap-1">

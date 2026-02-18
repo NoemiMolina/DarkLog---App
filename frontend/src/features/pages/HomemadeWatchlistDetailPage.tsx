@@ -13,6 +13,7 @@ import { Textarea } from "../../components/ui/textarea";
 import { IoSkull } from "react-icons/io5";
 import RatingSkulls from "../../components/HomePageComponents/RatingSkulls";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 
 interface Movie {
   _id: string;
@@ -84,12 +85,11 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
 
     try {
       if (rating > 0) {
-        const rateRes = await fetch(`${API_URL}/homemade-watchlists/rate`, {
+        const rateRes = await fetchWithCreds(`${API_URL}/homemade-watchlists/rate`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
           body: JSON.stringify({
             userId,
             watchlistId,
@@ -140,12 +140,11 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
     }
 
     try {
-      const res = await fetch(`${API_URL}/homemade-watchlists/add`, {
+      const res = await fetchWithCreds(`${API_URL}/homemade-watchlists/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify({
           userId,
           watchlistId,

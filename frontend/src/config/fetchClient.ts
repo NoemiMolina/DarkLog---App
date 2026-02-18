@@ -6,10 +6,19 @@ export const fetchWithCreds = (
   input: RequestInfo | URL,
   init?: FetchOptions,
 ) => {
+  const token = localStorage.getItem("authToken");
+  
   const options: FetchOptions = {
     ...init,
-    credentials: "include",
+    headers: {
+      ...init?.headers,
+    },
   };
+
+  // Add Authorization header if token exists
+  if (token) {
+    (options.headers as any)["Authorization"] = `Bearer ${token}`;
+  }
 
   return fetch(input, options);
 };

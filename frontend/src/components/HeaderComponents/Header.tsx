@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 import appLogo from "@/assets/logo/appLogo.png";
 import PublicSearchBar from "./PublicSearchBar";
 import SignUpForm from "./SignUpForm";
@@ -127,12 +128,10 @@ const Header: React.FC<HeaderProps> = ({
                   <DropdownMenuItem
                     onClick={async () => {
                       try {
-                        await fetch(`${API_URL}/users/logout`, {
+                        await fetchWithCreds(`${API_URL}/users/logout`, {
                           method: "POST",
-                          credentials: "include",
                         });
                       } catch (err) {
-                        console.error("Error calling logout endpoint:", err);
                       }
                       logout();
                       navigate("/");

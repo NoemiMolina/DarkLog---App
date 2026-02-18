@@ -87,7 +87,6 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
             bottom: r.bottom,
           });
       } catch (error) {
-        console.error("Search error:", error);
         setResults([]);
         setIsVisible(false);
       }

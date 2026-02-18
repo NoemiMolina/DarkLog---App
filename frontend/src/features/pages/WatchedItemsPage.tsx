@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, ChevronDown, Skull } from "lucide-react";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 import {
     Carousel,
     CarouselContent,
@@ -53,16 +54,13 @@ const WatchedItemsPage: React.FC = () => {
                 const storedUser = localStorage.getItem("user");
                 const user = storedUser ? JSON.parse(storedUser) : null;
                 const userId = user?._id;
-                const token = localStorage.getItem("token");
 
                 if (!userId) {
                     navigate("/");
                     return;
                 }
 
-                const response = await fetch(`${API_URL}/users/${userId}/profile`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
+                const response = await fetchWithCreds(`${API_URL}/users/${userId}/profile`);
 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

@@ -117,10 +117,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
 
-    // First check localStorage immediately
     updateAuthState();
-    
-    // Then try to verify with backend
     verifyToken();
 
     const verifyInterval = setInterval(() => {
@@ -149,17 +146,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const refreshAuth = async () => {
     try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) {
-        setIsAuthenticated(false);
-        return;
-      }
-
-      const response = await fetch(`${API_URL}/users/verify-token`, {
+      const response = await fetchWithCreds(`${API_URL}/users/verify-token`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
         },
       });
 
