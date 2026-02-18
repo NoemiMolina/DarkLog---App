@@ -4,6 +4,7 @@ import { API_URL } from "../../config/api";
 import { Button } from "../ui/button";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 import { GiCardRandom } from "react-icons/gi";
+import { IoSkull } from "react-icons/io5";
 import {
   Dialog,
   DialogContent,
@@ -173,7 +174,7 @@ const GetLuckyDialog: React.FC = () => {
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="z-[60] w-[90vw] sm:w-[30rem] bg-black text-white rounded-md border border-white/80 shadow-lg mr-25 translate-y-[-50%] md:ml-5">
+        <DialogContent className="z-[60] w-[90vw] sm:w-[30rem] bg-gray-800/50 border border-purple-500/20 rounded-md shadow-lg mr-25 translate-y-[-50%] md:ml-5">
           <DialogHeader>
             <DialogTitle className="sr-only">Random pick</DialogTitle>
           </DialogHeader>
@@ -200,7 +201,7 @@ const GetLuckyDialog: React.FC = () => {
                   <img
                     src={getPosterUrl(movieOrTVShow.poster_path)}
                     alt={movieOrTVShow.title || movieOrTVShow.name}
-                    className="w-full h-auto max-h-64 object-contain rounded-md mb-3"
+                    className="w-full h-auto max-h-64 object-contain rounded-md mb-3 border border-radius-10"
                   />
                 )}
 
@@ -216,7 +217,7 @@ const GetLuckyDialog: React.FC = () => {
                   className={`text-sm text-gray-300 ${showFullOverview ? "" : "line-clamp-4"}`}
                   onClick={() => setShowFullOverview((s) => !s)}
                   title={
-                    showFullOverview ? "Cliquer pour réduire" : "Lire la suite"
+                    showFullOverview ? "Click to collapse" : "Read more"
                   }
                   style={{ cursor: "pointer", width: "100%" }}
                 >
@@ -224,7 +225,7 @@ const GetLuckyDialog: React.FC = () => {
                 </div>
 
                 <p className="text-gray-300 mt-2">
-                  ⭐{" "}
+                  <IoSkull className="inline-block mr-1 text-yellow-400" />
                   {movieOrTVShow.vote_average != null
                     ? (Number(movieOrTVShow.vote_average) / 2).toFixed(1)
                     : "N/A"}
@@ -233,7 +234,7 @@ const GetLuckyDialog: React.FC = () => {
                 <Button
                   onClick={handleAddToWatchlist}
                   disabled={addingToWatchlist}
-                  className="mt-4 bg-white text-black hover:bg-gray-200 px-6 py-2 text-sm font-semibold"
+                  className="px-4 py-2 rounded-lg border border-purple-500/20 transition font-semibold text-white"
                 >
                   {addingToWatchlist ? "Adding..." : "Add to Watchlist"}
                 </Button>

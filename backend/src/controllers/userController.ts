@@ -283,6 +283,10 @@ export const getUserProfile = async (req: Request, res: Response) => {
         return { total_runtime: ratedShow.total_runtime || 0 };
       },
     );
+    
+    // Recalculate numberOfWatchedMovies based on actual RatedMovies to fix discrepancies
+    const actualNumberOfWatchedMovies = user.RatedMovies?.length || 0;
+    
     const profileData = {
       userProfilePicture: user.UserProfilePicture || null,
       userPseudo: user.UserPseudo || "",
@@ -324,7 +328,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
           ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
           : "",
       })),
-      numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
+      numberOfWatchedMovies: actualNumberOfWatchedMovies,
       numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
       numberOfGivenReviews: user.NumberOfGivenReviews || 0,
       numberOfFriends: user.Friends?.length || 0,
@@ -492,7 +496,7 @@ export const getPublicProfile = async (req: Request, res: Response) => {
           ? `https://image.tmdb.org/t/p/w500${show.poster_path}`
           : "",
       })),
-      numberOfWatchedMovies: user.NumberOfWatchedMovies || 0,
+      numberOfWatchedMovies: user.RatedMovies?.length || 0,
       numberOfWatchedTvShows: user.NumberOfWatchedTvShows || 0,
       numberOfGivenReviews: user.NumberOfGivenReviews || 0,
       MovieWatchlist: movieWatchlist.map((m: any) => ({
