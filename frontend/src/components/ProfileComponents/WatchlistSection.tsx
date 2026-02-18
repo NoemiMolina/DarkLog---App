@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Trash2 } from "lucide-react";
+import { API_URL } from "../../config/api";
 import {
   Carousel,
   CarouselContent,
@@ -135,7 +136,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
                       <img
                         src={
                           watchlist.posterPath
-                            ? `http://localhost:5000${watchlist.posterPath}`
+                            ? `${API_URL}${watchlist.posterPath}`
                             : "/placeholder.jpg"
                         }
                         alt={watchlist.title}
