@@ -45,32 +45,6 @@ const HomePage = () => {
   const [animeTVShows, setAnimeTVShows] = useState<any[]>([]);
   const [aliensTVShows, setAliensTVShows] = useState<any[]>([]);
 
-  useEffect(() => {
-    const rawUser = localStorage.getItem("user");
-    if (rawUser) {
-      try {
-        const parsed = JSON.parse(rawUser);
-        const userPseudo =
-          parsed.UserPseudo ||
-          parsed.userPseudo ||
-          parsed.pseudo ||
-          parsed.username ||
-          parsed.UserFirstName ||
-          "Guest";
-        setUsername(userPseudo);
-
-        if (parsed.UserProfilePicture) {
-          const fullPath = parsed.UserProfilePicture.startsWith("http")
-            ? parsed.UserProfilePicture
-            : `${API_URL}/${parsed.UserProfilePicture}`;
-          setProfilePic(fullPath);
-        }
-      } catch {
-        setUsername("Guest");
-      }
-    }
-  }, []);
-
   const fetchMovieCategory = async (endpoint: string, setter: any) => {
     try {
       const res = await fetchWithCreds(`${API_URL}/movies/style/${endpoint}`);

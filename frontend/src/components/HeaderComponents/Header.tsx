@@ -335,26 +335,30 @@ const Header: React.FC<HeaderProps> = ({
           )}
         </div>
       </header>
-      <AddFriendDialog
-        currentUserId={userId}
-        open={addFriendOpen}
-        onOpenChange={setAddFriendOpen}
-      />
+      {userId && (
+        <>
+          <AddFriendDialog
+            currentUserId={userId}
+            open={addFriendOpen}
+            onOpenChange={setAddFriendOpen}
+          />
+
+          {/* Import Modal */}
+          <ImportModal
+            isOpen={importModalOpen}
+            onClose={() => setImportModalOpen(false)}
+            userId={userId}
+            onSuccess={(stats) => {
+              console.log("✅ Import réussi avec stats:", stats);
+            }}
+          />
+        </>
+      )}
 
       {/* Friend Request Dialog */}
       <FriendRequestDialog
         open={friendRequestOpen}
         onOpenChange={setFriendRequestOpen}
-      />
-
-      {/* Import Modal */}
-      <ImportModal
-        isOpen={importModalOpen}
-        onClose={() => setImportModalOpen(false)}
-        userId={userId}
-        onSuccess={(stats) => {
-          console.log("✅ Import réussi avec stats:", stats);
-        }}
       />
 
       {searchBarOpen && (
