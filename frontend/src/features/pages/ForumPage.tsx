@@ -131,12 +131,6 @@ export const ForumPage: React.FC = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
-  };
-
   if (!isLoggedIn || !user) {
     return (
       <main className="min-h-screen relative">

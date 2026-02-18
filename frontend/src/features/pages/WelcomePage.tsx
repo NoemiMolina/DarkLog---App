@@ -30,10 +30,6 @@ const WelcomePage: React.FC = () => {
   const randomImageSelection =
     backgroundsImages[Math.floor(Math.random() * backgroundsImages.length)];
 
-  const handleLogout = () => {
-    localStorage.removeItem("userToken");
-  };
-
   return (
     <main className="min-h-screen relative">
       <Header />
