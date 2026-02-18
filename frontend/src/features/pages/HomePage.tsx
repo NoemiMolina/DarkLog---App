@@ -10,8 +10,6 @@ const TinderStyleWatchlistsCarousel = lazy(() => import("../../components/HomePa
 const News = lazy(() => import("../../components/NewsComponents/News"));
 
 const HomePage = () => {
-  const [username, setUsername] = useState<string>("Guest");
-  const [profilePic, setProfilePic] = useState<string | null>(null);
   const [slasherMovies, setSlasherMovies] = useState<any[]>([]);
   const [supernaturalMovies, setSupernaturalMovies] = useState<any[]>([]);
   const [zombieMovies, setZombieMovies] = useState<any[]>([]);
@@ -153,8 +151,6 @@ const HomePage = () => {
   return (
     <main className="min-h-screen relative">
       <Header
-        username={username}
-        userProfilePicture={profilePic}
         isTVShowMode={isTVShowMode}
         onToggleTVShowMode={setIsTVShowMode}
       />

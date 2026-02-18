@@ -82,22 +82,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             setUserProfilePicture(data.user.UserProfilePicture || null);
             setIsAuthenticated(true);
           }
+        } else if (response.status === 401) {
+          // Token is invalid - clear auth
+          localStorage.removeItem("user");
+          localStorage.removeItem("userId");
+          localStorage.removeItem("username");
+          localStorage.removeItem("authToken");
+          setIsAuthenticated(false);
+          setUsername("Guest");
+          setUserId(null);
+          setUserProfilePicture(null);
         } else {
-          if (response.status === 401) {
-            localStorage.removeItem("user");
-            localStorage.removeItem("userId");
-            localStorage.removeItem("username");
-            setIsAuthenticated(false);
-            setUsername("Guest");
-            setUserId(null);
-            setUserProfilePicture(null);
-          } else {
-            const storedUserId = localStorage.getItem("userId");
-            if (storedUserId) {
-              updateAuthState();
-              if (!isRetry) {
-                retryTimeout = setTimeout(() => verifyToken(true), 2000);
-              }
+          // Other error - keep localStorage data, don't reset auth
+          const storedUserId = localStorage.getItem("userId");
+          if (storedUserId) {
+            // Keep existing auth state from localStorage
+            updateAuthState();
+            if (!isRetry) {
+              retryTimeout = setTimeout(() => verifyToken(true), 2000);
             }
           }
         }

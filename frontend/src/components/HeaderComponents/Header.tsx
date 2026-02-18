@@ -27,16 +27,11 @@ import {
 } from "../../components/ui/dropdown-menu";
 
 interface HeaderProps {
-  username?: string;
-  userProfilePicture?: string | null;
-  onLogOut?: () => void;
   onToggleTVShowMode?: (value: boolean) => void;
   isTVShowMode?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
-  username = "Guest",
-  userProfilePicture,
   onToggleTVShowMode,
   isTVShowMode,
 }) => {
@@ -46,9 +41,8 @@ const Header: React.FC<HeaderProps> = ({
   const [importModalOpen, setImportModalOpen] = useState(false);
   const { unreadCount, friendRequestsCount, forumNotificationsCount } =
     useNotifications();
-  const { logout } = useAuth();
+  const { logout, username, userProfilePicture, userId } = useAuth();
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId") || "";
   const handleToggle = (value: boolean) => {
     localStorage.setItem("mediaType", value ? "tvshows" : "movies");
     onToggleTVShowMode?.(value);

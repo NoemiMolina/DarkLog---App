@@ -3,7 +3,7 @@ import Header from "../../components/HeaderComponents/Header";
 const PrivacyPage = () => {
   return (
     <main className="min-h-screen">
-      <Header username="Guest" />
+      <Header />
 
       <div className="max-w-4xl mx-auto px-4 py-12">
         <h1

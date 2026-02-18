@@ -159,7 +159,7 @@ export const ForumPage: React.FC = () => {
 
   return (
     <main className="min-h-screen relative">
-      <Header username={username} userProfilePicture={profilePic} />
+      <Header />
       <section className="py-8 px-4 max-w-4xl mx-auto">
         <div className="space-y-4">
           <div className="flex justify-between items-center mb-4">
