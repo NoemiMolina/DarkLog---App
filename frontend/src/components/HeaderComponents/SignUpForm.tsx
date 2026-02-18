@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -157,7 +158,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
         formData.append("UserProfilePicture", profilePic);
       }
 
-      const res = await fetch(`${API_URL}/users/signup`, {
+      const res = await fetchWithCreds(`${API_URL}/users/signup`, {
         method: "POST",
         body: formData,
       });
@@ -175,8 +176,10 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
       // Log in directly and redirect to home
       setTimeout(() => {
         if (data.token) {
-          localStorage.setItem("token", data.token);
+          localStorage.setItem("authToken", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("userId", data.user._id);
+          localStorage.setItem("username", data.user.UserPseudo || "Guest");
           
           // Add pending watchlists if available
           const pendingWatchlists = localStorage.getItem("pendingWatchlists");

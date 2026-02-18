@@ -7,6 +7,7 @@ interface AuthContextType {
   userProfilePicture: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
+  token: string | null;
   logout: () => void;
   refreshAuth: () => Promise<void>;
   updateAuthState: () => void;
@@ -24,15 +25,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [token, setTokenState] = useState<string | null>(() => {
+    return localStorage.getItem("authToken");
+  });
 
   const updateAuthState = () => {
     const storedUsername = localStorage.getItem("username");
     const storedUserId = localStorage.getItem("userId");
     const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("authToken");
 
-    if (storedUserId) {
+    if (storedUserId && storedToken) {
       setUsername(storedUsername || "Guest");
       setUserId(storedUserId);
+      setTokenState(storedToken);
       if (storedUser) {
         try {
           const user = JSON.parse(storedUser);
@@ -45,6 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       setUsername("Guest");
       setUserId(null);
+      setTokenState(null);
       setUserProfilePicture(null);
       setIsAuthenticated(false);
     }
@@ -169,8 +176,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
+    localStorage.removeItem("authToken");
     setUsername("Guest");
     setUserId(null);
+    setTokenState(null);
     setUserProfilePicture(null);
     setIsAuthenticated(false);
   };
@@ -183,6 +192,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         userProfilePicture,
         isAuthenticated,
         isLoading,
+        token,
         logout,
         refreshAuth,
         updateAuthState,
