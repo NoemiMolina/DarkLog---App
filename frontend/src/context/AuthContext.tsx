@@ -37,6 +37,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("authToken");
 
+    console.log("🔄 updateAuthState called", {
+      storedUsername,
+      storedUserId,
+      hasToken: !!storedToken,
+    });
+
     if (storedUserId && storedToken) {
       setUsername(storedUsername || "Guest");
       setUserId(storedUserId);
@@ -50,12 +56,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         }
       }
       setIsAuthenticated(true);
+      console.log("✅ Auth state updated - user authenticated");
     } else {
       setUsername("Guest");
       setUserId(null);
       setTokenState(null);
       setUserProfilePicture(null);
       setIsAuthenticated(false);
+      console.log("❌ Auth state reset - no user");
     }
   }, []);
 
