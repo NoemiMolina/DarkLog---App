@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 import { pendingWatchlistService } from "../../services/pendingWatchlistService";
 
 import { Button } from "../ui/button";
@@ -31,10 +32,9 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
     setSuccessMsg(null);
 
     try {
-      const res = await fetch(`${API_URL}/users/login`, {
+      const res = await fetchWithCreds(`${API_URL}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",
         body: JSON.stringify({
           UserMail: email.trim(),
           UserPassword: password.trim(),
@@ -51,7 +51,7 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
       }
 
       if (data.token) {
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("authToken", data.token);
       }
       if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
