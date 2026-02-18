@@ -48,7 +48,6 @@ const TinderStyleCarousel = ({
   const [swipeDelta, setSwipeDelta] = useState(0);
   const [swiping, setSwiping] = useState(false);
 
-  const [lastClickTime, setLastClickTime] = useState(0);
   const [swipeDetected, setSwipeDetected] = useState(false);
 
   const token = localStorage.getItem("authToken");
