@@ -18,6 +18,7 @@ import { Textarea } from "../../components/ui/textarea";
 import { IoSkull } from "react-icons/io5";
 import RatingSkulls from "./RatingSkulls";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 
 interface Movie {
   _id: string;
@@ -74,11 +75,10 @@ const HomemadeWatchlistsDialog = ({
 
     try {
       if (rating > 0) {
-        const rateRes = await fetch(`${API_URL}/homemade-watchlists/rate`, {
+        const rateRes = await fetchWithCreds(`${API_URL}/homemade-watchlists/rate`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
             userId,
@@ -130,11 +130,10 @@ const HomemadeWatchlistsDialog = ({
     }
 
     try {
-      const res = await fetch(`${API_URL}/homemade-watchlists/add`, {
+      const res = await fetchWithCreds(`${API_URL}/homemade-watchlists/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           userId,

@@ -54,10 +54,7 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
     }
     setLoadingFriends(true);
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${API_URL}/users/${userId}/friends`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetchWithCreds(`${API_URL}/users/${userId}/friends`);
       const data = await response.json();
       console.log("📥 Friends data received:", data);
       setFriends(data);

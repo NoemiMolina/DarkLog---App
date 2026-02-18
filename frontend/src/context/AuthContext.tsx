@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { API_URL } from "../config/api";
+import { fetchWithCreds } from "../config/fetchClient";
 
 interface AuthContextType {
   username: string;
@@ -62,9 +63,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const verifyToken = async (isRetry = false) => {
       try {
-        const response = await fetch(`${API_URL}/users/verify-token`, {
+        const response = await fetchWithCreds(`${API_URL}/users/verify-token`, {
           method: "POST",
-          credentials: "include", 
           headers: {
             "Content-Type": "application/json",
           },
@@ -147,9 +147,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const refreshAuth = async () => {
     try {
-      const response = await fetch(`${API_URL}/users/verify-token`, {
+      const response = await fetchWithCreds(`${API_URL}/users/verify-token`, {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },

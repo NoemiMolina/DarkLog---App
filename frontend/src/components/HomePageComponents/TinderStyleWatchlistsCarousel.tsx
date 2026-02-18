@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import HomemadeWatchlistsDialog from "./HomemadeWatchlistsDialog";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 
 interface Movie {
   _id: string;
@@ -32,7 +33,6 @@ const TinderStyleWatchlistsCarousel = () => {
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   const userId = user?._id;
-  const token = localStorage.getItem("token");
 
   const addToWatchlist = async (watchlist: Watchlist) => {
     if (!userId) {
@@ -40,11 +40,10 @@ const TinderStyleWatchlistsCarousel = () => {
       return;
     }
     try {
-      const res = await fetch(`${API_URL}/homemade-watchlists/add`, {
+      const res = await fetchWithCreds(`${API_URL}/homemade-watchlists/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           userId,

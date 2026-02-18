@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X } from "lucide-react";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 import DragDropZone from "./DragDropZone";
 import PreviewResults from "./PreviewResults";
 import ConfirmationStep from "./ConfirmationStep";
@@ -89,7 +90,7 @@ export default function ImportModal({
         runtime: film.runtime,
       }));
 
-      const response = await fetch(`${API_URL}/import/letterboxd/confirm`, {
+      const response = await fetchWithCreds(`${API_URL}/import/letterboxd/confirm`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

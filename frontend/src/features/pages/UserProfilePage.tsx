@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Separator } from "../../components/ui/separator";
 import { jwtDecode } from "jwt-decode";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import ProfileInfoSection from "../../components/ProfileComponents/ProfileInfosSection";
@@ -103,12 +104,7 @@ const UserProfile: React.FC = () => {
 
   const fetchProfileData = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${API_URL}/users/${userId}/profile`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetchWithCreds(`${API_URL}/users/${userId}/profile`);
 
       if (!response.ok) {
         const errorData = await response.json();

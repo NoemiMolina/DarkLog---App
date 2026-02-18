@@ -15,6 +15,7 @@ import { Badge } from "../../components/ui/badge";
 import { Heart, MessageCircle, Send, Trash2 } from "lucide-react";
 import { CommentItem } from "./CommentItem";
 import { API_URL } from "../../config/api";
+import { fetchWithCreds } from "../../config/fetchClient";
 
 interface Post {
   _id: string;
@@ -71,11 +72,10 @@ export const PostCard: React.FC<PostCardProps> = ({
     if (!newComment.trim()) return;
 
     try {
-      const res = await fetch(`${API_URL}/forum/posts/${post._id}/comments`, {
+      const res = await fetchWithCreds(`${API_URL}/forum/posts/${post._id}/comments`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ content: newComment }),
       });
