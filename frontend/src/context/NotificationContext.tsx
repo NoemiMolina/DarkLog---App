@@ -63,7 +63,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const getToken = () => localStorage.getItem("authToken");
   const fetchNotificationCounts = useCallback(async () => {
     const userId = getUserId();
     if (!userId) return;
