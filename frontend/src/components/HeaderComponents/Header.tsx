@@ -253,9 +253,7 @@ const Header: React.FC<HeaderProps> = ({
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => {
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("user");
-                        localStorage.removeItem("userId");
+                        logout();
                         navigate("/");
                       }}
                       className="cursor-pointer hover:bg-red-500/20 text-red-400"

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { API_URL } from "../config/api";
 import { fetchWithCreds } from "../config/fetchClient";
 
@@ -31,7 +31,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     return localStorage.getItem("authToken");
   });
 
-  const updateAuthState = () => {
+  const updateAuthState = useCallback(() => {
     const storedUsername = localStorage.getItem("username");
     const storedUserId = localStorage.getItem("userId");
     const storedUser = localStorage.getItem("user");
@@ -57,13 +57,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUserProfilePicture(null);
       setIsAuthenticated(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     let retryTimeout: NodeJS.Timeout;
 
     const verifyToken = async (isRetry = false) => {
       try {
+        const storedUserId = localStorage.getItem("userId");
+        if (!storedUserId) {
+          // No user stored locally, set loading done and return
+          setIsLoading(false);
+          return;
+        }
+
         const response = await fetchWithCreds(`${API_URL}/users/verify-token`, {
           method: "POST",
           headers: {
@@ -93,22 +100,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUserId(null);
           setUserProfilePicture(null);
         } else {
-          // Other error - keep localStorage data, don't reset auth
+          // Other error (500, 403, etc) - KEEP localStorage data, DON'T reset
           const storedUserId = localStorage.getItem("userId");
           if (storedUserId) {
-            // Keep existing auth state from localStorage
-            updateAuthState();
+            // Keep existing auth state from localStorage, don't change anything
             if (!isRetry) {
-              retryTimeout = setTimeout(() => verifyToken(true), 2000);
+              retryTimeout = setTimeout(() => verifyToken(true), 3000);
             }
           }
         }
       } catch (error) {
-        // Network error or CORS issue - use localStorage as fallback
+        // Network error - use localStorage as fallback, keep auth state
         const storedUserId = localStorage.getItem("userId");
-        if (storedUserId) {
-          updateAuthState();
-        } else {
+        if (!storedUserId) {
           setUsername("Guest");
           setUserId(null);
           setUserProfilePicture(null);
