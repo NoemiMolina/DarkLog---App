@@ -46,7 +46,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
 }) => {
   const [showReply, setShowReply] = useState(false);
   const [replyContent, setReplyContent] = useState("");
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("authToken");
 
   const isLiked = Array.isArray(comment.likes)
     ? comment.likes.some(

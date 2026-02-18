@@ -48,12 +48,12 @@ const TinderStyleCarousel = ({
   const [swipeDelta, setSwipeDelta] = useState(0);
   const [swiping, setSwiping] = useState(false);
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("authToken");
   const userId = token ? jwtDecode<any>(token).id : null;
   const currentMovie = items[currentIndex];
   const addToWatchlist = async (movie: Movie) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       if (!token) {
         alert("Please log in to add to watchlist");
         return;

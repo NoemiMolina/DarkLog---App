@@ -53,7 +53,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
     const debounceTimer = setTimeout(async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("authToken");
         const response = await fetch(
           `${API_URL}/users/search?query=${encodeURIComponent(searchQuery)}`,
           {
@@ -93,7 +93,7 @@ const AddFriendDialog: React.FC<AddFriendDialogProps> = ({
 
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       const response = await fetch(
         `${API_URL}/users/${currentUserId}/friends/${selectedUser._id}`,
         {

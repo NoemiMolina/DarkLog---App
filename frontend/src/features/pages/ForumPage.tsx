@@ -55,7 +55,7 @@ export const ForumPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const userToken = localStorage.getItem("token");
+    const userToken = localStorage.getItem("authToken");
     setIsLoggedIn(!!userToken);
   }, []);
 

@@ -53,7 +53,7 @@ const UserPublicProfile: React.FC = () => {
   const [isBlocked, setIsBlocked] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [totalWatchTimeMinutes, setTotalWatchTimeMinutes] = useState(0);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("authToken");
 
   let currentUserId: string | undefined;
   if (token) {

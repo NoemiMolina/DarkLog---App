@@ -14,7 +14,7 @@ interface Post {
 export const useForumData = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("authToken");
 
   const loadPosts = async () => {
     try {
@@ -90,7 +90,7 @@ export const useForumData = () => {
   };
 
   useEffect(() => {
-    const userToken = localStorage.getItem("token");
+    const userToken = localStorage.getItem("authToken");
     if (userToken) {
       loadPosts();
     } else {

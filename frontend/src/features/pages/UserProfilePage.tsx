@@ -78,7 +78,7 @@ const UserProfile: React.FC = () => {
     null,
   );
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("authToken");
   let userId: string | undefined;
 
   if (token) {

@@ -57,7 +57,7 @@ const GetLuckyDialog: React.FC = () => {
       const userId = localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user")!)?._id
         : null;
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
 
       if (!userId || !token) {
         const item = {

@@ -52,7 +52,7 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
 
   const startQuiz = async (difficulty: "easy" | "medium" | "hard") => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("authToken");
       const quizUrl = `${API_URL}/quiz/${mediaType}/${selectedCategory}/${difficulty}`;
       console.log("🎯 Starting quiz with:", {
         mediaType,

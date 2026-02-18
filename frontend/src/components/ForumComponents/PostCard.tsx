@@ -46,7 +46,7 @@ export const PostCard: React.FC<PostCardProps> = ({
   const [showComments, setShowComments] = useState(false);
   const [newComment, setNewComment] = useState("");
   const [isHighlighted, setIsHighlighted] = useState(false);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("authToken");
 
   const isLiked = Array.isArray(post.likes)
     ? post.likes.some((userId: any) => String(userId) === String(currentUserId))

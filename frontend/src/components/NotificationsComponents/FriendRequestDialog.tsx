@@ -44,7 +44,7 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({
     if (!currentRequest) return;
 
     const user = JSON.parse(localStorage.getItem("user") || "{}");
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("authToken");
 
     try {
       const response = await fetch(

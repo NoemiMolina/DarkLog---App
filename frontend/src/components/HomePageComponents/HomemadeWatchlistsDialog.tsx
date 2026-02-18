@@ -55,7 +55,7 @@ const HomemadeWatchlistsDialog = ({
   const storedUser = localStorage.getItem("user");
   const user = storedUser ? JSON.parse(storedUser) : null;
   const userId = user?._id;
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("authToken");
 
   const showMessage = (text: string) => {
     setMessage(text);
