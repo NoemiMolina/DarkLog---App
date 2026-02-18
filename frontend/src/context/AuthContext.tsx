@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { API_URL } from "../config/api";
-import { fetchWithCreds } from "../config/fetchClient";
 
 interface AuthContextType {
   username: string;
@@ -8,11 +7,9 @@ interface AuthContextType {
   userProfilePicture: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  token: string | null;
   logout: () => void;
   refreshAuth: () => Promise<void>;
   updateAuthState: () => void;
-  setToken: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,20 +24,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [token, setTokenState] = useState<string | null>(() => {
-    return localStorage.getItem("authToken");
-  });
 
   const updateAuthState = () => {
     const storedUsername = localStorage.getItem("username");
     const storedUserId = localStorage.getItem("userId");
     const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("authToken");
 
-    if (storedUserId && storedToken) {
+    if (storedUserId) {
       setUsername(storedUsername || "Guest");
       setUserId(storedUserId);
-      setTokenState(storedToken);
       if (storedUser) {
         try {
           const user = JSON.parse(storedUser);
@@ -53,7 +45,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       setUsername("Guest");
       setUserId(null);
-      setTokenState(null);
       setUserProfilePicture(null);
       setIsAuthenticated(false);
     }
@@ -64,8 +55,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const verifyToken = async (isRetry = false) => {
       try {
-        const response = await fetchWithCreds(`${API_URL}/users/verify-token`, {
+        const response = await fetch(`${API_URL}/users/verify-token`, {
           method: "POST",
+          credentials: "include", 
           headers: {
             "Content-Type": "application/json",
           },
@@ -84,6 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         } else {
           if (response.status === 401) {
+
             localStorage.removeItem("user");
             localStorage.removeItem("userId");
             localStorage.removeItem("username");
@@ -102,10 +95,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         }
       } catch (error) {
-        // Network error or CORS issue - use localStorage as fallback
         const storedUserId = localStorage.getItem("userId");
         if (storedUserId) {
           updateAuthState();
+          if (!isRetry) {
+            retryTimeout = setTimeout(() => verifyToken(true), 2000);
+          }
         } else {
           setUsername("Guest");
           setUserId(null);
@@ -117,15 +112,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
     };
 
-    // First check localStorage immediately
-    updateAuthState();
-    
-    // Then try to verify with backend
     verifyToken();
 
     const verifyInterval = setInterval(() => {
       verifyToken();
-    }, 60000);
+    }, 30000);
 
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
@@ -149,17 +140,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const refreshAuth = async () => {
     try {
-      const authToken = localStorage.getItem("authToken");
-      if (!authToken) {
-        setIsAuthenticated(false);
-        return;
-      }
-
       const response = await fetch(`${API_URL}/users/verify-token`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
         },
       });
 
@@ -184,17 +169,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("user");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    localStorage.removeItem("authToken");
     setUsername("Guest");
     setUserId(null);
-    setTokenState(null);
     setUserProfilePicture(null);
     setIsAuthenticated(false);
-  };
-
-  const setToken = (newToken: string) => {
-    setTokenState(newToken);
-    localStorage.setItem("authToken", newToken);
   };
 
   return (
@@ -205,11 +183,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         userProfilePicture,
         isAuthenticated,
         isLoading,
-        token,
         logout,
         refreshAuth,
         updateAuthState,
-        setToken,
       }}
     >
       {children}

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { API_URL } from "../../config/api";
-import { fetchWithCreds } from "../../config/fetchClient";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import {
   Carousel,
@@ -27,7 +26,7 @@ const News = ({ newsCarouselClassName = "" }: NewsProps) => {
   const [selected, setSelected] = useState<NewsArticle | null>(null);
 
   useEffect(() => {
-    fetchWithCreds(`${API_URL}/news`)
+    fetch(`${API_URL}/news`)
       .then((res) => res.json())
       .then(setNews)
       .catch(console.error);

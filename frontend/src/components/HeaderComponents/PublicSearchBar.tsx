@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API_URL } from "../../config/api";
-import { fetchWithCreds } from "../../config/fetchClient";
 import {
   InputGroup,
   InputGroupAddon,
@@ -53,15 +52,15 @@ const PublicSearchBar: React.FC<PublicSearchBarProps> = ({
         const encoded = encodeURIComponent(query);
 
         if (isForumPage) {
-          const response = await fetchWithCreds(
+          const response = await fetch(
             `${API_URL}/forum/posts/search?q=${encoded}`,
           );
           const data = response.ok ? await response.json() : { posts: [] };
           setResults(data.posts || []);
         } else {
           const [moviesRes, tvRes] = await Promise.all([
-            fetchWithCreds(`${API_URL}/search?query=${encoded}&type=movie`),
-            fetchWithCreds(`${API_URL}/search?query=${encoded}&type=tv`),
+            fetch(`${API_URL}/search?query=${encoded}&type=movie`),
+            fetch(`${API_URL}/search?query=${encoded}&type=tv`),
           ]);
 
           const movies = moviesRes.ok ? await moviesRes.json() : [];
