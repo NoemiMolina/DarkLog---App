@@ -140,7 +140,7 @@ export const ForumPage: React.FC = () => {
   if (!isLoggedIn || !user) {
     return (
       <main className="min-h-screen relative">
-        <Header onLogOut={handleLogout} />
+        <Header />
         <section className="flex items-center justify-center min-h-[80vh]">
           <Card className="w-[400px] bg-white/10 backdrop-blur-lg border-white/20">
             <CardHeader>

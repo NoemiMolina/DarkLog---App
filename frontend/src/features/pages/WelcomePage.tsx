@@ -36,7 +36,7 @@ const WelcomePage: React.FC = () => {
 
   return (
     <main className="min-h-screen relative">
-      <Header onLogOut={handleLogout} />
+      <Header />
       <section className="translate-y-0 sm:translate-y-0 2xl:translate-y-[70px] -z-10">
         <div className="relative crt-effect mb-20 sm:mb-90 w-screen mx-0 sm:w-[85%] sm:mx-auto sm:max-w-6xl md:w-[70%] lg:w-[100%] 2xl:-translate-y-[60px]">
           <img
