@@ -104,7 +104,9 @@ const UserProfile: React.FC = () => {
 
   const fetchProfileData = async () => {
     try {
-      const response = await fetchWithCreds(`${API_URL}/users/${userId}/profile`);
+      const response = await fetchWithCreds(
+        `${API_URL}/users/${userId}/profile`,
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

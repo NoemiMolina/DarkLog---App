@@ -100,12 +100,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setUserId(null);
           setUserProfilePicture(null);
         } else {
-          // Other error (500, 403, etc) - KEEP localStorage data, DON'T reset
-          const storedUserId = localStorage.getItem("userId");
-          if (storedUserId) {
-            // Keep existing auth state from localStorage, don't change anything
-            if (!isRetry) {
-              retryTimeout = setTimeout(() => verifyToken(true), 3000);
+          if (response.status === 401) {
+            localStorage.removeItem("user");
+            localStorage.removeItem("userId");
+            localStorage.removeItem("username");
+            setIsAuthenticated(false);
+            setUsername("Guest");
+            setUserId(null);
+            setUserProfilePicture(null);
+          } else {
+            const storedUserId = localStorage.getItem("userId");
+            if (storedUserId) {
+              updateAuthState();
+              if (!isRetry) {
+                retryTimeout = setTimeout(() => verifyToken(true), 2000);
+              }
             }
           }
         }

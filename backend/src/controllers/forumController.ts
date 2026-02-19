@@ -203,12 +203,10 @@ export const deleteCommentFromPost = async (req: Request, res: Response) => {
     const isCommentAuthor = String(comment.author) === String(userId);
     const isPostAuthor = String(post.author) === String(userId);
     if (!isCommentAuthor && !isPostAuthor) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "Forbidden: You can only delete your own comments or comments on your posts",
-        });
+      return res.status(403).json({
+        message:
+          "Forbidden: You can only delete your own comments or comments on your posts",
+      });
     }
 
     comment.deleteOne();

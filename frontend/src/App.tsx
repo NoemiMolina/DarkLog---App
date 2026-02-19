@@ -11,17 +11,29 @@ import MaintenancePage from "./features/pages/MaintenancePage";
 const WelcomePage = lazy(() => import("./features/pages/WelcomePage"));
 const HomePage = lazy(() => import("./features/pages/HomePage"));
 const UserProfile = lazy(() => import("./features/pages/UserProfilePage"));
-const UserPublicProfile = lazy(() => import("./features/pages/UserPublicProfilePage"));
+const UserPublicProfile = lazy(
+  () => import("./features/pages/UserPublicProfilePage"),
+);
 const QuizzPage = lazy(() => import("./features/pages/QuizzPage"));
 const ForumPage = lazy(() => import("./features/pages/ForumPage"));
 const LoginPage = lazy(() => import("./features/pages/LoginPage"));
 const SignUpPage = lazy(() => import("./features/pages/SignUpPage"));
+const ForgotPasswordPage = lazy(
+  () => import("./features/pages/ForgotPasswordPage"),
+);
+const ResetPasswordPage = lazy(
+  () => import("./features/pages/ResetPasswordPage"),
+);
 const ContactFormPage = lazy(() => import("./features/pages/ContactFormPage"));
 const PrivacyPage = lazy(() => import("./features/pages/PrivacyPage"));
 const TermsPage = lazy(() => import("./features/pages/TermsPage"));
-const WatchedItemsPage = lazy(() => import("./features/pages/WatchedItemsPage"));
+const WatchedItemsPage = lazy(
+  () => import("./features/pages/WatchedItemsPage"),
+);
 const ItemDetailPage = lazy(() => import("./features/pages/ItemDetailPage"));
-const HomemadeWatchlistDetailPage = lazy(() => import("./features/pages/HomemadeWatchlistDetailPage"));
+const HomemadeWatchlistDetailPage = lazy(
+  () => import("./features/pages/HomemadeWatchlistDetailPage"),
+);
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -88,6 +100,11 @@ function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
             />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route
+              path="/reset-password/:token"
+              element={<ResetPasswordPage />}
+            />
             <Route path="/contactform" element={<ContactFormPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/profile" element={<UserProfile />} />
@@ -101,7 +118,10 @@ function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/watched-items" element={<WatchedItemsPage />} />
             <Route path="/item/:type/:id" element={<ItemDetailPage />} />
-            <Route path="/homemade-watchlist/:watchlistId" element={<HomemadeWatchlistDetailPage />} />
+            <Route
+              path="/homemade-watchlist/:watchlistId"
+              element={<HomemadeWatchlistDetailPage />}
+            />
           </Routes>
         </Suspense>
       </div>

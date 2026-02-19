@@ -48,7 +48,7 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
     const fetchWatchlist = async () => {
       try {
         const response = await fetch(
-          `${API_URL}/homemade-watchlists/${watchlistId}`
+          `${API_URL}/homemade-watchlists/${watchlistId}`,
         );
         if (!response.ok) {
           throw new Error("Failed to fetch watchlist");
@@ -85,17 +85,20 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
 
     try {
       if (rating > 0) {
-        const rateRes = await fetchWithCreds(`${API_URL}/homemade-watchlists/rate`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const rateRes = await fetchWithCreds(
+          `${API_URL}/homemade-watchlists/rate`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              watchlistId,
+              rating,
+            }),
           },
-          body: JSON.stringify({
-            userId,
-            watchlistId,
-            rating,
-          }),
-        });
+        );
 
         if (!rateRes.ok) {
           throw new Error("Failed to save rating");
@@ -116,7 +119,7 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
               watchlistId,
               comment,
             }),
-          }
+          },
         );
 
         if (!commentRes.ok) {
@@ -233,9 +236,7 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
                     <div className="relative group">
                       <img
                         onClick={() =>
-                          navigate(
-                            `/item/movie/${movie.tmdb_id || movie._id}`
-                          )
+                          navigate(`/item/movie/${movie.tmdb_id || movie._id}`)
                         }
                         src={
                           movie.poster_path
@@ -314,7 +315,9 @@ const HomemadeWatchlistDetailPage: React.FC = () => {
             </Button>
 
             {message && (
-              <p className="text-green-400 text-sm mt-2 text-center">{message}</p>
+              <p className="text-green-400 text-sm mt-2 text-center">
+                {message}
+              </p>
             )}
           </div>
         </div>

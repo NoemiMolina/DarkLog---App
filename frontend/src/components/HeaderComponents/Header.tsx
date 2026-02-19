@@ -125,8 +125,7 @@ const Header: React.FC<HeaderProps> = ({
                         await fetchWithCreds(`${API_URL}/users/logout`, {
                           method: "POST",
                         });
-                      } catch (err) {
-                      }
+                      } catch (err) {}
                       logout();
                       navigate("/");
                     }}

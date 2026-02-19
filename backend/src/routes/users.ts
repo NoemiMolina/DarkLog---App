@@ -6,6 +6,9 @@ import {
   loginUser,
   logoutUser,
   verifyToken,
+  forgotPassword,
+  resetPassword,
+  verifyResetToken,
   getUserProfile,
   updateProfileInfos,
   updatePassword,
@@ -42,6 +45,9 @@ router.post(
 router.post("/login", loginUser);
 router.post("/logout", logoutUser);
 router.post("/verify-token", verifyToken);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password/:token", resetPassword);
+router.get("/verify-reset-token/:token", verifyResetToken);
 router.get("/:userId/profile", authMiddleware, getUserProfile);
 router.put(
   "/:userId/profile",

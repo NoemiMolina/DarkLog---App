@@ -54,7 +54,9 @@ const StatsSection: React.FC<ProfileStatsSection> = ({
     }
     setLoadingFriends(true);
     try {
-      const response = await fetchWithCreds(`${API_URL}/users/${userId}/friends`);
+      const response = await fetchWithCreds(
+        `${API_URL}/users/${userId}/friends`,
+      );
       const data = await response.json();
       setFriends(data);
     } catch (error) {

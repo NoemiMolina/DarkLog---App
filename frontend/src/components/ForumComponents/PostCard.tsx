@@ -72,13 +72,16 @@ export const PostCard: React.FC<PostCardProps> = ({
     if (!newComment.trim()) return;
 
     try {
-      const res = await fetchWithCreds(`${API_URL}/forum/posts/${post._id}/comments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetchWithCreds(
+        `${API_URL}/forum/posts/${post._id}/comments`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content: newComment }),
         },
-        body: JSON.stringify({ content: newComment }),
-      });
+      );
 
       if (res.ok) {
         setNewComment("");
