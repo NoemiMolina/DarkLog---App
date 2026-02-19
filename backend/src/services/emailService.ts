@@ -34,16 +34,20 @@ export const sendPasswordResetEmail = async (
   try {
     if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
       const transporter = nodemailer.createTransport({
-        service: process.env.EMAIL_SERVICE || "gmail",
+        host: "smtp.gmail.com",
+        port: 465,
+        secure: true,
         auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.EMAIL_PASSWORD,
         },
-      });
+      } as any);
 
       await transporter.sendMail(mailOptions);
+      console.log("✅ Email sent successfully to:", userEmail);
       return true;
     } else {
+      console.log("⚠️ Email not configured. Development mode activated. Reset link:", resetUrl);
       return true;
     }
   } catch (error) {
