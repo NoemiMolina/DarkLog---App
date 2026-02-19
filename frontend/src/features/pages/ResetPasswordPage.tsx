@@ -32,7 +32,7 @@ const ResetPasswordPage: React.FC = () => {
           `${API_URL}/users/verify-reset-token/${token}`,
           {
             method: "GET",
-          }
+          },
         );
 
         const data = await res.json();
@@ -40,13 +40,13 @@ const ResetPasswordPage: React.FC = () => {
           setTokenValid(true);
         } else {
           setErrorMsg(
-            "This reset link is invalid or has expired. Please request a new one."
+            "This reset link is invalid or has expired. Please request a new one.",
           );
         }
       } catch (err) {
         console.error("❌ Error verifying token:", err);
         setErrorMsg(
-          "This reset link is invalid or has expired. Please request a new one."
+          "This reset link is invalid or has expired. Please request a new one.",
         );
       } finally {
         setValidating(false);
@@ -80,15 +80,12 @@ const ResetPasswordPage: React.FC = () => {
           body: JSON.stringify({
             newPassword: password.trim(),
           }),
-        }
+        },
       );
 
       const data = await res.json();
       if (!res.ok) {
-        setErrorMsg(
-          data.message ||
-            "An error occurred during password reset"
-        );
+        setErrorMsg(data.message || "An error occurred during password reset");
         setLoading(false);
         return;
       }
@@ -109,9 +106,7 @@ const ResetPasswordPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-black to-purple-900 flex items-center justify-center p-4">
         <div className="w-full max-w-[420px]">
-          <p className="text-center text-gray-400">
-            Verifying link...
-          </p>
+          <p className="text-center text-gray-400">Verifying link...</p>
         </div>
       </div>
     );
@@ -132,9 +127,7 @@ const ResetPasswordPage: React.FC = () => {
           <div className="text-center py-6">
             <p className="text-red-400 text-lg mb-4">❌ {errorMsg}</p>
             <Link to="/forgot-password">
-              <Button className="w-full">
-                Request a new reset link
-              </Button>
+              <Button className="w-full">Request a new reset link</Button>
             </Link>
           </div>
         </div>
@@ -153,7 +146,8 @@ const ResetPasswordPage: React.FC = () => {
             Reset Password
           </h1>
           <p className="text-gray-400 text-sm mt-2 text-center">
-            Enter your new password (minimum 8 characters, with uppercase, number and special symbol)
+            Enter your new password (minimum 8 characters, with uppercase,
+            number and special symbol)
           </p>
         </div>
 
@@ -173,27 +167,21 @@ const ResetPasswordPage: React.FC = () => {
                 <div className="text-xs space-y-1">
                   <p
                     className={
-                      password.length >= 8
-                        ? "text-green-400"
-                        : "text-red-400"
+                      password.length >= 8 ? "text-green-400" : "text-red-400"
                     }
                   >
                     {password.length >= 8 ? "✓" : "✗"} At least 8 characters
                   </p>
                   <p
                     className={
-                      /[A-Z]/.test(password)
-                        ? "text-green-400"
-                        : "text-red-400"
+                      /[A-Z]/.test(password) ? "text-green-400" : "text-red-400"
                     }
                   >
                     {/[A-Z]/.test(password) ? "✓" : "✗"} One uppercase letter
                   </p>
                   <p
                     className={
-                      /[0-9]/.test(password)
-                        ? "text-green-400"
-                        : "text-red-400"
+                      /[0-9]/.test(password) ? "text-green-400" : "text-red-400"
                     }
                   >
                     {/[0-9]/.test(password) ? "✓" : "✗"} One number
@@ -223,9 +211,7 @@ const ResetPasswordPage: React.FC = () => {
                 disabled={loading}
               />
               {confirmPassword.length > 0 && !passwordsMatch && (
-                <p className="text-xs text-red-400">
-                  Passwords do not match
-                </p>
+                <p className="text-xs text-red-400">Passwords do not match</p>
               )}
               {passwordsMatch && (
                 <p className="text-xs text-green-400">✓ Passwords match</p>

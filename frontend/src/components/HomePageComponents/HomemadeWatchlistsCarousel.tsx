@@ -45,7 +45,9 @@ const HomemadeWatchlistsCarousel = () => {
                 className={`basis-1/2 sm:basis-1/3 md:basis-1/5 lg:basis-1/5 xl:basis-1/6 2xl:basis-1/8 2xl:mt-15 px-2 ${idx === 0 ? "ml-4" : ""}`}
               >
                 <div
-                  onClick={() => navigate(`/homemade-watchlist/${watchlist._id}`)}
+                  onClick={() =>
+                    navigate(`/homemade-watchlist/${watchlist._id}`)
+                  }
                   className="relative group transition duration-300 hover:-translate-y-2 hover:shadow-2xl hover:opacity-15 w-full cursor-pointer rounded-lg shadow-xl overflow-hidden aspect-[2/3] h-80 sm:h-80 bg-red-800 flex flex-col items-center justify-end"
                 >
                   {watchlist.posterPath && (

@@ -7,7 +7,7 @@ export const fetchWithCreds = (
   init?: FetchOptions,
 ) => {
   const token = localStorage.getItem("authToken");
-  
+
   const options: FetchOptions = {
     ...init,
     headers: {

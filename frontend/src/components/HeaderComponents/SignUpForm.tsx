@@ -41,10 +41,10 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
   const [resShows, setResShows] = useState<SearchItem[]>([]);
   const [top3TvShow, setTop3TvShow] = useState<SearchItem[]>([]);
   const [duplicateMovieError, setDuplicateMovieError] = useState<string | null>(
-    null
+    null,
   );
   const [duplicateShowError, setDuplicateShowError] = useState<string | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -88,7 +88,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
   const addMovie = (item: SearchItem) => {
     if (top3Movies.find((x) => x._id === item._id)) {
       setDuplicateMovieError(
-        "We get it, you truly love this movie, but you can put it only once in your top3"
+        "We get it, you truly love this movie, but you can put it only once in your top3",
       );
       setTimeout(() => setDuplicateMovieError(null), 3000);
       return;
@@ -105,7 +105,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
   const addShow = (item: SearchItem) => {
     if (top3TvShow.find((x) => x._id === item._id)) {
       setDuplicateShowError(
-        "We get it, you truly love this show, but you can put it only once in your top3"
+        "We get it, you truly love this show, but you can put it only once in your top3",
       );
       setTimeout(() => setDuplicateShowError(null), 3000);
       return;
@@ -163,14 +163,13 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
         body: formData,
       });
 
-
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err?.message || "Subscription failed");
       }
 
       const data = await res.json();
-      
+
       setSubmitSuccess("Account created successfully!");
 
       // Log in directly and redirect to home
@@ -180,7 +179,7 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("userId", data.user._id);
           localStorage.setItem("username", data.user.UserPseudo || "Guest");
-          
+
           // Add pending watchlists if available
           const pendingWatchlists = localStorage.getItem("pendingWatchlists");
           if (pendingWatchlists) {
@@ -321,14 +320,19 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
 
         {password.length > 0 && (
           <div className="mt-3 space-y-2 p-3 bg-white/5 rounded-lg border border-white/10">
-            <p className="text-xs font-semibold text-gray-300">Password requirements:</p>
+            <p className="text-xs font-semibold text-gray-300">
+              Password requirements:
+            </p>
             <div className="space-y-1">
               <div
                 className={`flex items-center gap-2 text-xs ${
                   hasMinLength ? "text-green-400" : "text-gray-400"
                 }`}
               >
-                <Check size={14} className={hasMinLength ? "visible" : "invisible"} />
+                <Check
+                  size={14}
+                  className={hasMinLength ? "visible" : "invisible"}
+                />
                 At least 8 characters
               </div>
               <div
@@ -336,7 +340,10 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
                   hasUppercase ? "text-green-400" : "text-gray-400"
                 }`}
               >
-                <Check size={14} className={hasUppercase ? "visible" : "invisible"} />
+                <Check
+                  size={14}
+                  className={hasUppercase ? "visible" : "invisible"}
+                />
                 One uppercase letter
               </div>
               <div
@@ -344,7 +351,10 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
                   hasNumber ? "text-green-400" : "text-gray-400"
                 }`}
               >
-                <Check size={14} className={hasNumber ? "visible" : "invisible"} />
+                <Check
+                  size={14}
+                  className={hasNumber ? "visible" : "invisible"}
+                />
                 One number
               </div>
               <div
@@ -352,7 +362,10 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
                   hasSpecialChar ? "text-green-400" : "text-gray-400"
                 }`}
               >
-                <Check size={14} className={hasSpecialChar ? "visible" : "invisible"} />
+                <Check
+                  size={14}
+                  className={hasSpecialChar ? "visible" : "invisible"}
+                />
                 One special character (!@#$%^&*)
               </div>
             </div>
@@ -373,7 +386,8 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
             }}
             placeholder="Confirm your password"
             className={
-              attemptedSubmit && (!passwordsMatch || confirmPassword.length === 0)
+              attemptedSubmit &&
+              (!passwordsMatch || confirmPassword.length === 0)
                 ? "border-red-500 bg-red-500/10"
                 : ""
             }

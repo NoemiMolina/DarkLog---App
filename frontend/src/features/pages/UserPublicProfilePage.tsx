@@ -384,7 +384,10 @@ const UserPublicProfile: React.FC = () => {
                   <Carousel className="w-full">
                     <CarouselContent>
                       {profileData.MovieWatchlist.map((movie) => (
-                        <CarouselItem key={movie.movieId} className="basis-1/2 sm:basis-1/3 md:basis-1/3">
+                        <CarouselItem
+                          key={movie.movieId}
+                          className="basis-1/2 sm:basis-1/3 md:basis-1/3"
+                        >
                           <div className="relative group aspect-[2/3] overflow-hidden">
                             <img
                               src={movie.poster}
@@ -412,7 +415,10 @@ const UserPublicProfile: React.FC = () => {
                   <Carousel className="w-full">
                     <CarouselContent>
                       {profileData.TvShowWatchlist.map((show) => (
-                        <CarouselItem key={show.tvshowId} className="basis-1/2 sm:basis-1/3 md:basis-1/3">
+                        <CarouselItem
+                          key={show.tvshowId}
+                          className="basis-1/2 sm:basis-1/3 md:basis-1/3"
+                        >
                           <div className="relative group aspect-[2/3] overflow-hidden">
                             <img
                               src={show.poster}

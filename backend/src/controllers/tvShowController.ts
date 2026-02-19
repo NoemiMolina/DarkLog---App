@@ -15,13 +15,13 @@ export const getAllTVShows = async (req: Request, res: Response) => {
 export const getTVShowById = async (req: Request, res: Response) => {
   try {
     const id = req.params.tvShowId;
-    
+
     let tvShow = await TVShow.findOne({ tmdb_id: Number(id) });
-    
+
     if (!tvShow && id.match(/^[0-9a-fA-F]{24}$/)) {
       tvShow = await TVShow.findById(id);
     }
-    
+
     if (!tvShow) return res.status(404).json({ message: "TV show not found" });
     res.status(200).json(tvShow);
   } catch (err) {

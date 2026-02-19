@@ -59,8 +59,6 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
         localStorage.setItem("username", data.user.UserPseudo || "Guest");
       }
       localStorage.setItem("firstConnection", "false");
-
-      // Notify AuthContext of the login
       updateAuthState();
 
       setSuccessMsg("✅ Successfully connected!");
@@ -131,16 +129,7 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
       </div>
 
       {errorMsg && <p className="text-sm text-red-400">{errorMsg}</p>}
-
       {successMsg && <p className="text-sm text-green-400">{successMsg}</p>}
-
-      <div className="text-right">
-        <Link to="/forgot-password">
-          <button className="text-sm text-purple-400 hover:text-purple-300 font-semibold underline">
-            Forgot password?
-          </button>
-        </Link>
-      </div>
 
       <div className="flex justify-end mt-4 gap-3">
         <Button
@@ -154,9 +143,10 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
         </Button>
 
         <Button
+          variant="outline"
           onClick={handleLogin}
           disabled={!canSubmit || loading}
-          className="text-white"
+          className="text-white hover:bg-white/10"
         >
           {loading ? "Connecting..." : "Login"}
         </Button>
@@ -175,6 +165,14 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
             Sign up
           </button>
         </p>
+      </div>
+
+      <div className="text-center">
+        <Link to="/forgot-password">
+          <button className="text-sm text-purple-400 hover:text-purple-300 font-semibold underline">
+            Forgot password?
+          </button>
+        </Link>
       </div>
     </div>
   );

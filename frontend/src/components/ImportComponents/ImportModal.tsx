@@ -90,16 +90,19 @@ export default function ImportModal({
         runtime: film.runtime,
       }));
 
-      const response = await fetchWithCreds(`${API_URL}/import/letterboxd/confirm`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetchWithCreds(
+        `${API_URL}/import/letterboxd/confirm`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            filmsToImport,
+          }),
         },
-        body: JSON.stringify({
-          userId,
-          filmsToImport,
-        }),
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

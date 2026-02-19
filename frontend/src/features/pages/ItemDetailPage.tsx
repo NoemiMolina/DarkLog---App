@@ -28,7 +28,7 @@ const ItemDetailPage: React.FC = () => {
         console.log("📍 Fetching from:", endpoint);
 
         const response = await fetchWithCreds(endpoint);
-        
+
         console.log("📍 Response status:", response.status);
 
         if (!response.ok) {
@@ -77,7 +77,6 @@ const ItemDetailPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 md:p-6 max-w-6xl">
-      {/* Back Button */}
       <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition mb-6"
@@ -86,13 +85,15 @@ const ItemDetailPage: React.FC = () => {
         <span>Back</span>
       </button>
 
-      {/* Title */}
       <h1 className="text-3xl md:text-4xl font-bold text-white mb-8">
         {item.title || item.name}
       </h1>
 
-      {/* Item Card Content */}
-      <ItemCard item={item} type={type || "movie"} onClose={() => navigate(-1)} />
+      <ItemCard
+        item={item}
+        type={type || "movie"}
+        onClose={() => navigate(-1)}
+      />
     </div>
   );
 };

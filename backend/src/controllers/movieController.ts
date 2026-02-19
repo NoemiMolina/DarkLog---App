@@ -12,27 +12,25 @@ export const getAllMovies = async (req: Request, res: Response) => {
     const movies = await Movie.find();
     res.status(200).json(movies);
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        message: "Erreur lors de la récupération des films",
-        error: err,
-      });
+    res.status(500).json({
+      message: "Erreur lors de la récupération des films",
+      error: err,
+    });
   }
 };
 
 export const getMovieById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    
+
     // Try to find by TMDB ID first (most common case)
     let movie = await Movie.findOne({ tmdb_id: Number(id) });
-    
+
     // Only try ObjectId if it matches the pattern and not found by TMDB ID
     if (!movie && id.match(/^[0-9a-fA-F]{24}$/)) {
       movie = await Movie.findById(id);
     }
-    
+
     if (!movie) return res.status(404).json({ message: "Film non trouvé" });
     res.status(200).json(movie);
   } catch (err) {
@@ -76,13 +74,11 @@ export const addRatingToMovie = async (req: Request, res: Response) => {
       await user.save();
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Rating added",
-        movie,
-        userAverage: user.AverageMovieRating,
-      });
+    res.status(200).json({
+      message: "Rating added",
+      movie,
+      userAverage: user.AverageMovieRating,
+    });
   } catch (err) {
     res.status(500).json({ message: "Error adding rating", error: err });
   }

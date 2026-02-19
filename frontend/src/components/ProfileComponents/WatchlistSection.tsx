@@ -1,11 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Trash2 } from "lucide-react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem
-} from "../ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 
 interface WatchlistItem {
   _id: string;
@@ -44,7 +40,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
         <CardTitle className="text-lg">Watchlists</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-      <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h3 className="text-xl mb-4"> 🎬 Movies ({movieWatchlist.length})</h3>
           {movieWatchlist.length === 0 ? (
             <div className="text-center py-12 bg-[#1A1A1A] rounded-lg">
@@ -59,7 +55,10 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <Carousel className="w-full">
               <CarouselContent>
                 {movieWatchlist.map((movie) => (
-                  <CarouselItem key={movie._id} className="basis-1/2 sm:basis-1/3 md:basis-1/3">
+                  <CarouselItem
+                    key={movie._id}
+                    className="basis-1/2 sm:basis-1/3 md:basis-1/3"
+                  >
                     <div className="relative group aspect-[2/3] overflow-hidden">
                       <img
                         src={movie.poster}
@@ -79,7 +78,7 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             </Carousel>
           )}
         </div>
-       <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
+        <div className="bg-gray-800/50 backdrop-blur-sm rounded-2xl p-4 sm:p-8 mb-4 sm:mb-8 shadow-2xl border border-purple-500/20">
           <h3 className="text-xl mb-4">
             TV Shows Watchlist ({tvShowWatchlist.length})
           </h3>
@@ -93,15 +92,18 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
               </button>
             </div>
           ) : (
-           <Carousel className="w-full">
+            <Carousel className="w-full">
               <CarouselContent>
                 {tvShowWatchlist.map((show) => (
-                  <CarouselItem key={show._id} className="basis-1/2 sm:basis-1/3 md:basis-1/3">
+                  <CarouselItem
+                    key={show._id}
+                    className="basis-1/2 sm:basis-1/3 md:basis-1/3"
+                  >
                     <div className="relative group aspect-[2/3] overflow-hidden">
                       <img
                         src={show.poster}
                         alt={show.title}
-                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg"
                       />
                       <button
                         onClick={() => onRemove(show._id, "tv")}
@@ -128,10 +130,11 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
             <Carousel className="w-full">
               <CarouselContent>
                 {savedHomemadeWatchlists.map((watchlist) => (
-                  <CarouselItem key={watchlist._id} className="basis-1/2 sm:basis-1/3 md:basis-1/3">
-                    <div
-                      className="relative group aspect-[2/3] overflow-hidden"
-                    >
+                  <CarouselItem
+                    key={watchlist._id}
+                    className="basis-1/2 sm:basis-1/3 md:basis-1/3"
+                  >
+                    <div className="relative group aspect-[2/3] overflow-hidden">
                       <img
                         src={
                           watchlist.posterPath
@@ -145,7 +148,9 @@ const WatchlistSection: React.FC<WatchlistSectionProps> = ({
                         {watchlist.title}
                       </div>
                       <button
-                        onClick={() => onRemove(watchlist._id, "homemadewatchlist")}
+                        onClick={() =>
+                          onRemove(watchlist._id, "homemadewatchlist")
+                        }
                         className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       >
                         <Trash2 size={16} />

@@ -54,9 +54,7 @@ const TinderStyleWatchlistsCarousel = () => {
         window.dispatchEvent(new Event("watchlistUpdated"));
       } else {
       }
-    } catch (err) {
-
-    }
+    } catch (err) {}
   };
 
   const handlers = useSwipeable({

@@ -4,9 +4,17 @@ import { fetchWithCreds } from "../../config/fetchClient";
 import Header from "../../components/HeaderComponents/Header";
 import CarouselItems from "../../components/HomePageComponents/CarouselItems";
 import TinderStyleCarousel from "../../components/HomePageComponents/TinderStyleCarousel";
-const PopularWFriendsSection = lazy(() => import("../../components/HomePageComponents/PopularWFriendsSection"));
-const HomemadeWatchlistsCarousel = lazy(() => import("../../components/HomePageComponents/HomemadeWatchlistsCarousel"));
-const TinderStyleWatchlistsCarousel = lazy(() => import("../../components/HomePageComponents/TinderStyleWatchlistsCarousel"));
+const PopularWFriendsSection = lazy(
+  () => import("../../components/HomePageComponents/PopularWFriendsSection"),
+);
+const HomemadeWatchlistsCarousel = lazy(
+  () =>
+    import("../../components/HomePageComponents/HomemadeWatchlistsCarousel"),
+);
+const TinderStyleWatchlistsCarousel = lazy(
+  () =>
+    import("../../components/HomePageComponents/TinderStyleWatchlistsCarousel"),
+);
 const News = lazy(() => import("../../components/NewsComponents/News"));
 
 const HomePage = () => {
@@ -78,8 +86,7 @@ const HomePage = () => {
       const res = await fetchWithCreds(`${API_URL}/movies/style/${endpoint}`);
       const data = await res.json();
       setter(data);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   const fetchTVShowCategory = async (endpoint: string, setter: any) => {
@@ -87,8 +94,7 @@ const HomePage = () => {
       const res = await fetchWithCreds(`${API_URL}/tvshows/style/${endpoint}`);
       const data = await res.json();
       setter(data);
-    } catch (error) {
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -161,26 +167,42 @@ const HomePage = () => {
 
       <section className="mt-8 px-4 xl:-translate-y-[15px]">
         <div className="mb-12 lg:-translate-x-40 xl:translate-x-0 2xl:translate-x-0">
-          <Suspense fallback={<div className="h-64 bg-[#2A2A2A] rounded-lg animate-pulse" />}>
+          <Suspense
+            fallback={
+              <div className="h-64 bg-[#2A2A2A] rounded-lg animate-pulse" />
+            }
+          >
             <PopularWFriendsSection />
           </Suspense>
         </div>
 
         <div className="mb-12">
           <div className="sm:hidden">
-            <Suspense fallback={<div className="h-80 bg-[#2A2A2A] rounded-lg animate-pulse" />}>
+            <Suspense
+              fallback={
+                <div className="h-80 bg-[#2A2A2A] rounded-lg animate-pulse" />
+              }
+            >
               <TinderStyleWatchlistsCarousel />
             </Suspense>
           </div>
 
           <div className="hidden sm:block">
-            <Suspense fallback={<div className="h-96 bg-[#2A2A2A] rounded-lg animate-pulse" />}>
+            <Suspense
+              fallback={
+                <div className="h-96 bg-[#2A2A2A] rounded-lg animate-pulse" />
+              }
+            >
               <HomemadeWatchlistsCarousel />
             </Suspense>
           </div>
 
           <div className="-mt-10 xl:-mt-40 2xl:-mt-50">
-            <Suspense fallback={<div className="h-64 bg-[#2A2A2A] rounded-lg animate-pulse" />}>
+            <Suspense
+              fallback={
+                <div className="h-64 bg-[#2A2A2A] rounded-lg animate-pulse" />
+              }
+            >
               <News newsCarouselClassName="sm:pl-0 lg:-translate-x-[10px] xl:translate-y-5 xl:max-w-[91%] xl:translate-x-15 2xl:translate-x-45 2xl:max-w-[80%]" />
             </Suspense>
           </div>

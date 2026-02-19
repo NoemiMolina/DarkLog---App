@@ -75,17 +75,20 @@ const HomemadeWatchlistsDialog = ({
 
     try {
       if (rating > 0) {
-        const rateRes = await fetchWithCreds(`${API_URL}/homemade-watchlists/rate`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        const rateRes = await fetchWithCreds(
+          `${API_URL}/homemade-watchlists/rate`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId,
+              watchlistId: watchlist._id,
+              rating,
+            }),
           },
-          body: JSON.stringify({
-            userId,
-            watchlistId: watchlist._id,
-            rating,
-          }),
-        });
+        );
 
         if (!rateRes.ok) {
           throw new Error("Failed to save rating");
@@ -219,7 +222,11 @@ const HomemadeWatchlistsDialog = ({
                     >
                       <div className="relative group w-full h-full flex items-center justify-center">
                         <img
-                          onClick={() => navigate(`/item/movie/${movie.tmdb_id || movie._id}`)}
+                          onClick={() =>
+                            navigate(
+                              `/item/movie/${movie.tmdb_id || movie._id}`,
+                            )
+                          }
                           src={
                             movie.poster_path
                               ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`

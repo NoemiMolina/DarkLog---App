@@ -31,11 +31,15 @@ export default function ContactFormPage() {
 
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white drop-shadow mb-2" style={{ fontFamily: "'Metal Mania', serif" }}>
+        <h1
+          className="text-3xl font-bold text-white drop-shadow mb-2"
+          style={{ fontFamily: "'Metal Mania', serif" }}
+        >
           📧 Contact The Dev
         </h1>
         <p className="text-gray-400">
-          Let it know if you can't find a movie or TV show, or if you have any suggestions to make the app better!
+          Let it know if you can't find a movie or TV show, or if you have any
+          suggestions to make the app better!
         </p>
       </div>
 

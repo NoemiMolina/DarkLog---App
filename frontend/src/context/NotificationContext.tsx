@@ -63,7 +63,6 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const getToken = () => localStorage.getItem("authToken");
   const fetchNotificationCounts = useCallback(async () => {
     const userId = getUserId();
     if (!userId) return;
@@ -78,21 +77,21 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
         setForumNotificationsCount(data.forumNotifications);
         setFriendRequestsCount(data.friendRequests);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }, []);
   const fetchNotifications = useCallback(async () => {
     const userId = getUserId();
     if (!userId) return;
 
     try {
-      const response = await fetchWithCreds(`${API_URL}/notifications/${userId}`);
+      const response = await fetchWithCreds(
+        `${API_URL}/notifications/${userId}`,
+      );
       if (response.ok) {
         const data = await response.json();
         setNotifications(data);
       }
-    } catch (error) {
-    }
+    } catch (error) {}
   }, []);
   const markAsRead = useCallback(
     async (notificationId: string) => {
@@ -111,8 +110,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           );
           await fetchNotificationCounts();
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     [fetchNotificationCounts],
   );
@@ -151,8 +149,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           );
           await fetchNotificationCounts();
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     [fetchNotificationCounts],
   );
@@ -171,8 +168,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           );
           await fetchNotificationCounts();
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     [fetchNotificationCounts],
   );
@@ -211,8 +207,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
           );
           await fetchNotificationCounts();
         }
-      } catch (error) {
-      }
+      } catch (error) {}
     },
     [fetchNotificationCounts],
   );
