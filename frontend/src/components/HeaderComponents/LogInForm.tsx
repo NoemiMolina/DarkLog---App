@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_URL } from "../../config/api";
 import { fetchWithCreds } from "../../config/fetchClient";
@@ -167,6 +167,7 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
         </p>
       </div>
 
+      {/* TODO: Debug forgot password feature - requests timing out
       <div className="text-center">
         <Link to="/forgot-password">
           <button className="text-sm text-purple-400 hover:text-purple-300 font-semibold underline">
@@ -174,6 +175,7 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
           </button>
         </Link>
       </div>
+      */}
     </div>
   );
 };

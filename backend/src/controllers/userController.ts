@@ -1248,9 +1248,12 @@ export const logoutUser = async (req: Request, res: Response) => {
 // ------ FORGOT PASSWORD
 export const forgotPassword = async (req: Request, res: Response) => {
   try {
+    console.log("📧 forgotPassword called with body:", req.body);
     const { UserMail } = req.body;
+    console.log("📧 Looking for user with email:", UserMail);
 
     const user = await User.findOne({ UserMail });
+    console.log("📧 User found:", !!user);
     if (!user) {
       // Don't reveal if email exists for security reasons
       return res.status(200).json({
