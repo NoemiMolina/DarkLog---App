@@ -72,6 +72,8 @@ export interface IUser extends Document {
     movieIds: Types.ObjectId[];
   }[];
   TotalWatchTimeFromWatchlists: number;
+  PasswordResetToken?: string;
+  PasswordResetExpires?: Date;
 }
 
 const UserSchema: Schema = new Schema({
@@ -151,6 +153,8 @@ const UserSchema: Schema = new Schema({
     },
   ],
   TotalWatchTimeFromWatchlists: { type: Number, default: 0 },
+  PasswordResetToken: { type: String, default: null },
+  PasswordResetExpires: { type: Date, default: null },
 });
 
 export default mongoose.model<IUser>("User", UserSchema);

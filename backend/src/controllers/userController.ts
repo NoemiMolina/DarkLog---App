@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 import User from "../models/User";
 import Movie from "../models/Movie";
 import { Types } from "mongoose";
@@ -8,6 +9,7 @@ import TVShow from "../models/TVShow";
 import HomemadeWatchlist from "../models/HomemadeWatchlists";
 import { isNumberObject } from "util/types";
 import { createNotification } from "./notificationController";
+import { sendPasswordResetEmail } from "../services/emailService";
 
 // ------ REGISTER
 export const registerUser = async (req: Request, res: Response) => {
@@ -1251,5 +1253,119 @@ export const logoutUser = async (req: Request, res: Response) => {
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error logging out", error: err });
+  }
+};
+
+// ------ FORGOT PASSWORD
+export const forgotPassword = async (req: Request, res: Response) => {
+  try {
+    const { UserMail } = req.body;
+
+    const user = await User.findOne({ UserMail });
+    if (!user) {
+      // Don't reveal if email exists for security reasons
+      return res.status(200).json({
+        message:
+          "Si cet email existe dans notre système, vous recevrez un lien de réinitialisation",
+      });
+    }
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    // Set token and expiration (1 hour)
+    user.PasswordResetToken = hashedToken;
+    user.PasswordResetExpires = new Date(Date.now() + 60 * 60 * 1000);
+
+    await user.save();
+
+    // Send email with reset link
+    await sendPasswordResetEmail(UserMail, resetToken, user.UserPseudo);
+
+    res.status(200).json({
+      message:
+        "Si cet email existe dans notre système, vous recevrez un lien de réinitialisation",
+    });
+  } catch (err) {
+    console.error("❌ Error in forgotPassword:", err);
+    res.status(500).json({ message: "Error processing forgot password", error: err });
+  }
+};
+
+// ------ RESET PASSWORD
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params;
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({ message: "New password is required" });
+    }
+
+    // Hash the token to find user
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      PasswordResetToken: hashedToken,
+      PasswordResetExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return res.status(400).json({
+        message:
+          "Ce lien de réinitialisation est invalide ou a expiré. Veuillez demander un nouveau lien.",
+      });
+    }
+
+    // Hash new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password and clear reset token
+    user.UserPassword = hashedPassword;
+    user.PasswordResetToken = undefined;
+    user.PasswordResetExpires = undefined;
+
+    await user.save();
+
+    res.status(200).json({
+      message:
+        "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.",
+    });
+  } catch (err) {
+    console.error("❌ Error in resetPassword:", err);
+    res.status(500).json({ message: "Error resetting password", error: err });
+  }
+};
+
+// ------ VERIFY RESET TOKEN
+export const verifyResetToken = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.params;
+
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    const user = await User.findOne({
+      PasswordResetToken: hashedToken,
+      PasswordResetExpires: { $gt: new Date() },
+    });
+
+    if (!user) {
+      return res.status(400).json({ valid: false });
+    }
+
+    res.status(200).json({ valid: true });
+  } catch (err) {
+    console.error("❌ Error in verifyResetToken:", err);
+    res.status(400).json({ valid: false });
   }
 };

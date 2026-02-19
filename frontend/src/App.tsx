@@ -16,6 +16,8 @@ const QuizzPage = lazy(() => import("./features/pages/QuizzPage"));
 const ForumPage = lazy(() => import("./features/pages/ForumPage"));
 const LoginPage = lazy(() => import("./features/pages/LoginPage"));
 const SignUpPage = lazy(() => import("./features/pages/SignUpPage"));
+const ForgotPasswordPage = lazy(() => import("./features/pages/ForgotPasswordPage"));
+const ResetPasswordPage = lazy(() => import("./features/pages/ResetPasswordPage"));
 const ContactFormPage = lazy(() => import("./features/pages/ContactFormPage"));
 const PrivacyPage = lazy(() => import("./features/pages/PrivacyPage"));
 const TermsPage = lazy(() => import("./features/pages/TermsPage"));
@@ -88,6 +90,8 @@ function AppRoutes({ isTVShowMode }: { isTVShowMode: boolean }) {
             />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
             <Route path="/contactform" element={<ContactFormPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/profile" element={<UserProfile />} />

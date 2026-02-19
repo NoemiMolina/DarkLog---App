@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { API_URL } from "../../config/api";
 import { fetchWithCreds } from "../../config/fetchClient";
@@ -133,6 +133,14 @@ export const LoginFormContent: React.FC<{ onClose?: () => void }> = ({
       {errorMsg && <p className="text-sm text-red-400">{errorMsg}</p>}
 
       {successMsg && <p className="text-sm text-green-400">{successMsg}</p>}
+
+      <div className="text-right">
+        <Link to="/forgot-password">
+          <button className="text-sm text-purple-400 hover:text-purple-300 font-semibold underline">
+            Forgot password?
+          </button>
+        </Link>
+      </div>
 
       <div className="flex justify-end mt-4 gap-3">
         <Button
