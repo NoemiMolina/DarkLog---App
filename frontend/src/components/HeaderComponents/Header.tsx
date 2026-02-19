@@ -252,6 +252,12 @@ const Header: React.FC<HeaderProps> = ({
                       Add Friend
                     </DropdownMenuItem>
                     <DropdownMenuItem
+                      onClick={() => navigate("/contactform")}
+                      className="cursor-pointer hover:bg-white/10"
+                    >
+                      Contact
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
                       onClick={() => {
                         logout();
                         navigate("/");
