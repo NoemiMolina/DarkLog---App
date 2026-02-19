@@ -25,11 +25,7 @@ const ItemDetailPage: React.FC = () => {
             ? `${API_URL}/movies/${id}`
             : `${API_URL}/tvShows/${id}`;
 
-        console.log("📍 Fetching from:", endpoint);
-
         const response = await fetchWithCreds(endpoint);
-        
-        console.log("📍 Response status:", response.status);
 
         if (!response.ok) {
           const text = await response.text();
@@ -38,7 +34,6 @@ const ItemDetailPage: React.FC = () => {
         }
 
         const data = await response.json();
-        console.log("📍 Fetched data:", data);
         setItem(data);
       } catch (err) {
         console.error("❌ Error fetching item:", err);

@@ -69,8 +69,6 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
         cache: "no-store",
       });
 
-      console.log("📊 Response status:", response.status);
-
       if (!response.ok) {
         const errorText = await response.text();
         console.error("❌ API Error:", response.status, errorText);
@@ -78,7 +76,6 @@ const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
       }
 
       const data = await response.json();
-      console.log("✅ Quiz data fetched:", data);
       setQuestions(data.questions);
       setCurrentQuestionIndex(0);
       setScore(0);

@@ -69,7 +69,6 @@ const TinderStyleCarousel = ({
         },
       });
       if (response.ok) {
-        console.log("✅ Movie added to watchlist successfully:", movie.title);
       } else {
         console.error("❌ Server error", response.statusText);
       }
