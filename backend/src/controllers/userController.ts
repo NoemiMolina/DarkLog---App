@@ -1266,7 +1266,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
       // Don't reveal if email exists for security reasons
       return res.status(200).json({
         message:
-          "Si cet email existe dans notre système, vous recevrez un lien de réinitialisation",
+          "If this email exists in our system, you will receive a password reset link",
       });
     }
 
@@ -1288,7 +1288,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
     res.status(200).json({
       message:
-        "Si cet email existe dans notre système, vous recevrez un lien de réinitialisation",
+        "If this email exists in our system, you will receive a password reset link",
     });
   } catch (err) {
     console.error("❌ Error in forgotPassword:", err);
@@ -1320,7 +1320,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).json({
         message:
-          "Ce lien de réinitialisation est invalide ou a expiré. Veuillez demander un nouveau lien.",
+          "This reset link is invalid or has expired. Please request a new one.",
       });
     }
 
@@ -1336,7 +1336,7 @@ export const resetPassword = async (req: Request, res: Response) => {
 
     res.status(200).json({
       message:
-        "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter.",
+        "Your password has been successfully reset. You can now log in.",
     });
   } catch (err) {
     console.error("❌ Error in resetPassword:", err);

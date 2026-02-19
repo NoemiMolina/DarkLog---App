@@ -36,7 +36,7 @@ const ForgotPasswordPage: React.FC = () => {
 
       const data = await res.json();
       if (!res.ok) {
-        setErrorMsg(data.message || "Une erreur s'est produite");
+        setErrorMsg(data.message || "An error occurred");
         setLoading(false);
         return;
       }
@@ -50,7 +50,7 @@ const ForgotPasswordPage: React.FC = () => {
       }, 3000);
     } catch (err) {
       console.error("❌ Error in forgotPassword:", err);
-      setErrorMsg("Une erreur s'est produite. Veuillez réessayer.");
+      setErrorMsg("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -64,10 +64,10 @@ const ForgotPasswordPage: React.FC = () => {
             className="text-2xl font-bold text-white text-center"
             style={{ fontFamily: "'Metal Mania', serif" }}
           >
-            Mot de passe oublié ?
+            Forgot Password?
           </h1>
           <p className="text-gray-400 text-sm mt-2 text-center">
-            Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.
+            Enter your email and we'll send you a link to reset your password.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ const ForgotPasswordPage: React.FC = () => {
                 }}
               />
               {!emailValid && email.length > 0 && (
-                <p className="text-xs text-red-400">Email invalide</p>
+                <p className="text-xs text-red-400">Invalid email</p>
               )}
             </div>
 
@@ -101,7 +101,7 @@ const ForgotPasswordPage: React.FC = () => {
                   variant="outline"
                   className="w-full text-white hover:bg-white/10"
                 >
-                  Retour
+                  Back
                 </Button>
               </Link>
 
@@ -110,7 +110,7 @@ const ForgotPasswordPage: React.FC = () => {
                 disabled={!canSubmit}
                 className="flex-1"
               >
-                {loading ? "Chargement..." : "Envoyer le lien"}
+                {loading ? "Loading..." : "Send Reset Link"}
               </Button>
             </div>
           </div>
@@ -118,10 +118,10 @@ const ForgotPasswordPage: React.FC = () => {
           <div className="text-center py-6">
             <p className="text-green-400 text-lg mb-4">✅ {successMsg}</p>
             <p className="text-gray-400 text-sm mb-6">
-              Vous allez être redirigé vers la page de connexion...
+              You will be redirected to the login page...
             </p>
             <Link to="/login">
-              <Button className="w-full">Retour à la connexion</Button>
+              <Button className="w-full">Back to Login</Button>
             </Link>
           </div>
         )}
