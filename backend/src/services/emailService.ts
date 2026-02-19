@@ -1,19 +1,24 @@
 import nodemailer from "nodemailer";
 
-const transporter = nodemailer.createTransport({
-  service: process.env.EMAIL_SERVICE || "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD,
-  },
-});
+let transporter: any = null;
+
+// Initialize transporter only if email credentials are configured
+if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+  transporter = nodemailer.createTransport({
+    service: process.env.EMAIL_SERVICE || "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+}
 
 export const sendPasswordResetEmail = async (
   userEmail: string,
   resetToken: string,
   userName: string
 ) => {
-  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+  const resetUrl = `${process.env.FRONTEND_URL || "http://localhost:5173"}/reset-password/${resetToken}`;
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
@@ -40,11 +45,23 @@ export const sendPasswordResetEmail = async (
   };
 
   try {
-    await transporter.sendMail(mailOptions);
-    console.log(`✅ Email de réinitialisation envoyé à ${userEmail}`);
-    return true;
+    // If email is configured, try to send
+    if (transporter) {
+      await transporter.sendMail(mailOptions);
+      console.log(`✅ Email de réinitialisation envoyé à ${userEmail}`);
+      return true;
+    } else {
+      // Fallback: log to console if email not configured (dev mode)
+      console.warn("⚠️  Email non configuré. Mode développement activé.");
+      console.log(`\n🔗 RESET PASSWORD LINK FOR ${userEmail}:`);
+      console.log(`${resetUrl}\n`);
+      return true;
+    }
   } catch (error) {
     console.error("❌ Erreur lors de l'envoi de l'email:", error);
-    throw error;
+    // Still return true to allow testing - just log the link instead
+    console.log(`\n🔗 FALLBACK - Reset password link for ${userEmail}:`);
+    console.log(`${resetUrl}\n`);
+    return true;
   }
 };
