@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import compression from "compression";
 import dotenv from "dotenv";
 import path from "path";
 import http from "http";
@@ -50,6 +51,8 @@ app.use(
     credentials: true,
   }),
 );
+// Disable compression for debugging - might be causing response issues
+app.use(compression({ threshold: Number.MAX_VALUE }));
 app.use(express.json());
 app.use(cookieParser());
 

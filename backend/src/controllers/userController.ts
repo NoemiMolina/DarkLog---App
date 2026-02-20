@@ -1251,10 +1251,16 @@ export const forgotPassword = async (req: Request, res: Response) => {
     const { UserMail } = req.body;
     console.log("📧 Looking for user with email:", UserMail);
 
+    if (!UserMail) {
+      console.log("📧 No UserMail in request body");
+      return res.status(400).json({ message: "Email is required" });
+    }
+
     const user = await User.findOne({ UserMail });
     console.log("📧 User found:", !!user);
     if (!user) {
       // Don't reveal if email exists for security reasons
+      console.log("📧 User not found, sending generic response");
       return res.status(200).json({
         message:
           "If this email exists in our system, you will receive a password reset link",
@@ -1273,7 +1279,12 @@ export const forgotPassword = async (req: Request, res: Response) => {
     user.PasswordResetExpires = new Date(Date.now() + 60 * 60 * 1000);
 
     await user.save();
+    console.log("📧 Token saved to user");
+
+    // Send email with reset link
+    console.log("📧 Attempting to send email to:", UserMail);
     await sendPasswordResetEmail(UserMail, resetToken, user.UserPseudo);
+    console.log("📧 Email sent successfully");
 
     res.status(200).json({
       message:
