@@ -26,15 +26,27 @@ const ForgotPasswordPage: React.FC = () => {
     setSuccessMsg(null);
 
     try {
+      const payload = { UserMail: email.trim() };
+      console.log("📧 Sending forgot-password request with payload:", payload);
+      console.log("📧 API_URL:", API_URL);
+
       const res = await fetchWithCreds(`${API_URL}/users/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          UserMail: email.trim(),
-        }),
+        body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      console.log("📧 Response status:", res.status);
+      console.log("📧 Response headers:", {
+        "content-type": res.headers.get("content-type"),
+      });
+
+      const text = await res.text();
+      console.log("📧 Response body (raw):", text);
+
+      const data = text ? JSON.parse(text) : {};
+      console.log("📧 Response data (parsed):", data);
+
       if (!res.ok) {
         setErrorMsg(data.message || "An error occurred");
         setLoading(false);
