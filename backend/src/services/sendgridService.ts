@@ -9,6 +9,11 @@ export async function sendPasswordResetEmailSendGrid(
   userName: string,
 ) {
   const resetUrl = `${process.env.FRONTEND_URL || "http://localhost:5173"}/reset-password/${resetToken}`;
+  // Debug log to verify env and request
+  console.log("[SendGrid] API Key present:", !!SENDGRID_API_KEY);
+  console.log("[SendGrid] Sender:", SENDGRID_SENDER);
+  console.log("[SendGrid] To:", userEmail);
+  console.log("[SendGrid] Reset URL:", resetUrl);
 
   const data = {
     personalizations: [
