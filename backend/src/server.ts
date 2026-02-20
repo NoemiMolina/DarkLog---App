@@ -53,6 +53,19 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// Debug middleware for forgot-password requests
+app.use((req, res, next) => {
+  if (req.url.includes("forgot-password") || req.url.includes("reset-password")) {
+    console.log(`🔍 [${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log("   Headers:", {
+      "content-type": req.headers["content-type"],
+      origin: req.headers.origin,
+    });
+    console.log("   Body:", req.body);
+  }
+  next();
+});
+
 connectDB();
 
 const uploadsPath = path.resolve("uploads");

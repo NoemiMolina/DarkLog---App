@@ -236,21 +236,21 @@ export const getUserProfile = async (req: Request, res: Response) => {
     const averageMovieRating =
       user.RatedMovies && user.RatedMovies.length > 0
         ? user.RatedMovies.reduce((sum, item) => sum + item.rating, 0) /
-          user.RatedMovies.length
+        user.RatedMovies.length
         : 0;
 
     const averageTvShowRating =
       user.RatedTvShows && user.RatedTvShows.length > 0
         ? user.RatedTvShows.reduce((sum, item) => sum + item.rating, 0) /
-          user.RatedTvShows.length
+        user.RatedTvShows.length
         : 0;
 
     const movieIds = (user.RatedMovies || []).map((r: any) => r.tmdbMovieId);
     const moviePosterData =
       movieIds.length > 0
         ? await Movie.find({ tmdb_id: { $in: movieIds } }).select(
-            "tmdb_id poster_path",
-          )
+          "tmdb_id poster_path",
+        )
         : [];
     const moviePosterMap: { [key: number]: string } = {};
     moviePosterData.forEach((m: any) => {
@@ -266,8 +266,8 @@ export const getUserProfile = async (req: Request, res: Response) => {
     const tvShowPosterData =
       tvShowIds.length > 0
         ? await TVShow.find({ tmdb_id: { $in: tvShowIds } }).select(
-            "tmdb_id poster_path",
-          )
+          "tmdb_id poster_path",
+        )
         : [];
     const tvShowPosterMap: { [key: number]: string } = {};
     tvShowPosterData.forEach((t: any) => {
@@ -288,10 +288,10 @@ export const getUserProfile = async (req: Request, res: Response) => {
         return { total_runtime: ratedShow.total_runtime || 0 };
       },
     );
-    
+
     // Recalculate numberOfWatchedMovies based on actual RatedMovies to fix discrepancies
     const actualNumberOfWatchedMovies = user.RatedMovies?.length || 0;
-    
+
     const profileData = {
       userProfilePicture: user.UserProfilePicture || null,
       userPseudo: user.UserPseudo || "",
@@ -457,18 +457,18 @@ export const getPublicProfile = async (req: Request, res: Response) => {
     }
     const averageMovieRating =
       user.RatedMovies &&
-      Array.isArray(user.RatedMovies) &&
-      user.RatedMovies.length > 0
+        Array.isArray(user.RatedMovies) &&
+        user.RatedMovies.length > 0
         ? user.RatedMovies.reduce((sum, item) => sum + (item.rating || 0), 0) /
-          user.RatedMovies.length
+        user.RatedMovies.length
         : 0;
 
     const averageTvShowRating =
       user.RatedTvShows &&
-      Array.isArray(user.RatedTvShows) &&
-      user.RatedTvShows.length > 0
+        Array.isArray(user.RatedTvShows) &&
+        user.RatedTvShows.length > 0
         ? user.RatedTvShows.reduce((sum, item) => sum + (item.rating || 0), 0) /
-          user.RatedTvShows.length
+        user.RatedTvShows.length
         : 0;
 
     const watchedMoviesWithDetails = (
@@ -1050,8 +1050,8 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
 
     const reviews = Array.isArray(user.Reviews)
       ? user.Reviews.filter(
-          (r) => r && r.itemId && r.itemId.toString().trim().length > 0,
-        )
+        (r) => r && r.itemId && r.itemId.toString().trim().length > 0,
+      )
       : [];
 
     if (type === "movie") {
@@ -1081,9 +1081,9 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
       const averageMovieRating =
         ratedMovies.length > 0
           ? ratedMovies.reduce(
-              (acc: number, r: any) => acc + (r.rating || 0),
-              0,
-            ) / ratedMovies.length
+            (acc: number, r: any) => acc + (r.rating || 0),
+            0,
+          ) / ratedMovies.length
           : 0;
 
       console.log("📊 Updated movie stats:", {
@@ -1100,7 +1100,6 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
         },
       );
     } else if (type === "tvshow") {
-      // Fetch TV show runtime from database
       let total_runtime = 0;
       try {
         const TVShowModel = require("../models/TVShow").default;
@@ -1138,9 +1137,9 @@ export const saveRatingAndReview = async (req: Request, res: Response) => {
       const averageTvShowRating =
         ratedTvShows.length > 0
           ? ratedTvShows.reduce(
-              (acc: number, r: any) => acc + (r.rating || 0),
-              0,
-            ) / ratedTvShows.length
+            (acc: number, r: any) => acc + (r.rating || 0),
+            0,
+          ) / ratedTvShows.length
           : 0;
 
       console.log("📊 Updated TV show stats:", {
@@ -1274,8 +1273,6 @@ export const forgotPassword = async (req: Request, res: Response) => {
     user.PasswordResetExpires = new Date(Date.now() + 60 * 60 * 1000);
 
     await user.save();
-
-    // Send email with reset link
     await sendPasswordResetEmail(UserMail, resetToken, user.UserPseudo);
 
     res.status(200).json({
