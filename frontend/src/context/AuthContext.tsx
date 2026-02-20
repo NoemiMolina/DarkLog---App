@@ -66,7 +66,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       try {
         const storedUserId = localStorage.getItem("userId");
         if (!storedUserId) {
-          // No user stored locally, set loading done and return
           setIsLoading(false);
           return;
         }
@@ -90,7 +89,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             setIsAuthenticated(true);
           }
         } else if (response.status === 401) {
-          // Token is invalid - clear auth
           localStorage.removeItem("user");
           localStorage.removeItem("userId");
           localStorage.removeItem("username");
@@ -119,7 +117,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           }
         }
       } catch (error) {
-        // Network error - use localStorage as fallback, keep auth state
         const storedUserId = localStorage.getItem("userId");
         if (!storedUserId) {
           setUsername("Guest");

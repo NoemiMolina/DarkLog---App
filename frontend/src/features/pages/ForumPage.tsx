@@ -58,8 +58,6 @@ export const ForumPage: React.FC = () => {
     const userToken = localStorage.getItem("authToken");
     setIsLoggedIn(!!userToken);
   }, []);
-
-  // Scroll to comment if coming from notification
   useEffect(() => {
     if (location.state?.commentId) {
       setTimeout(() => {
@@ -75,7 +73,6 @@ export const ForumPage: React.FC = () => {
         }
       }, 500);
     } else if (location.state?.postId) {
-      // If coming from notification with just postId, scroll to that post
       setTimeout(() => {
         const postElement = document.getElementById(
           `post-${location.state.postId}`,

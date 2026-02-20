@@ -32,7 +32,6 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({
     }
   }, [open, friendRequests]);
 
-  // Auto-open dialog when friend requests arrive
   useEffect(() => {
     if (friendRequests.length > 0 && !open) {
       onOpenChange(true);
@@ -56,10 +55,7 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({
       );
 
       if (response.ok) {
-        // Mark notification as read and navigate
         await markAsRead(currentRequest._id);
-
-        // Move to next request or close
         const nextRequest = friendRequests.find(
           (r) => r._id !== currentRequest._id,
         );
@@ -79,8 +75,6 @@ export const FriendRequestDialog: React.FC<FriendRequestDialogProps> = ({
     if (!currentRequest) return;
 
     await deleteNotification(currentRequest._id);
-
-    // Move to next request or close
     const nextRequest = friendRequests.find(
       (r) => r._id !== currentRequest._id,
     );

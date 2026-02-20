@@ -97,7 +97,6 @@ const WatchedItemsPage: React.FC = () => {
     return Object.keys(grouped)
       .sort((a, b) => Number(b) - Number(a))
       .reduce((acc: { [key: string]: any[] }, year) => {
-        // Sort items within each year by createdAt (newest first)
         acc[year] = grouped[year].sort(
           (a: any, b: any) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),

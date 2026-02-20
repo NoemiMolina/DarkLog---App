@@ -69,14 +69,11 @@ export const matchMovieByNameAndYear = async (
   minScore: number = 0.92,
 ): Promise<MovieMatchResult> => {
   try {
-    // Initialize cache on first call
     if (!cachedMovies || !cachedFuseIndex) {
       await initializeMovieCache();
     }
 
     const cleanName = name.replace(/\s*\(\d{4}\)\s*$/g, "").trim();
-
-    // Look for exact match first
     const exactMatch = cachedMovies!.find(
       (m) =>
         (m.title === cleanName || m.original_title === cleanName) &&
@@ -90,8 +87,6 @@ export const matchMovieByNameAndYear = async (
         score: 1.0,
       };
     }
-
-    // Fuzzy search using cached index
     const fuseResults = cachedFuseIndex!.search(cleanName, { limit: 10 });
 
     if (fuseResults.length === 0) {
@@ -100,8 +95,6 @@ export const matchMovieByNameAndYear = async (
         error: `No matching movies found for "${cleanName}"`,
       };
     }
-
-    // Filter by year range from results
     const yearFilteredResults = fuseResults.filter((r) => {
       const movieYear =
         r.item.year || parseInt(r.item.release_date?.substring(0, 4) || "0");

@@ -29,14 +29,12 @@ const PopularWFriendsSection: React.FC = () => {
       const token = localStorage.getItem("authToken");
       const user = JSON.parse(localStorage.getItem("user") || "{}");
       const userId = user._id;
-      
-      // Don't fetch if user not authenticated
       if (!userId || !token) {
         console.warn("⛔ fetchFriendReviews: No userId or token, skipping API call.");
         setLoading(false);
         return;
       }
-      
+
       const response = await fetch(
         `${API_URL}/users/${userId}/friends-reviews`,
         {
@@ -48,7 +46,6 @@ const PopularWFriendsSection: React.FC = () => {
         const data = await response.json();
         setFriendReviews(data.reviews || []);
       } else if (response.status === 401 || response.status === 403) {
-        // Token invalid or expired
         console.warn("⛔ Token invalid, clearing auth data");
         localStorage.removeItem("authToken");
         setFriendReviews([]);
@@ -108,15 +105,14 @@ const PopularWFriendsSection: React.FC = () => {
                     '{review.movieTitle}'
                   </p>
                   <div className="flex items-center justify-center gap-0.5 mb-1 scale-50">
-                    <RatingSkulls value={review.rating} onChange={() => {}} />
+                    <RatingSkulls value={review.rating} onChange={() => { }} />
                   </div>
                   <p
                     onClick={() =>
                       setExpandedReview(expandedReview === index ? null : index)
                     }
-                    className={`text-[0.6rem] text-gray-300 text-center cursor-pointer hover:text-purple-400 transition ${
-                      expandedReview === index ? "" : "line-clamp-2"
-                    }`}
+                    className={`text-[0.6rem] text-gray-300 text-center cursor-pointer hover:text-purple-400 transition ${expandedReview === index ? "" : "line-clamp-2"
+                      }`}
                   >
                     {review.review}
                   </p>
@@ -163,7 +159,7 @@ const PopularWFriendsSection: React.FC = () => {
                       on {new Date(review.createdAt).toLocaleDateString()}
                     </span>
                     <div className="scale-75 origin-left">
-                      <RatingSkulls value={review.rating} onChange={() => {}} />
+                      <RatingSkulls value={review.rating} onChange={() => { }} />
                     </div>
                     <span className="text-gray-400 text-sm">:</span>
                   </div>

@@ -4,29 +4,23 @@ const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 const SENDGRID_SENDER = process.env.SENDGRID_SENDER || "no-reply@fearlogapp.com";
 
 export async function sendPasswordResetEmailSendGrid(
-  userEmail: string,
-  resetToken: string,
-  userName: string,
+    userEmail: string,
+    resetToken: string,
+    userName: string,
 ) {
-  const resetUrl = `${process.env.FRONTEND_URL || "http://localhost:5173"}/reset-password/${resetToken}`;
-  // Debug log to verify env and request
-  console.log("[SendGrid] API Key present:", !!SENDGRID_API_KEY);
-  console.log("[SendGrid] Sender:", SENDGRID_SENDER);
-  console.log("[SendGrid] To:", userEmail);
-  console.log("[SendGrid] Reset URL:", resetUrl);
-
-  const data = {
-    personalizations: [
-      {
-        to: [{ email: userEmail }],
-        subject: "FearLog - Password Reset Request",
-      },
-    ],
-    from: { email: SENDGRID_SENDER, name: "FearLog App" },
-    content: [
-      {
-        type: "text/html",
-        value: `
+    const resetUrl = `${process.env.FRONTEND_URL || "http://localhost:5173"}/reset-password/${resetToken}`;
+    const data = {
+        personalizations: [
+            {
+                to: [{ email: userEmail }],
+                subject: "FearLog - Password Reset Request",
+            },
+        ],
+        from: { email: SENDGRID_SENDER, name: "FearLog App" },
+        content: [
+            {
+                type: "text/html",
+                value: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <h2 style="color: #333;">Password Reset Request</h2>
             <p>Heyy <strong>${userName}</strong>,</p>
@@ -44,30 +38,30 @@ export async function sendPasswordResetEmailSendGrid(
             </p>
           </div>
         `,
-      },
-    ],
-  };
+            },
+        ],
+    };
 
-  try {
-    const response = await axios.post(
-      "https://api.sendgrid.com/v3/mail/send",
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${SENDGRID_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      },
-    );
-    console.log("✅ SendGrid email sent to:", userEmail);
-    return true;
-  } catch (error: any) {
-    if (error && typeof error === "object") {
-      const errMsg = error.response?.data || error.message || JSON.stringify(error);
-      console.error("❌ SendGrid error:", errMsg);
-    } else {
-      console.error("❌ SendGrid error:", error);
+    try {
+        const response = await axios.post(
+            "https://api.sendgrid.com/v3/mail/send",
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${SENDGRID_API_KEY}`,
+                    "Content-Type": "application/json",
+                },
+            },
+        );
+        console.log("✅ SendGrid email sent to:", userEmail);
+        return true;
+    } catch (error: any) {
+        if (error && typeof error === "object") {
+            const errMsg = error.response?.data || error.message || JSON.stringify(error);
+            console.error("❌ SendGrid error:", errMsg);
+        } else {
+            console.error("❌ SendGrid error:", error);
+        }
+        return false;
     }
-    return false;
-  }
 }

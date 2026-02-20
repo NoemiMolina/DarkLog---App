@@ -171,16 +171,12 @@ export const SignUpFormContent: React.FC<{ onClose?: () => void }> = ({
       const data = await res.json();
 
       setSubmitSuccess("Account created successfully!");
-
-      // Log in directly and redirect to home
       setTimeout(() => {
         if (data.token) {
           localStorage.setItem("authToken", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
           localStorage.setItem("userId", data.user._id);
           localStorage.setItem("username", data.user.UserPseudo || "Guest");
-
-          // Add pending watchlists if available
           const pendingWatchlists = localStorage.getItem("pendingWatchlists");
           if (pendingWatchlists) {
             const watchlists = JSON.parse(pendingWatchlists);

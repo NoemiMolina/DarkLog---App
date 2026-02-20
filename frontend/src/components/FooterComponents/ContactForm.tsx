@@ -53,15 +53,12 @@ export const ContactFormContent: React.FC<ContactFormContentProps> = ({
     setMessage(null);
 
     try {
-      // Email 1: Confirmation à l'utilisateur
       const userTemplateParams = {
         user_email: email,
         subject_type: subjectType,
         item_name: itemName,
         to_email: email,
       };
-
-      // Email 2: Notification à l'admin
       const adminTemplateParams = {
         user_email: email,
         subject_type: subjectType,
@@ -162,11 +159,10 @@ export const ContactFormContent: React.FC<ContactFormContentProps> = ({
       </div>
       {message && (
         <div
-          className={`p-3 rounded-md text-sm ${
-            message.type === "success"
+          className={`p-3 rounded-md text-sm ${message.type === "success"
               ? "bg-green-500/20 text-green-400 border border-green-500/50"
               : "bg-red-500/20 text-red-400 border border-red-500/50"
-          }`}
+            }`}
         >
           {message.text}
         </div>

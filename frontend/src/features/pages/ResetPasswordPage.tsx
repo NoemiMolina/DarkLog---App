@@ -17,8 +17,7 @@ const ResetPasswordPage: React.FC = () => {
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const navigate = useNavigate();
-
-  // Verify token on mount
+  
   useEffect(() => {
     const verifyToken = async () => {
       if (!token) {

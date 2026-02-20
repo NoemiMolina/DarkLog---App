@@ -129,6 +129,9 @@ const ForgotPasswordPage: React.FC = () => {
         ) : (
           <div className="text-center py-6">
             <p className="text-green-400 text-lg mb-4">✅ {successMsg}</p>
+            <p className="text-yellow-400 text-sm mb-2 font-semibold">
+              ⚠️ If you don't see the email, check your spam folder!
+            </p>
             <p className="text-gray-400 text-sm mb-6">
               You will be redirected to the login page...
             </p>

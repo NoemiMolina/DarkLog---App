@@ -254,8 +254,7 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({
       return () => {
         newSocket.disconnect();
       };
-    }, 500); // Délai de 500ms après le chargement initial
-
+    }, 500); 
     return () => clearTimeout(timer);
   }, [fetchNotifications, fetchNotificationCounts]);
 

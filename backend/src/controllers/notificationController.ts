@@ -55,7 +55,6 @@ export const getNotificationCounts = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Mark notification as read
 export const markAsRead = async (req: Request, res: Response) => {
   try {
     const { notificationId } = req.params;

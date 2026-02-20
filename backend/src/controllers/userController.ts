@@ -63,8 +63,6 @@ export const registerUser = async (req: Request, res: Response) => {
     });
 
     await newUser.save();
-
-    // Log the user in directly
     const token = jwt.sign(
       { id: newUser._id },
       process.env.JWT_SECRET || "secretKey",
@@ -110,7 +108,6 @@ export const loginUser = async (req: Request, res: Response) => {
 // ------------- VERIFY TOKEN & GET USER
 export const verifyToken = async (req: Request, res: Response) => {
   try {
-    // Read token from cookie (or fallback to Authorization header for backwards compatibility)
     const token =
       (req.cookies as any).token || req.headers.authorization?.split(" ")[1];
 
@@ -289,9 +286,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
       },
     );
 
-    // Recalculate numberOfWatchedMovies based on actual RatedMovies to fix discrepancies
     const actualNumberOfWatchedMovies = user.RatedMovies?.length || 0;
-
     const profileData = {
       userProfilePicture: user.UserProfilePicture || null,
       userPseudo: user.UserPseudo || "",
@@ -1237,7 +1232,6 @@ export const getItemWithUserData = async (req: Request, res: Response) => {
 // ------------- LOGOUT
 export const logoutUser = async (req: Request, res: Response) => {
   try {
-    // JWT is stored on frontend, just send success response
     res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
     res.status(500).json({ message: "Error logging out", error: err });
@@ -1247,43 +1241,29 @@ export const logoutUser = async (req: Request, res: Response) => {
 // ------ FORGOT PASSWORD
 export const forgotPassword = async (req: Request, res: Response) => {
   try {
-    console.log("📧 forgotPassword called with body:", req.body);
     const { UserMail } = req.body;
-    console.log("📧 Looking for user with email:", UserMail);
-
     if (!UserMail) {
-      console.log("📧 No UserMail in request body");
       return res.status(400).json({ message: "Email is required" });
     }
 
     const user = await User.findOne({ UserMail });
-    console.log("📧 User found:", !!user);
     if (!user) {
-      // Don't reveal if email exists for security reasons
-      console.log("📧 User not found, sending generic response");
       return res.status(200).json({
         message:
           "If this email exists in our system, you will receive a password reset link",
       });
     }
 
-    // Generate reset token
     const resetToken = crypto.randomBytes(32).toString("hex");
     const hashedToken = crypto
       .createHash("sha256")
       .update(resetToken)
       .digest("hex");
 
-    // Set token and expiration (1 hour)
     user.PasswordResetToken = hashedToken;
     user.PasswordResetExpires = new Date(Date.now() + 60 * 60 * 1000);
 
     await user.save();
-    console.log("📧 Token saved to user");
-
-    // Send email with reset link
-    console.log("📧 Attempting to send email to:", UserMail);
-    // Use SendGrid in production
     if (process.env.NODE_ENV === "production" && process.env.SENDGRID_API_KEY) {
       const sgResult = await require("../services/sendgridService").sendPasswordResetEmailSendGrid(
         UserMail,
@@ -1319,10 +1299,7 @@ export const resetPassword = async (req: Request, res: Response) => {
     if (!newPassword) {
       return res.status(400).json({ message: "New password is required" });
     }
-
-    // Hash the token to find user
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-
     const user = await User.findOne({
       PasswordResetToken: hashedToken,
       PasswordResetExpires: { $gt: new Date() },
@@ -1334,11 +1311,7 @@ export const resetPassword = async (req: Request, res: Response) => {
           "This reset link is invalid or has expired. Please request a new one.",
       });
     }
-
-    // Hash new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update password and clear reset token
     user.UserPassword = hashedPassword;
     user.PasswordResetToken = undefined;
     user.PasswordResetExpires = undefined;

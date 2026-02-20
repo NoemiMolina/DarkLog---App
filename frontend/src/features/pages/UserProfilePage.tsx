@@ -44,7 +44,7 @@ interface UserProfileData {
     title: string;
     poster: string;
     posterPath: string;
-  }>; // Ajout posterPath
+  }>; 
   numberOfWatchedMovies: number;
   numberOfWatchedTvShows: number;
   numberOfGivenReviews: number;

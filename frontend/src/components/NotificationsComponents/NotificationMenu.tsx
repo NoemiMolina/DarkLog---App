@@ -32,10 +32,7 @@ export const NotificationMenu: React.FC = () => {
   );
 
   const handleNotificationClick = async (notif: any) => {
-    // Mark as read
     await markAsRead(notif._id);
-
-    // Navigate to post
     if (notif.postId) {
       setOpen(false);
       navigate(`/forum/${notif.postId}`, {

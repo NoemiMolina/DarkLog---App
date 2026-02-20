@@ -185,7 +185,7 @@ const main = async () => {
 
     await new Promise((res) => setTimeout(res, 500));
   }
-  // Importer les films manuels
+ 
   if (MANUAL_TMDB_IDS.length > 0) {
     for (const tmdbId of MANUAL_TMDB_IDS) {
       try {

@@ -146,7 +146,6 @@ const TinderStyleWatchlistsCarousel = () => {
       <div className="w-full flex flex-col items-center">
         <div
           onClick={() => {
-            // Only navigate if this wasn't a swipe action
             if (!swipeDetected) {
               navigate(`/homemade-watchlist/${currentWatchlist._id}`);
             }

@@ -25,15 +25,13 @@ dotenv.config({ path: envFile });
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
-
-// 🔌 Socket.IO setup
 const allowedOrigins =
   process.env.NODE_ENV === "production"
     ? [
-        "https://fearlogapp.vercel.app",
-        "https://fearlogapp.com",
-        "https://www.fearlogapp.com",
-      ]
+      "https://fearlogapp.vercel.app",
+      "https://fearlogapp.com",
+      "https://www.fearlogapp.com",
+    ]
     : ["http://localhost:5173", "http://localhost:3000"];
 
 export const io = new SocketIOServer(server, {
@@ -44,7 +42,6 @@ export const io = new SocketIOServer(server, {
   },
 });
 
-// Very early logging - BEFORE anything else
 app.use((req, res, next) => {
   if (req.url.includes("forgot-password") || req.url.includes("reset-password")) {
     console.log(`🚨 [EARLY] ${req.method} ${req.url} from ${req.headers.origin}`);
@@ -60,19 +57,6 @@ app.use(
 );
 app.use(express.json());
 app.use(cookieParser());
-
-// Debug middleware for forgot-password requests
-app.use((req, res, next) => {
-  if (req.url.includes("forgot-password") || req.url.includes("reset-password")) {
-    console.log(`🔍 [AFTER MIDDLEWARE] ${req.method} ${req.url}`);
-    console.log("   Headers:", {
-      "content-type": req.headers["content-type"],
-      origin: req.headers.origin,
-    });
-    console.log("   Body:", req.body);
-  }
-  next();
-});
 
 connectDB();
 

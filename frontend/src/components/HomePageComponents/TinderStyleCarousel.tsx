@@ -164,7 +164,6 @@ const TinderStyleCarousel = ({
 
           <div
             onClick={() => {
-              // Only navigate if this wasn't a swipe action
               if (!swipeDetected) {
                 const itemId = currentMovie.tmdb_id || currentMovie._id;
                 navigate(`/item/${type}/${itemId}`);
@@ -177,9 +176,8 @@ const TinderStyleCarousel = ({
                 : "translateX(0)",
               transition: swiping ? "none" : "transform 0.3s ease-out",
             }}
-            className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 ${
-              exitDirection === "left" ? "opacity-0" : ""
-            } ${exitDirection === "right" ? "opacity-0" : ""}`}
+            className={`relative w-full max-w-xs aspect-[2/3] overflow-hidden rounded-lg cursor-grab active:cursor-grabbing z-10 ${exitDirection === "left" ? "opacity-0" : ""
+              } ${exitDirection === "right" ? "opacity-0" : ""}`}
           >
             <img
               src={

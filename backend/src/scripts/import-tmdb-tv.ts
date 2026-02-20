@@ -289,7 +289,6 @@ const main = async () => {
   process.exit(0);
 };
 
-// Importer les séries manuelles
 async function importManualTVShows() {
   if (MANUAL_TMDB_IDS.length > 0) {
     for (const tmdbId of MANUAL_TMDB_IDS) {

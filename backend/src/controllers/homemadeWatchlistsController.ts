@@ -129,7 +129,6 @@ export const rateWatchlist = async (req: Request, res: Response) => {
     user.TotalWatchTimeFromWatchlists += totalRuntime;
     user.NumberOfWatchedMovies += watchlist.movies.length;
     user.NumberOfGivenReviews += 1;
-    // Calculer la nouvelle moyenne
     if (!user.AverageMovieRating || isNaN(user.AverageMovieRating))
       user.AverageMovieRating = 0;
     if (!user.RatedMovies) user.RatedMovies = [];
@@ -147,7 +146,6 @@ export const rateWatchlist = async (req: Request, res: Response) => {
       user.AverageMovieRating =
         ratings.reduce((a, b) => a + b, 0) / ratings.length;
     }
-    // Retirer la watchlist des SavedHomemadeWatchlists si elle y est
     if (
       user.SavedHomemadeWatchlists &&
       user.SavedHomemadeWatchlists.length > 0

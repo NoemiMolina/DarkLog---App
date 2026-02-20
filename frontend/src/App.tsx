@@ -7,7 +7,6 @@ import { AuthProvider, useAuth } from "./context/AuthContext";
 import { useEffect, useState } from "react";
 import MaintenancePage from "./features/pages/MaintenancePage";
 
-// Lazy load pages to reduce initial bundle
 const WelcomePage = lazy(() => import("./features/pages/WelcomePage"));
 const HomePage = lazy(() => import("./features/pages/HomePage"));
 const UserProfile = lazy(() => import("./features/pages/UserProfilePage"));

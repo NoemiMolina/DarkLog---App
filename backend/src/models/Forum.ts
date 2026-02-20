@@ -44,8 +44,8 @@ const ForumPostSchema = new Schema(
     content: { type: String, required: true, trim: true, maxlength: 1000 },
     tags: [{ type: String, trim: true, lowercase: true }],
     published: { type: Boolean, default: false },
-    likes: [{ type: Schema.Types.ObjectId, ref: "User" }], // unique-vote handled in controller
-    dislikes: [{ type: Schema.Types.ObjectId, ref: "User" }], // unique-vote handled in controller
+    likes: [{ type: Schema.Types.ObjectId, ref: "User" }], 
+    dislikes: [{ type: Schema.Types.ObjectId, ref: "User" }], 
     comments: [CommentSchema],
     reports: [
       {
