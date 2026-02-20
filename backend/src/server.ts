@@ -44,6 +44,14 @@ export const io = new SocketIOServer(server, {
   },
 });
 
+// Very early logging - BEFORE anything else
+app.use((req, res, next) => {
+  if (req.url.includes("forgot-password") || req.url.includes("reset-password")) {
+    console.log(`🚨 [EARLY] ${req.method} ${req.url} from ${req.headers.origin}`);
+  }
+  next();
+});
+
 app.use(
   cors({
     origin: allowedOrigins,
@@ -56,7 +64,7 @@ app.use(cookieParser());
 // Debug middleware for forgot-password requests
 app.use((req, res, next) => {
   if (req.url.includes("forgot-password") || req.url.includes("reset-password")) {
-    console.log(`🔍 [${new Date().toISOString()}] ${req.method} ${req.url}`);
+    console.log(`🔍 [AFTER MIDDLEWARE] ${req.method} ${req.url}`);
     console.log("   Headers:", {
       "content-type": req.headers["content-type"],
       origin: req.headers.origin,
