@@ -6,7 +6,7 @@ interface PendingWatchlistItem {
   timestamp: number;
 }
 
-const STORAGE_KEY = "darklog_pending_watchlist";
+const STORAGE_KEY = "fearlog_pending_watchlist";
 const EXPIRY_TIME = 30 * 60 * 1000;
 
 export const pendingWatchlistService = {

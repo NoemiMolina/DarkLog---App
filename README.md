@@ -37,7 +37,7 @@ Users can log their horror movies, interact with friends, participate in quizzes
 - View friends’ activity
 - User profiles
 
-DarkLog is not just a movie tracker — it's a community space for horror fans.
+FearLog is not just a movie tracker — it's a community space for horror fans.
 
 ![Profile Preview](https://github.com/user-attachments/assets/656b5a3f-5b01-4bea-a873-7ae85a73cd86)
 ![Profile Preview](https://github.com/user-attachments/assets/1319937e-5276-47f5-919d-0e571f0f6039)
@@ -64,7 +64,7 @@ A built-in forum allows users to:
 
 ## 📰 Horror News
 
-DarkLog also includes editorial content:
+FearLog also includes editorial content:
 
 - Horror movie news
 - Articles written specifically for the platform
@@ -146,7 +146,7 @@ Les utilisateurs peuvent noter leurs films, interagir avec leurs amis, participe
 - Fil d’activité des amis
 - Profils utilisateurs
 
-DarkLog est un espace communautaire pour les fans d’horreur.
+FearLog est un espace communautaire pour les fans d’horreur.
 
 ![Profile Preview](https://github.com/user-attachments/assets/656b5a3f-5b01-4bea-a873-7ae85a73cd86)
 ![Profile Preview](https://github.com/user-attachments/assets/1319937e-5276-47f5-919d-0e571f0f6039)
@@ -177,7 +177,7 @@ Un forum intégré permet de :
 
 ## 📰 News Horreur
 
-DarkLog propose également :
+FearLog propose également :
 
 - Des actualités sur le cinéma d’horreur
 - Des articles rédigés pour la plateforme

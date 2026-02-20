@@ -10,7 +10,7 @@ export const sendPasswordResetEmail = async (
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: userEmail,
-    subject: "DarkLog - Password Reset Request",
+    subject: "FearLog - Password Reset Request",
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
         <h2 style="color: #333;">Password Reset Request</h2>

@@ -138,7 +138,7 @@ const Header: React.FC<HeaderProps> = ({
             </div>
             <img
               src={appLogo}
-              alt="DarkLog app logo"
+              alt="FearLog app logo"
               onClick={() => navigate("/home")}
               className="hidden sm:block h-auto w-20 sm:w-32 md:w-40 lg:w-56 xl:w-80 2xl:translate-x-45 cursor-pointer hover:opacity-80 transition-opacity"
             />
@@ -149,7 +149,7 @@ const Header: React.FC<HeaderProps> = ({
             <div className="hidden lg:flex w-full justify-center items-center">
               <img
                 src={appLogo}
-                alt="DarkLog app logo"
+                alt="FearLog app logo"
                 onClick={() => navigate("/home")}
                 className="h-auto w-56 cursor-pointer hover:opacity-80 transition-opacity xl:w-80 xl:-translate-x-15 2xl:w-72 2xl:-translate-x-20 2xl:w-70"
               />
@@ -157,7 +157,7 @@ const Header: React.FC<HeaderProps> = ({
             {/* On <lg, keep previous layout */}
             <img
               src={appLogo}
-              alt="DarkLog app logo"
+              alt="FearLog app logo"
               onClick={() => navigate("/home")}
               className="hidden sm:block lg:hidden h-auto w-20 sm:w-32 md:w-40 cursor-pointer hover:opacity-80 transition-opacity"
             />
