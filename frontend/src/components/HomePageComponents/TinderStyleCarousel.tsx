@@ -61,7 +61,7 @@ const TinderStyleCarousel = ({
         return;
       }
       const movieId = movie.tmdb_id || movie._id;
-      const url = `${API_URL}/users/${userId}/watchlist/movie/${movieId}`;
+      const url = `${API_URL}/users/${userId}/watchlist/${type}/${movieId}`;
       const response = await fetch(url, {
         method: "POST",
         headers: {
