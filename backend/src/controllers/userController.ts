@@ -1283,7 +1283,19 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
     // Send email with reset link
     console.log("📧 Attempting to send email to:", UserMail);
-    await sendPasswordResetEmail(UserMail, resetToken, user.UserPseudo);
+    // Use SendGrid in production
+    if (process.env.NODE_ENV === "production" && process.env.SENDGRID_API_KEY) {
+      const sgResult = await require("../services/sendgridService").sendPasswordResetEmailSendGrid(
+        UserMail,
+        resetToken,
+        user.UserPseudo,
+      );
+      if (!sgResult) {
+        return res.status(500).json({ message: "Error sending email with SendGrid" });
+      }
+    } else {
+      await sendPasswordResetEmail(UserMail, resetToken, user.UserPseudo);
+    }
     console.log("📧 Email sent successfully");
 
     res.status(200).json({
