@@ -12,7 +12,8 @@ import backgroundOption8 from "@/assets/images/WelcomePageBackgroundImgs/midsomm
 import backgroundOption9 from "@/assets/images/WelcomePageBackgroundImgs/signsMainHomePic.jpg";
 import backgroundOption10 from "@/assets/images/WelcomePageBackgroundImgs/dawnOfTheDeadMainHomePic.jpg";
 import { FaInstagram, FaTiktok } from "react-icons/fa";
-import News from "../../components/NewsComponents/News";
+import { lazy, Suspense } from "react";
+const News = lazy(() => import("../../components/NewsComponents/News"));
 
 const WelcomePage: React.FC = () => {
   const backgroundsImages = [
@@ -97,7 +98,9 @@ const WelcomePage: React.FC = () => {
           </div>
         </div>
         <div className="xl:-mt-70 2xl:-mt-80">
-          <News newsCarouselClassName="sm:pl-0 lg:ml-[-250px] xl:pl-90 xl:w-[1540px] 2xl:pl-150 2xl:w-[1770px]" />
+          <Suspense fallback={<div className="text-white text-center">Loading news…</div>}>
+            <News newsCarouselClassName="sm:pl-0 lg:ml-[-250px] xl:pl-90 xl:w-[1540px] 2xl:pl-150 2xl:w-[1770px]" />
+          </Suspense>
         </div>
       </section>
     </main>
