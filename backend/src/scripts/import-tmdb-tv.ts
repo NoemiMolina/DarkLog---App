@@ -8,7 +8,7 @@ const MONGO_URI =
   process.env.MONGO_URI || "mongodb://localhost:27017/FearLogApp";
 const KEYWORD_ID = 315058; // Mot-clé Horror pour les séries
 const MAX_PAGES = 5;
-const MANUAL_TMDB_IDS = [54671]; // cracra
+const MANUAL_TMDB_IDS = [54671, 40008]; // cracra
 
 interface Episode {
   episode_number: number;

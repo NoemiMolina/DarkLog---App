@@ -99,10 +99,10 @@ const watchlistsData = [
     title: "Final Girls",
     description: 'The most badass final girls in horror movies.',
     tmdbIds: [
-      663712, 1034541, 945961, 760104, 1023922, 348, 424139, 713704, 949423, 567609
+      663712, 1034541, 945961, 760104, 1023922, 348, 424139, 713704, 949423, 567609,
     ],
     posterPath: "/HomemadeWatchlistsFigmaCards/finalgirls.png",
-  },
+  }
 ];
 
 const seedWatchlists = async () => {
@@ -125,9 +125,14 @@ const seedWatchlists = async () => {
         .toArray();
       if (movies.length === 0) {
         console.warn(
-          `   ⚠️  Aucun film trouvé pour "${watchlist.title}". Vérifiez les TMDB IDs.`,
+          `   ⚠️  No movies found for "${watchlist.title}". Check the TMDB IDs.`,
         );
         continue;
+      }
+      const foundTmdbIds = movies.map((m: any) => m.tmdb_id);
+      const missingTmdbIds = watchlist.tmdbIds.filter(id => !foundTmdbIds.includes(id));
+      if (missingTmdbIds.length > 0) {
+        console.warn(`   ⚠️  Missing movies for "${watchlist.title}": ${missingTmdbIds.join(", ")}`);
       }
 
       const movieIds = movies.map(
@@ -157,8 +162,9 @@ const seedWatchlists = async () => {
       }
     }
     const finalCount = await watchlistsCollection.countDocuments();
+    console.log(`✅ Import completed: ${createdCount} created, ${updatedCount} updated. Total in database: ${finalCount}`);
   } catch (error) {
-    console.error("❌ Erreur lors du seed :", error);
+    console.error("❌ Error during seed:", error);
     process.exit(1);
   } finally {
     await mongoose.disconnect();
