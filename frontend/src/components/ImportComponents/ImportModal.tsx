@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useCanonical } from "../../hooks/useCanonical";
 import { X } from "lucide-react";
 import { API_URL } from "../../config/api";
 import { fetchWithCreds } from "../../config/fetchClient";
@@ -55,6 +56,7 @@ export default function ImportModal({
   userId,
   onSuccess,
 }: ImportModalProps) {
+  useCanonical("https://www.fearlogapp.com/import");
   const [step, setStep] = useState<ModalStep>("drag-drop");
   const [previewData, setPreviewData] = useState<PreviewResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);

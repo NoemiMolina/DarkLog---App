@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCanonical } from "../../hooks/useCanonical";
 import { useLocation } from "react-router-dom";
 import { API_URL } from "../../config/api";
 import Header from "../../components/HeaderComponents/Header";
@@ -16,6 +17,7 @@ import { TagFilter } from "../../components/ForumComponents/TagFilter";
 import { useForumData } from "../../components/ForumComponents/hooks/useForumData";
 
 export const ForumPage: React.FC = () => {
+  useCanonical("https://www.fearlogapp.com/forum");
   const location = useLocation();
   const [username, setUsername] = useState<string>("Guest");
   const [profilePic, setProfilePic] = useState<string | null>(null);

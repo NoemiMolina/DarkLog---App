@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCanonical } from "../../hooks/useCanonical";
 import { Separator } from "../../components/ui/separator";
 import { jwtDecode } from "jwt-decode";
 import { API_URL } from "../../config/api";
@@ -58,6 +59,7 @@ interface UserProfileData {
 }
 
 const UserProfile: React.FC = () => {
+  useCanonical("https://www.fearlogapp.com/profile");
   const navigate = useNavigate();
   const [profileData, setProfileData] = useState<UserProfileData | null>(null);
   const [isEditing, setIsEditing] = useState(false);

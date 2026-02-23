@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useCanonical } from "../../hooks/useCanonical";
 import { API_URL } from "../../config/api";
 import { useNavigate } from "react-router-dom";
 import { GiRaiseZombie } from "react-icons/gi";
@@ -26,6 +27,7 @@ interface QuizzPageProps {
 }
 
 const QuizzPage: React.FC<QuizzPageProps> = ({ isTVShowMode }) => {
+  useCanonical("https://www.fearlogapp.com/quiz");
   const navigate = useNavigate();
   const [mediaType, setMediaType] = useState<"movies" | "tvshows">("movies");
   const [showDifficultyModal, setShowDifficultyModal] = useState(false);
