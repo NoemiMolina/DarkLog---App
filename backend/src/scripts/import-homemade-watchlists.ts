@@ -101,7 +101,7 @@ const watchlistsData = [
     tmdbIds: [
       663712, 1034541, 945961, 760104, 1023922, 348, 424139, 713704, 949423, 567609,
     ],
-    posterPath: "/HomemadeWatchlistsFigmaCards/finalgirls.png",
+    posterPath: "/HomemadeWatchlistsFigmaCards/finalgirlsposter.png",
   }
 ];
 
