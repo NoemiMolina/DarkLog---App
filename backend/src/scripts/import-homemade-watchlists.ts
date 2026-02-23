@@ -95,6 +95,14 @@ const watchlistsData = [
     ],
     posterPath: "/HomemadeWatchlistsFigmaCards/fridaythe13th.png",
   },
+  {
+    title: "Final Girls",
+    description: 'The most badass final girls in horror movies.',
+    tmdbIds: [
+      663712, 1034541, 945961, 760104, 1023922, 348, 424139, 713704, 949423, 567609
+    ],
+    posterPath: "/HomemadeWatchlistsFigmaCards/finalgirls.png",
+  },
 ];
 
 const seedWatchlists = async () => {
