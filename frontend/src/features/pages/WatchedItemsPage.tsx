@@ -37,6 +37,7 @@ const WatchedItemsPage: React.FC = () => {
   const [items, setItems] = useState<RatedMovie[] | RatedTvShow[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedYear, setExpandedYear] = useState<string | null>(null);
+  const [expandedReview, setExpandedReview] = useState<string | null>(null);
   const type = searchParams.get("type") || "movies"; // "movies" or "tvshows"
 
   const getPosterUrl = (posterPath: string | null | undefined): string => {
@@ -190,7 +191,21 @@ const WatchedItemsPage: React.FC = () => {
                                 )}
 
                                 {item.review && (
-                                  <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed">
+                                  <p
+                                    onClick={() =>
+                                      setExpandedReview(
+                                        expandedReview === `${type}-${item.tmdbMovieId || item.tmdbTvShowId}-${item.createdAt}`
+                                          ? null
+                                          : `${type}-${item.tmdbMovieId || item.tmdbTvShowId}-${item.createdAt}`
+                                      )
+                                    }
+                                    className={`text-xs text-gray-400 leading-relaxed cursor-pointer hover:text-purple-400 transition ${
+                                      expandedReview === `${type}-${item.tmdbMovieId || item.tmdbTvShowId}-${item.createdAt}`
+                                        ? ""
+                                        : "line-clamp-2"
+                                    }`}
+                                    title={expandedReview === `${type}-${item.tmdbMovieId || item.tmdbTvShowId}-${item.createdAt}` ? "Cliquez pour refermer" : "Cliquez pour voir plus"}
+                                  >
                                     "{item.review}"
                                   </p>
                                 )}

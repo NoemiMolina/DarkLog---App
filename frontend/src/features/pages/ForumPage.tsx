@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { useCanonical } from "../../hooks/useCanonical";
 import { useLocation } from "react-router-dom";
 import { API_URL } from "../../config/api";
@@ -17,6 +19,7 @@ import { TagFilter } from "../../components/ForumComponents/TagFilter";
 import { useForumData } from "../../components/ForumComponents/hooks/useForumData";
 
 export const ForumPage: React.FC = () => {
+  const navigate = useNavigate();
   useCanonical("https://www.fearlogapp.com/forum");
   const location = useLocation();
   const [username, setUsername] = useState<string>("Guest");
@@ -155,6 +158,13 @@ export const ForumPage: React.FC = () => {
       <Header />
       <section className="py-8 px-4 max-w-4xl mx-auto">
         <div className="space-y-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition mb-6"
+          >
+            <ArrowLeft size={20} />
+            Back
+          </button>
           <div className="flex justify-between items-center mb-4">
             <div className="text-center flex-1">
               <h1
